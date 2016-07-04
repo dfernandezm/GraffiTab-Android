@@ -1,4 +1,4 @@
-package com.graffitab.ui.activities;
+package com.graffitab.ui.activities.splash;
 
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
