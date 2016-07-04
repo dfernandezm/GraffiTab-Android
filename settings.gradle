@@ -1,0 +1,2 @@
+include ':graffitabsdk', ':app'
+project(':graffitabsdk').projectDir = new File(settingsDir, '../GraffiTab-Android-SDK/graffitabsdk')
