@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">GraffiTab</string>
+
+    <!-- Facebook -->
+    <string name="facebook_app_id">427845203916953</string>
+
+    <!-- Login -->
+    <string name="login_hint_username">Username</string>
+    <string name="login_hint_password">Password</string>
+    <string name="login_forgotten_password">Forgotten password?</string>
+    <string name="login">Login</string>
+    <string name="login_facebook">Login with Facebook</string>
+    <string name="login_sign_up_prompt">Don\'t have an account yet? Sign up</string>
+    <string name="login_sign_up">Sign up</string>
 </resources>

@@ -1,17 +1,17 @@
 package com.graffitab.ui.activities.splash;
 
-import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.graffitabsdk.config.GTConfig;
 import com.graffitab.graffitabsdk.config.GTSDKConfig;
+import com.graffitab.ui.activities.login.LoginActivity;
+import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
 
@@ -31,6 +31,29 @@ public class SplashActivity extends AppCompatActivity {
 
         setupSDK();
         setupBackgroundImage();
+
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                checkLoginStatus();
+            }
+        }, 1000);
+    }
+
+    private void showLoginScreen() {
+        Intent i = new Intent(getBaseContext(), LoginActivity.class);
+        startActivity(i);
+
+        finish();
+
+        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+    }
+
+    // Login
+
+    private void checkLoginStatus() {
+        showLoginScreen();
     }
 
     // Setup

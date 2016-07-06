@@ -1,7 +1,5 @@
 package com.graffitab.utils;
 
-import java.util.List;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,8 +7,16 @@ import android.content.pm.ResolveInfo;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.os.Handler;
+
+import java.util.List;
 
 public class Utils {
+
+	public static void runWithDelay(Runnable runnable, int delay) {
+		Handler handler = new Handler();
+		handler.postDelayed(runnable, delay);
+	}
 
 	public static void openUrl(Context c, String url) {
 		if (!url.startsWith("http://") && !url.startsWith("https://"))
