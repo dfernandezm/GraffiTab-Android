@@ -14,14 +14,17 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_margin="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="35dp"
+        android:layout_marginRight="35dp"
         android:orientation="vertical">
 
         <ImageView
             android:layout_width="fill_parent"
-            android:layout_height="110dp"
-            android:layout_marginBottom="30dp"
-            android:layout_marginTop="25dp"
+            android:layout_height="100dp"
+            android:layout_marginBottom="35dp"
+            android:layout_marginTop="35dp"
             android:scaleType="fitCenter"
             android:src="@drawable/logo" />
 
@@ -29,6 +32,8 @@
             android:id="@+id/username"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@null"
             android:drawableLeft="@drawable/ic_action_perm_identity_transparent"
             android:drawablePadding="7dp"
             android:hint="@string/login_hint_username"
@@ -37,28 +42,42 @@
             android:textColorHint="@color/colorLoginWhite"
             android:textSize="20sp" />
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorLoginWhite" />
+
         <EditText
             android:id="@+id/password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="13dp"
+            android:layout_marginTop="25dp"
+            android:background="@null"
             android:drawableLeft="@drawable/ic_action_https"
             android:drawablePadding="7dp"
+            android:fontFamily="sans-serif"
             android:hint="@string/login_hint_password"
             android:inputType="textPassword"
             android:textColor="#fff"
             android:textColorHint="@color/colorLoginWhite"
             android:textSize="20sp" />
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorLoginWhite" />
+
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="right"
+            android:onClick="onClickResetPassword"
             android:text="@string/login_forgotten_password"
             android:textColor="@color/colorLoginWhite"
-            android:textSize="17sp"
-            android:onClick="onClickResetPassword"/>
+            android:textSize="17sp" />
 
         <View
             android:layout_width="fill_parent"
@@ -70,9 +89,9 @@
             android:layout_height="50dp"
             android:background="@drawable/rounded_corner_login"
             android:gravity="center"
+            android:onClick="onClickLogin"
             android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:onClick="onClickLogin">
+            android:paddingLeft="5dp">
 
             <ImageView
                 android:layout_width="40dp"
@@ -103,9 +122,9 @@
             android:layout_marginTop="16dp"
             android:background="@drawable/rounded_corner_login_facebook"
             android:gravity="center"
+            android:onClick="onClickFacebookLogin"
             android:orientation="horizontal"
-            android:paddingLeft="5dp"
-            android:onClick="onClickFacebookLogin">
+            android:paddingLeft="5dp">
 
             <ImageView
                 android:layout_width="40dp"
@@ -138,10 +157,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
+            android:onClick="onClickSignUp"
             android:text="@string/login_sign_up_prompt"
             android:textColor="@color/colorLoginWhite"
-            android:textSize="17sp"
-            android:onClick="onClickSignUp"/>
+            android:textSize="17sp" />
 
     </LinearLayout>
 </RelativeLayout>
