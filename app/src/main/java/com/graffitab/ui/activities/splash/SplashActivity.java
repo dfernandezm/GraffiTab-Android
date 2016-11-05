@@ -51,18 +51,16 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     // Login
-
     private void checkLoginStatus() {
         showLoginScreen();
     }
 
     // Setup
-
     private void setupSDK() {
         GTConfig config = GTConfig.defaultConfig();
         config.logEnabled = true;
 
-        GTSDKConfig.sharedInstance.setConfig(config);
+        GTSDKConfig.set(config);
     }
 
     private void setupBackgroundImage() {

@@ -72,7 +72,6 @@ public class LoginActivity extends FacebookUtilsActivity {
     }
 
     // Setup
-
     private void setupTextFields() {
         TextUtils.colorTextViewSubstring(signUpField, getString(R.string.login_sign_up), Color.parseColor("#ddffffff"));
     }
@@ -80,7 +79,8 @@ public class LoginActivity extends FacebookUtilsActivity {
     private void setupBackgroundImage() {
         int resId = R.drawable.login;
 
-        InputStream is = getResources().openRawResource(resId);
+        // http://stackoverflow.com/questions/32038476/why-am-i-getting-this-error-expected-resource-of-type-raw-in-android-studio
+        InputStream is = getResources().openRawResource(+ resId);
         byte[] b;
 
         try {
