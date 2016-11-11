@@ -20,11 +20,13 @@ android {
 }
 
 def facebookVersion = "4.13.2"
+def junitVersion = "4.12"
+def androidSupportLibraryVersion = "24.0.0"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    testCompile "junit:junit:$junitVersion"
+    compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
     compile project(':graffitabsdk')
 
     compile "com.facebook.android:facebook-android-sdk:$facebookVersion"

@@ -22,7 +22,9 @@ import org.json.JSONObject;
 import java.util.Arrays;
 
 /**
- * Created by georgichristov on 06/07/16.
+ * Created by georgichristov on 28/10/2016
+ *
+ * Copyright © GraffiTab Inc. 2016
  */
 public class FacebookUtilsActivity extends AppCompatActivity {
 

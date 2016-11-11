@@ -21,7 +21,9 @@ import java.io.IOException;
 import java.io.InputStream;
 
 /**
- * Created by georgichristov on 06/07/16.
+ * Created by georgichristov on 28/10/2016
+ *
+ * Copyright © GraffiTab Inc. 2016
  */
 public class LoginActivity extends FacebookUtilsActivity {
 
