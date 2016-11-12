@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00436D</color>
-    <color name="colorPrimaryDark">#005c86</color>
-    <color name="colorAccent">#ffffff</color>
+    <color name="colorPrimary">#2584b2</color>
+    <color name="colorPrimaryDark">#0C6B99</color>
+    <color name="colorSecondary">#e9a13a</color>
+    <color name="colorMetadata">#a0a0a0</color>
+
     <color name="colorLoginWhite">#66ffffff</color>
+    <color name="colorResetPasswordWhite">#aaffffff</color>
+
     <color name="colorAwesome">#3F739A</color>
     <color name="colorLinks">#ef6a0e</color>
-    <color name="colorOrange">#e9a13a</color>
     <color name="colorUsername">#000000</color>
     <color name="colorTableBackground">#F2F3F4</color>
     <color name="colorGreen">#6cbd52</color>

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 24
@@ -6,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.graffitab"
-        minSdkVersion 16
+        minSdkVersion 19
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -22,12 +23,20 @@ android {
 def facebookVersion = "4.13.2"
 def junitVersion = "4.12"
 def androidSupportLibraryVersion = "24.0.0"
+def butterKnifeVersion = "8.4.0"
+def materialEditTextVersion = "2.1.4"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile "junit:junit:$junitVersion"
     compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
+    compile "com.android.support:design:$androidSupportLibraryVersion"
     compile project(':graffitabsdk')
 
     compile "com.facebook.android:facebook-android-sdk:$facebookVersion"
+
+    compile "com.jakewharton:butterknife:$butterKnifeVersion"
+    apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
+
+    compile "com.rengwuxian.materialedittext:library:$materialEditTextVersion"
 }

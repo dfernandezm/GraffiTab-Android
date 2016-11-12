@@ -8,8 +8,7 @@
         android:id="@+id/background"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/login" />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="fill_parent"
@@ -70,11 +69,11 @@
             android:background="@color/colorLoginWhite" />
 
         <TextView
+            android:id="@+id/forgottenPassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="right"
-            android:onClick="onClickResetPassword"
             android:text="@string/login_forgotten_password"
             android:textColor="@color/colorLoginWhite"
             android:textSize="17sp" />
@@ -85,11 +84,11 @@
             android:layout_weight="1" />
 
         <LinearLayout
+            android:id="@+id/loginBtn"
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             android:background="@drawable/rounded_corner_login"
             android:gravity="center"
-            android:onClick="onClickLogin"
             android:orientation="horizontal"
             android:paddingLeft="5dp">
 
@@ -117,12 +116,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/loginFacebookBtn"
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             android:layout_marginTop="16dp"
             android:background="@drawable/rounded_corner_login_facebook"
             android:gravity="center"
-            android:onClick="onClickFacebookLogin"
             android:orientation="horizontal"
             android:paddingLeft="5dp">
 
@@ -157,7 +156,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:onClick="onClickSignUp"
             android:text="@string/login_sign_up_prompt"
             android:textColor="@color/colorLoginWhite"
             android:textSize="17sp" />

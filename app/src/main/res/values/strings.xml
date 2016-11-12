@@ -12,4 +12,33 @@
     <string name="login_facebook">Login with Facebook</string>
     <string name="login_sign_up_prompt">Don\'t have an account yet? Sign up</string>
     <string name="login_sign_up">Sign up</string>
+    <string name="login_error_username">Please enter your username.</string>
+    <string name="login_error_password">Please enter your password.</string>
+
+    <!-- Reset password -->
+    <string name="reset_password">Reset password</string>
+    <string name="reset_password_detail">You will receive an email containing instructions on how to reset your password.</string>
+    <string name="reset_password_hint_email">Email</string>
+    <string name="reset_password_reset">Reset</string>
+
+    <!-- Sign up -->
+    <string name="sign_up">Sign me up</string>
+    <string name="sign_up_first_name">First name</string>
+    <string name="sign_up_last_name">Last name</string>
+    <string name="sign_up_confirm_password">Confirm password</string>
+    <string name="sign_up_terms">By registering you agree to our Terms of Use</string>
+    <string name="sign_up_terms_of_use">Terms of Use</string>
+    <string name="sign_up_error_firstname">Please enter your first name.</string>
+    <string name="sign_up_error_lastname">Please enter your last name.</string>
+    <string name="sign_up_error_email">Please enter your email.</string>
+    <string name="sign_up_error_username">Please enter a username.</string>
+    <string name="sign_up_error_password">Please enter a password.</string>
+    <string name="sign_up_error_confirm_password">Passwords do not match.</string>
+    <string name="sign_up_error_invalid_email">This email address is not valid.</string>
+
+    <!-- Other -->
+    <string name="other_processing">Processing</string>
+    <string name="other_done">Done</string>
+    <string name="other_save">Save</string>
+    <string name="other_cancel">Cancel</string>
 </resources>

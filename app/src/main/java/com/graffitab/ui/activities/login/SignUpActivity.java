@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -13,13 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
-import com.graffitab.ui.activities.custom.facebook.FacebookUtilsActivity;
-import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.constants.Constants;
+import com.graffitab.ui.activities.home.WebActivity;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.TextUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
+import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -33,13 +35,16 @@ import butterknife.OnClick;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class LoginActivity extends FacebookUtilsActivity {
+public class SignUpActivity extends AppCompatActivity {
 
-    @BindView(R.id.username) EditText usernameField;
-    @BindView(R.id.password) EditText passwordField;
-    @BindView(R.id.signUp) TextView signUpField;
+    @BindView(R.id.firstName) MaterialEditText firstname;
+    @BindView(R.id.lastName) MaterialEditText lastname;
+    @BindView(R.id.email) MaterialEditText email;
+    @BindView(R.id.username) MaterialEditText username;
+    @BindView(R.id.password) MaterialEditText password;
+    @BindView(R.id.confirmPassword) MaterialEditText confirmPassword;
+    @BindView(R.id.terms) TextView terms;
 
-    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -47,53 +52,44 @@ public class LoginActivity extends FacebookUtilsActivity {
         ActivityUtils.hideActionBar(this);
         ActivityUtils.setOrientation(this);
 
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_signup);
         ButterKnife.bind(this);
 
         setupBackgroundImage();
         setupTextFields();
     }
 
-    @OnClick(R.id.loginBtn)
-    public void onClickLogin(View view) {
-        Log.i(getClass().getSimpleName(), "Logging in");
-        String un = usernameField.getText().toString();
-        String pw = passwordField.getText().toString();
+    @OnClick(R.id.terms)
+    public void onClickTerms(View view) {
+        Intent i = new Intent(this, WebActivity.class);
+        i.putExtra(Constants.EXTRA_HTML_FILE, "terms.html");
+        startActivity(i);
+    }
 
-        if (InputValidator.validateLogin(this, un, pw)) {
+    @OnClick(R.id.closeBtn)
+    public void onClickClose(View view) {
+        finish();
+    }
+
+    @OnClick(R.id.signUpBtn)
+    public void onClickSignUp(View view) {
+        Log.i(getClass().getSimpleName(), "Sign up");
+        String fn = firstname.getText().toString();
+        String ln = lastname.getText().toString();
+        String em = email.getText().toString();
+        String un = username.getText().toString();
+        String pw = password.getText().toString();
+        String cpw = confirmPassword.getText().toString();
+
+        if (InputValidator.validateSignUp(this, fn, ln, em, un, pw, cpw)) {
             TaskDialog.getInstance().showDialog(null, this, null);
         }
-    }
-
-    @OnClick(R.id.loginFacebookBtn)
-    public void onClickFacebookLogin(View view) {
-        Log.i(getClass().getSimpleName(), "Logging in with Facebook");
-
-        facebookLogin(true, new FacebookLoginCallback() {
-
-            @Override
-            public void loginComplete() {
-            Log.i(getClass().getSimpleName(), "Facebook login complete. Checking user profile");
-            }
-        });
-    }
-
-    @OnClick(R.id.forgottenPassword)
-    public void onClickResetPassword(View view) {
-        Log.i(getClass().getSimpleName(), "Resetting password");
-        startActivity(new Intent(this, ResetPasswordActivity.class));
-    }
-
-    @OnClick(R.id.signUp)
-    public void onClickSignUp(View view) {
-        Log.i(getClass().getSimpleName(), "Signing up");
-        startActivity(new Intent(this, SignUpActivity.class));
     }
 
     // Setup
 
     private void setupTextFields() {
-        TextUtils.colorTextViewSubstring(signUpField, getString(R.string.login_sign_up), Color.parseColor("#ddffffff"));
+        TextUtils.colorTextViewSubstring(terms, getString(R.string.sign_up_terms_of_use), Color.parseColor("#ddffffff"));
     }
 
     private void setupBackgroundImage() {
