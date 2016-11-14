@@ -47,8 +47,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void showLoginScreen() {
-        Intent i = new Intent(getBaseContext(), LoginActivity.class);
-        startActivity(i);
+        startActivity(new Intent(getBaseContext(), LoginActivity.class));
 
         finish();
 

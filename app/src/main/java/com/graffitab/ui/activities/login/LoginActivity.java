@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.facebook.FacebookUtilsActivity;
+import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.TextUtils;
@@ -61,7 +62,8 @@ public class LoginActivity extends FacebookUtilsActivity {
         String pw = passwordField.getText().toString();
 
         if (InputValidator.validateLogin(this, un, pw)) {
-            TaskDialog.getInstance().showDialog(null, this, null);
+//            TaskDialog.getInstance().showDialog(null, this, null);
+            showHomeScreen();
         }
     }
 
@@ -88,6 +90,14 @@ public class LoginActivity extends FacebookUtilsActivity {
     public void onClickSignUp(View view) {
         Log.i(getClass().getSimpleName(), "Signing up");
         startActivity(new Intent(this, SignUpActivity.class));
+    }
+
+    private void showHomeScreen() {
+        startActivity(new Intent(getBaseContext(), HomeActivity.class));
+
+        finish();
+
+        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
     }
 
     // Setup

@@ -36,6 +36,17 @@
     <string name="sign_up_error_confirm_password">Passwords do not match.</string>
     <string name="sign_up_error_invalid_email">This email address is not valid.</string>
 
+    <!-- Home -->
+    <string name="home">Home</string>
+    <string name="home_trending">Trending</string>
+    <string name="home_notifications">Notifications</string>
+    <string name="home_recent">Recent</string>
+    <string name="home_profile">Profile</string>
+    <string name="home_locations">Locations</string>
+    <string name="home_search">Search</string>
+    <string name="home_settings">Settings</string>
+    <string name="home_explorer">Explorer</string>
+
     <!-- Other -->
     <string name="other_processing">Processing</string>
     <string name="other_done">Done</string>

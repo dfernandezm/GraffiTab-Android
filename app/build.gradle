@@ -25,6 +25,8 @@ def junitVersion = "4.12"
 def androidSupportLibraryVersion = "24.0.0"
 def butterKnifeVersion = "8.4.0"
 def materialEditTextVersion = "2.1.4"
+def reSideMenuVersion = "1.6+"
+def fabVersion = "1.6.4"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -39,4 +41,6 @@ dependencies {
     apt "com.jakewharton:butterknife-compiler:$butterKnifeVersion"
 
     compile "com.rengwuxian.materialedittext:library:$materialEditTextVersion"
+    compile "com.specyci:residemenu:$reSideMenuVersion"
+    compile "com.github.clans:fab:$fabVersion"
 }
