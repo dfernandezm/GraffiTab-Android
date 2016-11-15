@@ -45,4 +45,5 @@ dependencies {
     compile "com.specyci:residemenu:$reSideMenuVersion"
     compile "com.github.clans:fab:$fabVersion"
     compile "jp.co.recruit_mp:android-HeaderFooterGridView:$gridViewWithHeaderFooterVersion"
+    compile "com.etsy.android.grid:library:1.0.5"
 }

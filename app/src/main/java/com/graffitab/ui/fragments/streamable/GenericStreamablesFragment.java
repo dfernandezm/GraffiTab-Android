@@ -15,6 +15,7 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.adapters.BaseItemAdapter;
 import com.graffitab.ui.adapters.streamables.GridStreamablesAdapter;
+import com.graffitab.ui.adapters.streamables.ListStreamablesAdapter;
 import com.graffitab.ui.listeners.EndlessGridScrollListener;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.DisplayUtils;
@@ -33,7 +34,7 @@ import jp.co.recruit_mp.android.headerfootergridview.HeaderFooterGridView;
  */
 public abstract class GenericStreamablesFragment extends Fragment implements EndlessGridScrollListener.GridScrollListener {
 
-    public enum ViewType {GRID/*, TRENDING, SWIMLANE, LIST_FULL*/}
+    public enum ViewType {GRID/*, TRENDING, SWIMLANE*/, LIST_FULL}
 
     @BindView(R.id.gridView) HeaderFooterGridView gridView;
     @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
@@ -106,6 +107,8 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
         switch (viewType) {
             case GRID:
                 return new GridStreamablesAdapter(getActivity(), gridView, items);
+            case LIST_FULL:
+                return new ListStreamablesAdapter(getActivity(), gridView, items);
         }
 
         return null;
@@ -114,7 +117,14 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
     // Configuration
 
     private void configureLayout() {
-        gridView.setNumColumns(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+        switch (viewType) {
+            case GRID:
+                gridView.setNumColumns(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+                break;
+            case LIST_FULL:
+                gridView.setNumColumns(1);
+                break;
+        }
 
         if (adapter != null) {
             adapter.notifyDataSetChanged();
