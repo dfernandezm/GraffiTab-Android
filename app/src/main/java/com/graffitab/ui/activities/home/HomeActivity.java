@@ -144,6 +144,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         adapter.addFragment(new NotificationsFragment(), getString(R.string.home_notifications));
         adapter.addFragment(new RecentFragment(), getString(R.string.home_recent));
         viewPager.setAdapter(adapter);
+        viewPager.setOffscreenPageLimit(3);
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
