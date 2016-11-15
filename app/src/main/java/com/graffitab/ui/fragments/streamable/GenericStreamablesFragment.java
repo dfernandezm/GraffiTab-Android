@@ -5,17 +5,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.AdapterView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
-import com.graffitab.ui.adapters.BaseItemAdapter;
-import com.graffitab.ui.adapters.streamables.GridStreamablesAdapter;
-import com.graffitab.ui.adapters.streamables.ListStreamablesAdapter;
+import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
+import com.graffitab.ui.adapters.streamables.GridStreamablesRecyclerAdapter;
+import com.graffitab.ui.adapters.streamables.ListStreamablesRecyclerAdapter;
 import com.graffitab.ui.listeners.EndlessGridScrollListener;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.DisplayUtils;
@@ -25,7 +27,8 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import jp.co.recruit_mp.android.headerfootergridview.HeaderFooterGridView;
+
+import static com.graffitab.R.id.recyclerView;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -36,7 +39,7 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
 
     public enum ViewType {GRID/*, TRENDING, SWIMLANE*/, LIST_FULL}
 
-    @BindView(R.id.gridView) HeaderFooterGridView gridView;
+    @BindView(recyclerView) RecyclerView gridView;
     @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
 
     public List<Integer> items = new ArrayList();
@@ -44,9 +47,9 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
     public boolean canLoadMore = true;
     public int offset = 0;
 
-    private EndlessGridScrollListener gridListener;
+//    private EndlessGridScrollListener gridListener;
     private ViewType viewType;
-    private BaseItemAdapter adapter;
+    private BaseItemRecyclerAdapter adapter;
 
     public GenericStreamablesFragment() {
         // No-op.
@@ -63,8 +66,6 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
         ButterKnife.bind(this, view);
 
         basicInit();
-
-        configureLayout();
 
         setupRefreshView();
         setupGridView();
@@ -88,7 +89,7 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
         else {
             isDownloading = false;
 
-            gridListener.noMorePages();
+//            gridListener.noMorePages();
         }
     }
 
@@ -100,30 +101,48 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
         this.viewType = type;
     }
 
-    private BaseItemAdapter getAdapterForViewType() {
+    // Configuration
+
+    private BaseItemRecyclerAdapter getAdapterForViewType() {
         if (getActivity() == null)
             return null;
 
         switch (viewType) {
             case GRID:
-                return new GridStreamablesAdapter(getActivity(), gridView, items);
+                return new GridStreamablesRecyclerAdapter(getActivity(), items);
             case LIST_FULL:
-                return new ListStreamablesAdapter(getActivity(), gridView, items);
+                return new ListStreamablesRecyclerAdapter(getActivity(), items);
         }
 
         return null;
     }
 
-    // Configuration
+    private RecyclerView.LayoutManager getLayoutManagerForViewType() {
+        switch (viewType) {
+            case GRID: {
+                return new GridLayoutManager(getContext(), 3);
+            }
+            case LIST_FULL: {
+                return new LinearLayoutManager(getContext());
+            }
+        }
+        return null;
+    }
 
     private void configureLayout() {
+        RecyclerView.LayoutManager manager = getLayoutManagerForViewType();
+        if (gridView.getLayoutManager() == null || gridView.getLayoutManager().getClass() != manager.getClass()) {
+            gridView.setLayoutManager(manager);
+        }
+
         switch (viewType) {
-            case GRID:
-                gridView.setNumColumns(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+            case GRID: {
+                ((GridLayoutManager) gridView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
                 break;
-            case LIST_FULL:
-                gridView.setNumColumns(1);
+            }
+            case LIST_FULL: {
                 break;
+            }
         }
 
         if (adapter != null) {
@@ -163,7 +182,7 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
             public void run() {
                 if (o == 0) {
                     items.clear();
-                    gridListener.startUpdates();
+//                    gridListener.startUpdates();
                 }
 
                 List<Integer> loaded = new ArrayList<Integer>();
@@ -173,10 +192,10 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
 
                 if (loaded.size() <= 0 || loaded.size() < Constants.MAX_ITEMS) {
                     canLoadMore = false;
-                    gridListener.noMorePages();
+//                    gridListener.noMorePages();
                 }
-                else
-                    gridListener.notifyMorePages();
+//                else
+//                    gridListener.notifyMorePages();
 
                 finalizeLoad();
             }
@@ -241,7 +260,6 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
     }
 
     private void finalizeCacheLoad() {
-        adapter.setItems(items);
         adapter.notifyDataSetChanged();
     }
 
@@ -250,7 +268,6 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
 
         isDownloading = false;
 
-        adapter.setItems(items);
         adapter.notifyDataSetChanged();
     }
 
@@ -269,19 +286,10 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
     }
 
     private void setupGridView() {
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//        gridListener = new EndlessListScrollListener(gridView, this, false);
+//        gridView.setOnScrollListener(gridListener);
 
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (position > adapter.getCount() - 1)
-                    return;
-
-
-            }
-        });
-
-        gridListener = new EndlessGridScrollListener(gridView, this, false);
-        gridView.setOnScrollListener(gridListener);
+        configureLayout();
 
         // We must set the adapter after we set the footer view, otherwise the footer will not show.
         gridView.post(new Runnable() {

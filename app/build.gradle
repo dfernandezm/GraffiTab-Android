@@ -34,6 +34,8 @@ dependencies {
     testCompile "junit:junit:$junitVersion"
     compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
     compile "com.android.support:design:$androidSupportLibraryVersion"
+    compile "com.android.support:cardview-v7:$androidSupportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$androidSupportLibraryVersion"
     compile project(':graffitabsdk')
 
     compile "com.facebook.android:facebook-android-sdk:$facebookVersion"
@@ -45,5 +47,4 @@ dependencies {
     compile "com.specyci:residemenu:$reSideMenuVersion"
     compile "com.github.clans:fab:$fabVersion"
     compile "jp.co.recruit_mp:android-HeaderFooterGridView:$gridViewWithHeaderFooterVersion"
-    compile "com.etsy.android.grid:library:1.0.5"
 }
