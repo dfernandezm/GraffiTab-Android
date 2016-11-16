@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
@@ -44,7 +44,7 @@ public class TrendingStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<
         final GenericStreamablesFragment.GTStreamble item = getItem(position);
 
         TrendingViewHolder streamableHolder = (TrendingViewHolder) holder;
-        streamableHolder.streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.height));
+        streamableHolder.streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.height));
         streamableHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
