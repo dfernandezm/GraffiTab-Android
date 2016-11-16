@@ -8,22 +8,24 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
 import com.graffitab.ui.adapters.streamables.GridStreamablesRecyclerAdapter;
 import com.graffitab.ui.adapters.streamables.ListStreamablesRecyclerAdapter;
-import com.graffitab.ui.listeners.EndlessGridScrollListener;
+import com.graffitab.ui.adapters.streamables.SwimlaneStreamablesRecyclerAdapter;
+import com.graffitab.ui.adapters.streamables.TrendingStreamablesRecyclerAdapter;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.DisplayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,21 +37,21 @@ import static com.graffitab.R.id.recyclerView;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericStreamablesFragment extends Fragment implements EndlessGridScrollListener.GridScrollListener {
+public abstract class GenericStreamablesFragment extends Fragment {
 
-    public enum ViewType {GRID/*, TRENDING, SWIMLANE*/, LIST_FULL}
+    public enum ViewType {GRID, TRENDING, SWIMLANE, LIST_FULL}
 
     @BindView(recyclerView) RecyclerView gridView;
     @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
 
-    public List<Integer> items = new ArrayList();
+    public List<GTStreamble> items = new ArrayList();
     public boolean isDownloading = false;
     public boolean canLoadMore = true;
     public int offset = 0;
 
-//    private EndlessGridScrollListener gridListener;
     private ViewType viewType;
     private BaseItemRecyclerAdapter adapter;
+    private RecyclerView.ItemDecoration itemDecoration;
 
     public GenericStreamablesFragment() {
         // No-op.
@@ -79,23 +81,19 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
         configureLayout();
     }
 
-    @Override
-    public void onGridRefresh(int pageNumber) {
-        if (canLoadMore && !isDownloading) {
-            offset += Constants.MAX_ITEMS;
-
-            loadItems(false, offset);
-        }
-        else {
-            isDownloading = false;
-
-//            gridListener.noMorePages();
-        }
-    }
-
-    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-        // No-op.
-    }
+//    @Override
+//    public void onGridRefresh(int pageNumber) {
+//        if (canLoadMore && !isDownloading) {
+//            offset += Constants.MAX_ITEMS;
+//
+//            loadItems(false, offset);
+//        }
+//        else {
+//            isDownloading = false;
+//
+////            gridListener.noMorePages();
+//        }
+//    }
 
     public void setViewType(ViewType type) {
         this.viewType = type;
@@ -110,6 +108,10 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
         switch (viewType) {
             case GRID:
                 return new GridStreamablesRecyclerAdapter(getActivity(), items);
+            case TRENDING:
+                return new TrendingStreamablesRecyclerAdapter(getActivity(), items);
+            case SWIMLANE:
+                return new SwimlaneStreamablesRecyclerAdapter(getActivity(), items);
             case LIST_FULL:
                 return new ListStreamablesRecyclerAdapter(getActivity(), items);
         }
@@ -119,31 +121,69 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
 
     private RecyclerView.LayoutManager getLayoutManagerForViewType() {
         switch (viewType) {
-            case GRID: {
+            case GRID:
                 return new GridLayoutManager(getContext(), 3);
-            }
-            case LIST_FULL: {
+            case TRENDING:
+                return new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+            case SWIMLANE:
+                return new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            case LIST_FULL:
                 return new LinearLayoutManager(getContext());
+        }
+        return null;
+    }
+
+    private RecyclerView.ItemDecoration getItemDecorationForViewType() {
+        switch (viewType) {
+            case GRID: {
+                int spanCount = ((GridLayoutManager) gridView.getLayoutManager()).getSpanCount();
+                return new GridStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
             }
+            case TRENDING: {
+                int spanCount = ((StaggeredGridLayoutManager) gridView.getLayoutManager()).getSpanCount();
+                return new TrendingStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
+            }
+            case SWIMLANE: {
+                int spanCount = ((StaggeredGridLayoutManager) gridView.getLayoutManager()).getSpanCount();
+                return new SwimlaneStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
+            }
+            case LIST_FULL:
+                return new ListStreamablesRecyclerAdapter.RecyclerViewMargin(1);
         }
         return null;
     }
 
     private void configureLayout() {
+        // Replace layout manager.
         RecyclerView.LayoutManager manager = getLayoutManagerForViewType();
         if (gridView.getLayoutManager() == null || gridView.getLayoutManager().getClass() != manager.getClass()) {
             gridView.setLayoutManager(manager);
         }
 
+        // Configure individual layouts.
         switch (viewType) {
             case GRID: {
                 ((GridLayoutManager) gridView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+                break;
+            }
+            case TRENDING: {
+                ((StaggeredGridLayoutManager) gridView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 3 : 2);
+                break;
+            }
+            case SWIMLANE: {
+                ((StaggeredGridLayoutManager) gridView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
                 break;
             }
             case LIST_FULL: {
                 break;
             }
         }
+
+        // Replace item decoration.
+        if (itemDecoration != null)
+            gridView.removeItemDecoration(itemDecoration);
+        itemDecoration = getItemDecorationForViewType();
+        gridView.addItemDecoration(itemDecoration);
 
         if (adapter != null) {
             adapter.notifyDataSetChanged();
@@ -180,14 +220,12 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
         Utils.runWithDelay(new Runnable() {
             @Override
             public void run() {
-                if (o == 0) {
+                if (o == 0)
                     items.clear();
-//                    gridListener.startUpdates();
-                }
 
-                List<Integer> loaded = new ArrayList<Integer>();
+                List<GTStreamble> loaded = new ArrayList();
                 for (int i = 0; i < 25; i++)
-                    loaded.add(i);
+                    loaded.add(new GTStreamble(GTStreamble.randInt(300, 400), GTStreamble.randInt(500, 1024)));
                 items.addAll(loaded);
 
                 if (loaded.size() <= 0 || loaded.size() < Constants.MAX_ITEMS) {
@@ -286,9 +324,6 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
     }
 
     private void setupGridView() {
-//        gridListener = new EndlessListScrollListener(gridView, this, false);
-//        gridView.setOnScrollListener(gridListener);
-
         configureLayout();
 
         // We must set the adapter after we set the footer view, otherwise the footer will not show.
@@ -302,5 +337,42 @@ public abstract class GenericStreamablesFragment extends Fragment implements End
                 loadItems(true, offset);
             }
         });
+    }
+
+    public static class GTStreamble {
+        public int width;
+        public int height;
+
+        public GTStreamble(int width, int height) {
+            this.width = width;
+            this.height = height;
+        }
+
+        /**
+         * Returns a pseudo-random number between min and max, inclusive.
+         * The difference between min and max can be at most
+         * <code>Integer.MAX_VALUE - 1</code>.
+         *
+         * @param min Minimum value
+         * @param max Maximum value.  Must be greater than min.
+         * @return Integer between min and max, inclusive.
+         * @see java.util.Random#nextInt(int)
+         */
+        public static int randInt(int min, int max) {
+
+            // NOTE: This will (intentionally) not run as written so that folks
+            // copy-pasting have to think about how to initialize their
+            // Random instance.  Initialization of the Random instance is outside
+            // the main scope of the question, but some decent options are to have
+            // a field that is initialized once and then re-used as needed or to
+            // use ThreadLocalRandom (if using at least Java 1.7).
+            Random rand = new Random();
+
+            // nextInt is normally exclusive of the top value,
+            // so add 1 to make it inclusive
+            int randomNum = rand.nextInt((max - min) + 1) + min;
+
+            return randomNum;
+        }
     }
 }

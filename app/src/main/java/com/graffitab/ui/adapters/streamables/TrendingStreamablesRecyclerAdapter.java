@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
@@ -25,16 +26,16 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GenericStreamablesFragment.GTStreamble> {
+public class TrendingStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GenericStreamablesFragment.GTStreamble> {
 
-    public GridStreamablesRecyclerAdapter(Context context, List<GenericStreamablesFragment.GTStreamble> items) {
+    public TrendingStreamablesRecyclerAdapter(Context context, List<GenericStreamablesFragment.GTStreamble> items) {
         super(context, items);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_grid, null);
-        GridViewHolder rcv = new GridViewHolder(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_trending, null);
+        TrendingViewHolder rcv = new TrendingViewHolder(layoutView);
         return rcv;
     }
 
@@ -42,15 +43,16 @@ public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Gene
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GenericStreamablesFragment.GTStreamble item = getItem(position);
 
-        ((GridViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
+        TrendingViewHolder streamableHolder = (TrendingViewHolder) holder;
+        streamableHolder.streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.height));
+        streamableHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
-    static class GridViewHolder extends RecyclerView.ViewHolder {
+    static class TrendingViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.streamableView)
-        ImageView streamableView;
+        @BindView(R.id.streamableView) ImageView streamableView;
 
-        public GridViewHolder(View itemView) {
+        public TrendingViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -62,7 +64,7 @@ public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Gene
         private int spacing;
 
         public RecyclerViewMargin(@IntRange(from = 0) int columns) {
-            this.spacing = 5;
+            this.spacing = 15;
             this.spanCount = columns;
         }
 

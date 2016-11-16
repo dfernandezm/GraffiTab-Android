@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.graffitab.ui.views.layout.SquareRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/streamableView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="200dp"
         android:background="#efefef"
         android:scaleType="centerCrop" />
 
-</com.graffitab.ui.views.layout.SquareRelativeLayout>
+</RelativeLayout>

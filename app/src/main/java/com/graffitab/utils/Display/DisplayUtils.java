@@ -22,7 +22,7 @@ public class DisplayUtils {
 		display.getSize(size);
 		int width = size.x;
 		int height = size.y;
-		
+
 		int orientation = Configuration.ORIENTATION_UNDEFINED;
 
 		if (width < height)

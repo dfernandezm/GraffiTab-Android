@@ -2,6 +2,8 @@ package com.graffitab.ui.adapters.streamables;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,8 @@ import android.widget.TextView;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
+import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
+import com.graffitab.utils.display.DisplayUtils;
 
 import java.util.List;
 
@@ -23,9 +27,9 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Integer> {
+public class ListStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GenericStreamablesFragment.GTStreamble> {
 
-    public ListStreamablesRecyclerAdapter(Context context, List<Integer> items) {
+    public ListStreamablesRecyclerAdapter(Context context, List<GenericStreamablesFragment.GTStreamble> items) {
         super(context, items);
     }
 
@@ -38,7 +42,7 @@ public class ListStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Inte
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final Integer item = getItem(position);
+        final GenericStreamablesFragment.GTStreamble item = getItem(position);
 
         ((ListViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
@@ -60,6 +64,28 @@ public class ListStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Inte
         public ListViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+        }
+    }
+
+    public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {
+
+        private final int columns;
+
+        public RecyclerViewMargin(@IntRange(from = 0) int columns) {
+            this.columns = columns;
+        }
+
+        @Override
+        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
+            int itemCount = state.getItemCount();
+            int position = parent.getChildLayoutPosition(view);
+
+            outRect.right = 0;
+            outRect.left = 0;
+            outRect.top = DisplayUtils.pxToDip(parent.getContext(), 10);
+
+            if (position == itemCount - 1)
+                outRect.bottom = DisplayUtils.pxToDip(parent.getContext(), 10);
         }
     }
 }
