@@ -32,14 +32,14 @@ public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Gene
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_grid, null);
         GridViewHolder rcv = new GridViewHolder(layoutView);
         return rcv;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GenericStreamablesFragment.GTStreamble item = getItem(position);
 
         ((GridViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
@@ -47,8 +47,7 @@ public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Gene
 
     static class GridViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.streamableView)
-        ImageView streamableView;
+        @BindView(R.id.streamableView) ImageView streamableView;
 
         public GridViewHolder(View itemView) {
             super(itemView);
@@ -62,7 +61,7 @@ public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Gene
         private int spacing;
 
         public RecyclerViewMargin(@IntRange(from = 0) int columns) {
-            this.spacing = 5;
+            this.spacing = 2;
             this.spanCount = columns;
         }
 

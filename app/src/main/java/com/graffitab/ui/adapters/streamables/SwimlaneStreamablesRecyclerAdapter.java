@@ -33,14 +33,14 @@ public class SwimlaneStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_swimlane, null);
         SwimlaneViewHolder rcv = new SwimlaneViewHolder(layoutView);
         return rcv;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GenericStreamablesFragment.GTStreamble item = getItem(position);
 
         SwimlaneViewHolder streamableHolder = (SwimlaneViewHolder) holder;

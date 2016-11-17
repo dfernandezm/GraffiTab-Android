@@ -33,14 +33,14 @@ public class TrendingStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_trending, null);
         TrendingViewHolder rcv = new TrendingViewHolder(layoutView);
         return rcv;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GenericStreamablesFragment.GTStreamble item = getItem(position);
 
         TrendingViewHolder streamableHolder = (TrendingViewHolder) holder;

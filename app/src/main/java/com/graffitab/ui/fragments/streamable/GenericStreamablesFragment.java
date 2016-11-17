@@ -30,8 +30,6 @@ import java.util.Random;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.graffitab.R.id.recyclerView;
-
 /**
  * Created by georgichristov on 14/11/2016
  * --
@@ -41,7 +39,7 @@ public abstract class GenericStreamablesFragment extends Fragment {
 
     public enum ViewType {GRID, TRENDING, SWIMLANE, LIST_FULL}
 
-    @BindView(recyclerView) RecyclerView gridView;
+    @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
 
     public List<GTStreamble> items = new ArrayList();
@@ -70,7 +68,7 @@ public abstract class GenericStreamablesFragment extends Fragment {
         basicInit();
 
         setupRefreshView();
-        setupGridView();
+        setupRecyclerView();
 
         return view;
     }
@@ -80,20 +78,6 @@ public abstract class GenericStreamablesFragment extends Fragment {
         super.onConfigurationChanged(newConfig);
         configureLayout();
     }
-
-//    @Override
-//    public void onGridRefresh(int pageNumber) {
-//        if (canLoadMore && !isDownloading) {
-//            offset += Constants.MAX_ITEMS;
-//
-//            loadItems(false, offset);
-//        }
-//        else {
-//            isDownloading = false;
-//
-////            gridListener.noMorePages();
-//        }
-//    }
 
     public void setViewType(ViewType type) {
         this.viewType = type;
@@ -136,15 +120,15 @@ public abstract class GenericStreamablesFragment extends Fragment {
     private RecyclerView.ItemDecoration getItemDecorationForViewType() {
         switch (viewType) {
             case GRID: {
-                int spanCount = ((GridLayoutManager) gridView.getLayoutManager()).getSpanCount();
+                int spanCount = ((GridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
                 return new GridStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
             }
             case TRENDING: {
-                int spanCount = ((StaggeredGridLayoutManager) gridView.getLayoutManager()).getSpanCount();
+                int spanCount = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
                 return new TrendingStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
             }
             case SWIMLANE: {
-                int spanCount = ((StaggeredGridLayoutManager) gridView.getLayoutManager()).getSpanCount();
+                int spanCount = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
                 return new SwimlaneStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
             }
             case LIST_FULL:
@@ -156,22 +140,22 @@ public abstract class GenericStreamablesFragment extends Fragment {
     private void configureLayout() {
         // Replace layout manager.
         RecyclerView.LayoutManager manager = getLayoutManagerForViewType();
-        if (gridView.getLayoutManager() == null || gridView.getLayoutManager().getClass() != manager.getClass()) {
-            gridView.setLayoutManager(manager);
+        if (recyclerView.getLayoutManager() == null || recyclerView.getLayoutManager().getClass() != manager.getClass()) {
+            recyclerView.setLayoutManager(manager);
         }
 
         // Configure individual layouts.
         switch (viewType) {
             case GRID: {
-                ((GridLayoutManager) gridView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+                ((GridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
                 break;
             }
             case TRENDING: {
-                ((StaggeredGridLayoutManager) gridView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 3 : 2);
+                ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 3 : 2);
                 break;
             }
             case SWIMLANE: {
-                ((StaggeredGridLayoutManager) gridView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+                ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
                 break;
             }
             case LIST_FULL: {
@@ -181,9 +165,9 @@ public abstract class GenericStreamablesFragment extends Fragment {
 
         // Replace item decoration.
         if (itemDecoration != null)
-            gridView.removeItemDecoration(itemDecoration);
+            recyclerView.removeItemDecoration(itemDecoration);
         itemDecoration = getItemDecorationForViewType();
-        gridView.addItemDecoration(itemDecoration);
+        recyclerView.addItemDecoration(itemDecoration);
 
         if (adapter != null) {
             adapter.notifyDataSetChanged();
@@ -220,92 +204,42 @@ public abstract class GenericStreamablesFragment extends Fragment {
         Utils.runWithDelay(new Runnable() {
             @Override
             public void run() {
-                if (o == 0)
-                    items.clear();
-
+                // TODO: This is just a dummy procedure to generate some random content.
                 List<GTStreamble> loaded = new ArrayList();
                 for (int i = 0; i < 25; i++)
                     loaded.add(new GTStreamble(GTStreamble.randInt(300, 400), GTStreamble.randInt(500, 1024)));
+
+                // Clear items if we are pulling to refresh.
+                if (o == 0)
+                    items.clear();
+
+                // Merge newly loaded items.
                 items.addAll(loaded);
 
+                // Configure load more layout.
                 if (loaded.size() <= 0 || loaded.size() < Constants.MAX_ITEMS) {
                     canLoadMore = false;
-//                    gridListener.noMorePages();
+                    adapter.setProgressMore(false);
                 }
-//                else
-//                    gridListener.notifyMorePages();
+                else
+                    adapter.setProgressMore(true);
 
+                // Finalize and refresh UI.
                 finalizeLoad();
             }
         }, 3000);
-
-//        loadItems(isStart, o, new GTNetworkResponseHandler() {
-//
-//            @Override
-//            public void onSuccess(GTResponseObject response) {
-//                if (o == 0) {
-//                    items.clear();
-//                    gridListener.startUpdates();
-//                }
-//
-//                ArrayList<GTStreamable> loaded = (ArrayList<GTStreamable>) response.object;
-//
-//                items.addAll(loaded);
-//
-//                if (loaded.size() <= 0 || loaded.size() < Constants.MAX_ITEMS) {
-//                    canLoadMore = false;
-//                    gridListener.noMorePages();
-//                }
-//                else
-//                    gridListener.notifyMorePages();
-//
-//                finalizeLoad();
-//            }
-//
-//            @Override
-//            public void onError(GTResponseObject response) {
-//                if (getActivity() == null)
-//                    return;
-//
-//                canLoadMore = false;
-//                gridListener.noMorePages();
-//
-//                finalizeLoad();
-//
-//                if (response.reason == Reason.AUTHORIZATION_NEEDED)
-//                    Utils.logoutUser(getActivity());
-//                else
-//                    DialogBuilder.buildOKDialog(getActivity(), getString(R.string.app_name), response.message);
-//            }
-//
-//            @Override
-//            public void onCache(GTResponseObject response) {
-//                if (getActivity() == null)
-//                    return;
-//
-//                items.clear();
-//                items.addAll((Collection<? extends GTStreamable>) response.object);
-//
-//                getActivity().runOnUiThread(new Runnable() {
-//
-//                    @Override
-//                    public void run() {
-//                        finalizeCacheLoad();
-//                    }
-//                });
-//            }
-//        });
     }
 
     private void finalizeCacheLoad() {
+        adapter.finishLoadingMore();
         adapter.notifyDataSetChanged();
     }
 
     private void finalizeLoad() {
         refreshLayout.setRefreshing(false);
-
         isDownloading = false;
 
+        adapter.finishLoadingMore();
         adapter.notifyDataSetChanged();
     }
 
@@ -323,16 +257,33 @@ public abstract class GenericStreamablesFragment extends Fragment {
         refreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorSecondary);
     }
 
-    private void setupGridView() {
+    private void setupRecyclerView() {
         configureLayout();
 
         // We must set the adapter after we set the footer view, otherwise the footer will not show.
-        gridView.post(new Runnable() {
+        recyclerView.post(new Runnable() {
 
             @Override
             public void run() {
+                // Setup adapter.
                 adapter = getAdapterForViewType();
-                gridView.setAdapter(adapter);
+                recyclerView.setAdapter(adapter);
+
+                // Setup endless scroller.
+                adapter.addOnLoadMoreListener(new BaseItemRecyclerAdapter.OnLoadMoreListener() {
+
+                    @Override
+                    public void onLoadMore() {
+                        if (canLoadMore && !isDownloading) {
+                            offset += Constants.MAX_ITEMS;
+                            loadItems(false, offset);
+                        }
+                        else {
+                            isDownloading = false;
+                            adapter.setProgressMore(false);
+                        }
+                    }
+                }, recyclerView);
 
                 loadItems(true, offset);
             }

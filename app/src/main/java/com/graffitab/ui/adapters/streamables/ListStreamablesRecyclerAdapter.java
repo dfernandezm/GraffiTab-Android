@@ -34,14 +34,14 @@ public class ListStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<Gene
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_list, null);
         ListViewHolder rcv = new ListViewHolder(layoutView);
         return rcv;
     }
 
     @Override
-    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GenericStreamablesFragment.GTStreamble item = getItem(position);
 
         ((ListViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
