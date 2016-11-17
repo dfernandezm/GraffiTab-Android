@@ -1,29 +1,22 @@
-package com.graffitab.ui.fragments.streamable;
+package com.graffitab.ui.fragments.notification;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
-import com.graffitab.graffitabsdk.model.GTAsset;
-import com.graffitab.graffitabsdk.model.GTStreamable;
+import com.graffitab.graffitabsdk.model.GTNotification;
 import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.GridStreamablesRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.ListStreamablesRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.SwimlaneStreamablesRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.TrendingStreamablesRecyclerAdapter;
+import com.graffitab.ui.adapters.notifications.ListNotificationsRecyclerAdapter;
 import com.graffitab.utils.Utils;
-import com.graffitab.utils.display.DisplayUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,14 +29,14 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericStreamablesFragment extends Fragment {
+public abstract class GenericNotificationsFragment extends Fragment {
 
-    public enum ViewType {GRID, TRENDING, SWIMLANE, LIST_FULL}
+    public enum ViewType {LIST_FULL}
 
     @BindView(R.id.recyclerView) RecyclerView recyclerView;
     @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
 
-    public List<GTStreamable> items = new ArrayList();
+    public List<GTNotification> items = new ArrayList();
     public boolean isDownloading = false;
     public boolean canLoadMore = true;
     public int offset = 0;
@@ -52,12 +45,12 @@ public abstract class GenericStreamablesFragment extends Fragment {
     private BaseItemRecyclerAdapter adapter;
     private RecyclerView.ItemDecoration itemDecoration;
 
-    public GenericStreamablesFragment() {
+    public GenericNotificationsFragment() {
         // No-op.
     }
 
     public void basicInit() {
-        setViewType(ViewType.GRID);
+        setViewType(ViewType.LIST_FULL);
     }
 
     @Nullable
@@ -91,14 +84,8 @@ public abstract class GenericStreamablesFragment extends Fragment {
             return null;
 
         switch (viewType) {
-            case GRID:
-                return new GridStreamablesRecyclerAdapter(getActivity(), items);
-            case TRENDING:
-                return new TrendingStreamablesRecyclerAdapter(getActivity(), items);
-            case SWIMLANE:
-                return new SwimlaneStreamablesRecyclerAdapter(getActivity(), items);
             case LIST_FULL:
-                return new ListStreamablesRecyclerAdapter(getActivity(), items);
+                return new ListNotificationsRecyclerAdapter(getActivity(), items);
         }
 
         return null;
@@ -106,12 +93,6 @@ public abstract class GenericStreamablesFragment extends Fragment {
 
     private RecyclerView.LayoutManager getLayoutManagerForViewType() {
         switch (viewType) {
-            case GRID:
-                return new GridLayoutManager(getContext(), 3);
-            case TRENDING:
-                return new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
-            case SWIMLANE:
-                return new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
             case LIST_FULL:
                 return new LinearLayoutManager(getContext());
         }
@@ -120,20 +101,8 @@ public abstract class GenericStreamablesFragment extends Fragment {
 
     private RecyclerView.ItemDecoration getItemDecorationForViewType() {
         switch (viewType) {
-            case GRID: {
-                int spanCount = ((GridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
-                return new GridStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
-            }
-            case TRENDING: {
-                int spanCount = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
-                return new TrendingStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
-            }
-            case SWIMLANE: {
-                int spanCount = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
-                return new SwimlaneStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
-            }
             case LIST_FULL:
-                return new ListStreamablesRecyclerAdapter.RecyclerViewMargin(1);
+                return new ListNotificationsRecyclerAdapter.RecyclerViewMargin(1);
         }
         return null;
     }
@@ -147,18 +116,6 @@ public abstract class GenericStreamablesFragment extends Fragment {
 
         // Configure individual layouts.
         switch (viewType) {
-            case GRID: {
-                ((GridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
-                break;
-            }
-            case TRENDING: {
-                ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 3 : 2);
-                break;
-            }
-            case SWIMLANE: {
-                ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
-                break;
-            }
             case LIST_FULL: {
                 break;
             }
@@ -206,14 +163,12 @@ public abstract class GenericStreamablesFragment extends Fragment {
             @Override
             public void run() {
                 // TODO: This is just a dummy procedure to generate some random content.
-                List<GTStreamable> loaded = new ArrayList();
+                List<GTNotification> loaded = new ArrayList();
                 for (int i = 0; i < 25; i++) {
-                    GTStreamable streamable = new GTStreamable();
-                    GTAsset asset = new GTAsset();
-                    asset.thumbnailWidth = Utils.randInt(300, 400);
-                    asset.thumbnailHeight = Utils.randInt(500, 1024);
-                    streamable.asset = asset;
-                    loaded.add(streamable);
+                    GTNotification notification = new GTNotification();
+                    notification.type = GTNotification.GTNotificationType.values()[Utils.randInt(0, GTNotification.GTNotificationType.values().length - 1)];
+                    notification.isRead = i > 2;
+                    loaded.add(notification);
                 }
 
                 // Clear items if we are pulling to refresh.

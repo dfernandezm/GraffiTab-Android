@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="0dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:layout_weight="1"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:layout_marginRight="10dp"
+    android:layout_marginBottom="10dp">
+
+    <TextView
+        android:id="@+id/actionLbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mike Lngmr started following you."
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp" />
+
+    <TextView
+        android:id="@+id/dateLbl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="4 mins ago"
+        android:textColor="#B8B8B8"
+        android:textSize="11sp" />
+</LinearLayout>

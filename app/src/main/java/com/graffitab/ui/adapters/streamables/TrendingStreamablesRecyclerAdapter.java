@@ -13,8 +13,9 @@ import android.widget.LinearLayout;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
+import com.graffitab.ui.adapters.streamables.viewholders.TrendingStreamableViewHolder;
 
 import java.util.List;
 
@@ -26,36 +27,26 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class TrendingStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GenericStreamablesFragment.GTStreamble> {
+public class TrendingStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTStreamable> {
 
-    public TrendingStreamablesRecyclerAdapter(Context context, List<GenericStreamablesFragment.GTStreamble> items) {
+    public TrendingStreamablesRecyclerAdapter(Context context, List<GTStreamable> items) {
         super(context, items);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_trending, null);
-        TrendingViewHolder rcv = new TrendingViewHolder(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_trending, parent, false);
+        TrendingStreamableViewHolder rcv = new TrendingStreamableViewHolder(layoutView);
         return rcv;
     }
 
     @Override
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final GenericStreamablesFragment.GTStreamble item = getItem(position);
+        final GTStreamable item = getItem(position);
 
-        TrendingViewHolder streamableHolder = (TrendingViewHolder) holder;
-        streamableHolder.streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.height));
+        TrendingStreamableViewHolder streamableHolder = (TrendingStreamableViewHolder) holder;
+        streamableHolder.streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
         streamableHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
-    }
-
-    static class TrendingViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.streamableView) ImageView streamableView;
-
-        public TrendingViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
     }
 
     public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {

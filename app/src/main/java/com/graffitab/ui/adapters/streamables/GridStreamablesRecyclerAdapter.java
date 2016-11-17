@@ -8,51 +8,38 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
+import com.graffitab.ui.adapters.streamables.viewholders.GridStreamableViewHolder;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by georgichristov on 14/11/2016
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GenericStreamablesFragment.GTStreamble> {
+public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTStreamable> {
 
-    public GridStreamablesRecyclerAdapter(Context context, List<GenericStreamablesFragment.GTStreamble> items) {
+    public GridStreamablesRecyclerAdapter(Context context, List<GTStreamable> items) {
         super(context, items);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_grid, null);
-        GridViewHolder rcv = new GridViewHolder(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_grid, parent, false);
+        GridStreamableViewHolder rcv = new GridStreamableViewHolder(layoutView);
         return rcv;
     }
 
     @Override
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final GenericStreamablesFragment.GTStreamble item = getItem(position);
+        final GTStreamable item = getItem(position);
 
-        ((GridViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
-    }
-
-    static class GridViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.streamableView) ImageView streamableView;
-
-        public GridViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
+        ((GridStreamableViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
     public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {

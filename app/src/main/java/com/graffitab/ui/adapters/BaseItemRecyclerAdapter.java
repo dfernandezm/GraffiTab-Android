@@ -24,8 +24,8 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseItemRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private final int VIEW_ITEM = 1;
-    private final int VIEW_PROG = 0;
+    protected final int VIEW_ITEM = 321;
+    protected final int VIEW_PROG = 123;
 
     private List<T> itemList;
     private Context context;
@@ -48,9 +48,7 @@ public abstract class BaseItemRecyclerAdapter<T> extends RecyclerView.Adapter<Re
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        if (viewType == VIEW_ITEM)
-            return onCreateCustomViewHolder(parent, viewType);
-        else {
+        if (viewType == VIEW_PROG) {
             RecyclerView.ViewHolder holder = new ProgressViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.row_endless_footer, parent, false));
 
             if (layoutManager instanceof StaggeredGridLayoutManager) { // Workaround for staggered layouts.
@@ -60,6 +58,8 @@ public abstract class BaseItemRecyclerAdapter<T> extends RecyclerView.Adapter<Re
 
             return holder;
         }
+        else
+            return onCreateCustomViewHolder(parent, viewType);
     }
 
     @Override

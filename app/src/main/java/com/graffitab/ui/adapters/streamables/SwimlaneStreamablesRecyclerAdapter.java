@@ -13,8 +13,9 @@ import android.widget.RelativeLayout;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
+import com.graffitab.ui.adapters.streamables.viewholders.SwimlaneStreamableViewHolder;
 
 import java.util.List;
 
@@ -26,36 +27,26 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class SwimlaneStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GenericStreamablesFragment.GTStreamble> {
+public class SwimlaneStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTStreamable> {
 
-    public SwimlaneStreamablesRecyclerAdapter(Context context, List<GenericStreamablesFragment.GTStreamble> items) {
+    public SwimlaneStreamablesRecyclerAdapter(Context context, List<GTStreamable> items) {
         super(context, items);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_swimlane, null);
-        SwimlaneViewHolder rcv = new SwimlaneViewHolder(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_swimlane, parent, false);
+        SwimlaneStreamableViewHolder rcv = new SwimlaneStreamableViewHolder(layoutView);
         return rcv;
     }
 
     @Override
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final GenericStreamablesFragment.GTStreamble item = getItem(position);
+        final GTStreamable item = getItem(position);
 
-        SwimlaneViewHolder streamableHolder = (SwimlaneViewHolder) holder;
-        streamableHolder.streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.height));
+        SwimlaneStreamableViewHolder streamableHolder = (SwimlaneStreamableViewHolder) holder;
+        streamableHolder.streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
         streamableHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
-    }
-
-    static class SwimlaneViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.streamableView) ImageView streamableView;
-
-        public SwimlaneViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
     }
 
     public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {

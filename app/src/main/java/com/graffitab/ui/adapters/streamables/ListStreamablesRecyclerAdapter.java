@@ -13,8 +13,9 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
+import com.graffitab.ui.adapters.streamables.viewholders.ListStreamableViewHolder;
 import com.graffitab.utils.display.DisplayUtils;
 
 import java.util.List;
@@ -27,44 +28,24 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GenericStreamablesFragment.GTStreamble> {
+public class ListStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTStreamable> {
 
-    public ListStreamablesRecyclerAdapter(Context context, List<GenericStreamablesFragment.GTStreamble> items) {
+    public ListStreamablesRecyclerAdapter(Context context, List<GTStreamable> items) {
         super(context, items);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_list, null);
-        ListViewHolder rcv = new ListViewHolder(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_list, parent, false);
+        ListStreamableViewHolder rcv = new ListStreamableViewHolder(layoutView);
         return rcv;
     }
 
     @Override
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final GenericStreamablesFragment.GTStreamble item = getItem(position);
+        final GTStreamable item = getItem(position);
 
-        ((ListViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
-    }
-
-    static class ListViewHolder extends RecyclerView.ViewHolder {
-
-        @BindView(R.id.avatar) ImageView avatar;
-        @BindView(R.id.nameField) TextView nameField;
-        @BindView(R.id.usernameField) TextView usernameField;
-        @BindView(R.id.dateField) TextView dateField;
-        @BindView(R.id.streamableView) ImageView streamableView;
-        @BindView(R.id.likesField) TextView likesField;
-        @BindView(R.id.commentsField) TextView commentsField;
-        @BindView(R.id.likeStatusImage) ImageView likeStatusImage;
-        @BindView(R.id.likeButton) View likeButton;
-        @BindView(R.id.commentButton) View commentButton;
-        @BindView(R.id.shareButton) View shareButton;
-
-        public ListViewHolder(View itemView) {
-            super(itemView);
-            ButterKnife.bind(this, itemView);
-        }
+        ((ListStreamableViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
     public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {
