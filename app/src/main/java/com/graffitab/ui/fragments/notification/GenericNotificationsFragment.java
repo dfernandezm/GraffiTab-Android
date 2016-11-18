@@ -181,7 +181,7 @@ public abstract class GenericNotificationsFragment extends Fragment implements A
                     GTNotification notification = new GTNotification();
                     notification.type = GTNotification.GTNotificationType.values()[Utils.randInt(0, GTNotification.GTNotificationType.values().length - 1)];
                     notification.isRead = i > 2;
-//                    loaded.add(notification);
+                    loaded.add(notification);
                 }
 
                 // Clear items if we are pulling to refresh.

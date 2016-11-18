@@ -51,6 +51,11 @@
     <string name="feed_empty_title">Your feed is empty</string>
     <string name="feed_empty_description">How about drawing your first sketch?</string>
 
+    <!-- Search -->
+    <string name="search_graffitab">Search GraffiTab</string>
+    <string name="search_people">People</string>
+    <string name="search_graffiti">Graffiti</string>
+
     <!-- Notifications -->
     <string name="notifications_empty_title">No notifications</string>
     <string name="notifications_empty_description">Looks like you have no notifications yet.</string>

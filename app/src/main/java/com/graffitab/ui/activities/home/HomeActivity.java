@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -24,6 +25,7 @@ import com.graffitab.ui.fragments.home.RecentFragment;
 import com.graffitab.ui.fragments.home.TrendingFragment;
 import com.graffitab.ui.views.sidemenu.CustomResideMenu;
 import com.graffitab.utils.ImageUtils;
+import com.graffitab.utils.Utils;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -73,7 +75,28 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     @Override
-    public void onClick(View view) {}
+    public void onClick(final View view) {
+        resideMenu.closeMenu();
+
+        // Wait for menu to close.
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                if ((int) view.getTag() == 0) { // Profile.
+
+                }
+                else if ((int) view.getTag() == 1) { // Locations.
+
+                }
+                else if ((int) view.getTag() == 2) // Search.
+                    startActivity(new Intent(HomeActivity.this, SearchActivity.class));
+                else if ((int) view.getTag() == 3) { // Settings.
+
+                }
+            }
+        }, 300);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -132,6 +155,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int i = 0; i < titles.length; i++){
             ResideMenuItem item = new ResideMenuItem(this, icon[i], titles[i]);
+            item.setTag(i);
             item.setOnClickListener(this);
             resideMenu.addMenuItem(item,  ResideMenu.DIRECTION_LEFT);
         }

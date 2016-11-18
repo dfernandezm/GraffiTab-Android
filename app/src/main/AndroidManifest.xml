@@ -69,6 +69,11 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppThemeNoActionBar"/>
+        <activity
+            android:name=".ui.activities.home.SearchActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppThemeNoActionBar"/>
     </application>
 
 </manifest>
