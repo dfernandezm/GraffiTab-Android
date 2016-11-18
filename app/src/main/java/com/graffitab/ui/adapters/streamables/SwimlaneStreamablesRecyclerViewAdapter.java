@@ -8,35 +8,31 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTStreamable;
-import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.viewholders.TrendingStreamableViewHolder;
+import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.adapters.streamables.viewholders.SwimlaneStreamableViewHolder;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by georgichristov on 14/11/2016
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class TrendingStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTStreamable> {
+public class SwimlaneStreamablesRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTStreamable> {
 
-    public TrendingStreamablesRecyclerAdapter(Context context, List<GTStreamable> items) {
+    public SwimlaneStreamablesRecyclerViewAdapter(Context context, List<GTStreamable> items) {
         super(context, items);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_trending, parent, false);
-        TrendingStreamableViewHolder rcv = new TrendingStreamableViewHolder(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_swimlane, parent, false);
+        SwimlaneStreamableViewHolder rcv = new SwimlaneStreamableViewHolder(layoutView);
         return rcv;
     }
 
@@ -44,8 +40,8 @@ public class TrendingStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GTStreamable item = getItem(position);
 
-        TrendingStreamableViewHolder streamableHolder = (TrendingStreamableViewHolder) holder;
-        streamableHolder.streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
+        SwimlaneStreamableViewHolder streamableHolder = (SwimlaneStreamableViewHolder) holder;
+        streamableHolder.streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
         streamableHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
@@ -55,7 +51,7 @@ public class TrendingStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<
         private int spacing;
 
         public RecyclerViewMargin(@IntRange(from = 0) int columns) {
-            this.spacing = 15;
+            this.spacing = 5;
             this.spanCount = columns;
         }
 

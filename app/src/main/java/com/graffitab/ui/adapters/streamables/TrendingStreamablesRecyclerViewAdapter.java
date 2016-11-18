@@ -8,12 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTStreamable;
-import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.viewholders.GridStreamableViewHolder;
+import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.adapters.streamables.viewholders.TrendingStreamableViewHolder;
 
 import java.util.List;
 
@@ -22,16 +23,16 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTStreamable> {
+public class TrendingStreamablesRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTStreamable> {
 
-    public GridStreamablesRecyclerAdapter(Context context, List<GTStreamable> items) {
+    public TrendingStreamablesRecyclerViewAdapter(Context context, List<GTStreamable> items) {
         super(context, items);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_grid, parent, false);
-        GridStreamableViewHolder rcv = new GridStreamableViewHolder(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_trending, parent, false);
+        TrendingStreamableViewHolder rcv = new TrendingStreamableViewHolder(layoutView);
         return rcv;
     }
 
@@ -39,7 +40,9 @@ public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTSt
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GTStreamable item = getItem(position);
 
-        ((GridStreamableViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
+        TrendingStreamableViewHolder streamableHolder = (TrendingStreamableViewHolder) holder;
+        streamableHolder.streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
+        streamableHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
     public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {
@@ -48,7 +51,7 @@ public class GridStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTSt
         private int spacing;
 
         public RecyclerViewMargin(@IntRange(from = 0) int columns) {
-            this.spacing = 2;
+            this.spacing = 15;
             this.spanCount = columns;
         }
 

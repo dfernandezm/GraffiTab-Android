@@ -8,29 +8,24 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTStreamable;
-import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
+import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 import com.graffitab.ui.adapters.streamables.viewholders.ListStreamableViewHolder;
 import com.graffitab.utils.display.DisplayUtils;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by georgichristov on 15/11/2016
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListStreamablesRecyclerAdapter extends BaseItemRecyclerAdapter<GTStreamable> {
+public class ListStreamablesRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTStreamable> {
 
-    public ListStreamablesRecyclerAdapter(Context context, List<GTStreamable> items) {
+    public ListStreamablesRecyclerViewAdapter(Context context, List<GTStreamable> items) {
         super(context, items);
     }
 

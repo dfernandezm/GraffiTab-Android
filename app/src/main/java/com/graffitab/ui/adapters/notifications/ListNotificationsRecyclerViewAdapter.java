@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.graffitabsdk.model.GTNotification;
-import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
+import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 import com.graffitab.ui.adapters.notifications.viewholders.CommentNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.FollowNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.LikeNotificationViewHolder;
@@ -25,7 +25,7 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListNotificationsRecyclerAdapter extends BaseItemRecyclerAdapter<GTNotification> {
+public class ListNotificationsRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTNotification> {
 
     private final int VIEW_TYPE_WELCOME = 0;
     private final int VIEW_TYPE_LIKE = 1;
@@ -33,7 +33,7 @@ public class ListNotificationsRecyclerAdapter extends BaseItemRecyclerAdapter<GT
     private final int VIEW_TYPE_MENTION = 3;
     private final int VIEW_TYPE_COMMENT = 4;
 
-    public ListNotificationsRecyclerAdapter(Context context, List<GTNotification> items) {
+    public ListNotificationsRecyclerViewAdapter(Context context, List<GTNotification> items) {
         super(context, items);
     }
 

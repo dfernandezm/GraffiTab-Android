@@ -1,4 +1,4 @@
-package com.graffitab.ui.adapters;
+package com.graffitab.ui.views.recyclerview.components;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.graffitab.R;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class BaseItemRecyclerAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public abstract class CustomRecyclerViewAdapter<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     protected final int VIEW_ITEM = 321;
     protected final int VIEW_PROG = 123;
@@ -30,14 +31,14 @@ public abstract class BaseItemRecyclerAdapter<T> extends RecyclerView.Adapter<Re
     private List<T> itemList;
     private Context context;
 
-    private OnLoadMoreListener onLoadMoreListener;
+    private AdvancedRecyclerView.OnLoadMoreListener onLoadMoreListener;
     private RecyclerView.LayoutManager layoutManager;
     private boolean isMoreLoading = false;
     private int visibleThreshold = 1;
     private int firstVisibleItem, visibleItemCount, totalItemCount;
     private int lastProgressBarPosition = -1;
 
-    public BaseItemRecyclerAdapter(Context context, List<T> itemList) {
+    public CustomRecyclerViewAdapter(Context context, List<T> itemList) {
         this.itemList = itemList;
         this.context = context;
     }
@@ -85,7 +86,7 @@ public abstract class BaseItemRecyclerAdapter<T> extends RecyclerView.Adapter<Re
         return itemList.get(position);
     }
 
-    public void addOnLoadMoreListener(OnLoadMoreListener listener, RecyclerView recyclerView) {
+    public void addOnLoadMoreListener(AdvancedRecyclerView.OnLoadMoreListener listener, RecyclerView recyclerView) {
         this.onLoadMoreListener = listener;
         this.layoutManager = recyclerView.getLayoutManager();
 
@@ -165,9 +166,5 @@ public abstract class BaseItemRecyclerAdapter<T> extends RecyclerView.Adapter<Re
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
-    }
-
-    public interface OnLoadMoreListener {
-        public void onLoadMore();
     }
 }

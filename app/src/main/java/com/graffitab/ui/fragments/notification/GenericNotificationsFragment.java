@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +13,9 @@ import android.view.ViewGroup;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTNotification;
-import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.adapters.notifications.ListNotificationsRecyclerAdapter;
+import com.graffitab.ui.adapters.notifications.ListNotificationsRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
+import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 import com.graffitab.utils.Utils;
 
 import java.util.ArrayList;
@@ -29,12 +29,11 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericNotificationsFragment extends Fragment {
+public abstract class GenericNotificationsFragment extends Fragment implements AdvancedRecyclerView.OnEmptyViewListener {
 
     public enum ViewType {LIST_FULL}
 
-    @BindView(R.id.recyclerView) RecyclerView recyclerView;
-    @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.advancedRecyclerView) AdvancedRecyclerView advancedRecyclerView;
 
     public List<GTNotification> items = new ArrayList();
     public boolean isDownloading = false;
@@ -42,7 +41,7 @@ public abstract class GenericNotificationsFragment extends Fragment {
     public int offset = 0;
 
     private ViewType viewType;
-    private BaseItemRecyclerAdapter adapter;
+    private CustomRecyclerViewAdapter adapter;
     private RecyclerView.ItemDecoration itemDecoration;
 
     public GenericNotificationsFragment() {
@@ -61,7 +60,6 @@ public abstract class GenericNotificationsFragment extends Fragment {
 
         basicInit();
 
-        setupRefreshView();
         setupRecyclerView();
 
         return view;
@@ -73,19 +71,34 @@ public abstract class GenericNotificationsFragment extends Fragment {
         configureLayout();
     }
 
+    @Override
+    public int emptyViewImageResource() {
+        return -1;
+    }
+
+    @Override
+    public String emptyViewTitle() {
+        return getString(R.string.other_empty_no_posts);
+    }
+
+    @Override
+    public String emptyViewSubtitle() {
+        return getString(R.string.other_empty_no_posts_description);
+    }
+
     public void setViewType(ViewType type) {
         this.viewType = type;
     }
 
     // Configuration
 
-    private BaseItemRecyclerAdapter getAdapterForViewType() {
+    private CustomRecyclerViewAdapter getAdapterForViewType() {
         if (getActivity() == null)
             return null;
 
         switch (viewType) {
             case LIST_FULL:
-                return new ListNotificationsRecyclerAdapter(getActivity(), items);
+                return new ListNotificationsRecyclerViewAdapter(getActivity(), items);
         }
 
         return null;
@@ -102,7 +115,7 @@ public abstract class GenericNotificationsFragment extends Fragment {
     private RecyclerView.ItemDecoration getItemDecorationForViewType() {
         switch (viewType) {
             case LIST_FULL:
-                return new ListNotificationsRecyclerAdapter.RecyclerViewMargin(1);
+                return new ListNotificationsRecyclerViewAdapter.RecyclerViewMargin(1);
         }
         return null;
     }
@@ -110,8 +123,8 @@ public abstract class GenericNotificationsFragment extends Fragment {
     private void configureLayout() {
         // Replace layout manager.
         RecyclerView.LayoutManager manager = getLayoutManagerForViewType();
-        if (recyclerView.getLayoutManager() == null || recyclerView.getLayoutManager().getClass() != manager.getClass()) {
-            recyclerView.setLayoutManager(manager);
+        if (advancedRecyclerView.getRecyclerView().getLayoutManager() == null || advancedRecyclerView.getRecyclerView().getLayoutManager().getClass() != manager.getClass()) {
+            advancedRecyclerView.getRecyclerView().setLayoutManager(manager);
         }
 
         // Configure individual layouts.
@@ -123,9 +136,9 @@ public abstract class GenericNotificationsFragment extends Fragment {
 
         // Replace item decoration.
         if (itemDecoration != null)
-            recyclerView.removeItemDecoration(itemDecoration);
+            advancedRecyclerView.getRecyclerView().removeItemDecoration(itemDecoration);
         itemDecoration = getItemDecorationForViewType();
-        recyclerView.addItemDecoration(itemDecoration);
+        advancedRecyclerView.getRecyclerView().addItemDecoration(itemDecoration);
 
         if (adapter != null) {
             adapter.notifyDataSetChanged();
@@ -153,7 +166,7 @@ public abstract class GenericNotificationsFragment extends Fragment {
 
         if (items.size() <= 0 && !isDownloading) {
             if (isStart)
-                refreshLayout.setRefreshing(true);
+                advancedRecyclerView.beginRefreshing();
         }
 
         isDownloading = true;
@@ -168,7 +181,7 @@ public abstract class GenericNotificationsFragment extends Fragment {
                     GTNotification notification = new GTNotification();
                     notification.type = GTNotification.GTNotificationType.values()[Utils.randInt(0, GTNotification.GTNotificationType.values().length - 1)];
                     notification.isRead = i > 2;
-                    loaded.add(notification);
+//                    loaded.add(notification);
                 }
 
                 // Clear items if we are pulling to refresh.
@@ -198,17 +211,22 @@ public abstract class GenericNotificationsFragment extends Fragment {
     }
 
     private void finalizeLoad() {
-        refreshLayout.setRefreshing(false);
         isDownloading = false;
 
         adapter.finishLoadingMore();
         adapter.notifyDataSetChanged();
+
+        advancedRecyclerView.endRefreshing();
+        advancedRecyclerView.addOnEmptyViewListsner(this);
     }
 
     // Setup
 
-    private void setupRefreshView() {
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    private void setupRecyclerView() {
+        configureLayout();
+
+        advancedRecyclerView.setRefreshColorScheme(R.color.colorPrimary, R.color.colorSecondary);
+        advancedRecyclerView.addOnRefreshListener(new AdvancedRecyclerView.OnRefreshListener() {
 
             @Override
             public void onRefresh() {
@@ -216,23 +234,17 @@ public abstract class GenericNotificationsFragment extends Fragment {
             }
         });
 
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorSecondary);
-    }
-
-    private void setupRecyclerView() {
-        configureLayout();
-
         // We must set the adapter after we set the footer view, otherwise the footer will not show.
-        recyclerView.post(new Runnable() {
+        advancedRecyclerView.post(new Runnable() {
 
             @Override
             public void run() {
                 // Setup adapter.
                 adapter = getAdapterForViewType();
-                recyclerView.setAdapter(adapter);
+                advancedRecyclerView.setAdapter(adapter);
 
                 // Setup endless scroller.
-                adapter.addOnLoadMoreListener(new BaseItemRecyclerAdapter.OnLoadMoreListener() {
+                advancedRecyclerView.addOnLoadMoreListener(new AdvancedRecyclerView.OnLoadMoreListener() {
 
                     @Override
                     public void onLoadMore() {
@@ -245,7 +257,7 @@ public abstract class GenericNotificationsFragment extends Fragment {
                             adapter.setProgressMore(false);
                         }
                     }
-                }, recyclerView);
+                });
 
                 loadItems(true, offset);
             }

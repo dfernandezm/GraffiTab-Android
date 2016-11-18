@@ -47,9 +47,19 @@
     <string name="home_settings">Settings</string>
     <string name="home_explorer">Explorer</string>
 
+    <!-- Feed -->
+    <string name="feed_empty_title">Your feed is empty</string>
+    <string name="feed_empty_description">How about drawing your first sketch?</string>
+
+    <!-- Notifications -->
+    <string name="notifications_empty_title">No notifications</string>
+    <string name="notifications_empty_description">Looks like you have no notifications yet.</string>
+
     <!-- Other -->
     <string name="other_processing">Processing</string>
     <string name="other_done">Done</string>
     <string name="other_save">Save</string>
     <string name="other_cancel">Cancel</string>
+    <string name="other_empty_no_posts">No graffiti</string>
+    <string name="other_empty_no_posts_description">No graffiti were found over here. Please come back again.</string>
 </resources>

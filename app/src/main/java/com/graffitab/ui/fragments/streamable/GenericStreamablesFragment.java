@@ -4,7 +4,6 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,11 +16,12 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTAsset;
 import com.graffitab.graffitabsdk.model.GTStreamable;
-import com.graffitab.ui.adapters.BaseItemRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.GridStreamablesRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.ListStreamablesRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.SwimlaneStreamablesRecyclerAdapter;
-import com.graffitab.ui.adapters.streamables.TrendingStreamablesRecyclerAdapter;
+import com.graffitab.ui.adapters.streamables.GridStreamablesRecyclerViewAdapter;
+import com.graffitab.ui.adapters.streamables.ListStreamablesRecyclerViewAdapter;
+import com.graffitab.ui.adapters.streamables.SwimlaneStreamablesRecyclerViewAdapter;
+import com.graffitab.ui.adapters.streamables.TrendingStreamablesRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
+import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.DisplayUtils;
 
@@ -36,12 +36,11 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericStreamablesFragment extends Fragment {
+public abstract class GenericStreamablesFragment extends Fragment implements AdvancedRecyclerView.OnEmptyViewListener {
 
     public enum ViewType {GRID, TRENDING, SWIMLANE, LIST_FULL}
 
-    @BindView(R.id.recyclerView) RecyclerView recyclerView;
-    @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshLayout;
+    @BindView(R.id.advancedRecyclerView) AdvancedRecyclerView advancedRecyclerView;
 
     public List<GTStreamable> items = new ArrayList();
     public boolean isDownloading = false;
@@ -49,7 +48,7 @@ public abstract class GenericStreamablesFragment extends Fragment {
     public int offset = 0;
 
     private ViewType viewType;
-    private BaseItemRecyclerAdapter adapter;
+    private CustomRecyclerViewAdapter adapter;
     private RecyclerView.ItemDecoration itemDecoration;
 
     public GenericStreamablesFragment() {
@@ -68,7 +67,6 @@ public abstract class GenericStreamablesFragment extends Fragment {
 
         basicInit();
 
-        setupRefreshView();
         setupRecyclerView();
 
         return view;
@@ -80,25 +78,40 @@ public abstract class GenericStreamablesFragment extends Fragment {
         configureLayout();
     }
 
+    @Override
+    public int emptyViewImageResource() {
+        return -1;
+    }
+
+    @Override
+    public String emptyViewTitle() {
+        return getString(R.string.other_empty_no_posts);
+    }
+
+    @Override
+    public String emptyViewSubtitle() {
+        return getString(R.string.other_empty_no_posts_description);
+    }
+
     public void setViewType(ViewType type) {
         this.viewType = type;
     }
 
     // Configuration
 
-    private BaseItemRecyclerAdapter getAdapterForViewType() {
+    private CustomRecyclerViewAdapter getAdapterForViewType() {
         if (getActivity() == null)
             return null;
 
         switch (viewType) {
             case GRID:
-                return new GridStreamablesRecyclerAdapter(getActivity(), items);
+                return new GridStreamablesRecyclerViewAdapter(getActivity(), items);
             case TRENDING:
-                return new TrendingStreamablesRecyclerAdapter(getActivity(), items);
+                return new TrendingStreamablesRecyclerViewAdapter(getActivity(), items);
             case SWIMLANE:
-                return new SwimlaneStreamablesRecyclerAdapter(getActivity(), items);
+                return new SwimlaneStreamablesRecyclerViewAdapter(getActivity(), items);
             case LIST_FULL:
-                return new ListStreamablesRecyclerAdapter(getActivity(), items);
+                return new ListStreamablesRecyclerViewAdapter(getActivity(), items);
         }
 
         return null;
@@ -121,19 +134,19 @@ public abstract class GenericStreamablesFragment extends Fragment {
     private RecyclerView.ItemDecoration getItemDecorationForViewType() {
         switch (viewType) {
             case GRID: {
-                int spanCount = ((GridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
-                return new GridStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
+                int spanCount = ((GridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).getSpanCount();
+                return new GridStreamablesRecyclerViewAdapter.RecyclerViewMargin(spanCount);
             }
             case TRENDING: {
-                int spanCount = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
-                return new TrendingStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
+                int spanCount = ((StaggeredGridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).getSpanCount();
+                return new TrendingStreamablesRecyclerViewAdapter.RecyclerViewMargin(spanCount);
             }
             case SWIMLANE: {
-                int spanCount = ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).getSpanCount();
-                return new SwimlaneStreamablesRecyclerAdapter.RecyclerViewMargin(spanCount);
+                int spanCount = ((StaggeredGridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).getSpanCount();
+                return new SwimlaneStreamablesRecyclerViewAdapter.RecyclerViewMargin(spanCount);
             }
             case LIST_FULL:
-                return new ListStreamablesRecyclerAdapter.RecyclerViewMargin(1);
+                return new ListStreamablesRecyclerViewAdapter.RecyclerViewMargin(1);
         }
         return null;
     }
@@ -141,22 +154,22 @@ public abstract class GenericStreamablesFragment extends Fragment {
     private void configureLayout() {
         // Replace layout manager.
         RecyclerView.LayoutManager manager = getLayoutManagerForViewType();
-        if (recyclerView.getLayoutManager() == null || recyclerView.getLayoutManager().getClass() != manager.getClass()) {
-            recyclerView.setLayoutManager(manager);
+        if (advancedRecyclerView.getRecyclerView().getLayoutManager() == null || advancedRecyclerView.getRecyclerView().getLayoutManager().getClass() != manager.getClass()) {
+            advancedRecyclerView.getRecyclerView().setLayoutManager(manager);
         }
 
         // Configure individual layouts.
         switch (viewType) {
             case GRID: {
-                ((GridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+                ((GridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
                 break;
             }
             case TRENDING: {
-                ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 3 : 2);
+                ((StaggeredGridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 3 : 2);
                 break;
             }
             case SWIMLANE: {
-                ((StaggeredGridLayoutManager) recyclerView.getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+                ((StaggeredGridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
                 break;
             }
             case LIST_FULL: {
@@ -166,9 +179,9 @@ public abstract class GenericStreamablesFragment extends Fragment {
 
         // Replace item decoration.
         if (itemDecoration != null)
-            recyclerView.removeItemDecoration(itemDecoration);
+            advancedRecyclerView.getRecyclerView().removeItemDecoration(itemDecoration);
         itemDecoration = getItemDecorationForViewType();
-        recyclerView.addItemDecoration(itemDecoration);
+        advancedRecyclerView.getRecyclerView().addItemDecoration(itemDecoration);
 
         if (adapter != null) {
             adapter.notifyDataSetChanged();
@@ -196,7 +209,7 @@ public abstract class GenericStreamablesFragment extends Fragment {
 
         if (items.size() <= 0 && !isDownloading) {
             if (isStart)
-                refreshLayout.setRefreshing(true);
+                advancedRecyclerView.beginRefreshing();
         }
 
         isDownloading = true;
@@ -243,17 +256,22 @@ public abstract class GenericStreamablesFragment extends Fragment {
     }
 
     private void finalizeLoad() {
-        refreshLayout.setRefreshing(false);
         isDownloading = false;
 
         adapter.finishLoadingMore();
         adapter.notifyDataSetChanged();
+
+        advancedRecyclerView.endRefreshing();
+        advancedRecyclerView.addOnEmptyViewListsner(this);
     }
 
     // Setup
 
-    private void setupRefreshView() {
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+    private void setupRecyclerView() {
+        configureLayout();
+
+        advancedRecyclerView.setRefreshColorScheme(R.color.colorPrimary, R.color.colorSecondary);
+        advancedRecyclerView.addOnRefreshListener(new AdvancedRecyclerView.OnRefreshListener() {
 
             @Override
             public void onRefresh() {
@@ -261,26 +279,20 @@ public abstract class GenericStreamablesFragment extends Fragment {
             }
         });
 
-        refreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorSecondary);
-    }
-
-    private void setupRecyclerView() {
-        configureLayout();
-
-        // We must set the adapter after we set the footer view, otherwise the footer will not show.
-        recyclerView.post(new Runnable() {
+        advancedRecyclerView.post(new Runnable() {
 
             @Override
             public void run() {
                 // Setup adapter.
                 adapter = getAdapterForViewType();
-                recyclerView.setAdapter(adapter);
+                advancedRecyclerView.setAdapter(adapter);
 
                 // Setup endless scroller.
-                adapter.addOnLoadMoreListener(new BaseItemRecyclerAdapter.OnLoadMoreListener() {
+                advancedRecyclerView.addOnLoadMoreListener(new AdvancedRecyclerView.OnLoadMoreListener() {
 
                     @Override
                     public void onLoadMore() {
+                        System.out.println("LOADING MORE");
                         if (canLoadMore && !isDownloading) {
                             offset += Constants.MAX_ITEMS;
                             loadItems(false, offset);
@@ -290,7 +302,7 @@ public abstract class GenericStreamablesFragment extends Fragment {
                             adapter.setProgressMore(false);
                         }
                     }
-                }, recyclerView);
+                });
 
                 loadItems(true, offset);
             }
