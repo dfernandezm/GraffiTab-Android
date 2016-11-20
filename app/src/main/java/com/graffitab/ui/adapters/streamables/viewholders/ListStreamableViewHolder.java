@@ -5,6 +5,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.graffitabsdk.model.GTStreamable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,5 +31,10 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
     public ListStreamableViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+    }
+
+    @Override
+    public void setItem(GTStreamable notification) {
+        super.setItem(notification);
     }
 }

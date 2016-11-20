@@ -15,8 +15,8 @@ import android.widget.EditText;
 
 import com.graffitab.R;
 import com.graffitab.ui.adapters.ViewPagerTabAdapter;
-import com.graffitab.ui.fragments.home.FeedFragment;
 import com.graffitab.ui.fragments.search.SearchGraffitiFragment;
+import com.graffitab.ui.fragments.search.SearchUsersFragment;
 import com.graffitab.utils.ImageUtils;
 
 import butterknife.BindView;
@@ -72,7 +72,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private void setupViewPager() {
         final ViewPagerTabAdapter adapter = new ViewPagerTabAdapter(getSupportFragmentManager());
-        adapter.addFragment(new FeedFragment(), getString(R.string.search_people));
+        adapter.addFragment(new SearchUsersFragment(), getString(R.string.search_people));
         adapter.addFragment(new SearchGraffitiFragment(), getString(R.string.search_graffiti));
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(1);

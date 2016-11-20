@@ -13,8 +13,8 @@ import android.widget.RelativeLayout;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTStreamable;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 import com.graffitab.ui.adapters.streamables.viewholders.SwimlaneStreamableViewHolder;
+import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -38,11 +38,13 @@ public class SwimlaneStreamablesRecyclerViewAdapter extends CustomRecyclerViewAd
 
     @Override
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final GTStreamable item = getItem(position);
+        SwimlaneStreamableViewHolder customHolder = (SwimlaneStreamableViewHolder) holder;
 
-        SwimlaneStreamableViewHolder streamableHolder = (SwimlaneStreamableViewHolder) holder;
-        streamableHolder.streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
-        streamableHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
+        final GTStreamable item = getItem(position);
+        customHolder.setItem(item);
+
+        customHolder.streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
+        customHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
     public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {

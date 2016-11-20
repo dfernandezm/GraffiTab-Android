@@ -2,6 +2,8 @@ package com.graffitab.ui.adapters.notifications.viewholders;
 
 import android.view.View;
 
+import com.graffitab.graffitabsdk.model.GTNotification;
+
 import butterknife.ButterKnife;
 
 /**
@@ -14,5 +16,10 @@ public class FollowNotificationViewHolder extends NotificationViewHolder {
     public FollowNotificationViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+    }
+
+    @Override
+    public void setItem(GTNotification notification) {
+        super.setItem(notification);
     }
 }

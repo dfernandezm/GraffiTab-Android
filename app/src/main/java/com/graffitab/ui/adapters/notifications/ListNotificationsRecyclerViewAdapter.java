@@ -87,11 +87,11 @@ public class ListNotificationsRecyclerViewAdapter extends CustomRecyclerViewAdap
 
     @Override
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final GTNotification item = getItem(position);
-
         NotificationViewHolder viewHolder = (NotificationViewHolder) holder;
 
-        viewHolder.unreadIndicator.setVisibility(item.isRead ? View.INVISIBLE : View.VISIBLE);
+        final GTNotification item = getItem(position);
+        viewHolder.setItem(item);
+
         viewHolder.topTimelineSeparator.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
         viewHolder.bottomTimelineSeparator.setVisibility(position == getItemCount() - 2 /* Account for the infinite scroll view here. */ ? View.INVISIBLE : View.VISIBLE);
     }

@@ -29,5 +29,7 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
 
     public void setItem(GTNotification notification) {
         this.item = notification;
+
+        unreadIndicator.setVisibility(item.isRead ? View.INVISIBLE : View.VISIBLE);
     }
 }

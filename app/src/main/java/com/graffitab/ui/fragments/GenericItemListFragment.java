@@ -55,6 +55,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         basicInit();
 
         setupRecyclerView();
+        setupCustomViews();
 
         return view;
     }
@@ -78,6 +79,10 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     @Override
     public String emptyViewSubtitle() {
         return getString(R.string.other_empty_no_posts_description);
+    }
+
+    public AdvancedRecyclerView getRecyclerView() {
+        return advancedRecyclerView;
     }
 
     // Configuration
@@ -183,6 +188,10 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     }
 
     // Setup
+
+    public void setupCustomViews() {
+
+    }
 
     private void setupRecyclerView() {
         configureLayout();

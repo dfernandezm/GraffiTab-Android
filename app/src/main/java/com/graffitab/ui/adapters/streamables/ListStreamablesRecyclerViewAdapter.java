@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTStreamable;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 import com.graffitab.ui.adapters.streamables.viewholders.ListStreamableViewHolder;
+import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 import com.graffitab.utils.display.DisplayUtils;
 
 import java.util.List;
@@ -38,9 +38,12 @@ public class ListStreamablesRecyclerViewAdapter extends CustomRecyclerViewAdapte
 
     @Override
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        final GTStreamable item = getItem(position);
+        ListStreamableViewHolder customHolder = (ListStreamableViewHolder) holder;
 
-        ((ListStreamableViewHolder) holder).streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
+        final GTStreamable item = getItem(position);
+        customHolder.setItem(item);
+
+        customHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
     public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {
