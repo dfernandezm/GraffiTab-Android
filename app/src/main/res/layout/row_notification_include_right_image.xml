@@ -12,5 +12,5 @@
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_avatar" />
+        android:background="#efefef" />
 </LinearLayout>
