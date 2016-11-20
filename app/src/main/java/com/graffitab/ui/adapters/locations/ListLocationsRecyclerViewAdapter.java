@@ -1,4 +1,4 @@
-package com.graffitab.ui.adapters.users;
+package com.graffitab.ui.adapters.locations;
 
 import android.content.Context;
 import android.graphics.Rect;
@@ -9,8 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.graffitab.R;
-import com.graffitab.graffitabsdk.model.GTUser;
-import com.graffitab.ui.adapters.users.viewholders.ListUserViewHolder;
+import com.graffitab.graffitabsdk.model.GTLocation;
+import com.graffitab.ui.adapters.locations.viewholders.ListLocationViewHolder;
 import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 
 import java.util.List;
@@ -20,24 +20,24 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListUsersRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTUser> {
+public class ListLocationsRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTLocation> {
 
-    public ListUsersRecyclerViewAdapter(Context context, List<GTUser> items) {
+    public ListLocationsRecyclerViewAdapter(Context context, List<GTLocation> items) {
         super(context, items);
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
-        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_user_list, parent, false);
-        ListUserViewHolder rcv = new ListUserViewHolder(layoutView);
+        View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_location_list, parent, false);
+        ListLocationViewHolder rcv = new ListLocationViewHolder(layoutView);
         return rcv;
     }
 
     @Override
     public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
-        ListUserViewHolder customHolder = (ListUserViewHolder) holder;
+        ListLocationViewHolder customHolder = (ListLocationViewHolder) holder;
 
-        final GTUser item = getItem(position);
+        final GTLocation item = getItem(position);
         customHolder.setItem(item);
     }
 

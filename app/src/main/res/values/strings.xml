@@ -60,6 +60,9 @@
     <string name="notifications_empty_title">No notifications</string>
     <string name="notifications_empty_description">Looks like you have no notifications yet.</string>
 
+    <!-- Locations -->
+    <string name="locations">Locations</string>
+
     <!-- Other -->
     <string name="other_processing">Processing</string>
     <string name="other_done">Done</string>
@@ -69,4 +72,6 @@
     <string name="other_empty_no_posts_description">No graffiti were found over here. Please come back again.</string>
     <string name="other_empty_no_users">No users</string>
     <string name="other_empty_no_users_description">No users were found. Please come back again.</string>
+    <string name="other_empty_no_locations">No locations yet</string>
+    <string name="other_empty_no_locations_description">Create your first location and start receiving updates when new content is created in the area.</string>
 </resources>
