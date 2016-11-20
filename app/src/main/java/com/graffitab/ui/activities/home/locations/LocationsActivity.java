@@ -2,12 +2,14 @@ package com.graffitab.ui.activities.home.locations;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
+import com.graffitab.ui.fragments.location.ListLocationsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,6 +32,7 @@ public class LocationsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupTopBar();
+        setupContent();
     }
 
 //    @Override
@@ -64,5 +67,11 @@ public class LocationsActivity extends AppCompatActivity {
     private void setupTopBar() {
         getSupportActionBar().setTitle(getString(R.string.locations));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupContent() {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.content, new ListLocationsFragment());
+        transaction.commit();
     }
 }

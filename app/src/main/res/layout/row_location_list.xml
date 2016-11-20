@@ -16,7 +16,7 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/default_avatar"
+        android:background="#efefef"
         app:riv_corner_radius="5dp" />
 
     <LinearLayout
