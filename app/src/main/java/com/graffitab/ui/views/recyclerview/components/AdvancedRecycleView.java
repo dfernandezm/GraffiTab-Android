@@ -12,7 +12,7 @@ import android.view.View;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class CustomRecyclerView extends RecyclerView {
+public class AdvancedRecycleView extends RecyclerView {
 
     @Nullable
     private View emptyView;
@@ -40,15 +40,15 @@ public class CustomRecyclerView extends RecyclerView {
         }
     };
 
-    public CustomRecyclerView(Context context) {
+    public AdvancedRecycleView(Context context) {
         super(context);
     }
 
-    public CustomRecyclerView(Context context, AttributeSet attrs) {
+    public AdvancedRecycleView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public CustomRecyclerView(Context context, AttributeSet attrs, int defStyle) {
+    public AdvancedRecycleView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 

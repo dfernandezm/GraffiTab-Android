@@ -14,7 +14,7 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.streamables.viewholders.TrendingStreamableViewHolder;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -23,21 +23,21 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class TrendingStreamablesRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTStreamable> {
+public class TrendingStreamablesRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTStreamable> {
 
     public TrendingStreamablesRecyclerViewAdapter(Context context, List<GTStreamable> items) {
         super(context, items);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_trending, parent, false);
         TrendingStreamableViewHolder rcv = new TrendingStreamableViewHolder(layoutView);
         return rcv;
     }
 
     @Override
-    public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         TrendingStreamableViewHolder customHolder = (TrendingStreamableViewHolder) holder;
 
         final GTStreamable item = getItem(position);

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.graffitab.R;
 import com.graffitab.graffitabsdk.model.GTUser;
 import com.graffitab.ui.adapters.users.viewholders.ListUserViewHolder;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -20,21 +20,21 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListUsersRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTUser> {
+public class ListUsersRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTUser> {
 
     public ListUsersRecyclerViewAdapter(Context context, List<GTUser> items) {
         super(context, items);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_user_list, parent, false);
         ListUserViewHolder rcv = new ListUserViewHolder(layoutView);
         return rcv;
     }
 
     @Override
-    public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         ListUserViewHolder customHolder = (ListUserViewHolder) holder;
 
         final GTUser item = getItem(position);

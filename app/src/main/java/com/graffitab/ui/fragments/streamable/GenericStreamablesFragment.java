@@ -13,7 +13,7 @@ import com.graffitab.ui.adapters.streamables.ListStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.streamables.SwimlaneStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.streamables.TrendingStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.DisplayUtils;
 
@@ -57,7 +57,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     // Configuration
 
     @Override
-    public CustomRecyclerViewAdapter getAdapterForViewType() {
+    public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
         if (getActivity() == null)
             return null;
 

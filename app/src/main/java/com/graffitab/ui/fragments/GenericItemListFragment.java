@@ -1,18 +1,23 @@
 package com.graffitab.ui.fragments;
 
 import android.content.res.Configuration;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.utils.Utils;
 
 import java.util.ArrayList;
@@ -30,13 +35,15 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
     @BindView(R.id.advancedRecyclerView) public AdvancedRecyclerView advancedRecyclerView;
 
+    public AdvancedEndlessRecyclerViewAdapter adapter;
     public List<T> items = new ArrayList();
     public boolean isDownloading = false;
     public boolean canLoadMore = true;
     public int offset = 0;
+    public boolean hasOptionsMenu = false;
 
-    private CustomRecyclerViewAdapter adapter;
     private RecyclerView.ItemDecoration itemDecoration;
+    private boolean setupEndlessScrolling = false;
 
     public GenericItemListFragment() {
         // No-op.
@@ -44,6 +51,13 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
     public void basicInit() {
 
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setHasOptionsMenu(true);
     }
 
     @Nullable
@@ -55,7 +69,6 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         basicInit();
 
         setupRecyclerView();
-        setupCustomViews();
 
         return view;
     }
@@ -64,6 +77,35 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         configureLayout();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        if (hasOptionsMenu) {
+            inflater.inflate(R.menu.menu_refresh, menu);
+
+            for (int i = 0; i < menu.size(); i++) {
+                MenuItem menuItem = menu.getItem(i);
+                Drawable drawable = menuItem.getIcon();
+                if (drawable != null) {
+                    drawable.mutate();
+                    drawable.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_refresh) {
+            advancedRecyclerView.beginRefreshing();
+            refresh();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -87,7 +129,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
     // Configuration
 
-    public abstract CustomRecyclerViewAdapter getAdapterForViewType();
+    public abstract AdvancedEndlessRecyclerViewAdapter getAdapterForViewType();
 
     public abstract RecyclerView.LayoutManager getLayoutManagerForViewType();
 
@@ -127,6 +169,8 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     public abstract List<T> generateDummyData();
 
     private void refresh() {
+        if (isDownloading) return;
+
         offset = 0;
         canLoadMore = true;
 
@@ -150,6 +194,8 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
             public void run() {
                 // TODO: This is just a dummy procedure to generate some random content.
                 List<T> loaded = generateDummyData();
+                if (offset > 70)
+                    loaded.clear();
 
                 // Clear items if we are pulling to refresh.
                 if (o == 0)
@@ -159,12 +205,10 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
                 items.addAll(loaded);
 
                 // Configure load more layout.
-                if (loaded.size() <= 0 || loaded.size() < Constants.MAX_ITEMS) {
+                if (loaded.size() <= 0 || loaded.size() < Constants.MAX_ITEMS)
                     canLoadMore = false;
-                    adapter.setProgressMore(false);
-                }
-                else
-                    adapter.setProgressMore(true);
+
+                adapter.setCanLoadMore(canLoadMore, advancedRecyclerView.getRecyclerView());
 
                 // Finalize and refresh UI.
                 finalizeLoad();
@@ -173,6 +217,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     }
 
     private void finalizeCacheLoad() {
+        adapter.setItems(items);
         adapter.finishLoadingMore();
         adapter.notifyDataSetChanged();
     }
@@ -180,11 +225,17 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     private void finalizeLoad() {
         isDownloading = false;
 
+        adapter.setItems(items);
         adapter.finishLoadingMore();
         adapter.notifyDataSetChanged();
 
         advancedRecyclerView.endRefreshing();
         advancedRecyclerView.addOnEmptyViewListsner(this);
+
+        if (!setupEndlessScrolling) {
+            setupEndlessScrolling = true;
+            setupEndlessScroll();
+        }
     }
 
     // Setup
@@ -213,23 +264,26 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
                 adapter = getAdapterForViewType();
                 advancedRecyclerView.setAdapter(adapter);
 
-                // Setup endless scroller.
-                advancedRecyclerView.addOnLoadMoreListener(new AdvancedRecyclerView.OnLoadMoreListener() {
-
-                    @Override
-                    public void onLoadMore() {
-                        if (canLoadMore && !isDownloading) {
-                            offset += Constants.MAX_ITEMS;
-                            loadItems(false, offset);
-                        }
-                        else {
-                            isDownloading = false;
-                            adapter.setProgressMore(false);
-                        }
-                    }
-                });
+                setupCustomViews();
 
                 loadItems(true, offset);
+            }
+        });
+    }
+
+    private void setupEndlessScroll() {
+        advancedRecyclerView.addOnLoadMoreListener(new AdvancedRecyclerView.OnLoadMoreListener() {
+
+            @Override
+            public void onLoadMore() {
+            if (canLoadMore && !isDownloading) {
+                offset += Constants.MAX_ITEMS;
+                loadItems(false, offset);
+            }
+            else {
+                isDownloading = false;
+                adapter.setCanLoadMore(false, advancedRecyclerView.getRecyclerView());
+            }
             }
         });
     }

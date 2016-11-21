@@ -78,6 +78,10 @@
             android:name=".ui.activities.home.locations.LocationsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.users.ProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

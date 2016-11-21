@@ -7,7 +7,7 @@ import com.graffitab.R;
 import com.graffitab.graffitabsdk.model.GTNotification;
 import com.graffitab.ui.adapters.notifications.ListNotificationsRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.utils.Utils;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
     // Configuration
 
     @Override
-    public CustomRecyclerViewAdapter getAdapterForViewType() {
+    public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
         if (getActivity() == null)
             return null;
 

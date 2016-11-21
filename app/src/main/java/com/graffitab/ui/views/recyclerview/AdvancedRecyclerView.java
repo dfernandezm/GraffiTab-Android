@@ -11,8 +11,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.graffitab.R;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerView;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecycleView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,14 +26,15 @@ import butterknife.ButterKnife;
 public class AdvancedRecyclerView extends RelativeLayout {
 
     @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshView;
-    @BindView(R.id.recyclerView) CustomRecyclerView recyclerView;
+    @BindView(R.id.recyclerView)
+    AdvancedRecycleView recyclerView;
 
     @BindView(R.id.emptyView) View emptyView;
     @BindView(R.id.emptyImage) ImageView emptyImage;
     @BindView(R.id.emptyTitle) TextView emptyTitle;
     @BindView(R.id.emptyDescription) TextView emptyDescription;
 
-    private CustomRecyclerViewAdapter adapter;
+    private AdvancedRecyclerViewAdapter adapter;
     private OnEmptyViewListener emptyListener;
 
     // Constructors
@@ -66,7 +68,7 @@ public class AdvancedRecyclerView extends RelativeLayout {
 
     // Methods
 
-    public void setAdapter(CustomRecyclerViewAdapter adapter) {
+    public void setAdapter(AdvancedRecyclerViewAdapter adapter) {
         this.adapter = adapter;
         recyclerView.setAdapter(adapter);
     }
@@ -88,12 +90,15 @@ public class AdvancedRecyclerView extends RelativeLayout {
     }
 
     public void addOnLoadMoreListener(OnLoadMoreListener listener) {
-        adapter.addOnLoadMoreListener(listener, recyclerView);
+        if (adapter instanceof AdvancedEndlessRecyclerViewAdapter)
+            ((AdvancedEndlessRecyclerViewAdapter) adapter).addOnLoadMoreListener(listener, recyclerView);
+        else
+            throw new RuntimeException("Adapter does not support endless listeners.");
     }
 
     public void addOnEmptyViewListsner(OnEmptyViewListener listener) {
         this.emptyListener = listener;
-        recyclerView.setEmptyView(emptyView, new CustomRecyclerView.OnEmptyViewRecyclerListener() {
+        recyclerView.setEmptyView(emptyView, new AdvancedRecycleView.OnEmptyViewRecyclerListener() {
 
             @Override
             public void willShowEmptyView() {

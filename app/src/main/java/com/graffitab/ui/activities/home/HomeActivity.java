@@ -19,6 +19,7 @@ import android.view.Window;
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.ui.activities.home.locations.LocationsActivity;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.ViewPagerTabAdapter;
 import com.graffitab.ui.fragments.home.FeedFragment;
 import com.graffitab.ui.fragments.home.NotificationsFragment;
@@ -56,9 +57,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 
@@ -84,9 +85,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void run() {
-                if ((int) view.getTag() == 0) { // Profile.
-
-                }
+                if ((int) view.getTag() == 0) // Profile.
+                    startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
                 else if ((int) view.getTag() == 1) // Locations.
                     startActivity(new Intent(HomeActivity.this, LocationsActivity.class));
                 else if ((int) view.getTag() == 2) // Search.

@@ -64,6 +64,7 @@
     <string name="locations">Locations</string>
 
     <!-- Other -->
+    <string name="other_refresh">Refresh</string>
     <string name="other_processing">Processing</string>
     <string name="other_done">Done</string>
     <string name="other_save">Save</string>

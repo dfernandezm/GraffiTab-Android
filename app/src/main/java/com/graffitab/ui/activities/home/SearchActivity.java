@@ -37,9 +37,9 @@ public class SearchActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_search);
         ButterKnife.bind(this);
 

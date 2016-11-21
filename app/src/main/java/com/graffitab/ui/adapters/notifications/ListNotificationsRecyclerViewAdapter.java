@@ -10,13 +10,13 @@ import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.graffitabsdk.model.GTNotification;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
 import com.graffitab.ui.adapters.notifications.viewholders.CommentNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.FollowNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.LikeNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.MentionNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.NotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.WelcomeNotificationViewHolder;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -25,7 +25,7 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListNotificationsRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTNotification> {
+public class ListNotificationsRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTNotification> {
 
     private final int VIEW_TYPE_WELCOME = 0;
     private final int VIEW_TYPE_LIKE = 1;
@@ -38,9 +38,7 @@ public class ListNotificationsRecyclerViewAdapter extends CustomRecyclerViewAdap
     }
 
     @Override
-    public int getItemViewType(int position) {
-        if (getItem(position) == null) return VIEW_PROG;
-
+    public int getViewType(int position) {
         GTNotification.GTNotificationType type = getItem(position).type;
         switch (type) {
             case WELCOME: return VIEW_TYPE_WELCOME;
@@ -54,7 +52,7 @@ public class ListNotificationsRecyclerViewAdapter extends CustomRecyclerViewAdap
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
             case VIEW_TYPE_WELCOME: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_welcome, parent, false);
@@ -86,7 +84,7 @@ public class ListNotificationsRecyclerViewAdapter extends CustomRecyclerViewAdap
     }
 
     @Override
-    public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         NotificationViewHolder viewHolder = (NotificationViewHolder) holder;
 
         final GTNotification item = getItem(position);

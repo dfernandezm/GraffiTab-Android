@@ -1,4 +1,4 @@
-package com.graffitab.ui.activities.home.locations;
+package com.graffitab.ui.activities.home.users;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,7 +9,8 @@ import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
-import com.graffitab.ui.fragments.location.ListLocationsFragment;
+import com.graffitab.ui.fragments.user.profile.UserProfileFragment;
+import com.graffitab.utils.ImageUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,7 +20,7 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class LocationsActivity extends AppCompatActivity {
+public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.fab) FloatingActionButton fab;
 
@@ -28,11 +29,12 @@ public class LocationsActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_locations);
+        setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
 
         setupTopBar();
         setupContent();
+        setupButtons();
     }
 
     @Override
@@ -48,16 +50,20 @@ public class LocationsActivity extends AppCompatActivity {
     // Setup
 
     private void setupTopBar() {
-        getSupportActionBar().setTitle(getString(R.string.locations));
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupContent() {
-        ListLocationsFragment content = new ListLocationsFragment();
+        UserProfileFragment content = new UserProfileFragment();
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, content);
         transaction.commit();
+    }
+
+    private void setupButtons() {
+        fab.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_action_follow, getResources().getColor(R.color.colorPrimary)));
     }
 }

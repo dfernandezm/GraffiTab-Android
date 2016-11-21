@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.graffitab.R;
 import com.graffitab.graffitabsdk.model.GTLocation;
 import com.graffitab.ui.adapters.locations.viewholders.ListLocationViewHolder;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 
 import java.util.List;
 
@@ -20,21 +20,21 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListLocationsRecyclerViewAdapter extends CustomRecyclerViewAdapter<GTLocation> {
+public class ListLocationsRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTLocation> {
 
     public ListLocationsRecyclerViewAdapter(Context context, List<GTLocation> items) {
         super(context, items);
     }
 
     @Override
-    public RecyclerView.ViewHolder onCreateCustomViewHolder(ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_location_list, parent, false);
         ListLocationViewHolder rcv = new ListLocationViewHolder(layoutView);
         return rcv;
     }
 
     @Override
-    public void onBindCustomViewHolder(RecyclerView.ViewHolder holder, int position) {
+    public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         ListLocationViewHolder customHolder = (ListLocationViewHolder) holder;
 
         final GTLocation item = getItem(position);

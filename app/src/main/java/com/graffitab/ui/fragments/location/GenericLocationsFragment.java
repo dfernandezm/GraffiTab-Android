@@ -8,7 +8,7 @@ import com.graffitab.graffitabsdk.model.GTLocation;
 import com.graffitab.ui.adapters.locations.ListLocationsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.users.ListUsersRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.views.recyclerview.components.CustomRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,7 +51,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
     // Configuration
 
     @Override
-    public CustomRecyclerViewAdapter getAdapterForViewType() {
+    public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
         if (getActivity() == null)
             return null;
 
