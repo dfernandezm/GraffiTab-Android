@@ -1,8 +1,6 @@
 package com.graffitab.ui.adapters.locations;
 
 import android.content.Context;
-import android.graphics.Rect;
-import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,17 +37,5 @@ public class ListLocationsRecyclerViewAdapter extends AdvancedEndlessRecyclerVie
 
         final GTLocation item = getItem(position);
         customHolder.setItem(item);
-    }
-
-    public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {
-
-        private final int columns;
-
-        public RecyclerViewMargin(@IntRange(from = 0) int columns) {
-            this.columns = columns;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {}
     }
 }

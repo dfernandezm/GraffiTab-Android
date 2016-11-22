@@ -2,8 +2,6 @@ package com.graffitab.ui.adapters.streamables;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -45,29 +43,5 @@ public class TrendingStreamablesRecyclerViewAdapter extends AdvancedEndlessRecyc
 
         customHolder.streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
         customHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
-    }
-
-    public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {
-
-        private final int spanCount;
-        private int spacing;
-
-        public RecyclerViewMargin(@IntRange(from = 0) int columns) {
-            this.spacing = 15;
-            this.spanCount = columns;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            if (parent.getPaddingLeft() != spacing) {
-                parent.setPadding(spacing, spacing, spacing, spacing);
-                parent.setClipToPadding(false);
-            }
-
-            outRect.top = spacing;
-            outRect.bottom = spacing;
-            outRect.left = spacing;
-            outRect.right = spacing;
-        }
     }
 }

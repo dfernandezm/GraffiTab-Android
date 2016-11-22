@@ -1,13 +1,8 @@
 package com.graffitab.ui.fragments.user;
 
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-
 import com.graffitab.R;
 import com.graffitab.graffitabsdk.model.GTUser;
-import com.graffitab.ui.adapters.users.ListUsersRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,48 +40,6 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
     public void setViewType(ViewType type) {
         this.viewType = type;
-    }
-
-    // Configuration
-
-    @Override
-    public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (getActivity() == null)
-            return null;
-
-        switch (viewType) {
-            case LIST_FULL:
-                return new ListUsersRecyclerViewAdapter(getActivity(), items);
-        }
-
-        return null;
-    }
-
-    @Override
-    public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        switch (viewType) {
-            case LIST_FULL:
-                return new LinearLayoutManager(getContext());
-        }
-        return null;
-    }
-
-    @Override
-    public RecyclerView.ItemDecoration getItemDecorationForViewType() {
-        switch (viewType) {
-            case LIST_FULL:
-                return new ListUsersRecyclerViewAdapter.RecyclerViewMargin(1);
-        }
-        return null;
-    }
-
-    @Override
-    public void configureLayoutManagers() {
-        switch (viewType) {
-            case LIST_FULL: {
-                break;
-            }
-        }
     }
 
     // Loading

@@ -1,8 +1,6 @@
 package com.graffitab.ui.adapters.notifications;
 
 import android.content.Context;
-import android.graphics.Rect;
-import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,17 +90,5 @@ public class ListNotificationsRecyclerViewAdapter extends AdvancedEndlessRecycle
 
         viewHolder.topTimelineSeparator.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
         viewHolder.bottomTimelineSeparator.setVisibility(position == getItemCount() - 2 /* Account for the infinite scroll view here. */ ? View.INVISIBLE : View.VISIBLE);
-    }
-
-    public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {
-
-        private final int columns;
-
-        public RecyclerViewMargin(@IntRange(from = 0) int columns) {
-            this.columns = columns;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {}
     }
 }

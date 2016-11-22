@@ -2,8 +2,6 @@ package com.graffitab.ui.adapters.streamables;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.Rect;
-import android.support.annotation.IntRange;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +12,6 @@ import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.streamables.viewholders.ListStreamableViewHolder;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
-import com.graffitab.utils.display.DisplayUtils;
 
 import java.util.List;
 
@@ -44,27 +41,5 @@ public class ListStreamablesRecyclerViewAdapter extends AdvancedEndlessRecyclerV
         customHolder.setItem(item);
 
         customHolder.streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
-    }
-
-    public static class RecyclerViewMargin extends RecyclerView.ItemDecoration {
-
-        private final int columns;
-
-        public RecyclerViewMargin(@IntRange(from = 0) int columns) {
-            this.columns = columns;
-        }
-
-        @Override
-        public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-            int itemCount = state.getItemCount();
-            int position = parent.getChildLayoutPosition(view);
-
-            outRect.right = 0;
-            outRect.left = 0;
-            outRect.top = DisplayUtils.pxToDip(parent.getContext(), 10);
-
-            if (position == itemCount - 1)
-                outRect.bottom = DisplayUtils.pxToDip(parent.getContext(), 10);
-        }
     }
 }

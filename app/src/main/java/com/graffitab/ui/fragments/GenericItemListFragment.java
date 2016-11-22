@@ -129,11 +129,11 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
     // Configuration
 
+    public abstract RecyclerView.ItemDecoration getItemDecoration();
+
     public abstract AdvancedEndlessRecyclerViewAdapter getAdapterForViewType();
 
     public abstract RecyclerView.LayoutManager getLayoutManagerForViewType();
-
-    public abstract RecyclerView.ItemDecoration getItemDecorationForViewType();
 
     public abstract void configureLayoutManagers();
 
@@ -150,7 +150,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         // Replace item decoration.
         if (itemDecoration != null)
             advancedRecyclerView.getRecyclerView().removeItemDecoration(itemDecoration);
-        itemDecoration = getItemDecorationForViewType();
+        itemDecoration = getItemDecoration();
         advancedRecyclerView.getRecyclerView().addItemDecoration(itemDecoration);
 
         if (adapter != null) {
@@ -192,6 +192,9 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         Utils.runWithDelay(new Runnable() {
             @Override
             public void run() {
+                if (getActivity() == null)
+                    return;
+
                 // TODO: This is just a dummy procedure to generate some random content.
                 List<T> loaded = generateDummyData();
                 if (offset > 70)
@@ -217,12 +220,18 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     }
 
     private void finalizeCacheLoad() {
+        if (getActivity() == null)
+            return;
+
         adapter.setItems(items);
         adapter.finishLoadingMore();
         adapter.notifyDataSetChanged();
     }
 
     private void finalizeLoad() {
+        if (getActivity() == null)
+            return;
+
         isDownloading = false;
 
         adapter.setItems(items);
