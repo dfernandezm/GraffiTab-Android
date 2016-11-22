@@ -87,13 +87,21 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
         else if (itemTypes.get(position) == ViewTypes.FOOTER)
             onBindFooterViewHolder(holder, position);
         else
-            onBindItemViewHolder(holder, position);
+            onBindItemViewHolder(holder, hasHeader() ? position - 1 : position);
     }
 
     // Public methods.
 
+    public boolean hasHeader() {
+        return headerResId >= 0;
+    }
+
+    public boolean hasFooter() {
+        return footerResId >= 0;
+    }
+
     public void addHeaderView(int headerResId, RecyclerView recyclerView) {
-        if (this.headerResId < 0) {
+        if (!hasHeader()) {
             this.headerResId = headerResId;
             itemTypes.add(0, ViewTypes.HEADER);
             setDecorationLayout(recyclerView);
@@ -102,7 +110,7 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
     }
 
     public void removeHeaderView() {
-        if (headerResId >= 0) {
+        if (hasHeader()) {
             headerResId = -1;
             itemTypes.remove(0);
             notifyDataSetChanged();
@@ -110,7 +118,7 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
     }
 
     public void addFooter(int footerResId, RecyclerView recyclerView) {
-        if (this.footerResId < 0) {
+        if (!hasFooter()) {
             this.footerResId = footerResId;
             itemTypes.add(ViewTypes.FOOTER);
             setDecorationLayout(recyclerView);
@@ -119,7 +127,7 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
     }
 
     public void removeFooterView() {
-        if (footerResId >= 0) {
+        if (hasFooter()) {
             footerResId = -1;
             itemTypes.remove(itemTypes.size() - 1);
             notifyDataSetChanged();

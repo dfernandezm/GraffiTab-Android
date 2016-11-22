@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 
 import com.graffitab.R;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
@@ -27,6 +28,17 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
 
     public AdvancedEndlessRecyclerViewAdapter(Context context, List<T> items) {
         super(context, items);
+    }
+
+    @Override
+    public void onBindFooterViewHolder(RecyclerView.ViewHolder holder, int position) {
+        super.onBindFooterViewHolder(holder, position);
+
+        View progressView = holder.itemView.findViewById(R.id.loadMoreIndicator);
+        View loadedAllView = holder.itemView.findViewById(R.id.loadedAllIndicator);
+
+        progressView.setVisibility(canLoadMore ? View.VISIBLE : View.GONE);
+        loadedAllView.setVisibility(canLoadMore ? View.GONE : View.VISIBLE);
     }
 
     public void addOnLoadMoreListener(AdvancedRecyclerView.OnLoadMoreListener listener, RecyclerView recyclerView) {
@@ -74,10 +86,6 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
 
     public void setCanLoadMore(boolean canLoadMore, RecyclerView recyclerView) {
         this.canLoadMore = canLoadMore;
-
-        if (!canLoadMore)
-            removeFooterView();
-        else
-            addFooter(R.layout.decoration_footer_endless, recyclerView);
+        notifyDataSetChanged();
     }
 }
