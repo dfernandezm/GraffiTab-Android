@@ -3,9 +3,11 @@ package com.graffitab.ui.fragments.notification;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.graffitab.application.MyApplication;
 import com.graffitab.ui.adapters.notifications.ListNotificationsRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 
 /**
  * Created by georgichristov on 17/11/2016
@@ -28,17 +30,16 @@ public class ListNotificationsFragment extends GenericNotificationsFragment {
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (getActivity() == null)
-            return null;
-
-        return new ListNotificationsRecyclerViewAdapter(getActivity(), items);
+        return new ListNotificationsRecyclerViewAdapter(MyApplication.getInstance(), items);
     }
 
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        return new LinearLayoutManager(getContext());
+        return new LinearLayoutManager(MyApplication.getInstance());
     }
 
     @Override
-    public void configureLayoutManagers() {}
+    public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
+        return null;
+    }
 }

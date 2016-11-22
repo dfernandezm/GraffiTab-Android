@@ -5,8 +5,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.graffitab.application.MyApplication;
 import com.graffitab.ui.adapters.streamables.ListStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.display.DisplayUtils;
 
 /**
@@ -34,27 +36,26 @@ public class ListStreamablesFragment extends GenericStreamablesFragment {
 
                 outRect.right = 0;
                 outRect.left = 0;
-                outRect.top = DisplayUtils.pxToDip(parent.getContext(), 10);
+                outRect.top = DisplayUtils.pxToDip(MyApplication.getInstance(), 10);
 
                 if (position == itemCount - 1)
-                    outRect.bottom = DisplayUtils.pxToDip(parent.getContext(), 10);
+                    outRect.bottom = DisplayUtils.pxToDip(MyApplication.getInstance(), 10);
             }
         };
     }
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (getActivity() == null)
-            return null;
-
-        return new ListStreamablesRecyclerViewAdapter(getActivity(), items);
+        return new ListStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items);
     }
 
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        return new LinearLayoutManager(getContext());
+        return new LinearLayoutManager(MyApplication.getInstance());
     }
 
     @Override
-    public void configureLayoutManagers() {}
+    public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
+        return null;
+    }
 }

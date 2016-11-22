@@ -5,6 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -14,6 +15,7 @@ import com.graffitab.utils.ImageUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by georgichristov on 20/11/2016
@@ -23,6 +25,8 @@ import butterknife.ButterKnife;
 public class ProfileActivity extends AppCompatActivity {
 
     @BindView(R.id.fab) FloatingActionButton fab;
+
+    private UserProfileFragment content;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,6 +51,47 @@ public class ProfileActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @OnClick(R.id.fab)
+    public void onClickFollow(View view) {
+
+    }
+
+    public void onClickPosts(View view) {
+
+    }
+
+    public void onClickFollowers(View view) {
+
+    }
+
+    public void onClickFollowing(View view) {
+
+    }
+
+    public void onClickGrid(View view) {
+
+    }
+
+    public void onClickList(View view) {
+
+    }
+
+    public void onClickLikes(View view) {
+
+    }
+
+    public void onClickMentions(View view) {
+
+    }
+
+    public void onClickAvatar(View view) {
+
+    }
+
+    public void onClickCover(View view) {
+
+    }
+
     // Setup
 
     private void setupTopBar() {
@@ -55,7 +100,7 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setupContent() {
-        UserProfileFragment content = new UserProfileFragment();
+        content = new UserProfileFragment();
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

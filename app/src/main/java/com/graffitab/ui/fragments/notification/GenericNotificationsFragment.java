@@ -40,6 +40,7 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
 
     public void setViewType(ViewType type) {
         this.viewType = type;
+        configureLayout();
     }
 
     // Loading

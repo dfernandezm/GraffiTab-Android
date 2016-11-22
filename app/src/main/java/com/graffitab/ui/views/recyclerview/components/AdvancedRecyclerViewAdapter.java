@@ -100,6 +100,14 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
         return footerResId >= 0;
     }
 
+    public int getHeaderResId() {
+        return headerResId;
+    }
+
+    public int getFooterResId() {
+        return footerResId;
+    }
+
     public void addHeaderView(int headerResId, RecyclerView recyclerView) {
         if (!hasHeader()) {
             this.headerResId = headerResId;

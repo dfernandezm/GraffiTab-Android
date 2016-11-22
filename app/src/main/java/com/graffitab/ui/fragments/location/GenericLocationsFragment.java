@@ -40,6 +40,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     public void setViewType(ViewType type) {
         this.viewType = type;
+        configureLayout();
     }
 
     // Loading

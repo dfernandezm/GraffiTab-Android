@@ -3,9 +3,11 @@ package com.graffitab.ui.fragments.location;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.graffitab.application.MyApplication;
 import com.graffitab.ui.adapters.locations.ListLocationsRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.display.DisplayUtils;
 
 /**
@@ -29,25 +31,24 @@ public class ListLocationsFragment extends GenericLocationsFragment {
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (getActivity() == null)
-            return null;
-
-        return new ListLocationsRecyclerViewAdapter(getActivity(), items);
+        return new ListLocationsRecyclerViewAdapter(MyApplication.getInstance(), items);
     }
 
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        return new LinearLayoutManager(getContext());
+        return new LinearLayoutManager(MyApplication.getInstance());
     }
 
     @Override
-    public void configureLayoutManagers() {}
+    public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
+        return null;
+    }
 
     @Override
     public void setupCustomViews() {
         super.setupCustomViews();
 
-        int padding = DisplayUtils.pxToDip(getContext(), 10);
+        int padding = DisplayUtils.pxToDip(MyApplication.getInstance(), 10);
         getRecyclerView().setPadding(padding, padding, padding, 0);
     }
 }

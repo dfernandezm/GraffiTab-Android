@@ -40,6 +40,7 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
     public void setViewType(ViewType type) {
         this.viewType = type;
+        configureLayout();
     }
 
     // Loading

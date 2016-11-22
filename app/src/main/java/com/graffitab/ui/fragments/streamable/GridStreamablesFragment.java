@@ -3,9 +3,11 @@ package com.graffitab.ui.fragments.streamable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.graffitab.application.MyApplication;
 import com.graffitab.ui.adapters.streamables.GridStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.display.DisplayUtils;
 
 /**
@@ -24,24 +26,21 @@ public class GridStreamablesFragment extends GenericStreamablesFragment {
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(getContext()) ? 4 : 3, 2);
+        return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3, 2);
     }
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (getActivity() == null)
-            return null;
-
-        return new GridStreamablesRecyclerViewAdapter(getActivity(), items);
+        return new GridStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items);
     }
 
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        return new GridLayoutManager(getContext(), 3);
+        return new GridLayoutManager(MyApplication.getInstance(), 3);
     }
 
     @Override
-    public void configureLayoutManagers() {
-        ((GridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).setSpanCount(DisplayUtils.isLandscape(getContext()) ? 4 : 3);
+    public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
+        return new AdvancedRecyclerViewLayoutConfiguration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3);
     }
 }

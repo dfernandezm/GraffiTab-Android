@@ -6,7 +6,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,6 +20,7 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 
 import java.util.ArrayList;
@@ -135,9 +138,9 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
     public abstract RecyclerView.LayoutManager getLayoutManagerForViewType();
 
-    public abstract void configureLayoutManagers();
+    public abstract AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration();
 
-    private void configureLayout() {
+    public void configureLayout() {
         // Replace layout manager.
         RecyclerView.LayoutManager manager = getLayoutManagerForViewType();
         if (advancedRecyclerView.getRecyclerView().getLayoutManager() == null || advancedRecyclerView.getRecyclerView().getLayoutManager().getClass() != manager.getClass()) {
@@ -145,7 +148,13 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         }
 
         // Configure individual layouts.
-        configureLayoutManagers();
+        AdvancedRecyclerViewLayoutConfiguration layoutConfiguration = getLayoutConfiguration();
+        if (layoutConfiguration != null) {
+            if (advancedRecyclerView.getRecyclerView().getLayoutManager() instanceof GridLayoutManager)
+                ((GridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).setSpanCount(layoutConfiguration.getSpanCount());
+            else if (advancedRecyclerView.getRecyclerView().getLayoutManager() instanceof StaggeredGridLayoutManager)
+                ((StaggeredGridLayoutManager) advancedRecyclerView.getRecyclerView().getLayoutManager()).setSpanCount(layoutConfiguration.getSpanCount());
+        }
 
         // Replace item decoration.
         if (itemDecoration != null)

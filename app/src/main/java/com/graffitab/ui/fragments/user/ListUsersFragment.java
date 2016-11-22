@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import com.graffitab.ui.adapters.users.ListUsersRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 
 /**
  * Created by georgichristov on 15/11/2016
@@ -40,5 +41,7 @@ public class ListUsersFragment extends GenericUsersFragment {
     }
 
     @Override
-    public void configureLayoutManagers() {}
+    public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
+        return null;
+    }
 }

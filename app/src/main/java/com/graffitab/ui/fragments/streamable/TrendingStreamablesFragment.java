@@ -3,9 +3,11 @@ package com.graffitab.ui.fragments.streamable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 
+import com.graffitab.application.MyApplication;
 import com.graffitab.ui.adapters.streamables.TrendingStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.display.DisplayUtils;
 
 /**
@@ -24,15 +26,12 @@ public class TrendingStreamablesFragment extends GenericStreamablesFragment {
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(getContext()) ? 3 : 2, 15);
+        return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 3 : 2, 15);
     }
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (getActivity() == null)
-            return null;
-
-        return new TrendingStreamablesRecyclerViewAdapter(getActivity(), items);
+        return new TrendingStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items);
     }
 
     @Override
@@ -41,5 +40,7 @@ public class TrendingStreamablesFragment extends GenericStreamablesFragment {
     }
 
     @Override
-    public void configureLayoutManagers() {}
+    public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
+        return new AdvancedRecyclerViewLayoutConfiguration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 3 : 2);
+    }
 }
