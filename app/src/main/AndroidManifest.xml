@@ -81,7 +81,8 @@
         <activity
             android:name=".ui.activities.home.users.ProfileActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/AppThemeTransparentAction"/>
     </application>
 
 </manifest>

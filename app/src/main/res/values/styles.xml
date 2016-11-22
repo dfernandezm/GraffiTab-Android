@@ -11,6 +11,19 @@
         <item name="actionBarStyle">@style/ActionBarStyle</item>
     </style>
 
+    <!-- ActionBar theme. -->
+    <style name="ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">@color/colorPrimary</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="titleTextStyle">@style/ActionBarTextStyle</item>
+    </style>
+
+    <style name="ActionBarTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
     <!-- Base no actionbar theme. -->
     <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
@@ -20,18 +33,28 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!-- Base application transparent theme. -->
+    <style name="AppThemeTransparentAction" parent="AppTheme">
+        <item name="android:windowActionBarOverlay">true</item>
+        <item name="windowActionBarOverlay">true</item>
+        <item name="colorPrimary">@android:color/transparent</item>
+        <item name="colorPrimaryDark">#000</item>
+
+        <!-- Custom action bar. -->
+        <item name="actionBarTheme">@style/ActionBarTransparentTheme</item>
+        <item name="actionBarStyle">@style/ActionBarTransparentStyle</item>
+    </style>
+
     <!-- ActionBar theme. -->
-    <style name="ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
-        <item name="colorControlNormal">@color/colorPrimary</item>
+    <style name="ActionBarTransparentTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <item name="colorControlNormal">#fff</item>
     </style>
 
-    <!-- ActionBar style. -->
-    <style name="ActionBarStyle" parent="@style/Widget.AppCompat.ActionBar.Solid">
-        <item name="titleTextStyle">@style/ActionBarTextStyle</item>
+    <style name="ActionBarTransparentStyle" parent="@style/Widget.AppCompat.ActionBar.Solid">
+        <item name="titleTextStyle">@style/ActionBarTransparentTextStyle</item>
     </style>
 
-    <!-- ActionBar text theme. -->
-    <style name="ActionBarTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/colorPrimary</item>
+    <style name="ActionBarTransparentTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">#fff</item>
     </style>
 </resources>

@@ -63,6 +63,11 @@
     <!-- Locations -->
     <string name="locations">Locations</string>
 
+    <!-- Profile -->
+    <string name="profile_graffiti">graffiti</string>
+    <string name="profile_followers">followers</string>
+    <string name="profile_following">following</string>
+
     <!-- Other -->
     <string name="other_refresh">Refresh</string>
     <string name="other_processing">Processing</string>
