@@ -18,6 +18,7 @@ import android.view.View;
 
 import com.graffitab.R;
 import com.graffitab.ui.fragments.streamable.ListStreamablesFragment;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.ImageUtils;
 
 /**
@@ -56,10 +57,13 @@ public class UserProfileFragment extends ListStreamablesFragment {
                     outRect.top = 0;
                     outRect.left = 0;
                     outRect.right = 0;
-                    outRect.bottom = -7;
+                    outRect.bottom = 2;
                 }
-                else
-                    UserProfileFragment.super.getItemDecoration().getItemOffsets(outRect, view, parent, state);
+                else {
+                    AdvancedRecyclerViewItemDecoration decoration = (AdvancedRecyclerViewItemDecoration) UserProfileFragment.super.getItemDecoration();
+                    decoration.setPadEdges(false);
+                    decoration.getItemOffsets(outRect, view, parent, state);
+                }
             }
         };
     }
@@ -73,9 +77,11 @@ public class UserProfileFragment extends ListStreamablesFragment {
         final AppCompatActivity activity = (AppCompatActivity) getActivity();
         final ActionBar actionBar = activity.getSupportActionBar();
 
-        actionBarDrawable = new ColorDrawable(0xffffffff);
-        actionBarDrawable.setAlpha(0);
-        actionBar.setBackgroundDrawable(actionBarDrawable);
+        if (actionBarDrawable == null) { // This can be called when viewType is switching, so make sure it is initialized only once.
+            actionBarDrawable = new ColorDrawable(0xffffffff);
+            actionBarDrawable.setAlpha(0);
+            actionBar.setBackgroundDrawable(actionBarDrawable);
+        }
 
         getRecyclerView().getRecyclerView().setOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -93,20 +99,22 @@ public class UserProfileFragment extends ListStreamablesFragment {
                     actionBarDrawable.setAlpha(newAlpha);
 
                     if (offset > 400) {
-                        activity.getSupportActionBar().setTitle("Georgi Christov");
+                        String title = "Georgi Christov";
+                        String subtitle = "@georgi";
 
-                        Spannable text = new SpannableString(activity.getSupportActionBar().getTitle());
-                        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-                        activity.getSupportActionBar().setTitle(text);
+                        Spannable coloredTitle = new SpannableString(title);
+                        coloredTitle.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)), 0, coloredTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+                        Spannable coloredSubtitle = new SpannableString(subtitle);
+                        coloredSubtitle.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorMetadata)), 0, coloredSubtitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+
+                        activity.getSupportActionBar().setTitle(coloredTitle);
+                        activity.getSupportActionBar().setSubtitle(coloredSubtitle);
 
                         activity.getSupportActionBar().setHomeAsUpIndicator(ImageUtils.tintIcon(getContext(), R.drawable.ic_arrow_back_black_24dp, getResources().getColor(R.color.colorPrimary)));
                     }
                     else {
                         activity.getSupportActionBar().setTitle("");
-
-                        Spannable text = new SpannableString(activity.getSupportActionBar().getTitle());
-                        text.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorWhite)), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
-                        activity.getSupportActionBar().setTitle(text);
+                        activity.getSupportActionBar().setSubtitle("");
 
                         activity.getSupportActionBar().setHomeAsUpIndicator(ImageUtils.tintIcon(getContext(), R.drawable.ic_arrow_back_black_24dp, getResources().getColor(R.color.colorWhite)));
                     }

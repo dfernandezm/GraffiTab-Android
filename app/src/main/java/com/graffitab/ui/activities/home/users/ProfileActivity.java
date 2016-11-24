@@ -10,6 +10,7 @@ import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
+import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.user.profile.UserProfileFragment;
 import com.graffitab.utils.ImageUtils;
 
@@ -69,11 +70,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void onClickGrid(View view) {
-
+        content.setViewType(GenericStreamablesFragment.ViewType.GRID);
     }
 
     public void onClickList(View view) {
-
+        content.setViewType(GenericStreamablesFragment.ViewType.LIST_FULL);
     }
 
     public void onClickLikes(View view) {

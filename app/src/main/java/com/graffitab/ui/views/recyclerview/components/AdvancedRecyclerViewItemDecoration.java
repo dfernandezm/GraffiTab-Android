@@ -14,15 +14,20 @@ public class AdvancedRecyclerViewItemDecoration extends RecyclerView.ItemDecorat
 
     private final int spanCount;
     private int spacing;
+    private boolean padEdges = true;
 
     public AdvancedRecyclerViewItemDecoration(@IntRange(from = 0) int columns, @IntRange(from = 0) int spacing) {
         this.spacing = spacing;
         this.spanCount = columns;
     }
 
+    public void setPadEdges(boolean padEdges) {
+        this.padEdges = padEdges;
+    }
+
     @Override
     public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
-        if (parent.getPaddingLeft() != spacing) {
+        if (padEdges && parent.getPaddingLeft() != spacing) {
             parent.setPadding(spacing, spacing, spacing, spacing);
             parent.setClipToPadding(false);
         }

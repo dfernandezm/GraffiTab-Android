@@ -1,8 +1,16 @@
 package com.graffitab.ui.fragments.location;
 
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+
 import com.graffitab.R;
+import com.graffitab.application.MyApplication;
 import com.graffitab.graffitabsdk.model.GTLocation;
+import com.graffitab.ui.adapters.locations.ListLocationsRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +26,8 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
     public enum ViewType {LIST_FULL}
 
     private ViewType viewType;
+    private ViewType previousViewType;
+    private boolean initialViewTypeSet = false;
 
     public void basicInit() {
         setViewType(ViewType.LIST_FULL);
@@ -39,8 +49,43 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
     }
 
     public void setViewType(ViewType type) {
-        this.viewType = type;
-        configureLayout();
+        if (previousViewType == null || previousViewType != type) {
+            this.viewType = type;
+            this.previousViewType = this.viewType;
+
+            if (initialViewTypeSet) // Only reset views once initial viewType has been set.
+                didChangeViewType();
+        }
+
+        initialViewTypeSet = true; // After the first layout pass, we allow changing the view type.
+    }
+
+    // Configuration
+
+    @Override
+    public RecyclerView.ItemDecoration getItemDecoration() {
+        if (viewType == ViewType.LIST_FULL)
+            return new AdvancedRecyclerViewItemDecoration(1, 0);
+        return null;
+    }
+
+    @Override
+    public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
+        if (viewType == ViewType.LIST_FULL)
+            return new ListLocationsRecyclerViewAdapter(MyApplication.getInstance(), items);
+        return null;
+    }
+
+    @Override
+    public RecyclerView.LayoutManager getLayoutManagerForViewType() {
+        if (viewType == ViewType.LIST_FULL)
+            return new LinearLayoutManager(MyApplication.getInstance());
+        return null;
+    }
+
+    @Override
+    public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
+        return null;
     }
 
     // Loading

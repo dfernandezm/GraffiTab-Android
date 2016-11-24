@@ -167,6 +167,20 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         }
     }
 
+    public void didChangeViewType() {
+        configureLayout();
+
+        // Clean up old adapter.
+        adapter.removeEndlessListener(advancedRecyclerView.getRecyclerView());
+
+        // Set new adapter and custom views.
+        adapter = getAdapterForViewType();
+        advancedRecyclerView.setAdapter(adapter);
+
+        setupCustomViews();
+        setupEndlessScroll();
+    }
+
     // Loading
 
 //    public abstract void loadItems(boolean isStart, int offset, GTNetworkResponseHandler handler);

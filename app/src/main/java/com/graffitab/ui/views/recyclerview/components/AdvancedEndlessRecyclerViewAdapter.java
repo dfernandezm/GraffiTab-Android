@@ -20,11 +20,11 @@ import java.util.List;
 public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecyclerViewAdapter<T> {
 
     private AdvancedRecyclerView.OnLoadMoreListener onLoadMoreListener;
+    private RecyclerView.OnScrollListener onScrollListener;
     private boolean isMoreLoading = false;
     private boolean canLoadMore = true;
     private int visibleThreshold = 1;
     private int firstVisibleItem, visibleItemCount, totalItemCount;
-    private int lastProgressBarPosition = -1;
 
     public AdvancedEndlessRecyclerViewAdapter(Context context, List<T> items) {
         super(context, items);
@@ -42,11 +42,12 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
     }
 
     public void addOnLoadMoreListener(AdvancedRecyclerView.OnLoadMoreListener listener, RecyclerView recyclerView) {
+        removeEndlessListener(recyclerView);
+
         addFooter(R.layout.decoration_footer_endless, recyclerView);
 
         this.onLoadMoreListener = listener;
-
-        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        this.onScrollListener = new RecyclerView.OnScrollListener() {
 
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
@@ -77,7 +78,15 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
                     isMoreLoading = true;
                 }
             }
-        });
+        };
+        recyclerView.addOnScrollListener(onScrollListener);
+    }
+
+    public void removeEndlessListener(RecyclerView recyclerView) {
+        if (onScrollListener != null) {
+            recyclerView.removeOnScrollListener(onScrollListener);
+            removeFooterView();
+        }
     }
 
     public void finishLoadingMore() {

@@ -20,26 +20,4 @@ public class ListNotificationsFragment extends GenericNotificationsFragment {
     public void basicInit() {
         setViewType(ViewType.LIST_FULL);
     }
-
-    // Configuration
-
-    @Override
-    public RecyclerView.ItemDecoration getItemDecoration() {
-        return new AdvancedRecyclerViewItemDecoration(1, 0);
-    }
-
-    @Override
-    public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        return new ListNotificationsRecyclerViewAdapter(MyApplication.getInstance(), items);
-    }
-
-    @Override
-    public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        return new LinearLayoutManager(MyApplication.getInstance());
-    }
-
-    @Override
-    public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
-        return null;
-    }
 }
