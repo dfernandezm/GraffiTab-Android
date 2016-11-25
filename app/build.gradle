@@ -28,6 +28,7 @@ def materialEditTextVersion = "2.1.4"
 def reSideMenuVersion = "1.6+"
 def fabVersion = "1.6.4"
 def roundedImageViewVersion = "2.2.1"
+def circleIndicatorVersion = "1.2.2@aar"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -47,4 +48,5 @@ dependencies {
     compile "com.specyci:residemenu:$reSideMenuVersion"
     compile "com.github.clans:fab:$fabVersion"
     compile "com.makeramen:roundedimageview:$roundedImageViewVersion"
+    compile "me.relex:circleindicator:$circleIndicatorVersion"
 }

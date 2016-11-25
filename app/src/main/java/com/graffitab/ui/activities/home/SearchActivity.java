@@ -14,7 +14,7 @@ import android.view.Window;
 import android.widget.EditText;
 
 import com.graffitab.R;
-import com.graffitab.ui.adapters.ViewPagerTabAdapter;
+import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
 import com.graffitab.ui.fragments.search.SearchGraffitiFragment;
 import com.graffitab.ui.fragments.search.SearchUsersFragment;
 import com.graffitab.utils.ImageUtils;

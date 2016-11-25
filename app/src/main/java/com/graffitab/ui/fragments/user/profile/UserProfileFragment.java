@@ -1,7 +1,5 @@
 package com.graffitab.ui.fragments.user.profile;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -13,13 +11,16 @@ import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 
 import com.graffitab.R;
+import com.graffitab.ui.adapters.profile.UserProfileHeaderGridAdapter;
+import com.graffitab.ui.adapters.profile.UserProfileHeaderListAdapter;
 import com.graffitab.ui.fragments.streamable.ListStreamablesFragment;
+import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.ImageUtils;
+import com.graffitab.utils.activity.ActivityUtils;
 
 /**
  * Created by georgichristov on 21/11/2016
@@ -29,19 +30,23 @@ import com.graffitab.utils.ImageUtils;
 public class UserProfileFragment extends ListStreamablesFragment {
 
     private Drawable actionBarDrawable;
+    private Menu menu;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        inflater.inflate(R.menu.menu_refresh, menu);
+        inflater.inflate(R.menu.menu_settings, menu);
+        this.menu = menu;
+    }
 
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem menuItem = menu.getItem(i);
-            Drawable drawable = menuItem.getIcon();
-            if (drawable != null) {
-                drawable.mutate();
-                drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
-            }
-        }
+    // Configuration
+
+    @Override
+    public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
+        if (getViewType() == ViewType.GRID)
+            return new UserProfileHeaderGridAdapter(getContext(), items);
+        else if (getViewType() == ViewType.LIST_FULL)
+            return new UserProfileHeaderListAdapter(getContext(), items);
+        return super.getAdapterForViewType();
     }
 
     @Override
@@ -111,12 +116,16 @@ public class UserProfileFragment extends ListStreamablesFragment {
                         activity.getSupportActionBar().setSubtitle(coloredSubtitle);
 
                         activity.getSupportActionBar().setHomeAsUpIndicator(ImageUtils.tintIcon(getContext(), R.drawable.ic_arrow_back_black_24dp, getResources().getColor(R.color.colorPrimary)));
+
+                        ActivityUtils.colorMenu(getContext(), menu, R.color.colorPrimary);
                     }
                     else {
                         activity.getSupportActionBar().setTitle("");
                         activity.getSupportActionBar().setSubtitle("");
 
                         activity.getSupportActionBar().setHomeAsUpIndicator(ImageUtils.tintIcon(getContext(), R.drawable.ic_arrow_back_black_24dp, getResources().getColor(R.color.colorWhite)));
+
+                        ActivityUtils.colorMenu(getContext(), menu, R.color.colorWhite);
                     }
                 }
             }

@@ -47,8 +47,8 @@ public abstract class ToggleStreamablesActivity extends GenericStreamablesActivi
 
 
     @Override
-    public void setupContent() {
-        super.setupContent();
+    public void setupContent(GenericStreamablesFragment contentFragment) {
+        super.setupContent(contentFragment);
 
         getContent().hasOptionsMenu = false;
     }

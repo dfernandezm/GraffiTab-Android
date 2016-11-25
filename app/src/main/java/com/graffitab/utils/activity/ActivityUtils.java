@@ -58,4 +58,17 @@ public class ActivityUtils {
             }
         }
 	}
+
+    public static void colorMenu(Context context, Menu menu, int colorResId) {
+        if (menu == null) return;
+
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            Drawable drawable = menuItem.getIcon();
+            if (drawable != null) {
+                drawable.mutate();
+                drawable.setColorFilter(context.getResources().getColor(colorResId), PorterDuff.Mode.SRC_ATOP);
+            }
+        }
+    }
 }

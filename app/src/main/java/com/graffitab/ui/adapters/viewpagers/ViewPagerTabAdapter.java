@@ -1,4 +1,4 @@
-package com.graffitab.ui.adapters;
+package com.graffitab.ui.adapters.viewpagers;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

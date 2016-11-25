@@ -31,7 +31,7 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupTopBar();
-        setupContent();
+        setupContent(new GridStreamablesFragment());
     }
 
     @Override
@@ -53,8 +53,8 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void setupContent() {
-        content = new GridStreamablesFragment();
+    public void setupContent(GenericStreamablesFragment contentFragment) {
+        content = contentFragment;
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
