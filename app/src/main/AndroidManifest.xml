@@ -75,7 +75,7 @@
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppThemeNoActionBar"/>
         <activity
-            android:name=".ui.activities.home.locations.LocationsActivity"
+            android:name=".ui.activities.home.me.locations.LocationsActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
         <activity
@@ -83,6 +83,26 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden"
             android:theme="@style/AppThemeTransparentAction"/>
+        <activity
+            android:name=".ui.activities.home.users.UserLikesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.users.UserPostsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.users.UserMentionsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.users.UserFollowersActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.users.UserFollowingActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

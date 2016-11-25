@@ -57,6 +57,10 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
         return getString(R.string.other_empty_no_posts_description);
     }
 
+    public ViewType getViewType() {
+        return viewType;
+    }
+
     public void setViewType(ViewType type) {
         if (previousViewType == null || previousViewType != type) {
             this.viewType = type;

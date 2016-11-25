@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home.users;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -58,15 +59,15 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void onClickPosts(View view) {
-
+        startActivity(new Intent(this, UserPostsActivity.class));
     }
 
     public void onClickFollowers(View view) {
-
+        startActivity(new Intent(this, UserFollowersActivity.class));
     }
 
     public void onClickFollowing(View view) {
-
+        startActivity(new Intent(this, UserFollowingActivity.class));
     }
 
     public void onClickGrid(View view) {
@@ -78,11 +79,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void onClickLikes(View view) {
-
+        startActivity(new Intent(this, UserLikesActivity.class));
     }
 
     public void onClickMentions(View view) {
-
+        startActivity(new Intent(this, UserMentionsActivity.class));
     }
 
     public void onClickAvatar(View view) {

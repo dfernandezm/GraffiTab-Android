@@ -18,7 +18,7 @@ import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
-import com.graffitab.ui.activities.home.locations.LocationsActivity;
+import com.graffitab.ui.activities.home.me.locations.LocationsActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.ViewPagerTabAdapter;
 import com.graffitab.ui.fragments.home.FeedFragment;

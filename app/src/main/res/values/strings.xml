@@ -68,7 +68,20 @@
     <string name="profile_followers">followers</string>
     <string name="profile_following">following</string>
 
+    <!-- Likes -->
+    <string name="likes">Likes</string>
+
+    <!-- Mentions -->
+    <string name="mentions">Mentioned in</string>
+
+    <!-- Followers -->
+    <string name="followers">Followers</string>
+
+    <!-- Following -->
+    <string name="following">Following</string>
+
     <!-- Other -->
+    <string name="other_toggle">Switch Layout</string>
     <string name="other_refresh">Refresh</string>
     <string name="other_processing">Processing</string>
     <string name="other_done">Done</string>

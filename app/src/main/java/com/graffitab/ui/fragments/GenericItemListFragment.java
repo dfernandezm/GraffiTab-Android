@@ -1,8 +1,6 @@
 package com.graffitab.ui.fragments;
 
 import android.content.res.Configuration;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +20,7 @@ import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.activity.ActivityUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,16 +87,9 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
         if (hasOptionsMenu) {
             inflater.inflate(R.menu.menu_refresh, menu);
-
-            for (int i = 0; i < menu.size(); i++) {
-                MenuItem menuItem = menu.getItem(i);
-                Drawable drawable = menuItem.getIcon();
-                if (drawable != null) {
-                    drawable.mutate();
-                    drawable.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-                }
-            }
         }
+
+        ActivityUtils.colorMenu(getContext(), menu);
     }
 
     @Override

@@ -1,11 +1,17 @@
 package com.graffitab.utils.activity;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
+import com.graffitab.R;
 import com.graffitab.utils.display.DisplayUtils;
 
 public class ActivityUtils {
@@ -38,5 +44,18 @@ public class ActivityUtils {
 		activity.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		activity.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
 				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
+
+	public static void colorMenu(Context context, Menu menu) {
+        if (menu == null) return;
+
+        for (int i = 0; i < menu.size(); i++) {
+            MenuItem menuItem = menu.getItem(i);
+            Drawable drawable = menuItem.getIcon();
+            if (drawable != null) {
+                drawable.mutate();
+                drawable.setColorFilter(context.getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
+            }
+        }
 	}
 }

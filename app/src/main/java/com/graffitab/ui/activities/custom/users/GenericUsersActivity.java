@@ -1,4 +1,4 @@
-package com.graffitab.ui.activities.home.locations;
+package com.graffitab.ui.activities.custom.users;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,28 +7,27 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.Window;
 
-import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
-import com.graffitab.ui.fragments.location.ListLocationsFragment;
+import com.graffitab.ui.fragments.user.GenericUsersFragment;
+import com.graffitab.ui.fragments.user.ListUsersFragment;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by georgichristov on 20/11/2016
+ * Created by georgichristov on 24/11/2016
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class LocationsActivity extends AppCompatActivity {
+public abstract class GenericUsersActivity extends AppCompatActivity {
 
-    @BindView(R.id.fab) FloatingActionButton fab;
+    private GenericUsersFragment content;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_locations);
+        setContentView(R.layout.activity_fragment_holder);
         ButterKnife.bind(this);
 
         setupTopBar();
@@ -41,19 +40,21 @@ public class LocationsActivity extends AppCompatActivity {
             finish();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    public GenericUsersFragment getContent() {
+        return content;
     }
 
     // Setup
 
-    private void setupTopBar() {
-        getSupportActionBar().setTitle(getString(R.string.locations));
+    public void setupTopBar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void setupContent() {
-        ListLocationsFragment content = new ListLocationsFragment();
+        content = new ListUsersFragment();
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
