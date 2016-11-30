@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
+import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.user.profile.UserProfileFragment;
 import com.graffitab.utils.ImageUtils;
@@ -24,7 +25,7 @@ import butterknife.OnClick;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends CameraUtilsActivity {
 
     @BindView(R.id.fab) FloatingActionButton fab;
 
@@ -87,11 +88,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void onClickAvatar(View view) {
-
+        showImagePicker((ImageView) view);
     }
 
     public void onClickCover(View view) {
-
+        showImagePicker((ImageView) view);
     }
 
     // Setup

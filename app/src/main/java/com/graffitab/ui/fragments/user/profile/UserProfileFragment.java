@@ -12,13 +12,17 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.profile.UserProfileHeaderAdapter;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.viewpagers.ProfileViewPagerAdapter;
@@ -39,6 +43,8 @@ public class UserProfileFragment extends ListStreamablesFragment {
 
     private Menu menu;
     private View header;
+    private ImageView cover;
+    private ImageView avatar;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -147,13 +153,33 @@ public class UserProfileFragment extends ListStreamablesFragment {
 
     private void setupHeaderView() {
         if (header == null)
-            header = LayoutInflater.from(getContext()).inflate(R.layout.decoration_header_profile, advancedRecyclerView, false);
+            header = LayoutInflater.from(getActivity()).inflate(R.layout.decoration_header_profile, advancedRecyclerView, false);
+
+        cover = (ImageView) header.findViewById(R.id.cover);
+        avatar = (ImageView) header.findViewById(R.id.avatar);
         ViewPager viewPager = (ViewPager) header.findViewById(R.id.viewpager);
         CircleIndicator circleIndicator = (CircleIndicator) header.findViewById(R.id.indicator);
+
+        final GestureDetector tapGestureDetector = new GestureDetector(getActivity(), new TapGestureListener());
+        viewPager.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                tapGestureDetector.onTouchEvent(event);
+                return false;
+            }
+        });
 
         PagerAdapter adapter = new ProfileViewPagerAdapter(getContext(), viewPager);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ProfileViewPagerAdapter.ProfilePagerChangeListener(viewPager));
         circleIndicator.setViewPager(viewPager);
+    }
+
+    class TapGestureListener extends GestureDetector.SimpleOnGestureListener{
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            ((ProfileActivity) getActivity()).onClickCover(cover);
+            return true;
+        }
     }
 }

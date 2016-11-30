@@ -33,9 +33,9 @@ public abstract class ToggleStreamablesActivity extends GenericStreamablesActivi
         }
         else if (item.getItemId() == R.id.action_toggle) {
             if (getContent().getViewType() == GenericStreamablesFragment.ViewType.GRID)
-                getContent().setViewType(GenericStreamablesFragment.ViewType.LIST_FULL);
+                getContent().switchViewType(GenericStreamablesFragment.ViewType.LIST_FULL);
             else
-                getContent().setViewType(GenericStreamablesFragment.ViewType.GRID);
+                getContent().switchViewType(GenericStreamablesFragment.ViewType.GRID);
 
             return true;
         }

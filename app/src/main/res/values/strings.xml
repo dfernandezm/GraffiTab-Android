@@ -82,6 +82,9 @@
 
     <!-- Other -->
     <string name="other_toggle">Switch Layout</string>
+    <string name="other_take_picture">Take a Photo</string>
+    <string name="other_choose_picture">Choose from Gallery</string>
+    <string name="other_select_image">Choose an image</string>
     <string name="other_refresh">Refresh</string>
     <string name="other_processing">Processing</string>
     <string name="other_done">Done</string>

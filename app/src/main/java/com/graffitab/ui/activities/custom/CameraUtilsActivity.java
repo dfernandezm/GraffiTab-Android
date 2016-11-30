@@ -1,0 +1,101 @@
+package com.graffitab.ui.activities.custom;
+
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.widget.ImageView;
+
+import com.cocosw.bottomsheet.BottomSheet;
+import com.graffitab.R;
+import com.graffitab.utils.display.BitmapUtils;
+
+import java.io.InputStream;
+
+/**
+ * Created by georgichristov on 30/11/2016
+ * --
+ * Copyright © GraffiTab Inc. 2016
+ */
+public class CameraUtilsActivity extends AppCompatActivity {
+
+    static final int REQUEST_TAKE_PHOTO = 1;
+    static final int REQUEST_PICK_IMAGE = 2;
+
+    private ImageView targetView;
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            finishCapturingImage(imageBitmap);
+        }
+        else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
+            if (data == null) {
+                Log.i(getClass().getSimpleName(), "Failed to retrieve chose image. Data is null");
+                return;
+            }
+
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                byte[] bytes = BitmapUtils.getBytes(inputStream);
+                Bitmap bitmap = BitmapUtils.decodeSampledBitmapFromBytes(bytes, targetView.getWidth(), targetView.getHeight());
+                finishCapturingImage(bitmap);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public void showImagePicker(ImageView view) {
+        targetView = view;
+
+        BottomSheet.Builder builder = buildImagePickerSheet();
+        builder = builder.listener(new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == R.id.action_take_new)
+                    takePicture();
+                else if (which == R.id.action_choose)
+                    choosePicture();
+            }
+        });
+        builder.show();
+    }
+
+    public BottomSheet.Builder buildImagePickerSheet() {
+        return new BottomSheet.Builder(this, R.style.BottomSheet_Dialog)
+                .title(R.string.other_select_image)
+                .sheet(R.menu.menu_camera_normal);
+    }
+
+    // Image capture
+
+    private void finishCapturingImage(Bitmap capturedImage) {
+        targetView.setImageBitmap(capturedImage);
+    }
+
+    private void takePicture() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null)
+            startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+    }
+
+    private void choosePicture() {
+        Intent getIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        getIntent.setType("image/*");
+
+        Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        pickIntent.setType("image/*");
+
+        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+
+        startActivityForResult(chooserIntent, REQUEST_PICK_IMAGE);
+    }
+}
