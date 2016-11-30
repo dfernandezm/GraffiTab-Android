@@ -1,26 +1,34 @@
 package com.graffitab.ui.fragments.user.profile;
 
+import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 
 import com.graffitab.R;
-import com.graffitab.ui.adapters.profile.UserProfileHeaderGridAdapter;
-import com.graffitab.ui.adapters.profile.UserProfileHeaderListAdapter;
+import com.graffitab.application.MyApplication;
+import com.graffitab.ui.adapters.profile.UserProfileHeaderAdapter;
+import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
+import com.graffitab.ui.adapters.viewpagers.ProfileViewPagerAdapter;
 import com.graffitab.ui.fragments.streamable.ListStreamablesFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.ImageUtils;
 import com.graffitab.utils.activity.ActivityUtils;
+
+import me.relex.circleindicator.CircleIndicator;
 
 /**
  * Created by georgichristov on 21/11/2016
@@ -29,8 +37,8 @@ import com.graffitab.utils.activity.ActivityUtils;
  */
 public class UserProfileFragment extends ListStreamablesFragment {
 
-    private Drawable actionBarDrawable;
     private Menu menu;
+    private View header;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -38,15 +46,19 @@ public class UserProfileFragment extends ListStreamablesFragment {
         this.menu = menu;
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setupHeaderView();
+    }
+
     // Configuration
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (getViewType() == ViewType.GRID)
-            return new UserProfileHeaderGridAdapter(getContext(), items);
-        else if (getViewType() == ViewType.LIST_FULL)
-            return new UserProfileHeaderListAdapter(getContext(), items);
-        return super.getAdapterForViewType();
+        GenericStreamablesRecyclerViewAdapter customAdapter = new UserProfileHeaderAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
+        customAdapter.setViewType(getViewType());
+        return customAdapter;
     }
 
     @Override
@@ -77,16 +89,15 @@ public class UserProfileFragment extends ListStreamablesFragment {
     public void setupCustomViews() {
         super.setupCustomViews();
 
-        adapter.addHeaderView(R.layout.decoration_header_profile, advancedRecyclerView.getRecyclerView());
+        setupHeaderView();
+
+        adapter.addHeaderView(header, advancedRecyclerView.getRecyclerView());
 
         final AppCompatActivity activity = (AppCompatActivity) getActivity();
         final ActionBar actionBar = activity.getSupportActionBar();
-
-        if (actionBarDrawable == null) { // This can be called when viewType is switching, so make sure it is initialized only once.
-            actionBarDrawable = new ColorDrawable(0xffffffff);
-            actionBarDrawable.setAlpha(0);
-            actionBar.setBackgroundDrawable(actionBarDrawable);
-        }
+        final Drawable actionBarDrawable = new ColorDrawable(0xffffffff);
+        actionBarDrawable.setAlpha(0);
+        actionBar.setBackgroundDrawable(actionBarDrawable);
 
         getRecyclerView().getRecyclerView().setOnScrollListener(new RecyclerView.OnScrollListener() {
 
@@ -130,5 +141,19 @@ public class UserProfileFragment extends ListStreamablesFragment {
                 }
             }
         });
+    }
+
+    // Setup
+
+    private void setupHeaderView() {
+        if (header == null)
+            header = LayoutInflater.from(getContext()).inflate(R.layout.decoration_header_profile, advancedRecyclerView, false);
+        ViewPager viewPager = (ViewPager) header.findViewById(R.id.viewpager);
+        CircleIndicator circleIndicator = (CircleIndicator) header.findViewById(R.id.indicator);
+
+        PagerAdapter adapter = new ProfileViewPagerAdapter(getContext(), viewPager);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ProfileViewPagerAdapter.ProfilePagerChangeListener(viewPager));
+        circleIndicator.setViewPager(viewPager);
     }
 }

@@ -11,10 +11,7 @@ import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.graffitabsdk.model.GTAsset;
 import com.graffitab.graffitabsdk.model.GTStreamable;
-import com.graffitab.ui.adapters.streamables.GridStreamablesRecyclerViewAdapter;
-import com.graffitab.ui.adapters.streamables.ListStreamablesRecyclerViewAdapter;
-import com.graffitab.ui.adapters.streamables.SwimlaneStreamablesRecyclerViewAdapter;
-import com.graffitab.ui.adapters.streamables.TrendingStreamablesRecyclerViewAdapter;
+import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
@@ -35,8 +32,6 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     public enum ViewType {GRID, TRENDING, SWIMLANE, LIST_FULL}
 
     private ViewType viewType;
-    private ViewType previousViewType;
-    private boolean initialViewTypeSet = false;
 
     public void basicInit() {
         setViewType(ViewType.GRID);
@@ -62,15 +57,14 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     }
 
     public void setViewType(ViewType type) {
-        if (previousViewType == null || previousViewType != type) {
-            this.viewType = type;
-            this.previousViewType = this.viewType;
+        this.viewType = type;
+    }
 
-            if (initialViewTypeSet) // Only reset views once initial viewType has been set.
-                didChangeViewType();
-        }
+    public void switchViewType(ViewType type) {
+        setViewType(type);
 
-        initialViewTypeSet = true; // After the first layout pass, we allow changing the view type.
+        ((GenericStreamablesRecyclerViewAdapter) adapter).setViewType(viewType);
+        configureLayout();
     }
 
     // Configuration
@@ -107,15 +101,9 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (viewType == ViewType.GRID)
-            return new GridStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items);
-        else if (viewType == ViewType.LIST_FULL)
-            return new ListStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items);
-        else if (viewType == ViewType.SWIMLANE)
-            return new SwimlaneStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items);
-        else if (viewType == ViewType.TRENDING)
-            return new TrendingStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items);
-        return null;
+        GenericStreamablesRecyclerViewAdapter customAdapter = new GenericStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
+        customAdapter.setViewType(viewType);
+        return customAdapter;
     }
 
     @Override

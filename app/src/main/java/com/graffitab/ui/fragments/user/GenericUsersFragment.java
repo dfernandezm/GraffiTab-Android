@@ -4,8 +4,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.graffitab.R;
+import com.graffitab.application.MyApplication;
 import com.graffitab.graffitabsdk.model.GTUser;
-import com.graffitab.ui.adapters.users.ListUsersRecyclerViewAdapter;
+import com.graffitab.ui.adapters.users.GenericUsersRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
@@ -25,8 +26,6 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
     public enum ViewType {LIST_FULL}
 
     private ViewType viewType;
-    private ViewType previousViewType;
-    private boolean initialViewTypeSet = false;
 
     public void basicInit() {
         setViewType(ViewType.LIST_FULL);
@@ -48,15 +47,14 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
     }
 
     public void setViewType(ViewType type) {
-        if (previousViewType == null || previousViewType != type) {
-            this.viewType = type;
-            this.previousViewType = this.viewType;
+        this.viewType = type;
+    }
 
-            if (initialViewTypeSet) // Only reset views once initial viewType has been set.
-                didChangeViewType();
-        }
+    public void switchViewType(ViewType type) {
+        setViewType(type);
 
-        initialViewTypeSet = true; // After the first layout pass, we allow changing the view type.
+        ((GenericUsersRecyclerViewAdapter) adapter).setViewType(viewType);
+        configureLayout();
     }
 
     // Configuration
@@ -70,12 +68,9 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (getActivity() == null)
-            return null;
-
-        if (viewType == ViewType.LIST_FULL)
-            return new ListUsersRecyclerViewAdapter(getActivity(), items);
-        return null;
+        GenericUsersRecyclerViewAdapter customAdapter = new GenericUsersRecyclerViewAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
+        customAdapter.setViewType(viewType);
+        return customAdapter;
     }
 
     @Override

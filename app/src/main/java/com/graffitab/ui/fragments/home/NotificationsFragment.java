@@ -1,22 +1,12 @@
 package com.graffitab.ui.fragments.home;
 
-import com.graffitab.R;
-import com.graffitab.ui.fragments.notification.ListNotificationsFragment;
+import com.graffitab.ui.fragments.notification.GenericNotificationsFragment;
 
 /**
- * Created by georgichristov on 14/11/2016
+ * Created by georgichristov on 30/11/2016
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class NotificationsFragment extends ListNotificationsFragment {
+public class NotificationsFragment extends GenericNotificationsFragment {
 
-    @Override
-    public String emptyViewTitle() {
-        return getString(R.string.notifications_empty_title);
-    }
-
-    @Override
-    public String emptyViewSubtitle() {
-        return getString(R.string.notifications_empty_description);
-    }
 }

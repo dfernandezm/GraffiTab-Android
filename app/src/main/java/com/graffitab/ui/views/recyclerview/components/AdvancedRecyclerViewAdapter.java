@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -26,16 +25,16 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
         public static final int FOOTER = 987654321;
     }
 
-    private int headerResId = -1;
-    private int footerResId = -1;
+    private View headerView;
+    private View footerView;
 
     private List<T> itemList;
     private List<Integer> itemTypes = new ArrayList<>();
 
-    public AdvancedRecyclerViewAdapter(Context context, List<T> itemList) {
+    public AdvancedRecyclerViewAdapter(Context context, List<T> itemList, RecyclerView recyclerView) {
         this.context = context;
 
-        setItems(itemList);
+        setItems(itemList, recyclerView);
     }
 
     // Methods to override
@@ -73,9 +72,9 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == ViewTypes.HEADER)
-            return new DecorationViewHolder(LayoutInflater.from(parent.getContext()).inflate(headerResId, parent, false), ((RecyclerView) parent).getLayoutManager());
+            return new DecorationViewHolder(headerView, ((RecyclerView) parent).getLayoutManager());
         else if (viewType == ViewTypes.FOOTER)
-            return new DecorationViewHolder(LayoutInflater.from(parent.getContext()).inflate(footerResId, parent, false), ((RecyclerView) parent).getLayoutManager());
+            return new DecorationViewHolder(footerView, ((RecyclerView) parent).getLayoutManager());
         else
             return onCreateItemViewHolder(parent, viewType);
     }
@@ -93,73 +92,50 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
     // Public methods.
 
     public boolean hasHeader() {
-        return headerResId >= 0;
+        return itemTypes.contains(ViewTypes.HEADER);
     }
 
-    public boolean hasFooter() {
-        return footerResId >= 0;
+    public void addHeaderView(View view, RecyclerView recyclerView) {
+        headerView = view;
+        rebuildItemTypes();
+        notifyDataSetChanged();
+        configureDecorationLayout(recyclerView);
     }
 
-    public int getHeaderResId() {
-        return headerResId;
+    public void removeHeaderView(RecyclerView recyclerView) {
+        headerView = null;
+        rebuildItemTypes();
+        notifyDataSetChanged();
+        configureDecorationLayout(recyclerView);
     }
 
-    public int getFooterResId() {
-        return footerResId;
+    public void addFooter(View view, RecyclerView recyclerView) {
+        footerView = view;
+        rebuildItemTypes();
+        notifyDataSetChanged();
+        configureDecorationLayout(recyclerView);
     }
 
-    public void addHeaderView(int headerResId, RecyclerView recyclerView) {
-        if (!hasHeader()) {
-            this.headerResId = headerResId;
-            itemTypes.add(0, ViewTypes.HEADER);
-            setDecorationLayout(recyclerView);
-            notifyDataSetChanged();
-        }
+    public void removeFooterView(RecyclerView recyclerView) {
+        footerView = null;
+        rebuildItemTypes();
+        notifyDataSetChanged();
+        configureDecorationLayout(recyclerView);
     }
 
-    public void removeHeaderView() {
-        if (hasHeader()) {
-            headerResId = -1;
-            itemTypes.remove(0);
-            notifyDataSetChanged();
-        }
-    }
-
-    public void addFooter(int footerResId, RecyclerView recyclerView) {
-        if (!hasFooter()) {
-            this.footerResId = footerResId;
-            itemTypes.add(ViewTypes.FOOTER);
-            setDecorationLayout(recyclerView);
-            notifyDataSetChanged();
-        }
-    }
-
-    public void removeFooterView() {
-        if (hasFooter()) {
-            footerResId = -1;
-            itemTypes.remove(itemTypes.size() - 1);
-            notifyDataSetChanged();
-        }
-    }
-
-    public void setItems(List<T> items) {
+    public void setItems(List<T> items, RecyclerView recyclerView) {
         if (items == null) this.itemList = new ArrayList();
         else this.itemList = new ArrayList(items);
         rebuildItemTypes();
         notifyDataSetChanged();
-    }
-
-    public void addItems(List<T> items) {
-        itemList.addAll(items);
-        rebuildItemTypes();
-        notifyDataSetChanged();
+        configureDecorationLayout(recyclerView);
     }
 
     public T getItem(int position) {
         return itemList.get(position);
     }
 
-    private void setDecorationLayout(RecyclerView recyclerView) {
+    public void configureDecorationLayout(RecyclerView recyclerView) {
         if (recyclerView.getLayoutManager() instanceof GridLayoutManager) {
             final GridLayoutManager gridLayout = (GridLayoutManager) recyclerView.getLayoutManager();
             gridLayout.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
@@ -179,10 +155,10 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
     private void rebuildItemTypes() {
         itemTypes.clear();
 
-        if (headerResId >= 0) itemTypes.add(ViewTypes.HEADER); // Add header, if any.
+        if (headerView != null) itemTypes.add(ViewTypes.HEADER); // Add header, if any.
         for (T item : itemList) // Add items.
             itemTypes.add(ViewTypes.NORMAL);
-        if (footerResId >= 0) itemTypes.add(ViewTypes.FOOTER); // Add footer, if any.
+        if (footerView != null) itemTypes.add(ViewTypes.FOOTER); // Add footer, if any.
     }
 
     // Custom classes

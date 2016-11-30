@@ -23,7 +23,7 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListNotificationsRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTNotification> {
+public class GenericNotificationsRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTNotification> {
 
     private final int VIEW_TYPE_WELCOME = 0;
     private final int VIEW_TYPE_LIKE = 1;
@@ -31,8 +31,8 @@ public class ListNotificationsRecyclerViewAdapter extends AdvancedEndlessRecycle
     private final int VIEW_TYPE_MENTION = 3;
     private final int VIEW_TYPE_COMMENT = 4;
 
-    public ListNotificationsRecyclerViewAdapter(Context context, List<GTNotification> items) {
-        super(context, items);
+    public GenericNotificationsRecyclerViewAdapter(Context context, List<GTNotification> items, RecyclerView recyclerView) {
+        super(context, items, recyclerView);
     }
 
     @Override

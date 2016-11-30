@@ -8,12 +8,7 @@ import com.graffitab.utils.display.DisplayUtils;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListLocationsFragment extends GenericLocationsFragment {
-
-    @Override
-    public void basicInit() {
-        setViewType(GenericLocationsFragment.ViewType.LIST_FULL);
-    }
+public class LocationsFragment extends GenericLocationsFragment {
 
     @Override
     public void setupCustomViews() {

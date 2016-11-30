@@ -1,10 +1,12 @@
 package com.graffitab.ui.adapters.streamables.viewholders;
 
+import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.graffitab.R;
+import com.graffitab.constants.Constants;
 import com.graffitab.graffitabsdk.model.GTStreamable;
 
 import butterknife.BindView;
@@ -26,7 +28,9 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
         ButterKnife.bind(this, itemView);
     }
 
-    public void setItem(GTStreamable notification) {
+    public void setItem(GTStreamable notification, int position) {
         this.item = notification;
+
+        streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 }

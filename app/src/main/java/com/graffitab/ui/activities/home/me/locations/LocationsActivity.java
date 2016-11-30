@@ -9,7 +9,7 @@ import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
-import com.graffitab.ui.fragments.location.ListLocationsFragment;
+import com.graffitab.ui.fragments.location.LocationsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -53,7 +53,7 @@ public class LocationsActivity extends AppCompatActivity {
     }
 
     private void setupContent() {
-        ListLocationsFragment content = new ListLocationsFragment();
+        LocationsFragment content = new LocationsFragment();
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

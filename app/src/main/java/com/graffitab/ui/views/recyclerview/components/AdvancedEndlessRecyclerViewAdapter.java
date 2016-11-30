@@ -5,6 +5,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import com.graffitab.R;
@@ -26,8 +27,8 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
     private int visibleThreshold = 1;
     private int firstVisibleItem, visibleItemCount, totalItemCount;
 
-    public AdvancedEndlessRecyclerViewAdapter(Context context, List<T> items) {
-        super(context, items);
+    public AdvancedEndlessRecyclerViewAdapter(Context context, List<T> items, RecyclerView recyclerView) {
+        super(context, items, recyclerView);
     }
 
     @Override
@@ -44,7 +45,8 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
     public void addOnLoadMoreListener(AdvancedRecyclerView.OnLoadMoreListener listener, RecyclerView recyclerView) {
         removeEndlessListener(recyclerView);
 
-        addFooter(R.layout.decoration_footer_endless, recyclerView);
+        View view = LayoutInflater.from(recyclerView.getContext()).inflate(R.layout.decoration_footer_endless, recyclerView, false);
+        addFooter(view, recyclerView);
 
         this.onLoadMoreListener = listener;
         this.onScrollListener = new RecyclerView.OnScrollListener() {
@@ -85,7 +87,7 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
     public void removeEndlessListener(RecyclerView recyclerView) {
         if (onScrollListener != null) {
             recyclerView.removeOnScrollListener(onScrollListener);
-            removeFooterView();
+            removeFooterView(recyclerView);
         }
     }
 

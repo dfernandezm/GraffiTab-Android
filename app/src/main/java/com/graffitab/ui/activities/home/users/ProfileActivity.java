@@ -71,11 +71,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     public void onClickGrid(View view) {
-        content.setViewType(GenericStreamablesFragment.ViewType.GRID);
+        content.switchViewType(GenericStreamablesFragment.ViewType.GRID);
     }
 
     public void onClickList(View view) {
-        content.setViewType(GenericStreamablesFragment.ViewType.LIST_FULL);
+        content.switchViewType(GenericStreamablesFragment.ViewType.LIST_FULL);
     }
 
     public void onClickLikes(View view) {

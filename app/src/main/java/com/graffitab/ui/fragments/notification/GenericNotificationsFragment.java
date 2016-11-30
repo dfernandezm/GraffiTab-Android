@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.graffitabsdk.model.GTNotification;
-import com.graffitab.ui.adapters.notifications.ListNotificationsRecyclerViewAdapter;
+import com.graffitab.ui.adapters.notifications.GenericNotificationsRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
@@ -23,16 +23,6 @@ import java.util.List;
  */
 public abstract class GenericNotificationsFragment extends GenericItemListFragment<GTNotification> {
 
-    public enum ViewType {LIST_FULL}
-
-    private ViewType viewType;
-    private ViewType previousViewType;
-    private boolean initialViewTypeSet = false;
-
-    public void basicInit() {
-        setViewType(ViewType.LIST_FULL);
-    }
-
     @Override
     public int emptyViewImageResource() {
         return -1;
@@ -40,47 +30,29 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
 
     @Override
     public String emptyViewTitle() {
-        return getString(R.string.other_empty_no_posts);
+        return getString(R.string.notifications_empty_title);
     }
 
     @Override
     public String emptyViewSubtitle() {
-        return getString(R.string.other_empty_no_posts_description);
-    }
-
-    public void setViewType(ViewType type) {
-        if (previousViewType == null || previousViewType != type) {
-            this.viewType = type;
-            this.previousViewType = this.viewType;
-
-            if (initialViewTypeSet) // Only reset views once initial viewType has been set.
-                didChangeViewType();
-        }
-
-        initialViewTypeSet = true; // After the first layout pass, we allow changing the view type.
+        return getString(R.string.notifications_empty_description);
     }
 
     // Configuration
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        if (viewType == ViewType.LIST_FULL)
-            return new AdvancedRecyclerViewItemDecoration(1, 0);
-        return null;
+        return new AdvancedRecyclerViewItemDecoration(1, 0);
     }
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        if (viewType == ViewType.LIST_FULL)
-            return new ListNotificationsRecyclerViewAdapter(MyApplication.getInstance(), items);
-        return null;
+        return new GenericNotificationsRecyclerViewAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
     }
 
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        if (viewType == ViewType.LIST_FULL)
-            return new LinearLayoutManager(MyApplication.getInstance());
-        return null;
+        return new LinearLayoutManager(MyApplication.getInstance());
     }
 
     @Override

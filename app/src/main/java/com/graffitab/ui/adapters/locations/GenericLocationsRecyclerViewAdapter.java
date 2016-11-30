@@ -18,10 +18,10 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListLocationsRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTLocation> {
+public class GenericLocationsRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTLocation> {
 
-    public ListLocationsRecyclerViewAdapter(Context context, List<GTLocation> items) {
-        super(context, items);
+    public GenericLocationsRecyclerViewAdapter(Context context, List<GTLocation> items, RecyclerView recyclerView) {
+        super(context, items, recyclerView);
     }
 
     @Override

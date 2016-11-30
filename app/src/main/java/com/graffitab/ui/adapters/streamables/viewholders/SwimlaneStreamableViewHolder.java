@@ -1,6 +1,8 @@
 package com.graffitab.ui.adapters.streamables.viewholders;
 
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.graffitab.graffitabsdk.model.GTStreamable;
 
@@ -19,7 +21,9 @@ public class SwimlaneStreamableViewHolder extends StreamableViewHolder {
     }
 
     @Override
-    public void setItem(GTStreamable notification) {
-        super.setItem(notification);
+    public void setItem(GTStreamable notification, int position) {
+        super.setItem(notification, position);
+
+        streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
     }
 }

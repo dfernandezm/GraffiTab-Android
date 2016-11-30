@@ -48,11 +48,12 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     private boolean setupEndlessScrolling = false;
 
     public GenericItemListFragment() {
-        // No-op.
+        basicInit();
     }
 
+    /** This method is called from the constructor so avoid any view-related operations. */
     public void basicInit() {
-
+        // No-op
     }
 
     @Override
@@ -67,8 +68,6 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_refreshable_recyclerview, container, false);
         ButterKnife.bind(this, view);
-
-        basicInit();
 
         setupRecyclerView();
 
@@ -110,12 +109,12 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
     @Override
     public String emptyViewTitle() {
-        return getString(R.string.other_empty_no_posts);
+        return getString(R.string.other_empty_no_items);
     }
 
     @Override
     public String emptyViewSubtitle() {
-        return getString(R.string.other_empty_no_posts_description);
+        return getString(R.string.other_empty_no_items_description);
     }
 
     public AdvancedRecyclerView getRecyclerView() {
@@ -156,21 +155,8 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
         if (adapter != null) {
             adapter.notifyDataSetChanged();
+            adapter.configureDecorationLayout(getRecyclerView().getRecyclerView());
         }
-    }
-
-    public void didChangeViewType() {
-        configureLayout();
-
-        // Clean up old adapter.
-        adapter.removeEndlessListener(advancedRecyclerView.getRecyclerView());
-
-        // Set new adapter and custom views.
-        adapter = getAdapterForViewType();
-        advancedRecyclerView.setAdapter(adapter);
-
-        setupCustomViews();
-        setupEndlessScroll();
     }
 
     // Loading
@@ -238,9 +224,8 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         if (getActivity() == null)
             return;
 
-        adapter.setItems(items);
+        adapter.setItems(items, getRecyclerView().getRecyclerView());
         adapter.finishLoadingMore();
-        adapter.notifyDataSetChanged();
     }
 
     private void finalizeLoad() {
@@ -249,9 +234,8 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
         isDownloading = false;
 
-        adapter.setItems(items);
+        adapter.setItems(items, getRecyclerView().getRecyclerView());
         adapter.finishLoadingMore();
-        adapter.notifyDataSetChanged();
 
         advancedRecyclerView.endRefreshing();
         advancedRecyclerView.addOnEmptyViewListsner(this);
@@ -265,12 +249,10 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     // Setup
 
     public void setupCustomViews() {
-
+        // No-op.
     }
 
     private void setupRecyclerView() {
-        configureLayout();
-
         advancedRecyclerView.setRefreshColorScheme(R.color.colorPrimary, R.color.colorSecondary);
         advancedRecyclerView.addOnRefreshListener(new AdvancedRecyclerView.OnRefreshListener() {
 
@@ -289,6 +271,8 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
                 advancedRecyclerView.setAdapter(adapter);
 
                 setupCustomViews();
+
+                configureLayout();
 
                 loadItems(true, offset);
             }

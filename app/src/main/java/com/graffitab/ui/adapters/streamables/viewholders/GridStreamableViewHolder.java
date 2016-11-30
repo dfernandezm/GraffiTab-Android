@@ -19,7 +19,7 @@ public class GridStreamableViewHolder extends StreamableViewHolder {
     }
 
     @Override
-    public void setItem(GTStreamable notification) {
-        super.setItem(notification);
+    public void setItem(GTStreamable notification, int position) {
+        super.setItem(notification, position);
     }
 }

@@ -87,6 +87,8 @@
     <string name="other_done">Done</string>
     <string name="other_save">Save</string>
     <string name="other_cancel">Cancel</string>
+    <string name="other_empty_no_items">No items</string>
+    <string name="other_empty_no_items_description">No itemswere found over here. Please come back again.</string>
     <string name="other_empty_no_posts">No graffiti</string>
     <string name="other_empty_no_posts_description">No graffiti were found over here. Please come back again.</string>
     <string name="other_empty_no_users">No users</string>
