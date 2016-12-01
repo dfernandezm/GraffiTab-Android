@@ -1,10 +1,10 @@
 package com.graffitab.ui.activities.custom;
 
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,6 +12,7 @@ import android.widget.ImageView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
+import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.BitmapUtils;
 import com.graffitab.utils.file.FileUtils;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -31,6 +32,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
     static final int REQUEST_PICK_IMAGE = 2;
 
     private ImageView targetView;
+    private Uri cameraImageUri;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -48,10 +50,13 @@ public class CameraUtilsActivity extends AppCompatActivity {
         }
         else if (requestCode == REQUEST_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) { // Success
-                Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                byte[] bytes = BitmapUtils.getBitmapData(imageBitmap);
-                finishCapturingImage(bytes);
+                try {
+                    Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), cameraImageUri);
+                    byte[] bytes = BitmapUtils.getBitmapData(imageBitmap);
+                    finishCapturingImage(bytes);
+                } catch (Exception e) {
+                    Log.e(getClass().getSimpleName(), "Failed to retrieve taken image.", e);
+                }
             }
             else // Error
                 Log.e(getClass().getSimpleName(), "Failed to retrieve captured image. ResultCode is not OK");
@@ -111,18 +116,28 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
     private void finishCapturingImage(byte[] bytes) {
         // Save full-size image to file.
-        Uri uri = FileUtils.saveImageToCrop(bytes);
+        final Uri uri = FileUtils.saveImageToCrop(bytes);
 
-        // Calculate aspect ratio.
-        int ratioW = targetView.getWidth();
-        int ratioH = (int) Math.ceil(targetView.getWidth() / ((double)targetView.getWidth() / targetView.getHeight()));
+        // Pause the calculation of the aspect ratio because of the interface orientation. The default
+        // orientation in Android is landscape, so even though the camera is in portrait, when control
+        // comes back to this activity, it will be landscape for a few ms, so we want to wait until
+        // views are resized for portrait before calculating the aspect ratio.
+        Utils.runWithDelay(new Runnable() {
 
-        // Start image cropper for saved image.
-        CropImage.activity(uri)
-                .setGuidelines(CropImageView.Guidelines.ON)
-                .setAspectRatio(ratioW, ratioH)
-                .setFixAspectRatio(true)
-                .start(this);
+            @Override
+            public void run() {
+                // Calculate aspect ratio.
+                int ratioW = targetView.getWidth();
+                int ratioH = (int) Math.ceil(targetView.getWidth() / ((double)targetView.getWidth() / targetView.getHeight()));
+
+                // Start image cropper for saved image.
+                CropImage.activity(uri)
+                        .setGuidelines(CropImageView.Guidelines.ON)
+                        .setAspectRatio(ratioW, ratioH)
+                        .setFixAspectRatio(true)
+                        .start(CameraUtilsActivity.this);
+            }
+        }, 300);
     }
 
     private void finishCroppingImage(Uri imageResource) {
@@ -135,8 +150,15 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null)
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.TITLE, "New Picture");
+            values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
+
+            cameraImageUri = getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, cameraImageUri);
             startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+        }
     }
 
     private void choosePicture() {

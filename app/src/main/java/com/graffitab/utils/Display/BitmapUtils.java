@@ -21,8 +21,8 @@ import java.io.InputStream;
 
 public class BitmapUtils {
 
-	private static final int MAX_WIDTH = 480;
-	private static final int MAX_HEIGHT = 800;
+	private static final int MAX_WIDTH = 1200;
+	private static final int MAX_HEIGHT = 1920;
 	
 	public static Bitmap fastblur(Bitmap sentBitmap, int radius) {
 

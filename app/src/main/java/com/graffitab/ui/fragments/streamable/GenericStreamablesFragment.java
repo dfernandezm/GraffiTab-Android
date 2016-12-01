@@ -9,12 +9,14 @@ import android.view.View;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.graffitabsdk.model.GTAsset;
 import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.DisplayUtils;
 
 import java.util.ArrayList;
@@ -135,14 +137,14 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     @Override
     public List<GTStreamable> generateDummyData() {
         List<GTStreamable> loaded = new ArrayList();
-//        for (int i = 0; i < 25; i++) {
-//            GTStreamable streamable = new GTStreamable();
-//            GTAsset asset = new GTAsset();
-//            asset.thumbnailWidth = Utils.randInt(300, 400);
-//            asset.thumbnailHeight = Utils.randInt(500, 1024);
-//            streamable.asset = asset;
-//            loaded.add(streamable);
-//        }
+        for (int i = 0; i < 25; i++) {
+            GTStreamable streamable = new GTStreamable();
+            GTAsset asset = new GTAsset();
+            asset.thumbnailWidth = Utils.randInt(300, 400);
+            asset.thumbnailHeight = Utils.randInt(500, 1024);
+            streamable.asset = asset;
+            loaded.add(streamable);
+        }
         return loaded;
     }
 }
