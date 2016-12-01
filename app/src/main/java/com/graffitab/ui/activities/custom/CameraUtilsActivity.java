@@ -3,6 +3,7 @@ package com.graffitab.ui.activities.custom;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +13,11 @@ import android.widget.ImageView;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.utils.display.BitmapUtils;
+import com.graffitab.utils.file.FileUtils;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.File;
 import java.io.InputStream;
 
 /**
@@ -29,28 +34,53 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
-            finishCapturingImage(imageBitmap);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) { // Success
+                Uri resultUri = result.getUri();
+                finishCroppingImage(resultUri);
+                Log.i(getClass().getSimpleName(), "Finished cropping image. Path is: " + resultUri);
+            }
+            else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) { // Error
+                Exception error = result.getError();
+                Log.e(getClass().getSimpleName(), "Failed to retrieve cropped image.", error);
+            }
         }
-        else if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK) {
-            if (data == null) {
-                Log.i(getClass().getSimpleName(), "Failed to retrieve chose image. Data is null");
-                return;
+        else if (requestCode == REQUEST_TAKE_PHOTO) {
+            if (resultCode == RESULT_OK) { // Success
+                Bundle extras = data.getExtras();
+                Bitmap imageBitmap = (Bitmap) extras.get("data");
+                byte[] bytes = BitmapUtils.getBitmapData(imageBitmap);
+                finishCapturingImage(bytes);
             }
+            else // Error
+                Log.e(getClass().getSimpleName(), "Failed to retrieve captured image. ResultCode is not OK");
+        }
+        else if (requestCode == REQUEST_PICK_IMAGE) {
+            if (resultCode == RESULT_OK) { // Success
+                if (data == null) {
+                    Log.e(getClass().getSimpleName(), "Failed to retrieve chose image. Data is null");
+                    return;
+                }
 
-            try {
-                InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                byte[] bytes = BitmapUtils.getBytes(inputStream);
-                Bitmap bitmap = BitmapUtils.decodeSampledBitmapFromBytes(bytes, targetView.getWidth(), targetView.getHeight());
-                finishCapturingImage(bitmap);
-            } catch (Exception e) {
-                e.printStackTrace();
+                try {
+                    InputStream inputStream = getContentResolver().openInputStream(data.getData());
+                    byte[] bytes = BitmapUtils.getBytes(inputStream);
+                    finishCapturingImage(bytes);
+                } catch (Exception e) {
+                    Log.e(getClass().getSimpleName(), "Failed to retrieve chose image.", e);
+                }
             }
+            else // Error
+                Log.e(getClass().getSimpleName(), "Failed to retrieve chosen image. ResultCode is not OK");
         }
     }
 
+    /**
+     * Shows a dialog to prompt for the source of the image.
+     *
+     * @param view target view.
+     */
     public void showImagePicker(ImageView view) {
         targetView = view;
 
@@ -68,16 +98,39 @@ public class CameraUtilsActivity extends AppCompatActivity {
         builder.show();
     }
 
+    /**
+     * Builds the image source dialog.
+     */
     public BottomSheet.Builder buildImagePickerSheet() {
-        return new BottomSheet.Builder(this, R.style.BottomSheet_Dialog)
+        return new BottomSheet.Builder(this, R.style.BottomSheet_StyleDialog)
                 .title(R.string.other_select_image)
                 .sheet(R.menu.menu_camera_normal);
     }
 
     // Image capture
 
-    private void finishCapturingImage(Bitmap capturedImage) {
-        targetView.setImageBitmap(capturedImage);
+    private void finishCapturingImage(byte[] bytes) {
+        // Save full-size image to file.
+        Uri uri = FileUtils.saveImageToCrop(bytes);
+
+        // Calculate aspect ratio.
+        int ratioW = targetView.getWidth();
+        int ratioH = (int) Math.ceil(targetView.getWidth() / ((double)targetView.getWidth() / targetView.getHeight()));
+
+        // Start image cropper for saved image.
+        CropImage.activity(uri)
+                .setGuidelines(CropImageView.Guidelines.ON)
+                .setAspectRatio(ratioW, ratioH)
+                .setFixAspectRatio(true)
+                .start(this);
+    }
+
+    private void finishCroppingImage(Uri imageResource) {
+        File file = new File(imageResource.getPath());
+
+        // Compress bitmap to fit the target view's bounds.
+        Bitmap bitmap = BitmapUtils.decodeSampledBitmapFileForSize(file, targetView.getWidth(), targetView.getHeight());
+        targetView.setImageBitmap(bitmap);
     }
 
     private void takePicture() {

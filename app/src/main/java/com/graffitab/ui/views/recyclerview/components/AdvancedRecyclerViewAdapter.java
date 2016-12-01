@@ -29,7 +29,7 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
     private View footerView;
 
     private List<T> itemList;
-    private List<Integer> itemTypes = new ArrayList<>();
+    protected List<Integer> itemTypes = new ArrayList<>();
 
     public AdvancedRecyclerViewAdapter(Context context, List<T> itemList, RecyclerView recyclerView) {
         this.context = context;
@@ -56,8 +56,18 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
 
     // Methods from superclass
 
+    public boolean isEmpty() {
+        return itemList.isEmpty();
+    }
+
     @Override
     public int getItemCount() {
+        if (isEmpty()) {
+            if (!hasHeader())
+                return 0; // Do not show header or footer.
+            else
+                return 1; // Only show header.
+        }
         return itemTypes.size();
     }
 

@@ -20,6 +20,14 @@ public class UserProfileHeaderAdapter extends GenericStreamablesRecyclerViewAdap
     }
 
     @Override
+    public int getItemCount() {
+        if (isEmpty()) {
+            return itemTypes.size();
+        }
+        return super.getItemCount();
+    }
+
+    @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder, int position) {
         super.onBindHeaderViewHolder(holder, position);
     }

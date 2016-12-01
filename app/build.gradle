@@ -30,6 +30,7 @@ def fabVersion = "1.6.4"
 def roundedImageViewVersion = "2.2.1"
 def circleIndicatorVersion = "1.2.2@aar"
 def bottomSheetVersion = "1.+@aar"
+def imageCropperVersion = "2.3.+"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -51,4 +52,5 @@ dependencies {
     compile "com.makeramen:roundedimageview:$roundedImageViewVersion"
     compile "me.relex:circleindicator:$circleIndicatorVersion"
     compile "com.cocosw:bottomsheet:$bottomSheetVersion"
+    compile "com.theartofdev.edmodo:android-image-cropper:$imageCropperVersion"
 }

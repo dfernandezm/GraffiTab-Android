@@ -17,7 +17,7 @@ import com.graffitab.R;
 import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
 import com.graffitab.ui.fragments.search.SearchGraffitiFragment;
 import com.graffitab.ui.fragments.search.SearchUsersFragment;
-import com.graffitab.utils.ImageUtils;
+import com.graffitab.utils.image.ImageUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

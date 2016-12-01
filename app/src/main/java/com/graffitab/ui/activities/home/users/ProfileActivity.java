@@ -14,7 +14,7 @@ import com.graffitab.R;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.user.profile.UserProfileFragment;
-import com.graffitab.utils.ImageUtils;
+import com.graffitab.utils.image.ImageUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

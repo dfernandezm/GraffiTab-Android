@@ -26,7 +26,7 @@ import com.graffitab.ui.fragments.home.NotificationsFragment;
 import com.graffitab.ui.fragments.home.RecentFragment;
 import com.graffitab.ui.fragments.home.TrendingFragment;
 import com.graffitab.ui.views.sidemenu.CustomResideMenu;
-import com.graffitab.utils.ImageUtils;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitab.utils.Utils;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;

@@ -16,19 +16,16 @@ import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.utils.TextUtils;
+import com.graffitab.utils.text.TextUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-import bolts.Task;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-
-import static android.R.attr.editable;
 
 /**
  * Created by georgichristov on 11/11/2016

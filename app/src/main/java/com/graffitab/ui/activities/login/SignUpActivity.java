@@ -9,7 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,7 +16,7 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.WebActivity;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.utils.TextUtils;
+import com.graffitab.utils.text.TextUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;

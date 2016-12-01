@@ -1,4 +1,4 @@
-package com.graffitab.utils;
+package com.graffitab.utils.image;
 
 import android.content.Context;
 import android.graphics.PorterDuff;

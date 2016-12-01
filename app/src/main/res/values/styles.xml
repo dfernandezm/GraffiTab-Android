@@ -57,4 +57,10 @@
     <style name="ActionBarTransparentTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">#fff</item>
     </style>
+
+    <!-- BottomSheet theme. -->
+    <style name="BottomSheet.StyleDialog" parent="BottomSheet.Dialog">
+        <item name="android:textColorPrimary">#232728</item>
+        <item name="android:textColorSecondary">#a0a0a0</item>
+    </style>
 </resources>

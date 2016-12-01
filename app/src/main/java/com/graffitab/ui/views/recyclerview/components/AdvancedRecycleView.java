@@ -85,9 +85,17 @@ public class AdvancedRecycleView extends RecyclerView {
     }
 
     private void checkIfEmpty() {
-        if (emptyView != null && emptyListener != null) {
+        if (emptyListener != null)
             emptyListener.willShowEmptyView();
-            emptyView.setVisibility(getAdapter().getItemCount() > 0 ? GONE : VISIBLE);
+
+        if (emptyView != null) {
+            boolean isEmpty = false;
+            if (getAdapter() instanceof AdvancedRecyclerViewAdapter)
+                isEmpty = ((AdvancedRecyclerViewAdapter) getAdapter()).isEmpty();
+            else
+                isEmpty = getAdapter().getItemCount() <= 0;
+
+            emptyView.setVisibility(isEmpty ? VISIBLE : GONE);
         }
     }
 

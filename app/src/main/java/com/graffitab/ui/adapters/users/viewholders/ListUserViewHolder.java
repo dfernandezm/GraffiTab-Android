@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.graffitabsdk.model.GTUser;
-import com.graffitab.utils.ImageUtils;
+import com.graffitab.utils.image.ImageUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

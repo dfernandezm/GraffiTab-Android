@@ -29,7 +29,7 @@ import com.graffitab.ui.adapters.viewpagers.ProfileViewPagerAdapter;
 import com.graffitab.ui.fragments.streamable.ListStreamablesFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
-import com.graffitab.utils.ImageUtils;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 
 import me.relex.circleindicator.CircleIndicator;
@@ -89,6 +89,13 @@ public class UserProfileFragment extends ListStreamablesFragment {
                 }
             }
         };
+    }
+
+    @Override
+    public void finalizeLoad() {
+        super.finalizeLoad();
+
+        advancedRecyclerView.addOnEmptyViewListener(null);
     }
 
     @Override

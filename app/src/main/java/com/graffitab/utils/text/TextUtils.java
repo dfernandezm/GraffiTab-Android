@@ -1,4 +1,4 @@
-package com.graffitab.utils;
+package com.graffitab.utils.text;
 
 import android.text.Spannable;
 import android.text.SpannableStringBuilder;

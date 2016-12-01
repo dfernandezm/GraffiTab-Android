@@ -228,7 +228,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         adapter.finishLoadingMore();
     }
 
-    private void finalizeLoad() {
+    public void finalizeLoad() {
         if (getActivity() == null)
             return;
 
@@ -238,7 +238,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         adapter.finishLoadingMore();
 
         advancedRecyclerView.endRefreshing();
-        advancedRecyclerView.addOnEmptyViewListsner(this);
+        advancedRecyclerView.addOnEmptyViewListener(this);
 
         if (!setupEndlessScrolling) {
             setupEndlessScrolling = true;

@@ -96,28 +96,35 @@ public class AdvancedRecyclerView extends RelativeLayout {
             throw new RuntimeException("Adapter does not support endless listeners.");
     }
 
-    public void addOnEmptyViewListsner(OnEmptyViewListener listener) {
+    public void addOnEmptyViewListener(OnEmptyViewListener listener) {
         this.emptyListener = listener;
-        recyclerView.setEmptyView(emptyView, new AdvancedRecycleView.OnEmptyViewRecyclerListener() {
 
-            @Override
-            public void willShowEmptyView() {
-                int imageResId = emptyListener.emptyViewImageResource();
-                String title = emptyListener.emptyViewTitle();
-                String description = emptyListener.emptyViewSubtitle();
+        if (listener == null) {
+            recyclerView.setEmptyView(null, null);
+            emptyView.setVisibility(GONE);
+        }
+        else {
+            recyclerView.setEmptyView(emptyView, new AdvancedRecycleView.OnEmptyViewRecyclerListener() {
 
-                emptyImage.setVisibility(imageResId >= 0 ? View.VISIBLE : View.GONE);
-                emptyTitle.setVisibility(title.length() > 0 ? View.VISIBLE : View.GONE);
-                emptyDescription.setVisibility(description.length() > 0 ? View.VISIBLE : View.GONE);
+                @Override
+                public void willShowEmptyView() {
+                    int imageResId = emptyListener.emptyViewImageResource();
+                    String title = emptyListener.emptyViewTitle();
+                    String description = emptyListener.emptyViewSubtitle();
 
-                if (imageResId >= 0)
-                    emptyImage.setImageResource(imageResId);
-                if (title.length() > 0)
-                    emptyTitle.setText(title);
-                if (description.length() > 0)
-                    emptyDescription.setText(description);
-            }
-        });
+                    emptyImage.setVisibility(imageResId >= 0 ? View.VISIBLE : View.GONE);
+                    emptyTitle.setVisibility(title.length() > 0 ? View.VISIBLE : View.GONE);
+                    emptyDescription.setVisibility(description.length() > 0 ? View.VISIBLE : View.GONE);
+
+                    if (imageResId >= 0)
+                        emptyImage.setImageResource(imageResId);
+                    if (title.length() > 0)
+                        emptyTitle.setText(title);
+                    if (description.length() > 0)
+                        emptyDescription.setText(description);
+                }
+            });
+        }
     }
 
     public void addOnRefreshListener(final OnRefreshListener listener) {

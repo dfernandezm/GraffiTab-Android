@@ -5,7 +5,7 @@ import android.content.Context;
 
 import com.graffitab.R;
 import com.graffitab.ui.dialog.DialogBuilder;
-import com.graffitab.utils.TextUtils;
+import com.graffitab.utils.text.TextUtils;
 
 public class InputValidator {
 
