@@ -12,7 +12,7 @@ This is the Android app for the system. Work is still in progress.
 * `GenericStreamablesFragment.java` - An example of how the GenericItemListFragment might be subclassed.
 * `GenericStreamablesRecyclerViewAdapter.java` - Used alongside `GenericStreamablesFragment` to provide the main views for the different collection types.
 * `UserProfileFragment.java` - Custom implementation of `GenericItemListFragment` which shows how to switch between different layout times at runtime. It also outlines how to attach a header to the `RecyclerView`.
-* `HomeActivity.java` - The home screen for the app. Shows how to use ` `ToolBar` and `ViewHolder` to create tabbed layout with fragments. Also shows how to use the `RESideMenu` library.
+* `HomeActivity.java` - The home screen for the app. Shows how to use `ToolBar` and `ViewHolder` to create tabbed layout with fragments. Also shows how to use the `RESideMenu` library.
 * `FacebookUtilsActivity.java` - Custom Facebook-helper activity which handles login with Facebook and validating the user's Facebook tokens.
 * `CameraUtilsActivity.java` - Activities requiring image capture should extend this class. It provides an image source picker as well as a cropper.
 
