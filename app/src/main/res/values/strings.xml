@@ -91,6 +91,9 @@
     <string name="edit_profile_website">Website</string>
     <string name="edit_profile_private_description">Private graffiti can only be viewed by you</string>
 
+    <!-- Explorer -->
+    <string name="explorer">Explorer</string>
+
     <!-- Other -->
     <string name="other_toggle">Switch Layout</string>
     <string name="other_take_picture">Take a Photo</string>

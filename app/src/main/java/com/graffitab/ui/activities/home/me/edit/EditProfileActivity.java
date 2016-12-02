@@ -1,6 +1,7 @@
 package com.graffitab.ui.activities.home.me.edit;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -82,6 +83,16 @@ public class EditProfileActivity extends CameraUtilsActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public Pair<Integer, Integer> calculateAspectRatio(View targetView) {
+        if (targetView == avatar)
+            return super.calculateAspectRatio(targetView);
+
+        int ratioW = 5;
+        int ratioH = 3;
+        return new Pair<>(ratioW, ratioH);
     }
 
     // Setup

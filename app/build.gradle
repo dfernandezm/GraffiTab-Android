@@ -22,7 +22,8 @@ android {
 
 def facebookVersion = "4.13.2"
 def junitVersion = "4.12"
-def androidSupportLibraryVersion = "24.0.0"
+def androidSupportLibraryVersion = "24.2.1"
+def playServicesVersion = "9.8.0"
 def butterKnifeVersion = "8.4.0"
 def materialEditTextVersion = "2.1.4"
 def reSideMenuVersion = "1.6+"
@@ -36,6 +37,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile "junit:junit:$junitVersion"
     compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
+    compile "com.google.android.gms:play-services:$playServicesVersion"
     compile "com.android.support:design:$androidSupportLibraryVersion"
     compile "com.android.support:cardview-v7:$androidSupportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$androidSupportLibraryVersion"

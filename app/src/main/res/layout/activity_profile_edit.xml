@@ -50,7 +50,7 @@
                         android:layout_weight="1"
                         android:text="@string/edit_profile_avatar"
                         android:textColor="#232728"
-                        android:textSize="15sp" />
+                        android:textSize="17sp" />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -101,7 +101,7 @@
                         android:layout_weight="1"
                         android:text="@string/edit_profile_cover"
                         android:textColor="#232728"
-                        android:textSize="15sp" />
+                        android:textSize="17sp" />
 
                     <ImageView
                         android:layout_width="20dp"
@@ -137,7 +137,7 @@
                     android:layout_weight="1"
                     android:text="@string/edit_profile_change_password"
                     android:textColor="#232728"
-                    android:textSize="15sp" />
+                    android:textSize="17sp" />
 
                 <ImageView
                     android:layout_width="20dp"
@@ -279,7 +279,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/edit_profile_manage_private"
                         android:textColor="#232728"
-                        android:textSize="15sp" />
+                        android:textSize="17sp" />
 
                     <TextView
                         android:layout_width="match_parent"

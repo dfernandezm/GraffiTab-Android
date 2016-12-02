@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Pair;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.cocosw.bottomsheet.BottomSheet;
@@ -121,6 +123,12 @@ public class CameraUtilsActivity extends AppCompatActivity {
             targetView.setImageDrawable(null);
     }
 
+    public Pair<Integer, Integer> calculateAspectRatio(View targetView) {
+        int ratioW = targetView.getWidth();
+        int ratioH = (int) Math.ceil(targetView.getWidth() / ((double)targetView.getWidth() / targetView.getHeight()));
+        return new Pair<>(ratioW, ratioH);
+    }
+
     // Image capture
 
     private void finishCapturingImage(byte[] bytes) {
@@ -136,13 +144,12 @@ public class CameraUtilsActivity extends AppCompatActivity {
             @Override
             public void run() {
                 // Calculate aspect ratio.
-                int ratioW = targetView.getWidth();
-                int ratioH = (int) Math.ceil(targetView.getWidth() / ((double)targetView.getWidth() / targetView.getHeight()));
+                Pair<Integer, Integer> aspectRatio = calculateAspectRatio(targetView);
 
                 // Start image cropper for saved image.
                 CropImage.activity(uri)
                         .setGuidelines(CropImageView.Guidelines.ON)
-                        .setAspectRatio(ratioW, ratioH)
+                        .setAspectRatio(aspectRatio.first, aspectRatio.second)
                         .setFixAspectRatio(true)
                         .start(CameraUtilsActivity.this);
             }
