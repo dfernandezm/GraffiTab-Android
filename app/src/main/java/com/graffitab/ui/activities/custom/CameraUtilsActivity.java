@@ -98,6 +98,8 @@ public class CameraUtilsActivity extends AppCompatActivity {
                     takePicture();
                 else if (which == R.id.action_choose)
                     choosePicture();
+                else if (which == R.id.action_remove)
+                    finishPickingImage(null);
             }
         });
         builder.show();
@@ -110,6 +112,13 @@ public class CameraUtilsActivity extends AppCompatActivity {
         return new BottomSheet.Builder(this, R.style.BottomSheet_StyleDialog)
                 .title(R.string.other_select_image)
                 .sheet(R.menu.menu_camera_normal);
+    }
+
+    public void finishPickingImage(Bitmap bitmap) {
+        if (bitmap != null)
+            targetView.setImageBitmap(bitmap);
+        else
+            targetView.setImageDrawable(null);
     }
 
     // Image capture
@@ -145,7 +154,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
         // Compress bitmap to fit the target view's bounds.
         Bitmap bitmap = BitmapUtils.decodeSampledBitmapFileForSize(file, targetView.getWidth(), targetView.getHeight());
-        targetView.setImageBitmap(bitmap);
+        finishPickingImage(bitmap);
     }
 
     private void takePicture() {

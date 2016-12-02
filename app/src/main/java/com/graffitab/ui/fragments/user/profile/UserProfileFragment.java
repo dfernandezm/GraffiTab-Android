@@ -29,8 +29,8 @@ import com.graffitab.ui.adapters.viewpagers.ProfileViewPagerAdapter;
 import com.graffitab.ui.fragments.streamable.ListStreamablesFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
-import com.graffitab.utils.image.ImageUtils;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.image.ImageUtils;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -45,6 +45,8 @@ public class UserProfileFragment extends ListStreamablesFragment {
     private View header;
     private ImageView cover;
     private ImageView avatar;
+
+    private int lastScrollYOffset;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -120,14 +122,14 @@ public class UserProfileFragment extends ListStreamablesFragment {
 
                 RecyclerView.ViewHolder holder = recyclerView.findViewHolderForLayoutPosition(0);
                 if (holder != null) {
-                    int offset = -holder.itemView.getTop();
+                    lastScrollYOffset = -holder.itemView.getTop();
 
                     final int headerHeight = holder.itemView.getHeight() / 2 - actionBar.getHeight();
-                    final float ratio = (float) Math.min(Math.max(offset, 0), headerHeight) / headerHeight;
+                    final float ratio = (float) Math.min(Math.max(lastScrollYOffset, 0), headerHeight) / headerHeight;
                     final int newAlpha = (int) (ratio * 255);
                     actionBarDrawable.setAlpha(newAlpha);
 
-                    if (offset > 400) {
+                    if (lastScrollYOffset > 400) {
                         String title = "Georgi Christov";
                         String subtitle = "@georgi";
 

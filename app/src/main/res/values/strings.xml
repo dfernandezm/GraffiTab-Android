@@ -80,11 +80,23 @@
     <!-- Following -->
     <string name="following">Following</string>
 
+    <!-- Edit Profile -->
+    <string name="edit_profile">Edit Profile</string>
+    <string name="edit_profile_avatar">Profile Picture</string>
+    <string name="edit_profile_cover">Cover Picture</string>
+    <string name="edit_profile_header_private">Private Graffiti</string>
+    <string name="edit_profile_manage_private">Manage Private Graffiti</string>
+    <string name="edit_profile_change_password">Change Password</string>
+    <string name="edit_profile_about">About</string>
+    <string name="edit_profile_website">Website</string>
+    <string name="edit_profile_private_description">Private graffiti can only be viewed by you</string>
+
     <!-- Other -->
     <string name="other_toggle">Switch Layout</string>
     <string name="other_take_picture">Take a Photo</string>
     <string name="other_choose_picture">Choose from Gallery</string>
     <string name="other_select_image">Choose an image</string>
+    <string name="other_remove_image">Remove image</string>
     <string name="other_refresh">Refresh</string>
     <string name="other_processing">Processing</string>
     <string name="other_done">Done</string>

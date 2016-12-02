@@ -12,4 +12,9 @@
         android:icon="@drawable/ic_photo_library_black_24dp"
         android:title="@string/other_choose_picture"
         app:showAsAction="always" />
+    <item
+        android:id="@+id/action_remove"
+        android:icon="@drawable/ic_clear_black_24dp"
+        android:title="@string/other_remove_image"
+        app:showAsAction="always" />
 </menu>

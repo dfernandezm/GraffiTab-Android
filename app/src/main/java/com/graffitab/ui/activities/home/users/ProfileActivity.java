@@ -12,6 +12,7 @@ import android.widget.ImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
+import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.user.profile.UserProfileFragment;
 import com.graffitab.utils.image.ImageUtils;
@@ -48,6 +49,10 @@ public class ProfileActivity extends CameraUtilsActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             finish();
+            return true;
+        }
+        else if (item.getItemId() == R.id.action_settings) {
+            startActivity(new Intent(this, EditProfileActivity.class));
             return true;
         }
 

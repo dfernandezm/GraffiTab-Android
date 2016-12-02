@@ -108,6 +108,10 @@
         <activity
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+            android:name=".ui.activities.home.me.edit.EditProfileActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

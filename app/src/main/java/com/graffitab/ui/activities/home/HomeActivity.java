@@ -2,8 +2,6 @@ package com.graffitab.ui.activities.home;
 
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
@@ -26,8 +24,9 @@ import com.graffitab.ui.fragments.home.NotificationsFragment;
 import com.graffitab.ui.fragments.home.RecentFragment;
 import com.graffitab.ui.fragments.home.TrendingFragment;
 import com.graffitab.ui.views.sidemenu.CustomResideMenu;
-import com.graffitab.utils.image.ImageUtils;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.image.ImageUtils;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -102,15 +101,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home, menu);
-
-        for (int i = 0; i < menu.size(); i++) {
-            MenuItem menuItem = menu.getItem(i);
-            Drawable drawable = menuItem.getIcon();
-            if (drawable != null) {
-                drawable.mutate();
-                drawable.setColorFilter(getResources().getColor(R.color.colorPrimary), PorterDuff.Mode.SRC_ATOP);
-            }
-        }
+        ActivityUtils.colorMenu(this, menu);
 
         return true;
     }
