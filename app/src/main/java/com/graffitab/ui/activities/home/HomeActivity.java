@@ -18,6 +18,12 @@ import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
+import com.graffitab.graffitabsdk.log.GTLog;
+import com.graffitab.graffitabsdk.managers.api.GTApiManager;
+import com.graffitab.graffitabsdk.managers.api.GTUserManager;
+import com.graffitab.graffitabsdk.model.GTUser;
+import com.graffitab.graffitabsdk.network.common.GTResponseObject;
+import com.graffitab.graffitabsdk.network.common.ResponseHandler;
 import com.graffitab.ui.activities.home.me.locations.LocationsActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
@@ -67,6 +73,21 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setupViewPager();
         setupTabBar();
         setupMenu();
+
+        GTUserManager.get().getMe(new ResponseHandler<GTUser>() {
+            @Override
+            public void onSuccess(GTResponseObject<GTUser> responseObject) {
+                GTUser user = responseObject.getObject();
+                GTLog.i("Me", "Got me: " + user.email, true);
+            }
+
+            @Override
+            public void onFailure(GTResponseObject<GTUser> responseObject) {
+                GTLog.i("Me", "Got error " + responseObject.getResultCode() + " " + responseObject.getResultDetail(), true);
+                GTApiManager.clearCookies();
+            }
+        });
+
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.graffitab.ui.activities.login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -13,8 +15,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.graffitabsdk.managers.api.GTUserManager;
+import com.graffitab.graffitabsdk.model.GTUser;
+import com.graffitab.graffitabsdk.network.common.GTResponseObject;
+import com.graffitab.graffitabsdk.network.common.ResponseHandler;
 import com.graffitab.ui.activities.custom.facebook.FacebookUtilsActivity;
 import com.graffitab.ui.activities.home.HomeActivity;
+import com.graffitab.ui.activities.splash.SplashActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.TextUtils;
@@ -62,8 +69,21 @@ public class LoginActivity extends FacebookUtilsActivity {
         String pw = passwordField.getText().toString();
 
         if (InputValidator.validateLogin(this, un, pw)) {
-//            TaskDialog.getInstance().showDialog(null, this, null);
-            showHomeScreen();
+
+            GTUserManager.get().login(un, pw, new ResponseHandler<GTUser>() {
+                @Override
+                public void onSuccess(GTResponseObject<GTUser> responseObject) {
+                    TaskDialog.getInstance().showDialog("Login was successful", LoginActivity.this, null);
+                    saveLoggedIn(true);
+                    showHomeScreen();
+                }
+
+                @Override
+                public void onFailure(GTResponseObject<GTUser> responseObject) {
+                    TaskDialog.getInstance().showDialog("Failed login", LoginActivity.this, null);
+                    saveLoggedIn(false);
+                }
+            });
         }
     }
 
@@ -101,7 +121,6 @@ public class LoginActivity extends FacebookUtilsActivity {
     }
 
     // Setup
-
     private void setupTextFields() {
         TextUtils.colorTextViewSubstring(signUpField, getString(R.string.login_sign_up), Color.parseColor("#ddffffff"));
     }
@@ -119,5 +138,11 @@ public class LoginActivity extends FacebookUtilsActivity {
             ImageView background = (ImageView) findViewById(R.id.background);
             background.setImageDrawable(drawable);
         } catch (IOException e) {}
+    }
+
+    private void saveLoggedIn(boolean loggedIn) {
+        SharedPreferences sharedPreferences = getSharedPreferences("LOGIN_STATUS",Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit().putBoolean("loggedIn", loggedIn);
+        editor.apply();
     }
 }

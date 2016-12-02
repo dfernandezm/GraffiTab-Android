@@ -1,6 +1,8 @@
 package com.graffitab.ui.activities.splash;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -10,6 +12,8 @@ import android.widget.ImageView;
 import com.graffitab.R;
 import com.graffitab.graffitabsdk.config.GTConfig;
 import com.graffitab.graffitabsdk.config.GTSDKConfig;
+import com.graffitab.graffitabsdk.managers.api.GTApiManager;
+import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
@@ -54,19 +58,29 @@ public class SplashActivity extends AppCompatActivity {
         overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
     }
 
-    // Login
+    private void showHomeScreen() {
+        startActivity(new Intent(getBaseContext(), HomeActivity.class));
 
+        finish();
+
+        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+    }
+
+    // Login
     private void checkLoginStatus() {
-        showLoginScreen();
+        if (isLoggedIn()) {
+            showHomeScreen();
+        } else {
+            showLoginScreen();
+        }
     }
 
     // Setup
-
     private void setupSDK() {
         GTConfig config = GTConfig.defaultConfig();
         config.logEnabled = true;
-
-        GTSDKConfig.sharedInstance.setConfig(config);
+        GTSDKConfig.set(config);
+        GTApiManager.setupPersistentCookieManager(getApplicationContext());
     }
 
     private void setupBackgroundImage() {
@@ -82,5 +96,11 @@ public class SplashActivity extends AppCompatActivity {
             ImageView background = (ImageView) findViewById(R.id.background);
             background.setImageDrawable(drawable);
         } catch (IOException e) {}
+    }
+
+    private boolean isLoggedIn() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LOGIN_STATUS",Context.MODE_PRIVATE);
+        return sharedPreferences.getBoolean("loggedIn", false);
+        //return false;
     }
 }
