@@ -112,6 +112,12 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1px"
+                android:layout_marginLeft="15dp"
+                android:background="#eaeaea" />
+
             <LinearLayout
                 android:id="@+id/changePasswordLayout"
                 android:layout_width="match_parent"
@@ -143,10 +149,10 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="1dp"
+                android:layout_height="1px"
                 android:layout_marginBottom="25dp"
                 android:layout_marginLeft="15dp"
-                android:background="#efefef" />
+                android:background="#eaeaea" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/firstName"
@@ -244,10 +250,10 @@
 
             <View
                 android:layout_width="wrap_content"
-                android:layout_height="1dp"
+                android:layout_height="1px"
                 android:layout_marginLeft="15dp"
                 android:layout_marginTop="8dp"
-                android:background="#efefef" />
+                android:background="#eaeaea" />
 
             <LinearLayout
                 android:id="@+id/privateLayout"
