@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home.me.edit;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.Menu;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
+import com.graffitab.ui.activities.home.me.PrivateStreamablesActivity;
 import com.graffitab.utils.activity.ActivityUtils;
 
 import butterknife.BindView;
@@ -59,7 +61,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
 
     @OnClick(R.id.privateLayout)
     public void onClickPrivate(View view) {
-
+        startActivity(new Intent(this, PrivateStreamablesActivity.class));
     }
 
     @Override

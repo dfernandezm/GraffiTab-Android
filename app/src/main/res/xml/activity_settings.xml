@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <PreferenceCategory android:title="@string/settings_account">
+        <Preference
+            android:key="editProfile"
+            android:title="@string/settings_edit_profile" />
+
+        <Preference
+            android:key="changePassword"
+            android:title="@string/edit_profile_change_password" />
+
+        <Preference
+            android:key="likedPosts"
+            android:title="@string/settings_liked" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="rememberMe"
+            android:summary="@string/settings_remember_me_description"
+            android:title="@string/settings_remember_me" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_discover">
+        <Preference
+            android:key="findFacebookFriends"
+            android:title="@string/settings_find_facebook_friends"
+            android:icon="@drawable/ic_action_facebook"/>
+
+        <Preference
+            android:key="followersActivity"
+            android:title="@string/settings_followers_activity" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/home_settings">
+        <Preference
+            android:key="linkedAccounts"
+            android:title="@string/settings_linked_accounts" />
+
+        <Preference
+            android:key="clearCache"
+            android:title="@string/settings_clear_cache" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="drawingAssistant"
+            android:title="@string/settings_drawing_assistant" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_support">
+        <Preference
+            android:key="helpCenter"
+            android:title="@string/settings_help_center" />
+
+        <Preference
+            android:key="reportProblem"
+            android:title="@string/settings_report_problem" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_about">
+        <Preference
+            android:key="terms"
+            android:title="@string/sign_up_terms_of_use" />
+
+        <Preference
+            android:key="eula"
+            android:title="@string/settings_eula" />
+
+        <Preference
+            android:key="about"
+            android:title="@string/settings_about" />
+    </PreferenceCategory>
+    <PreferenceCategory>
+        <Preference
+            android:key="logout"
+            android:title="@string/settings_logout"/>
+    </PreferenceCategory>
+</PreferenceScreen>

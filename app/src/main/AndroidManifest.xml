@@ -121,6 +121,14 @@
             android:name=".ui.activities.home.streamables.explorer.ExplorerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.me.PrivateStreamablesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.settings.SettingsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

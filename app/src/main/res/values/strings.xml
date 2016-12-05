@@ -94,6 +94,28 @@
     <!-- Explorer -->
     <string name="explorer">Explorer</string>
 
+    <!-- Private Streamables -->
+    <string name="private_posts">Private Graffiti</string>
+
+    <!-- Settings -->
+    <string name="settings_account">Account</string>
+    <string name="settings_edit_profile">Edit Profile</string>
+    <string name="settings_liked">Posts You\'ve Liked</string>
+    <string name="settings_remember_me">Remember Me</string>
+    <string name="settings_remember_me_description">Remembers your login credentials and autofills them in case your log out.</string>
+    <string name="settings_discover">Discover</string>
+    <string name="settings_find_facebook_friends">Find Facebook Friends</string>
+    <string name="settings_followers_activity">Followers Activity</string>
+    <string name="settings_linked_accounts">Linked Accounts</string>
+    <string name="settings_clear_cache">Clear App Cache</string>
+    <string name="settings_drawing_assistant">Show Drawing Assistant</string>
+    <string name="settings_support">Support</string>
+    <string name="settings_help_center">Help Center</string>
+    <string name="settings_report_problem">Report a Problem</string>
+    <string name="settings_about">About</string>
+    <string name="settings_eula">End User License Agreement</string>
+    <string name="settings_logout">Log out</string>
+
     <!-- Other -->
     <string name="other_toggle">Switch Layout</string>
     <string name="other_take_picture">Take a Photo</string>

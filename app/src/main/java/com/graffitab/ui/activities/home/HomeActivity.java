@@ -17,6 +17,7 @@ import android.view.Window;
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.ui.activities.home.me.locations.LocationsActivity;
+import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
@@ -91,9 +92,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     startActivity(new Intent(HomeActivity.this, LocationsActivity.class));
                 else if ((int) view.getTag() == 2) // Search.
                     startActivity(new Intent(HomeActivity.this, SearchActivity.class));
-                else if ((int) view.getTag() == 3) { // Settings.
-
-                }
+                else if ((int) view.getTag() == 3) // Settings.
+                    startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             }
         }, 300);
     }
