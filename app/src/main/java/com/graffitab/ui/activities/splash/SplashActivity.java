@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import com.graffitab.R;
 import com.graffitab.graffitabsdk.config.GTConfig;
 import com.graffitab.graffitabsdk.config.GTSDKConfig;
+import com.graffitab.graffitabsdk.dagger.DaggerInjector;
 import com.graffitab.graffitabsdk.managers.api.GTApiManager;
+import com.graffitab.graffitabsdk.managers.api.GTUserManager;
 import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.utils.Utils;
@@ -22,12 +24,17 @@ import com.graffitab.utils.display.BitmapUtils;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.inject.Inject;
+
 /**
  * Created by georgichristov on 11/11/2016
  * --
  * Copyright © GraffiTab Inc. 2016
  */
 public class SplashActivity extends AppCompatActivity {
+
+    @Inject
+    GTUserManager gtUserManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,8 +86,8 @@ public class SplashActivity extends AppCompatActivity {
     private void setupSDK() {
         GTConfig config = GTConfig.defaultConfig();
         config.logEnabled = true;
-        GTSDKConfig.set(config);
-        GTApiManager.setupPersistentCookieManager(getApplicationContext());
+        // Put in a common place?
+        DaggerInjector.get(getApplication(), config).inject(this);
     }
 
     private void setupBackgroundImage() {

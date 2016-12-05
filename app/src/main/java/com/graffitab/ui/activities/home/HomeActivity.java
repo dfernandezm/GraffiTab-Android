@@ -68,26 +68,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
-
+        
         setupTopBar();
         setupViewPager();
         setupTabBar();
         setupMenu();
-
-        GTUserManager.get().getMe(new ResponseHandler<GTUser>() {
-            @Override
-            public void onSuccess(GTResponseObject<GTUser> responseObject) {
-                GTUser user = responseObject.getObject();
-                GTLog.i("Me", "Got me: " + user.email, true);
-            }
-
-            @Override
-            public void onFailure(GTResponseObject<GTUser> responseObject) {
-                GTLog.i("Me", "Got error " + responseObject.getResultCode() + " " + responseObject.getResultDetail(), true);
-                GTApiManager.clearCookies();
-            }
-        });
-
     }
 
     @Override

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.graffitabsdk.dagger.DaggerInjector;
 import com.graffitab.graffitabsdk.managers.api.GTUserManager;
 import com.graffitab.graffitabsdk.model.GTUser;
 import com.graffitab.graffitabsdk.network.common.GTResponseObject;
@@ -32,6 +33,8 @@ import com.graffitab.utils.input.InputValidator;
 import java.io.IOException;
 import java.io.InputStream;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -47,6 +50,9 @@ public class LoginActivity extends FacebookUtilsActivity {
     @BindView(R.id.password) EditText passwordField;
     @BindView(R.id.signUp) TextView signUpField;
 
+    @Inject
+    GTUserManager userManager;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +63,8 @@ public class LoginActivity extends FacebookUtilsActivity {
 
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
+
+        DaggerInjector.get().inject(this);
 
         setupBackgroundImage();
         setupTextFields();
@@ -69,8 +77,7 @@ public class LoginActivity extends FacebookUtilsActivity {
         String pw = passwordField.getText().toString();
 
         if (InputValidator.validateLogin(this, un, pw)) {
-
-            GTUserManager.get().login(un, pw, new ResponseHandler<GTUser>() {
+            userManager.login(un, pw, new ResponseHandler<GTUser>() {
                 @Override
                 public void onSuccess(GTResponseObject<GTUser> responseObject) {
                     TaskDialog.getInstance().showDialog("Login was successful", LoginActivity.this, null);
