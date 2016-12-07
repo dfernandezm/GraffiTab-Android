@@ -32,6 +32,7 @@ def roundedImageViewVersion = "2.2.1"
 def circleIndicatorVersion = "1.2.2@aar"
 def bottomSheetVersion = "1.+@aar"
 def imageCropperVersion = "2.3.+"
+def instabugVersion = "3+"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -55,4 +56,5 @@ dependencies {
     compile "me.relex:circleindicator:$circleIndicatorVersion"
     compile "com.cocosw:bottomsheet:$bottomSheetVersion"
     compile "com.theartofdev.edmodo:android-image-cropper:$imageCropperVersion"
+    compile "com.instabug.library:instabug:$instabugVersion"
 }

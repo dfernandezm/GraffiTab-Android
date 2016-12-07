@@ -25,6 +25,7 @@ public class WebActivity extends AppCompatActivity {
     @BindView(R.id.webView) WebView webView;
 
     private String htmlFile;
+    private String title;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +36,7 @@ public class WebActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             htmlFile = extras.getString(Constants.EXTRA_HTML_FILE);
+            title = extras.getString(Constants.EXTRA_TITLE);
         }
         else
             finish();
@@ -65,7 +67,7 @@ public class WebActivity extends AppCompatActivity {
     // Setup
 
     private void setupTopBar() {
-        getSupportActionBar().setTitle(getString(R.string.sign_up_terms_of_use));
+        getSupportActionBar().setTitle(title);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

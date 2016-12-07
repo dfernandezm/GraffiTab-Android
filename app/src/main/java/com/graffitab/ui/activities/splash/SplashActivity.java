@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 
 import com.graffitab.R;
+import com.graffitab.config.AppConfig;
 import com.graffitab.graffitabsdk.config.GTConfig;
 import com.graffitab.graffitabsdk.config.GTSDKConfig;
 import com.graffitab.ui.activities.login.LoginActivity;
@@ -34,8 +35,9 @@ public class SplashActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_splash);
 
-        setupSDK();
         setupBackgroundImage();
+
+        configureApp();
 
         Utils.runWithDelay(new Runnable() {
 
@@ -60,14 +62,13 @@ public class SplashActivity extends AppCompatActivity {
         showLoginScreen();
     }
 
-    // Setup
+    // Configure
 
-    private void setupSDK() {
-        GTConfig config = GTConfig.defaultConfig();
-        config.logEnabled = true;
-
-        GTSDKConfig.sharedInstance.setConfig(config);
+    private void configureApp() {
+        AppConfig.configuration.configureApp();
     }
+
+    // Setup
 
     private void setupBackgroundImage() {
         int resId = R.drawable.splash;

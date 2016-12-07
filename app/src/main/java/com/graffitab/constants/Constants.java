@@ -10,6 +10,7 @@ public class Constants {
     public static final String FILE_APP_FOLDER = "GraffiTab";
 
     public static final String EXTRA_HTML_FILE = "EXTRA_HTML_FILE";
+    public static final String EXTRA_TITLE = "EXTRA_TITLE";
 
     public static final Integer MAX_ITEMS = 20;
 

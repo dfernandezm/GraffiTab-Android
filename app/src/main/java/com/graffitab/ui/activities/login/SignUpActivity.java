@@ -62,6 +62,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void onClickTerms(View view) {
         Intent i = new Intent(this, WebActivity.class);
         i.putExtra(Constants.EXTRA_HTML_FILE, "terms.html");
+        i.putExtra(Constants.EXTRA_TITLE, getString(R.string.sign_up_terms_of_use));
         startActivity(i);
     }
 

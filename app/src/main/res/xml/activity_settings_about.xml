@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <Preference
+        android:key="releaseInformation"
+        android:title="@string/settings_release_information" />
+    <PreferenceCategory android:title="@string/settings_version_information">
+        <Preference
+            android:key="version"
+            android:title="@string/settings_version" />
+
+        <Preference
+            android:key="build"
+            android:title="@string/settings_build" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/settings_copyright"/>
+</PreferenceScreen>
