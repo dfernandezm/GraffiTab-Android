@@ -19,7 +19,7 @@ import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
-import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.Input.InputValidator;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;

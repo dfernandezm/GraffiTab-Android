@@ -18,7 +18,7 @@ import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
-import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.Input.InputValidator;
 
 import java.io.IOException;
 import java.io.InputStream;

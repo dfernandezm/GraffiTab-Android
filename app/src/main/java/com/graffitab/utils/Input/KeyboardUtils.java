@@ -1,4 +1,4 @@
-package com.graffitab.utils.input;
+package com.graffitab.utils.Input;
 
 import android.app.Activity;
 import android.content.Context;
