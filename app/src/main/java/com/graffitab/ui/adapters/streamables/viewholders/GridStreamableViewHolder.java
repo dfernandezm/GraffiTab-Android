@@ -2,7 +2,7 @@ package com.graffitab.ui.adapters.streamables.viewholders;
 
 import android.view.View;
 
-import com.graffitab.graffitabsdk.model.GTStreamable;
+import com.graffitabsdk.model.GTStreamable;
 
 import butterknife.ButterKnife;
 

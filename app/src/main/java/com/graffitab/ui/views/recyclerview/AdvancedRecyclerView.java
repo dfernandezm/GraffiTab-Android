@@ -12,8 +12,8 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecycleView;
+import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewAdapter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

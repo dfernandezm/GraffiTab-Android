@@ -9,8 +9,6 @@ import android.view.View;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
-import com.graffitab.graffitabsdk.model.GTAsset;
-import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
@@ -18,6 +16,8 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDe
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.DisplayUtils;
+import com.graffitabsdk.model.GTAsset;
+import com.graffitabsdk.model.GTStreamable;
 
 import java.util.ArrayList;
 import java.util.List;

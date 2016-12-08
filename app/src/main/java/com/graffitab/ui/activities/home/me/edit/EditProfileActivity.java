@@ -56,7 +56,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
 
     @OnClick(R.id.changePasswordLayout)
     public void onClickChangePassword(View view) {
-
+        startActivity(new Intent(this, ChangePasswordActivity.class));
     }
 
     @OnClick(R.id.privateLayout)

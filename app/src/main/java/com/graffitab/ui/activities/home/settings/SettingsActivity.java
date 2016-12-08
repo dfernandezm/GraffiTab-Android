@@ -14,6 +14,12 @@ import android.view.ViewGroup;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.WebActivity;
+import com.graffitab.ui.activities.home.me.edit.ChangePasswordActivity;
+import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
+import com.graffitab.ui.activities.home.users.UserLikesActivity;
+import com.graffitab.ui.activities.login.LoginActivity;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.instabug.library.Instabug;
 
 /**
@@ -42,6 +48,10 @@ public class SettingsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    private void logout() {
+
+    }
+
     // Setup
 
     private void setupTopBar() {
@@ -51,20 +61,33 @@ public class SettingsActivity extends AppCompatActivity {
 
     public static class MyPreferenceFragment extends PreferenceFragment {
 
+        private Preference editProfilePreference;
+        private Preference changePasswordPreference;
+        private Preference userLikesPreference;
+
+        private Preference helpPreference;
         private Preference reportPreference;
+
         private Preference termsPreference;
         private Preference eulaPreference;
         private Preference aboutPreference;
+
+        private Preference logoutPreference;
 
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.activity_settings);
 
+            editProfilePreference = findPreference("editProfile");
+            changePasswordPreference = findPreference("changePassword");
+            userLikesPreference = findPreference("likedPosts");
+            helpPreference = findPreference("helpCenter");
             reportPreference = findPreference("reportProblem");
             termsPreference = findPreference("terms");
             eulaPreference = findPreference("eula");
             aboutPreference = findPreference("about");
+            logoutPreference = findPreference("logout");
 
             bindPreferenced();
         }
@@ -78,6 +101,38 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         private void bindPreferenced() {
+            editProfilePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(getActivity(), EditProfileActivity.class));
+                    return true;
+                }
+            });
+            changePasswordPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
+                    return true;
+                }
+            });
+            userLikesPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(getActivity(), UserLikesActivity.class));
+                    return true;
+                }
+            });
+            helpPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Instabug.invoke();
+                    return true;
+                }
+            });
             reportPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
                 @Override
@@ -113,6 +168,27 @@ public class SettingsActivity extends AppCompatActivity {
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
                     startActivity(new Intent(getActivity(), AboutActivity.class));
+                    return true;
+                }
+            });
+            logoutPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    DialogBuilder.buildYesNoDialog(getActivity(), getString(R.string.app_name), getString(R.string.settings_prompt_logout), getString(R.string.settings_logout), getString(R.string.other_cancel), new OnYesNoHandler() {
+
+                        @Override
+                        public void onClickYes() {
+                            Intent intent = new Intent(getActivity(), LoginActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            getActivity().finish();
+                            getActivity().overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+                        }
+
+                        @Override
+                        public void onClickNo() {}
+                    });
                     return true;
                 }
             });

@@ -16,9 +16,9 @@ import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.utils.text.TextUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
+import com.graffitab.utils.text.TextUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -62,7 +62,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         String em = emailField.getText().toString();
 
         if (TextUtils.isValidEmailAddress(em)) {
-            TaskDialog.getInstance().showDialog(null, this, null);
+            finish();
         }
     }
 

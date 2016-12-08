@@ -4,7 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.graffitab.R;
-import com.graffitab.graffitabsdk.model.GTNotification;
+import com.graffitabsdk.model.GTNotification;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

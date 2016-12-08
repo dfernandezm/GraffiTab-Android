@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.graffitab.R;
-import com.graffitab.graffitabsdk.model.GTNotification;
 import com.graffitab.ui.adapters.notifications.viewholders.CommentNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.FollowNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.LikeNotificationViewHolder;
@@ -15,6 +14,7 @@ import com.graffitab.ui.adapters.notifications.viewholders.MentionNotificationVi
 import com.graffitab.ui.adapters.notifications.viewholders.NotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.WelcomeNotificationViewHolder;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitabsdk.model.GTNotification;
 
 import java.util.List;
 

@@ -32,7 +32,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Some address string goes here and can be on multiple lines."
-            android:textColor="#232728"
+            android:textColor="@color/colorLightBlack"
             android:textSize="15sp"
             android:lines="2"
             android:ellipsize="end"/>

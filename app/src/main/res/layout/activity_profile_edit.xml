@@ -49,7 +49,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/edit_profile_avatar"
-                        android:textColor="#232728"
+                        android:textColor="@color/colorLightBlack"
                         android:textSize="17sp" />
 
                     <ImageView
@@ -100,7 +100,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/edit_profile_cover"
-                        android:textColor="#232728"
+                        android:textColor="@color/colorLightBlack"
                         android:textSize="17sp" />
 
                     <ImageView
@@ -136,7 +136,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/edit_profile_change_password"
-                    android:textColor="#232728"
+                    android:textColor="@color/colorLightBlack"
                     android:textSize="17sp" />
 
                 <ImageView
@@ -164,7 +164,7 @@
                 android:inputType="textCapWords"
                 android:text="Georgi"
                 android:textSize="17sp"
-                app:met_baseColor="#232728"
+                app:met_baseColor="@color/colorLightBlack"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/colorPrimary"
                 app:met_textColorHint="#808080"
@@ -181,7 +181,7 @@
                 android:inputType="textCapWords"
                 android:text="Christov"
                 android:textSize="17sp"
-                app:met_baseColor="#232728"
+                app:met_baseColor="@color/colorLightBlack"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/colorPrimary"
                 app:met_textColorHint="#808080"
@@ -198,7 +198,7 @@
                 android:inputType="textCapWords"
                 android:text="georgi.christov89@gmail.com"
                 android:textSize="17sp"
-                app:met_baseColor="#232728"
+                app:met_baseColor="@color/colorLightBlack"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/colorPrimary"
                 app:met_textColorHint="#808080"
@@ -215,7 +215,7 @@
                 android:inputType="textCapWords"
                 android:text="Mobile Software Developer"
                 android:textSize="17sp"
-                app:met_baseColor="#232728"
+                app:met_baseColor="@color/colorLightBlack"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/colorPrimary"
                 app:met_textColorHint="#808080"
@@ -232,7 +232,7 @@
                 android:inputType="textCapWords"
                 android:text="www.graffitab.com"
                 android:textSize="17sp"
-                app:met_baseColor="#232728"
+                app:met_baseColor="@color/colorLightBlack"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/colorPrimary"
                 app:met_textColorHint="#808080"
@@ -244,7 +244,7 @@
                 android:layout_marginTop="20dp"
                 android:paddingLeft="15dp"
                 android:text="@string/edit_profile_header_private"
-                android:textColor="#232728"
+                android:textColor="@color/colorLightBlack"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -278,7 +278,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/edit_profile_manage_private"
-                        android:textColor="#232728"
+                        android:textColor="@color/colorLightBlack"
                         android:textSize="17sp" />
 
                     <TextView

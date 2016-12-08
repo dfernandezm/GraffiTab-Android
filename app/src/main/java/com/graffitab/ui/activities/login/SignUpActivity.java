@@ -16,10 +16,10 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.WebActivity;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.utils.text.TextUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.text.TextUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
@@ -82,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
         String cpw = confirmPassword.getText().toString();
 
         if (InputValidator.validateSignUp(this, fn, ln, em, un, pw, cpw)) {
-            TaskDialog.getInstance().showDialog(null, this, null);
+            finish();
         }
     }
 

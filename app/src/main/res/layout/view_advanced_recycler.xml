@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="Some title text"
-            android:textColor="#232728"
+            android:textColor="@color/colorLightBlack"
             android:textSize="21sp"
             android:textStyle="bold" />
 

@@ -3,8 +3,8 @@ package com.graffitab.ui.adapters.profile;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 
-import com.graffitab.graffitabsdk.model.GTStreamable;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
+import com.graffitabsdk.model.GTStreamable;
 
 import java.util.List;
 

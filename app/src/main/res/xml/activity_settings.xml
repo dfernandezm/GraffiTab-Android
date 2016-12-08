@@ -72,6 +72,7 @@
     <PreferenceCategory>
         <Preference
             android:key="logout"
-            android:title="@string/settings_logout"/>
+            android:title="@string/settings_logout"
+            android:summary="Georgi Christov"/>
     </PreferenceCategory>
 </PreferenceScreen>

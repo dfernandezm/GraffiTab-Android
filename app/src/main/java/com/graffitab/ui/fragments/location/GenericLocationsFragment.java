@@ -5,12 +5,12 @@ import android.support.v7.widget.RecyclerView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
-import com.graffitab.graffitabsdk.model.GTLocation;
 import com.graffitab.ui.adapters.locations.GenericLocationsRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitabsdk.model.GTLocation;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -118,6 +118,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name=".ui.activities.home.me.edit.ChangePasswordActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateVisible" />
+        <activity
             android:name=".ui.activities.home.streamables.explorer.ExplorerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />

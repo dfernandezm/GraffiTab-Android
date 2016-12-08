@@ -15,10 +15,10 @@ import android.widget.TextView;
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.facebook.FacebookUtilsActivity;
 import com.graffitab.ui.activities.home.HomeActivity;
-import com.graffitab.utils.text.TextUtils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.text.TextUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,6 +61,21 @@ public class LoginActivity extends FacebookUtilsActivity {
 
         if (InputValidator.validateLogin(this, un, pw)) {
 //            TaskDialog.getInstance().showDialog(null, this, null);
+//
+//            GTSDK.getUserManager().login(un, pw, new GTResponseHandler<GTUser>() {
+//
+//                @Override
+//                public void onSuccess(GTResponse<GTUser> responseObject) {
+//                    System.out.println(responseObject.getObject().firstName);
+//                    TaskDialog.getInstance().hideDialog();
+//                }
+//
+//                @Override
+//                public void onFailure(GTResponse<GTUser> responseObject) {
+//                    TaskDialog.getInstance().hideDialog();
+//                    DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
+//                }
+//            });
             showHomeScreen();
         }
     }
@@ -92,9 +107,7 @@ public class LoginActivity extends FacebookUtilsActivity {
 
     private void showHomeScreen() {
         startActivity(new Intent(getBaseContext(), HomeActivity.class));
-
         finish();
-
         overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
     }
 

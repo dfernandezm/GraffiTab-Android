@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.graffitab.R;
-import com.graffitab.graffitabsdk.model.GTLocation;
+import com.graffitabsdk.model.GTLocation;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

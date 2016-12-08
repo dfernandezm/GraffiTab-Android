@@ -2,7 +2,7 @@ package com.graffitab.ui.adapters.notifications.viewholders;
 
 import android.view.View;
 
-import com.graffitab.graffitabsdk.model.GTNotification;
+import com.graffitabsdk.model.GTNotification;
 
 import butterknife.ButterKnife;
 

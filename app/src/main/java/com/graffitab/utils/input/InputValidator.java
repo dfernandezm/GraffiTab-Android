@@ -52,4 +52,20 @@ public class InputValidator {
         }
         return true;
     }
+
+    public static boolean validateChangePassword(Context context, String password, String newPassword, String confirmPassword) {
+        if (password.length() <= 0) {
+            DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name), context.getString(R.string.change_password_error_password));
+            return false;
+        }
+        if (newPassword.length() <= 0) {
+            DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name), context.getString(R.string.sign_up_error_password));
+            return false;
+        }
+        if (!newPassword.equals(confirmPassword)) {
+            DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name), context.getString(R.string.sign_up_error_confirm_password));
+            return false;
+        }
+        return true;
+    }
 }

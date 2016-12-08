@@ -60,7 +60,7 @@
 
     <!-- BottomSheet theme. -->
     <style name="BottomSheet.StyleDialog" parent="BottomSheet.Dialog">
-        <item name="android:textColorPrimary">#232728</item>
+        <item name="android:textColorPrimary">@color/colorLightBlack</item>
         <item name="android:textColorSecondary">#a0a0a0</item>
     </style>
 </resources>

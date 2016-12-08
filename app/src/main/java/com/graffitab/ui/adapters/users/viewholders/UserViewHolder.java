@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.graffitab.R;
-import com.graffitab.graffitabsdk.model.GTUser;
+import com.graffitabsdk.model.GTUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

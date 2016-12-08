@@ -4,7 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.graffitab.graffitabsdk.model.GTStreamable;
+import com.graffitabsdk.model.GTStreamable;
 
 import butterknife.ButterKnife;
 

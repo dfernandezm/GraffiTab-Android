@@ -9,8 +9,6 @@ import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.config.AppConfig;
-import com.graffitab.graffitabsdk.config.GTConfig;
-import com.graffitab.graffitabsdk.config.GTSDKConfig;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;

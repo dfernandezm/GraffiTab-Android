@@ -97,6 +97,11 @@
     <!-- Private Streamables -->
     <string name="private_posts">Private Graffiti</string>
 
+    <!-- Change Password -->
+    <string name="change_password_current">Your password</string>
+    <string name="change_password_new">New password</string>
+    <string name="change_password_error_password">Please enter your current password.</string>
+
     <!-- Settings -->
     <string name="settings_account">Account</string>
     <string name="settings_edit_profile">Edit Profile</string>
@@ -120,6 +125,7 @@
     <string name="settings_version">Version</string>
     <string name="settings_build">Build</string>
     <string name="settings_copyright">© 2016 GraffiTab All Rights Reserved</string>
+    <string name="settings_prompt_logout">Are you sure you want to log out?</string>
 
     <!-- Other -->
     <string name="other_toggle">Switch Layout</string>

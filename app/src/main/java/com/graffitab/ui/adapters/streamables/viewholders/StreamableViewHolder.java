@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
-import com.graffitab.graffitabsdk.model.GTStreamable;
+import com.graffitabsdk.model.GTStreamable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

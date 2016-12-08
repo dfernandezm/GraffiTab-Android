@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home.settings;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.Preference;
@@ -11,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.graffitab.R;
+import com.graffitab.constants.Constants;
+import com.graffitab.ui.activities.home.WebActivity;
 
 /**
  * Created by georgichristov on 07/12/2016
@@ -47,6 +50,7 @@ public class AboutActivity extends AppCompatActivity {
 
     public static class MyPreferenceFragment extends PreferenceFragment {
 
+        private Preference releaseInformationPreference;
         private Preference versionPreference;
         private Preference buildPreference;
 
@@ -55,6 +59,7 @@ public class AboutActivity extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.activity_settings_about);
 
+            releaseInformationPreference = findPreference("releaseInformation");
             versionPreference = findPreference("version");
             buildPreference = findPreference("build");
 
@@ -71,7 +76,17 @@ public class AboutActivity extends AppCompatActivity {
         }
 
         private void bindPreferenced() {
+            releaseInformationPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Intent i = new Intent(getActivity(), WebActivity.class);
+                    i.putExtra(Constants.EXTRA_HTML_FILE, "release_notes.html");
+                    i.putExtra(Constants.EXTRA_TITLE, getString(R.string.settings_release_information));
+                    startActivity(i);
+                    return true;
+                }
+            });
         }
 
         private void loadPreferences() {

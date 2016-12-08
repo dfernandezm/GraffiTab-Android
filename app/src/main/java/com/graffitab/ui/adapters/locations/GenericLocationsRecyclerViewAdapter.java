@@ -7,9 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.graffitab.R;
-import com.graffitab.graffitabsdk.model.GTLocation;
 import com.graffitab.ui.adapters.locations.viewholders.ListLocationViewHolder;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitabsdk.model.GTLocation;
 
 import java.util.List;
 
