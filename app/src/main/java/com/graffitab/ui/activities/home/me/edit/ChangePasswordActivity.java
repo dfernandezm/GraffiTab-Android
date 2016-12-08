@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import com.graffitab.R;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.input.KeyboardUtils;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import butterknife.BindView;
@@ -48,6 +49,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
+            KeyboardUtils.hideKeyboard(this);
             finish();
             return true;
         }

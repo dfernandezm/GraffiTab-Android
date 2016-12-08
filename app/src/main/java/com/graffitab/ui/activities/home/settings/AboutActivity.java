@@ -63,7 +63,7 @@ public class AboutActivity extends AppCompatActivity {
             versionPreference = findPreference("version");
             buildPreference = findPreference("build");
 
-            bindPreferenced();
+            bindPreferences();
             loadPreferences();
         }
 
@@ -75,7 +75,7 @@ public class AboutActivity extends AppCompatActivity {
             return view;
         }
 
-        private void bindPreferenced() {
+        private void bindPreferences() {
             releaseInformationPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
                 @Override

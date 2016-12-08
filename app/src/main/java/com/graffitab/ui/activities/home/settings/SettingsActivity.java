@@ -3,6 +3,7 @@ package com.graffitab.ui.activities.home.settings;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.settings.Settings;
 import com.graffitab.ui.activities.home.WebActivity;
 import com.graffitab.ui.activities.home.me.edit.ChangePasswordActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
@@ -64,6 +66,9 @@ public class SettingsActivity extends AppCompatActivity {
         private Preference editProfilePreference;
         private Preference changePasswordPreference;
         private Preference userLikesPreference;
+        private CheckBoxPreference rememberMePreference;
+
+        private CheckBoxPreference assistantPreference;
 
         private Preference helpPreference;
         private Preference reportPreference;
@@ -82,6 +87,8 @@ public class SettingsActivity extends AppCompatActivity {
             editProfilePreference = findPreference("editProfile");
             changePasswordPreference = findPreference("changePassword");
             userLikesPreference = findPreference("likedPosts");
+            rememberMePreference = (CheckBoxPreference) findPreference("rememberMe");
+            assistantPreference = (CheckBoxPreference) findPreference("drawingAssistant");
             helpPreference = findPreference("helpCenter");
             reportPreference = findPreference("reportProblem");
             termsPreference = findPreference("terms");
@@ -89,7 +96,8 @@ public class SettingsActivity extends AppCompatActivity {
             aboutPreference = findPreference("about");
             logoutPreference = findPreference("logout");
 
-            bindPreferenced();
+            bindPreferences();
+            loadPreferences();
         }
 
         @Override
@@ -100,7 +108,28 @@ public class SettingsActivity extends AppCompatActivity {
             return view;
         }
 
-        private void bindPreferenced() {
+        private void loadPreferences() {
+            rememberMePreference.setChecked(Settings.settings.rememberMe());
+            assistantPreference.setChecked(Settings.settings.showDrawingAssistant());
+        }
+
+        private void bindPreferences() {
+            assistantPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Settings.settings.setShowDrawingAssistant(assistantPreference.isChecked());
+                    return true;
+                }
+            });
+            rememberMePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Settings.settings.setRememberMe(rememberMePreference.isChecked());
+                    return true;
+                }
+            });
             editProfilePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
                 @Override
