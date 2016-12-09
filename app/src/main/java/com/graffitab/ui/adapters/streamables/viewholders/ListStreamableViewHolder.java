@@ -37,4 +37,54 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
     public void setItem(GTStreamable notification, int position) {
         super.setItem(notification, position);
     }
+
+    @Override
+    protected void setupViews() {
+        super.setupViews();
+
+        View.OnClickListener profileListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                openUserProfile();
+            }
+        };
+
+        avatar.setClickable(true);
+        avatar.setOnClickListener(profileListener);
+        usernameField.setClickable(true);
+        usernameField.setOnClickListener(profileListener);
+        nameField.setClickable(true);
+        nameField.setOnClickListener(profileListener);
+
+        likesField.setClickable(true);
+        likesField.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                openLikes();
+            }
+        });
+
+        View.OnClickListener commentListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                openComments();
+            }
+        };
+        commentsField.setClickable(true);
+        commentsField.setOnClickListener(commentListener);
+        commentButton.setClickable(true);
+        commentButton.setOnClickListener(commentListener);
+
+        shareButton.setClickable(true);
+        shareButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                share();
+            }
+        });
+    }
 }

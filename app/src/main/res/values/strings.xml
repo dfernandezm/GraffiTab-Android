@@ -70,6 +70,7 @@
 
     <!-- Likes -->
     <string name="likes">Likes</string>
+    <string name="likes_likers">Likers</string>
 
     <!-- Mentions -->
     <string name="mentions">Mentioned in</string>
