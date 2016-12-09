@@ -1,4 +1,4 @@
-package com.graffitab.ui.activities.custom.streamables;
+package com.graffitab.ui.activities.custom.comments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,19 +8,19 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.graffitab.R;
-import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
-import com.graffitab.ui.fragments.streamables.GridStreamablesFragment;
+import com.graffitab.ui.fragments.comments.GenericCommentsFragment;
+import com.graffitab.ui.fragments.comments.ListCommentsFragment;
 
 import butterknife.ButterKnife;
 
 /**
- * Created by georgichristov on 24/11/2016
+ * Created by georgichristov on 09/12/2016
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericStreamablesActivity extends AppCompatActivity {
+public class GenericCommentsActivity extends AppCompatActivity {
 
-    private GenericStreamablesFragment content;
+    private GenericCommentsFragment content;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,7 +31,7 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupTopBar();
-        setupContent(new GridStreamablesFragment());
+        setupContent();
     }
 
     @Override
@@ -43,18 +43,19 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public GenericStreamablesFragment getContent() {
+    public GenericCommentsFragment getContent() {
         return content;
     }
 
     // Setup
 
     public void setupTopBar() {
+        getSupportActionBar().setTitle(R.string.comments);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void setupContent(GenericStreamablesFragment contentFragment) {
-        content = contentFragment;
+    private void setupContent() {
+        content = new ListCommentsFragment();
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();

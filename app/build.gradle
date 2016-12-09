@@ -33,6 +33,7 @@ def circleIndicatorVersion = "1.2.2@aar"
 def bottomSheetVersion = "1.+@aar"
 def imageCropperVersion = "2.3.+"
 def instabugVersion = "3+"
+def swipyVersion = "1.2.3@aar"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -57,4 +58,5 @@ dependencies {
     compile "com.cocosw:bottomsheet:$bottomSheetVersion"
     compile "com.theartofdev.edmodo:android-image-cropper:$imageCropperVersion"
     compile "com.instabug.library:instabug:$instabugVersion"
+    compile "com.github.orangegangsters:swipy:$swipyVersion"
 }

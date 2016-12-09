@@ -1,7 +1,7 @@
 package com.graffitab.ui.fragments.home;
 
 import com.graffitab.R;
-import com.graffitab.ui.fragments.streamable.ListStreamablesFragment;
+import com.graffitab.ui.fragments.streamables.ListStreamablesFragment;
 
 /**
  * Created by georgichristov on 14/11/2016

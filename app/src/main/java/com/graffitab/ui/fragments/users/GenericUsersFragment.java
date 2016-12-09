@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.user;
+package com.graffitab.ui.fragments.users;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

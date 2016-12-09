@@ -1,6 +1,6 @@
 package com.graffitab.ui.fragments.search;
 
-import com.graffitab.ui.fragments.user.ListUsersFragment;
+import com.graffitab.ui.fragments.users.ListUsersFragment;
 import com.graffitab.utils.display.DisplayUtils;
 
 /**

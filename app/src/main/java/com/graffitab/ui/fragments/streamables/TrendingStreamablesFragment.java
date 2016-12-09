@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.streamable;
+package com.graffitab.ui.fragments.streamables;
 
 /**
  * Created by georgichristov on 15/11/2016

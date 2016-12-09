@@ -72,6 +72,10 @@
     <string name="likes">Likes</string>
     <string name="likes_likers">Likers</string>
 
+    <!-- Comments -->
+    <string name="comments">Comments</string>
+    <string name="comments_hint">Write your comment here</string>
+
     <!-- Mentions -->
     <string name="mentions">Mentioned in</string>
 
@@ -147,4 +151,6 @@
     <string name="other_empty_no_users_description">No users were found. Please come back again.</string>
     <string name="other_empty_no_locations">No locations yet</string>
     <string name="other_empty_no_locations_description">Create your first location and start receiving updates when new content is created in the area.</string>
+    <string name="other_empty_no_comments">No comments yet</string>
+    <string name="other_empty_no_comments_description">Be the first to post a comment</string>
 </resources>

@@ -13,8 +13,8 @@ import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
-import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
-import com.graffitab.ui.fragments.user.profile.UserProfileFragment;
+import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
+import com.graffitab.ui.fragments.users.profile.UserProfileFragment;
 import com.graffitab.utils.image.ImageUtils;
 
 import butterknife.BindView;

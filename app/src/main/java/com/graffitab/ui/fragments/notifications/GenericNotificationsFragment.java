@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.notification;
+package com.graffitab.ui.fragments.notifications;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

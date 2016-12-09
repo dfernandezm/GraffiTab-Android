@@ -9,7 +9,7 @@ import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
-import com.graffitab.ui.fragments.location.LocationsFragment;
+import com.graffitab.ui.fragments.locations.LocationsFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

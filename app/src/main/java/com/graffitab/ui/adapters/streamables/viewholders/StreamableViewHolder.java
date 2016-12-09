@@ -9,6 +9,7 @@ import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.ui.activities.home.streamables.CommentsActivity;
 import com.graffitab.ui.activities.home.streamables.LikesActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitabsdk.model.GTStreamable;
@@ -54,7 +55,8 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void openComments() {
-        System.out.println("COMMENTS");
+        Context context = itemView.getContext();
+        context.startActivity(new Intent(context, CommentsActivity.class));
     }
 
     public void share() {

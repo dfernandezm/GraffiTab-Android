@@ -5,7 +5,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.graffitab.R;
-import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment;
+import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.utils.activity.ActivityUtils;
 
 /**

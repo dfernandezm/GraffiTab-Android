@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.location;
+package com.graffitab.ui.fragments.locations;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;

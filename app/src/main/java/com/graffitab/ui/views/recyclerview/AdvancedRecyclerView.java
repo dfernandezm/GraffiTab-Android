@@ -2,7 +2,6 @@ package com.graffitab.ui.views.recyclerview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -14,6 +13,8 @@ import com.graffitab.R;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecycleView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewAdapter;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayout;
+import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -25,9 +26,8 @@ import butterknife.ButterKnife;
  */
 public class AdvancedRecyclerView extends RelativeLayout {
 
-    @BindView(R.id.refreshLayout) SwipeRefreshLayout refreshView;
-    @BindView(R.id.recyclerView)
-    AdvancedRecycleView recyclerView;
+    @BindView(R.id.refreshLayout) SwipyRefreshLayout refreshView;
+    @BindView(R.id.recyclerView) AdvancedRecycleView recyclerView;
 
     @BindView(R.id.emptyView) View emptyView;
     @BindView(R.id.emptyImage) ImageView emptyImage;
@@ -75,6 +75,10 @@ public class AdvancedRecyclerView extends RelativeLayout {
 
     public RecyclerView getRecyclerView() {
         return recyclerView;
+    }
+
+    public SwipyRefreshLayout getRefreshLayout() {
+        return refreshView;
     }
 
     public void beginRefreshing() {
@@ -128,10 +132,10 @@ public class AdvancedRecyclerView extends RelativeLayout {
     }
 
     public void addOnRefreshListener(final OnRefreshListener listener) {
-        refreshView.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshView.setOnRefreshListener(new SwipyRefreshLayout.OnRefreshListener() {
 
             @Override
-            public void onRefresh() {
+            public void onRefresh(SwipyRefreshLayoutDirection direction) {
                 listener.onRefresh();
             }
         });

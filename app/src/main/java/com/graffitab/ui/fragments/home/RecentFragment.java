@@ -1,6 +1,6 @@
 package com.graffitab.ui.fragments.home;
 
-import com.graffitab.ui.fragments.streamable.SwimlaneStreamablesFragment;
+import com.graffitab.ui.fragments.streamables.SwimlaneStreamablesFragment;
 
 /**
  * Created by georgichristov on 14/11/2016

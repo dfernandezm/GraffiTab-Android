@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorTableBackground">
+
+    <com.graffitab.ui.views.recyclerview.AdvancedRecyclerView
+        android:id="@+id/advancedRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/commentLayout" />
+
+    <LinearLayout
+        android:id="@+id/commentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/square_frame_chat"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingBottom="4dp"
+        android:paddingLeft="7dp"
+        android:paddingRight="5dp"
+        android:paddingTop="4dp">
+
+        <EditText
+            android:id="@+id/messageField"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="3dp"
+            android:layout_marginRight="7dp"
+            android:layout_marginTop="3dp"
+            android:layout_weight="1"
+            android:background="@drawable/rounded_corner_chat"
+            android:gravity="top"
+            android:hint="@string/comments_hint"
+            android:inputType="textMultiLine|textCapSentences"
+            android:padding="5dp"
+            android:textSize="15sp"
+            android:maxLines="5"/>
+
+        <ImageButton
+            android:id="@+id/sendBtn"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_marginBottom="2dp"
+            android:background="@null"
+            android:padding="2dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_send_black_24dp"
+            android:tint="@color/colorPrimary" />
+    </LinearLayout>
+</RelativeLayout>

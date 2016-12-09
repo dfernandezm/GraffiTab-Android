@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.location;
+package com.graffitab.ui.fragments.locations;
 
 import com.graffitab.application.MyApplication;
 import com.graffitab.utils.display.DisplayUtils;

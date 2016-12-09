@@ -8,8 +8,8 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.graffitab.R;
-import com.graffitab.ui.fragments.user.GenericUsersFragment;
-import com.graffitab.ui.fragments.user.ListUsersFragment;
+import com.graffitab.ui.fragments.users.GenericUsersFragment;
+import com.graffitab.ui.fragments.users.ListUsersFragment;
 
 import butterknife.ButterKnife;
 

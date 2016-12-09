@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.user;
+package com.graffitab.ui.fragments.users;
 
 /**
  * Created by georgichristov on 15/11/2016

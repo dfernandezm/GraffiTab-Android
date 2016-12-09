@@ -11,7 +11,7 @@ import com.graffitab.ui.adapters.streamables.viewholders.GridStreamableViewHolde
 import com.graffitab.ui.adapters.streamables.viewholders.ListStreamableViewHolder;
 import com.graffitab.ui.adapters.streamables.viewholders.SwimlaneStreamableViewHolder;
 import com.graffitab.ui.adapters.streamables.viewholders.TrendingStreamableViewHolder;
-import com.graffitab.ui.fragments.streamable.GenericStreamablesFragment.ViewType;
+import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment.ViewType;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitabsdk.model.GTStreamable;
 

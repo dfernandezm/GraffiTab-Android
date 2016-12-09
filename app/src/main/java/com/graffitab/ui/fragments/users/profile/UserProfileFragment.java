@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.user.profile;
+package com.graffitab.ui.fragments.users.profile;
 
 import android.content.res.Configuration;
 import android.graphics.Rect;
@@ -26,7 +26,7 @@ import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.profile.UserProfileHeaderAdapter;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.viewpagers.ProfileViewPagerAdapter;
-import com.graffitab.ui.fragments.streamable.ListStreamablesFragment;
+import com.graffitab.ui.fragments.streamables.ListStreamablesFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.activity.ActivityUtils;

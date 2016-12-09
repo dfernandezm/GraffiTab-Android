@@ -252,7 +252,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         // No-op.
     }
 
-    private void setupRecyclerView() {
+    protected void setupRecyclerView() {
         advancedRecyclerView.setRefreshColorScheme(R.color.colorPrimary, R.color.colorSecondary);
         advancedRecyclerView.addOnRefreshListener(new AdvancedRecyclerView.OnRefreshListener() {
 
@@ -274,7 +274,13 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
                 configureLayout();
 
-                loadItems(true, offset);
+                Utils.runWithDelay(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        loadItems(true, offset);
+                    }
+                }, 100);
             }
         });
     }

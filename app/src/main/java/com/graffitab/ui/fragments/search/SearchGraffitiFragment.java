@@ -1,6 +1,6 @@
 package com.graffitab.ui.fragments.search;
 
-import com.graffitab.ui.fragments.streamable.GridStreamablesFragment;
+import com.graffitab.ui.fragments.streamables.GridStreamablesFragment;
 
 /**
  * Created by georgichristov on 18/11/2016

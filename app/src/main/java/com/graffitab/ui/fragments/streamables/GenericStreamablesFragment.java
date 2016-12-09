@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.streamable;
+package com.graffitab.ui.fragments.streamables;
 
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
