@@ -33,4 +33,28 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
 
         streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
+
+    public void openUserProfile() {
+
+    }
+
+    public void openPost() {
+
+    }
+
+    public void openLikes() {
+
+    }
+
+    public void openComments() {
+
+    }
+
+    public void share() {
+
+    }
+
+    public void toggleLike() {
+
+    }
 }

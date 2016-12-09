@@ -107,7 +107,9 @@ public class LoginActivity extends FacebookUtilsActivity {
 
     private void showHomeScreen() {
         startActivity(new Intent(getBaseContext(), HomeActivity.class));
+
         finish();
+
         overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
     }
 
