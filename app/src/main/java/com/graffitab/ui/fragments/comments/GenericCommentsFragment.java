@@ -130,7 +130,7 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
         List<GTComment> loaded = new ArrayList();
         for (int i = 0; i < 25; i++) {
             GTComment comment = new GTComment();
-            comment.text = "This is some random text.";
+            comment.text = "This is some #random #text to @georgi. Check out this link - https://www.graffitab.com.";
             loaded.add(comment);
         }
         return loaded;

@@ -9,7 +9,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.ui.activities.home.SearchActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
+import com.graffitab.utils.Utils;
 import com.graffitabsdk.model.GTComment;
 import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkOnClickListener;
@@ -76,14 +78,17 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void onAutoLinkTextClick(AutoLinkMode autoLinkMode, String matchedText) {
+                Context context = itemView.getContext();
                 if (autoLinkMode == AutoLinkMode.MODE_URL) {
-
+                    Utils.openUrl(context, matchedText.trim());
                 }
                 else if (autoLinkMode == AutoLinkMode.MODE_HASHTAG) {
-
+                    String text = matchedText.substring(1);
+                    context.startActivity(new Intent(context, SearchActivity.class));
                 }
                 else if (autoLinkMode == AutoLinkMode.MODE_MENTION) {
-
+                    String text = matchedText.substring(1);
+                    context.startActivity(new Intent(context, ProfileActivity.class));
                 }
             }
         });
