@@ -50,14 +50,14 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <TextView
+        <com.luseen.autolinklibrary.AutoLinkTextView
             android:id="@+id/textField"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:text="This is some random comment that should go on multiple lines hopefully."
             android:textColor="#555555"
-            android:textSize="14sp" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/dateField"

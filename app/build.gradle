@@ -34,6 +34,7 @@ def bottomSheetVersion = "1.+@aar"
 def imageCropperVersion = "2.3.+"
 def instabugVersion = "3+"
 def swipyVersion = "1.2.3@aar"
+def autoLinkTextViewVersion = "0.3.0"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -59,4 +60,5 @@ dependencies {
     compile "com.theartofdev.edmodo:android-image-cropper:$imageCropperVersion"
     compile "com.instabug.library:instabug:$instabugVersion"
     compile "com.github.orangegangsters:swipy:$swipyVersion"
+    compile "com.github.armcha:AutoLinkTextView:$autoLinkTextViewVersion"
 }
