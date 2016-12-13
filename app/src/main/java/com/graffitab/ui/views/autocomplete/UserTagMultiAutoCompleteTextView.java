@@ -59,17 +59,20 @@ public class UserTagMultiAutoCompleteTextView extends MultiAutoCompleteTextView 
 
         @Override
         public void onTextChanged(CharSequence charSequence, int start, int before, int after) {
-            String character;
-            if (start < charSequence.length())
-                character = charSequence.toString().charAt(start) + "";
-            else if (start > 0) {
-                character = charSequence.toString().charAt(start - 1) + "";
+            if (start >= charSequence.length())
+                start = start - 1;
+
+            String token = null;
+            while (start >= 0) {
+                String character = charSequence.toString().charAt(start) + "";
+                if (character.startsWith("@") || character.startsWith("#")) { // We have a token.
+                    token = character;
+                    break;
+                }
+                start--;
             }
-            else {
-                character = "";
-            }
-            if (character.startsWith("@") || character.startsWith("#"))
-                adapter.setSearchTerm(character);
+            if (token != null) // Found a token, so update the adapter.
+                adapter.setSearchTerm(token);
         }
 
         @Override
