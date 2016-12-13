@@ -9,14 +9,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.MultiAutoCompleteTextView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.ui.adapters.comments.GenericCommentsRecyclerViewAdapter;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.fragments.comments.tokenizer.UserTagTokenizer;
+import com.graffitab.ui.views.autocomplete.UserTagMultiAutoCompleteTextView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
@@ -39,10 +37,9 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
 
     public enum ViewType {LIST_FULL}
 
-    @BindView(R.id.messageField) MultiAutoCompleteTextView commentField;
+    @BindView(R.id.messageField) UserTagMultiAutoCompleteTextView commentField;
 
     private ViewType viewType;
-    private String[] language ={"C","C++","Java",".NET","iPhone","Android","ASP.NET","PHP"};
 
     public void basicInit() {
         setViewType(ViewType.LIST_FULL);
@@ -147,14 +144,5 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
 
         getRecyclerView().setBackgroundColor(Color.WHITE);
         getRecyclerView().getRefreshLayout().setDirection(SwipyRefreshLayoutDirection.BOTTOM);
-
-        //Creating the instance of ArrayAdapter containing list of language names
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>
-                (getContext(), android.R.layout.select_dialog_item, language);
-
-        //Getting the instance of AutoCompleteTextView
-        commentField.setTokenizer(new UserTagTokenizer());
-        commentField.setThreshold(1);//will start working from first character
-        commentField.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
     }
 }

@@ -1,4 +1,4 @@
-package com.graffitab.ui.fragments.comments.tokenizer;
+package com.graffitab.ui.views.autocomplete.components;
 
 import android.text.SpannableString;
 import android.text.Spanned;
