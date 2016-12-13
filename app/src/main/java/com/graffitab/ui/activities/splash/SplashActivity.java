@@ -9,10 +9,12 @@ import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.config.AppConfig;
+import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
+import com.graffitabsdk.config.GTSDK;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,16 +50,24 @@ public class SplashActivity extends AppCompatActivity {
 
     private void showLoginScreen() {
         startActivity(new Intent(getBaseContext(), LoginActivity.class));
-
         finish();
+        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+    }
 
+    private void showHomeScreen() {
+        startActivity(new Intent(getBaseContext(), HomeActivity.class));
+        finish();
         overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
     }
 
     // Login
 
     private void checkLoginStatus() {
-        showLoginScreen();
+        if (GTSDK.getAccountManager().isUserLoggedIn()) {
+            showHomeScreen();
+        }
+        else
+            showLoginScreen();
     }
 
     // Configure
