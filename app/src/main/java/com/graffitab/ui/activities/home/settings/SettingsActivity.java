@@ -21,7 +21,12 @@ import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.activities.home.users.UserLikesActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
+import com.graffitab.utils.Utils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.GTResponse;
+import com.graffitabsdk.network.common.GTResponseHandler;
 import com.instabug.library.Instabug;
 
 /**
@@ -208,11 +213,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                         @Override
                         public void onClickYes() {
-                            Intent intent = new Intent(getActivity(), LoginActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            getActivity().finish();
-                            getActivity().overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+                            logout();
                         }
 
                         @Override
@@ -221,6 +222,45 @@ public class SettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+        }
+
+        private void logout() {
+            final Runnable handlerBlock = new Runnable() {
+
+                @Override
+                public void run() {
+                    TaskDialog.getInstance().hideDialog();
+
+                    // Show login screen.
+                    Intent intent = new Intent(getActivity(), LoginActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intent);
+                    getActivity().finish();
+                    getActivity().overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+                }
+            };
+
+            TaskDialog.getInstance().showDialog(getString(R.string.other_processing), getActivity(), null);
+
+            Utils.runWithDelay(new Runnable() { // Give time to the loading dialog to appear.
+
+                @Override
+                public void run() {
+                    // Logout user.
+                    GTSDK.getUserManager().logout(new GTResponseHandler<Void>() {
+
+                        @Override
+                        public void onSuccess(GTResponse<Void> gtResponse) {
+                            handlerBlock.run();
+                        }
+
+                        @Override
+                        public void onFailure(GTResponse<Void> responseObject) {
+                            handlerBlock.run();
+                        }
+                    });
+                }
+            }, 300);
         }
     }
 }

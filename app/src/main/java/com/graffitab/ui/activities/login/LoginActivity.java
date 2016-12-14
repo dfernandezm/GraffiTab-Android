@@ -72,12 +72,13 @@ public class LoginActivity extends FacebookUtilsActivity {
 
                 @Override
                 public void onSuccess(GTResponse<GTUser> responseObject) {
-                    TaskDialog.getInstance().hideDialog();
-                    showHomeScreen();
+                    Log.i(getClass().getSimpleName(), "Logged in");
+                    refreshCurrentUserAndFinishLogin();
                 }
 
                 @Override
                 public void onFailure(GTResponse<GTUser> responseObject) {
+                    Log.e(getClass().getSimpleName(), "Failed to login");
                     TaskDialog.getInstance().hideDialog();
                     DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
                 }
@@ -114,6 +115,26 @@ public class LoginActivity extends FacebookUtilsActivity {
         startActivity(new Intent(getBaseContext(), HomeActivity.class));
         finish();
         overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+    }
+
+    private void refreshCurrentUserAndFinishLogin() {
+        Log.i(getClass().getSimpleName(), "Refreshing profile");
+        GTSDK.getUserManager().getMe(new GTResponseHandler<GTUser>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTUser> gtResponse) {
+                Log.i(getClass().getSimpleName(), "Profile refreshed. Showing Home screen");
+                TaskDialog.getInstance().hideDialog();
+                showHomeScreen();
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTUser> responseObject) {
+                Log.e(getClass().getSimpleName(), "Failed to refresh profile. Showing Home screen");
+                TaskDialog.getInstance().hideDialog();
+                DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
+            }
+        });
     }
 
     // Setup

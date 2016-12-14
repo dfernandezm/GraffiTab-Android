@@ -5,6 +5,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.graffitab.R;
@@ -15,6 +16,9 @@ import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.BitmapUtils;
 import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.GTResponse;
+import com.graffitabsdk.network.common.GTResponseHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -64,10 +68,33 @@ public class SplashActivity extends AppCompatActivity {
 
     private void checkLoginStatus() {
         if (GTSDK.getAccountManager().isUserLoggedIn()) {
-            showHomeScreen();
+            Log.i(getClass().getSimpleName(), "User logged in");
+            if (Utils.isNetworkConnected(this)) { // Online, so refresh profile
+                Log.i(getClass().getSimpleName(), "Refreshing profile");
+                GTSDK.getUserManager().getMe(new GTResponseHandler<GTUser>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTUser> gtResponse) {
+                        Log.i(getClass().getSimpleName(), "Profile refreshed. Showing Home screen");
+                        showHomeScreen();
+                    }
+
+                    @Override
+                    public void onFailure(GTResponse<GTUser> responseObject) {
+                        Log.e(getClass().getSimpleName(), "Failed to refresh profile. Showing Home screen");
+                        showHomeScreen();
+                    }
+                });
+            }
+            else { // Offline, so show home screen
+                Log.i(getClass().getSimpleName(), "No network connection. Showing Home screen");
+                showHomeScreen();
+            }
         }
-        else
+        else {
+            Log.i(getClass().getSimpleName(), "User not logged in. Showing login screen");
             showLoginScreen();
+        }
     }
 
     // Configure
