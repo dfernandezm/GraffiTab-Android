@@ -173,6 +173,14 @@ public class UserProfileFragment extends ListStreamablesFragment {
         viewPager.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 tapGestureDetector.onTouchEvent(event);
+                getRecyclerView().getRefreshLayout().setEnabled(false);
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_UP:
+                    case MotionEvent.ACTION_CANCEL:
+                    case MotionEvent.ACTION_OUTSIDE:
+                        getRecyclerView().getRefreshLayout().setEnabled(true);
+                        break;
+                }
                 return false;
             }
         });
