@@ -2,6 +2,7 @@ package com.graffitab.ui.activities.home.streamables.explorer;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -11,6 +12,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.graffitab.R;
 import com.graffitab.utils.activity.ActivityUtils;
+
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -22,8 +26,29 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
         ActivityUtils.hideActionBar(this);
         setContentView(R.layout.activity_explorer);
+        ButterKnife.bind(this);
 
         setupMapView();
+    }
+
+    @OnClick(R.id.backBtn)
+    public void onClickBack(View view) {
+        finish();
+    }
+
+    @OnClick(R.id.gridBtn)
+    public void onClickGrid(View view) {
+
+    }
+
+    @OnClick(R.id.locate)
+    public void onClickLocate(View view) {
+
+    }
+
+    @OnClick(R.id.createLocationBtn)
+    public void onClickCreateLocation(View view) {
+
     }
 
     /**
