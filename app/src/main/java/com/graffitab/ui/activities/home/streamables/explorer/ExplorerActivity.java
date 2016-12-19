@@ -1,16 +1,19 @@
 package com.graffitab.ui.activities.home.streamables.explorer;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.graffitab.R;
+import com.graffitab.managers.GTLocationManager;
 import com.graffitab.utils.activity.ActivityUtils;
 
 import butterknife.ButterKnife;
@@ -21,6 +24,7 @@ import static com.graffitab.R.id.map;
 public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private boolean shouldCheckForCurrentLocation = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,6 +35,15 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         ButterKnife.bind(this);
 
         setupMapView();
+
+        awaitCurrentLocation();
+    }
+
+    @Override
+    protected void onDestroy() {
+        shouldCheckForCurrentLocation = false;
+
+        super.onDestroy();
     }
 
     @OnClick(R.id.backBtn)
@@ -45,12 +58,51 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.locate)
     public void onClickLocate(View view) {
-
+        zoomToLocation(GTLocationManager.sharedInstance.getLastKnownLocation());
     }
 
     @OnClick(R.id.createLocationBtn)
     public void onClickCreateLocation(View view) {
 
+    }
+
+    // Map
+
+    private void awaitCurrentLocation() {
+        new Thread() {
+
+            @Override
+            public void run() {
+                // Loop until we find a location or we close the current activity.
+                while (GTLocationManager.sharedInstance.getLastKnownLocation() == null && shouldCheckForCurrentLocation) {
+                    try {
+                        Log.i(ExplorerActivity.this.getClass().getSimpleName(), "Polling for location...");
+                        Thread.sleep(1000);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.e(ExplorerActivity.this.getClass().getSimpleName(), "Interrupted polling for location...", e);
+                    }
+                }
+
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Location location = GTLocationManager.sharedInstance.getLastKnownLocation();
+                        zoomToLocation(location);
+                    }
+                });
+            }
+        }.start();
+    }
+
+    private void zoomToLocation(Location location) {
+        if (location != null) { // Make sure we have a valid location.
+            Log.i(getClass().getSimpleName(), "Zooming to location (latitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + ")");
+            LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(sydney, 16);
+            mMap.animateCamera(update);
+        }
     }
 
     /**
@@ -79,9 +131,13 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void setupMapOnceAvailable() {
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        try {
+            mMap.setMyLocationEnabled(true);
+        } catch (SecurityException e) {
+            e.printStackTrace();
+            Log.e(getClass().getSimpleName(), "Location permission not granted", e);
+        }
+
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
     }
 }

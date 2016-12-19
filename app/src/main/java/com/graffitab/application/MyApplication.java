@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.graffitab.managers.GTLocationManager;
 import com.graffitabsdk.config.GTSDK;
 
 import java.util.Locale;
@@ -38,6 +39,7 @@ public class MyApplication extends Application {
         AppEventsLogger.activateApp(this);
 
         setupBroadcastReceivers();
+        setupListeners();
     }
 
     // Setup
@@ -47,13 +49,16 @@ public class MyApplication extends Application {
         registerReceiver(receiver, new IntentFilter(ACTION_LOCALE_CHANGED));
     }
 
+    private void setupListeners() {
+        GTLocationManager.sharedInstance.startLocationUpdates();
+    }
+
     private class MyBroadcastReceiver extends BroadcastReceiver {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() == ACTION_LOCALE_CHANGED) {
+            if (intent.getAction() == ACTION_LOCALE_CHANGED)
                 GTSDK.setLanguage(Locale.getDefault().getLanguage());
-            }
         }
     }
 }

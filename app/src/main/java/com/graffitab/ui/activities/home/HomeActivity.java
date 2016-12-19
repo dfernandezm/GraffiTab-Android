@@ -16,6 +16,7 @@ import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
+import com.graffitab.managers.GTLocationManager;
 import com.graffitab.ui.activities.home.me.locations.LocationsActivity;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
@@ -116,6 +117,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
         else if (item.getItemId() == R.id.action_map) {
+            GTLocationManager.sharedInstance.startLocationUpdates();
             startActivity(new Intent(this, ExplorerActivity.class));
             return true;
         }
