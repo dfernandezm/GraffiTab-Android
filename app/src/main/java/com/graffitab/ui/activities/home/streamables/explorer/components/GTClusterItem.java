@@ -8,11 +8,11 @@ import com.google.maps.android.clustering.ClusterItem;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class GTItem implements ClusterItem {
+public class GTClusterItem implements ClusterItem {
 
     private final LatLng mPosition;
 
-    public GTItem(double lat, double lng) {
+    public GTClusterItem(double lat, double lng) {
         mPosition = new LatLng(lat, lng);
     }
 

@@ -15,8 +15,12 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterManager;
 import com.graffitab.R;
 import com.graffitab.managers.GTLocationManager;
-import com.graffitab.ui.activities.home.streamables.explorer.components.GTItem;
+import com.graffitab.ui.activities.home.streamables.explorer.components.GTClusterItem;
+import com.graffitab.ui.activities.home.streamables.explorer.components.GTClusterRenderer;
 import com.graffitab.utils.activity.ActivityUtils;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -27,7 +31,8 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     private GoogleMap mMap;
     private boolean shouldCheckForCurrentLocation = true;
-    private ClusterManager<GTItem> mClusterManager;
+    private ClusterManager<GTClusterItem> mClusterManager;
+    private Timer timer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +50,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     @Override
     protected void onDestroy() {
         shouldCheckForCurrentLocation = false;
+        stopTimer();
 
         super.onDestroy();
     }
@@ -69,6 +75,35 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     }
 
+    // Loading
+
+    private void refreshMap() {
+        Log.i(getClass().getSimpleName(), "Refreshing map...");
+        addDummyItems();
+    }
+
+    // Timer
+
+    private void startTimer() {
+        stopTimer();
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+
+            @Override
+            public void run() {
+                refreshMap();
+            }
+        }, 0, 3000);
+    }
+
+    private void stopTimer() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
     // Map
 
     private void addDummyItems() {
@@ -81,7 +116,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
             double offset = i / 60d;
             lat = lat + offset;
             lng = lng + offset;
-            GTItem offsetItem = new GTItem(lat, lng);
+            GTClusterItem offsetItem = new GTClusterItem(lat, lng);
             mClusterManager.addItem(offsetItem);
         }
     }
@@ -156,13 +191,15 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
             Log.e(getClass().getSimpleName(), "Location permission not granted", e);
         }
 
-        mMap.getUiSettings().setMyLocationButtonEnabled(false);
-
         // Setup cluster manager.
-        mClusterManager = new ClusterManager<GTItem>(this, mMap);
+        mClusterManager = new ClusterManager<GTClusterItem>(this, mMap);
+        mClusterManager.setRenderer(new GTClusterRenderer(this, mMap, mClusterManager));
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
 
-        addDummyItems();
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mMap.getUiSettings().setMapToolbarEnabled(false);
+
+        startTimer();
     }
 }
