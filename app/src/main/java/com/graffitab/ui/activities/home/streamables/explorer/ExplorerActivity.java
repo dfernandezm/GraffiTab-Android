@@ -12,8 +12,10 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.clustering.ClusterManager;
 import com.graffitab.R;
 import com.graffitab.managers.GTLocationManager;
+import com.graffitab.ui.activities.home.streamables.explorer.components.GTItem;
 import com.graffitab.utils.activity.ActivityUtils;
 
 import butterknife.ButterKnife;
@@ -25,6 +27,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     private GoogleMap mMap;
     private boolean shouldCheckForCurrentLocation = true;
+    private ClusterManager<GTItem> mClusterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +70,21 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     // Map
+
+    private void addDummyItems() {
+        // Set some lat/lng coordinates to start with.
+        double lat = 51.5145160;
+        double lng = -0.1270060;
+
+        // Add ten cluster items in close proximity, for purposes of this example.
+        for (int i = 0; i < 10; i++) {
+            double offset = i / 60d;
+            lat = lat + offset;
+            lng = lng + offset;
+            GTItem offsetItem = new GTItem(lat, lng);
+            mClusterManager.addItem(offsetItem);
+        }
+    }
 
     private void awaitCurrentLocation() {
         new Thread() {
@@ -139,5 +157,12 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         }
 
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
+
+        // Setup cluster manager.
+        mClusterManager = new ClusterManager<GTItem>(this, mMap);
+        mMap.setOnCameraIdleListener(mClusterManager);
+        mMap.setOnMarkerClickListener(mClusterManager);
+
+        addDummyItems();
     }
 }

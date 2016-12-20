@@ -35,6 +35,7 @@ def imageCropperVersion = "2.3.+"
 def instabugVersion = "3+"
 def swipyVersion = "1.2.3@aar"
 def autoLinkTextViewVersion = "0.3.0"
+def mapUtilsVersion = "0.4+"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -44,6 +45,7 @@ dependencies {
     compile "com.android.support:design:$androidSupportLibraryVersion"
     compile "com.android.support:cardview-v7:$androidSupportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$androidSupportLibraryVersion"
+    compile "com.google.maps.android:android-maps-utils:$mapUtilsVersion"
     compile project(':graffitabsdk')
 
     compile "com.facebook.android:facebook-android-sdk:$facebookVersion"
