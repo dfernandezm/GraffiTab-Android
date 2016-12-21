@@ -99,6 +99,9 @@
     <!-- Explorer -->
     <string name="explorer">Explorer</string>
 
+    <!-- Create Location -->
+    <string name="create_location_no_matches">No address matches found.</string>
+
     <!-- Private Streamables -->
     <string name="private_posts">Private Graffiti</string>
 

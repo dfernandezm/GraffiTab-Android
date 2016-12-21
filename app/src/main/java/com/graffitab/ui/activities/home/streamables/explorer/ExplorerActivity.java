@@ -199,6 +199,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
+        mMap.getUiSettings().setCompassEnabled(false);
 
         startTimer();
     }
