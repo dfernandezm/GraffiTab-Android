@@ -149,6 +149,15 @@
             android:name=".ui.activities.home.me.locations.CreateLocationActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.streamables.explorer.staticcontainers.StaticStreamablesActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.streamables.explorer.staticcontainers.ClusterActivity"
+            android:theme="@style/AllTimeDialogTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

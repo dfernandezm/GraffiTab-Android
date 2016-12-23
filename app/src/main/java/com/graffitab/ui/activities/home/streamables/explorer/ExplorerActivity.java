@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home.streamables.explorer;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,8 +16,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterManager;
 import com.graffitab.R;
 import com.graffitab.managers.GTLocationManager;
-import com.graffitab.ui.activities.home.streamables.explorer.components.GTClusterItem;
-import com.graffitab.ui.activities.home.streamables.explorer.components.GTClusterRenderer;
+import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterItem;
+import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterRenderer;
+import com.graffitab.ui.activities.home.streamables.explorer.staticcontainers.ClusterActivity;
 import com.graffitab.utils.activity.ActivityUtils;
 
 import java.util.Timer;
@@ -72,7 +74,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.createLocationBtn)
     public void onClickCreateLocation(View view) {
-
+        startActivity(new Intent(this, ClusterActivity.class));
     }
 
     // Loading

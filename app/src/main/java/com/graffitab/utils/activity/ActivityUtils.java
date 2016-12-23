@@ -23,7 +23,6 @@ public class ActivityUtils {
 	
 	public static void showAsPopup(AppCompatActivity activity, int width, int height) {
 	    //To show activity as dialog and dim the background, you need to declare android:theme="@style/PopupTheme" on for the chosen activity on the manifest
-	    activity.requestWindowFeature(Window.FEATURE_ACTION_BAR);
 	    activity.getWindow().setFlags(LayoutParams.FLAG_DIM_BEHIND,
 	        LayoutParams.FLAG_DIM_BEHIND);
 	    LayoutParams params = activity.getWindow().getAttributes(); 

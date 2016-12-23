@@ -1,4 +1,4 @@
-package com.graffitab.ui.activities.home.streamables.explorer.components;
+package com.graffitab.ui.activities.home.streamables.explorer.mapcomponents;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;

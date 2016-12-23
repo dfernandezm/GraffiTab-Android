@@ -27,7 +27,7 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_fragment_holder);
+        setContentView(getLayoutResId());
         ButterKnife.bind(this);
 
         setupTopBar();
@@ -41,6 +41,10 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public int getLayoutResId() {
+        return R.layout.activity_fragment_holder;
     }
 
     public GenericStreamablesFragment getContent() {

@@ -110,6 +110,12 @@
     <string name="change_password_new">New password</string>
     <string name="change_password_error_password">Please enter your current password.</string>
 
+    <!-- Static Streamables -->
+    <string name="static_streamables_count">%1$d graffiti</string>
+
+    <!-- Cluster -->
+    <string name="cluster_streamables_count">%1$d discovered</string>
+
     <!-- Settings -->
     <string name="settings_account">Account</string>
     <string name="settings_edit_profile">Edit Profile</string>

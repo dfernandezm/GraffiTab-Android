@@ -1,4 +1,4 @@
-package com.graffitab.ui.activities.home.streamables.explorer.components;
+package com.graffitab.ui.activities.home.streamables.explorer.mapcomponents;
 
 import android.content.Context;
 import android.graphics.Bitmap;

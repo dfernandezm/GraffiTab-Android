@@ -11,6 +11,30 @@
         <item name="actionBarStyle">@style/ActionBarStyle</item>
     </style>
 
+    <!-- Base dialog application theme. -->
+    <style name="AppThemeDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">true</item>
+
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">#fff</item>
+        <item name="colorPrimaryDark">#b2b2b2</item>
+
+        <!-- Custom action bar. -->
+        <item name="actionBarTheme">@style/ActionBarTheme</item>
+        <item name="actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+    <!-- Activity Dialog theme. -->
+    <style name="DialogTheme" parent="AppTheme">
+        <!-- No-op -->
+    </style>
+
+    <!-- Activity Dialog theme. -->
+    <style name="AllTimeDialogTheme" parent="AppThemeDialog">
+        <!-- No-op -->
+    </style>
+
     <!-- ActionBar theme. -->
     <style name="ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">@color/colorPrimary</item>
