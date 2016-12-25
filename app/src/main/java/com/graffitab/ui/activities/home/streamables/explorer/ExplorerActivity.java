@@ -13,6 +13,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.graffitab.R;
 import com.graffitab.managers.GTLocationManager;
@@ -74,7 +75,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.createLocationBtn)
     public void onClickCreateLocation(View view) {
-        startActivity(new Intent(this, ClusterActivity.class));
+
     }
 
     // Loading
@@ -196,6 +197,21 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         // Setup cluster manager.
         mClusterManager = new ClusterManager<GTClusterItem>(this, mMap);
         mClusterManager.setRenderer(new GTClusterRenderer(this, mMap, mClusterManager));
+        mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<GTClusterItem>() {
+
+            @Override
+            public boolean onClusterClick(Cluster<GTClusterItem> cluster) {
+                startActivity(new Intent(ExplorerActivity.this, ClusterActivity.class));
+                return true;
+            }
+        });
+        mClusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<GTClusterItem>() {
+
+            @Override
+            public boolean onClusterItemClick(GTClusterItem gtClusterItem) {
+                return true;
+            }
+        });
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
 
