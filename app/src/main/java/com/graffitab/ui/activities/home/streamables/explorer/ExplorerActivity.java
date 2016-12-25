@@ -65,7 +65,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.gridBtn)
     public void onClickGrid(View view) {
-
+        startActivity(new Intent(ExplorerActivity.this, ClusterActivity.class));
     }
 
     @OnClick(R.id.locate)
