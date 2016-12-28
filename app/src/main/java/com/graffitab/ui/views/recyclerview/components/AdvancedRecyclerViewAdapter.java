@@ -7,6 +7,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.graffitab.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,6 +141,21 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
         rebuildItemTypes();
         notifyDataSetChanged();
         configureDecorationLayout(recyclerView);
+    }
+
+    public void removeItem(int position, final RecyclerView recyclerView) {
+        itemList.remove(position);
+        notifyItemRemoved(position);
+
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                rebuildItemTypes();
+                notifyDataSetChanged();
+                configureDecorationLayout(recyclerView);
+            }
+        }, 400);
     }
 
     public T getItem(int position) {

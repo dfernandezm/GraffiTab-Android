@@ -18,7 +18,7 @@ import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
-import com.graffitab.utils.display.BitmapUtils;
+import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;

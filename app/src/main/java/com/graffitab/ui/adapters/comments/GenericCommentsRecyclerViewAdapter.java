@@ -24,6 +24,7 @@ public class GenericCommentsRecyclerViewAdapter extends AdvancedEndlessRecyclerV
     private final int VIEW_TYPE_LIST_FULL = 0;
 
     private GenericCommentsFragment.ViewType itemViewType;
+    private OnCommentClickListener clickListener;
 
     public GenericCommentsRecyclerViewAdapter(Context context, List<GTComment> items, RecyclerView recyclerView) {
         super(context, items, recyclerView);
@@ -31,6 +32,10 @@ public class GenericCommentsRecyclerViewAdapter extends AdvancedEndlessRecyclerV
 
     public void setViewType(GenericCommentsFragment.ViewType type) {
         this.itemViewType = type;
+    }
+
+    public void setClickListener(OnCommentClickListener listener) {
+        this.clickListener = listener;
     }
 
     @Override
@@ -47,11 +52,27 @@ public class GenericCommentsRecyclerViewAdapter extends AdvancedEndlessRecyclerV
         if (viewType == VIEW_TYPE_LIST_FULL) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_comment_list, parent, false);
             ListCommentViewHolder rcv = new ListCommentViewHolder(layoutView);
+            rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null)
+                        clickListener.onClick(view);
+                }
+            });
             return rcv;
         }
         else {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_comment_list, parent, false);
             ListCommentViewHolder rcv = new ListCommentViewHolder(layoutView);
+            rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null)
+                        clickListener.onClick(view);
+                }
+            });
             return rcv;
         }
     }

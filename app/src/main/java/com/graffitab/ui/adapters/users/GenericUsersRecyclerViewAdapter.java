@@ -24,6 +24,7 @@ public class GenericUsersRecyclerViewAdapter extends AdvancedEndlessRecyclerView
     private final int VIEW_TYPE_LIST_FULL = 0;
 
     private ViewType itemViewType;
+    private OnUserClickListener clickListener;
 
     public GenericUsersRecyclerViewAdapter(Context context, List<GTUser> items, RecyclerView recyclerView) {
         super(context, items, recyclerView);
@@ -31,6 +32,10 @@ public class GenericUsersRecyclerViewAdapter extends AdvancedEndlessRecyclerView
 
     public void setViewType(ViewType type) {
         this.itemViewType = type;
+    }
+
+    public void setClickListener(OnUserClickListener listener) {
+        this.clickListener = listener;
     }
 
     @Override
@@ -47,11 +52,27 @@ public class GenericUsersRecyclerViewAdapter extends AdvancedEndlessRecyclerView
         if (viewType == VIEW_TYPE_LIST_FULL) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_user_list, parent, false);
             ListUserViewHolder rcv = new ListUserViewHolder(layoutView);
+            rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null)
+                        clickListener.onClick(view);
+                }
+            });
             return rcv;
         }
         else {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_user_list, parent, false);
             ListUserViewHolder rcv = new ListUserViewHolder(layoutView);
+            rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null)
+                        clickListener.onClick(view);
+                }
+            });
             return rcv;
         }
     }

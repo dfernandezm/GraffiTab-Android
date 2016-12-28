@@ -39,7 +39,7 @@
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/followButton"
+        android:id="@+id/menuButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:scaleType="fitCenter"

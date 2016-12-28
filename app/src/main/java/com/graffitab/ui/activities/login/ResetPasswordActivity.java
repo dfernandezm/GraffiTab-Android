@@ -15,9 +15,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.graffitab.R;
-import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
-import com.graffitab.utils.display.BitmapUtils;
+import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.text.TextUtils;
 
 import java.io.IOException;

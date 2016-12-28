@@ -30,6 +30,7 @@ public class GenericStreamablesRecyclerViewAdapter extends AdvancedEndlessRecycl
     private final int VIEW_TYPE_GRID = 3;
 
     private ViewType itemViewType;
+    private OnStreamableClickListener clickListener;
 
     public GenericStreamablesRecyclerViewAdapter(Context context, List<GTStreamable> items, RecyclerView recyclerView) {
         super(context, items, recyclerView);
@@ -37,6 +38,10 @@ public class GenericStreamablesRecyclerViewAdapter extends AdvancedEndlessRecycl
 
     public void setViewType(ViewType type) {
         this.itemViewType = type;
+    }
+
+    public void setClickListener(OnStreamableClickListener listener) {
+        this.clickListener = listener;
     }
 
     @Override
@@ -56,21 +61,53 @@ public class GenericStreamablesRecyclerViewAdapter extends AdvancedEndlessRecycl
         if (viewType == VIEW_TYPE_TRENDING) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_trending, parent, false);
             TrendingStreamableViewHolder rcv = new TrendingStreamableViewHolder(layoutView);
+            rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null)
+                        clickListener.onClick(view);
+                }
+            });
             return rcv;
         }
         else if (viewType == VIEW_TYPE_LIST_FULL) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_list, parent, false);
             ListStreamableViewHolder rcv = new ListStreamableViewHolder(layoutView);
+            rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null)
+                        clickListener.onClick(view);
+                }
+            });
             return rcv;
         }
         else if (viewType == VIEW_TYPE_SWIMLANE) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_swimlane, parent, false);
             SwimlaneStreamableViewHolder rcv = new SwimlaneStreamableViewHolder(layoutView);
+            rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null)
+                        clickListener.onClick(view);
+                }
+            });
             return rcv;
         }
         else { // Grid is default case.
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_grid, parent, false);
             GridStreamableViewHolder rcv = new GridStreamableViewHolder(layoutView);
+            rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    if (clickListener != null)
+                        clickListener.onClick(view);
+                }
+            });
             return rcv;
         }
     }

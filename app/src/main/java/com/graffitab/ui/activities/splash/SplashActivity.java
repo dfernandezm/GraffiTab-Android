@@ -14,7 +14,7 @@ import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
-import com.graffitab.utils.display.BitmapUtils;
+import com.graffitab.utils.image.BitmapUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.GTResponse;

@@ -2,6 +2,7 @@ package com.graffitab.ui.adapters.locations.viewholders;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
@@ -18,6 +19,7 @@ import butterknife.ButterKnife;
 public class LocationViewHolder extends RecyclerView.ViewHolder {
 
     @BindView(R.id.address) public TextView address;
+    @BindView(R.id.menuButton) public ImageView menu;
 
     protected GTLocation item;
 
@@ -28,5 +30,9 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
     public void setItem(GTLocation location) {
         this.item = location;
+    }
+
+    public GTLocation getItem() {
+        return item;
     }
 }

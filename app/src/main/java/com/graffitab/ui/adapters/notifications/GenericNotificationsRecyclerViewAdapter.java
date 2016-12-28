@@ -31,8 +31,14 @@ public class GenericNotificationsRecyclerViewAdapter extends AdvancedEndlessRecy
     private final int VIEW_TYPE_MENTION = 3;
     private final int VIEW_TYPE_COMMENT = 4;
 
+    private OnNotificationClickListener clickListener;
+
     public GenericNotificationsRecyclerViewAdapter(Context context, List<GTNotification> items, RecyclerView recyclerView) {
         super(context, items, recyclerView);
+    }
+
+    public void setClickListener(OnNotificationClickListener listener) {
+        this.clickListener = listener;
     }
 
     @Override
@@ -55,26 +61,66 @@ public class GenericNotificationsRecyclerViewAdapter extends AdvancedEndlessRecy
             case VIEW_TYPE_WELCOME: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_welcome, parent, false);
                 WelcomeNotificationViewHolder rcv = new WelcomeNotificationViewHolder(layoutView);
+                rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        if (clickListener != null)
+                            clickListener.onClick(view);
+                    }
+                });
                 return rcv;
             }
             case VIEW_TYPE_LIKE: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_like, parent, false);
                 LikeNotificationViewHolder rcv = new LikeNotificationViewHolder(layoutView);
+                rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        if (clickListener != null)
+                            clickListener.onClick(view);
+                    }
+                });
                 return rcv;
             }
             case VIEW_TYPE_FOLLOW: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_follow, parent, false);
                 FollowNotificationViewHolder rcv = new FollowNotificationViewHolder(layoutView);
+                rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        if (clickListener != null)
+                            clickListener.onClick(view);
+                    }
+                });
                 return rcv;
             }
             case VIEW_TYPE_MENTION: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_mention, parent, false);
                 MentionNotificationViewHolder rcv = new MentionNotificationViewHolder(layoutView);
+                rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        if (clickListener != null)
+                            clickListener.onClick(view);
+                    }
+                });
                 return rcv;
             }
             case VIEW_TYPE_COMMENT: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_comment, parent, false);
                 CommentNotificationViewHolder rcv = new CommentNotificationViewHolder(layoutView);
+                rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        if (clickListener != null)
+                            clickListener.onClick(view);
+                    }
+                });
                 return rcv;
             }
         }

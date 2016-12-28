@@ -20,14 +20,36 @@ import java.util.List;
  */
 public class GenericLocationsRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTLocation> {
 
+    private OnLocationClickListener clickListener;
+
     public GenericLocationsRecyclerViewAdapter(Context context, List<GTLocation> items, RecyclerView recyclerView) {
         super(context, items, recyclerView);
+    }
+
+    public void setClickListener(OnLocationClickListener listener) {
+        this.clickListener = listener;
     }
 
     @Override
     public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_location_list, parent, false);
-        ListLocationViewHolder rcv = new ListLocationViewHolder(layoutView);
+        final ListLocationViewHolder rcv = new ListLocationViewHolder(layoutView);
+        rcv.itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (clickListener != null)
+                    clickListener.onRowSelected(rcv.getItem());
+            }
+        });
+        rcv.menu.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (clickListener != null)
+                    clickListener.onMenuSelected(rcv.getItem());
+            }
+        });
         return rcv;
     }
 

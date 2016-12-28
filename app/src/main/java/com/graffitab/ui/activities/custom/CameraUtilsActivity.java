@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.utils.Utils;
-import com.graffitab.utils.display.BitmapUtils;
+import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.file.FileUtils;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
