@@ -16,5 +16,6 @@
     <color name="colorGreen">#6cbd52</color>
     <color name="colorFacebook">#3B5998</color>
     <color name="colorWhite">#fff</color>
-    <color name="colorLightBlack">#232728</color>
+    <color name="colorLightBlack">#232728</color>33000000
+    <color name="colorStreamableDetailBackground">#33000000</color>
 </resources>

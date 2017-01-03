@@ -12,6 +12,7 @@ import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.ui.activities.home.streamables.CommentsActivity;
 import com.graffitab.ui.activities.home.streamables.LikesActivity;
+import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.streamables.OnStreamableClickListener;
@@ -76,7 +77,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public void onRowSelected(GTStreamable streamable) {
-        System.out.println("SELECTED " + streamable);
+        startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
     }
 
     @Override

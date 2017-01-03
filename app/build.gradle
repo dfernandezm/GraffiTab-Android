@@ -36,6 +36,7 @@ def instabugVersion = "3+"
 def swipyVersion = "1.2.3@aar"
 def autoLinkTextViewVersion = "0.3.0"
 def mapUtilsVersion = "0.4+"
+def photoViewVersion = "1.3.1"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -63,4 +64,5 @@ dependencies {
     compile "com.instabug.library:instabug:$instabugVersion"
     compile "com.github.orangegangsters:swipy:$swipyVersion"
     compile "com.github.armcha:AutoLinkTextView:$autoLinkTextViewVersion"
+    compile "com.github.chrisbanes:PhotoView:$photoViewVersion"
 }
