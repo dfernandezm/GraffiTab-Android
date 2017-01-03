@@ -51,28 +51,14 @@ public class GenericCommentsRecyclerViewAdapter extends AdvancedEndlessRecyclerV
     public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_LIST_FULL) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_comment_list, parent, false);
-            ListCommentViewHolder rcv = new ListCommentViewHolder(layoutView);
-            rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    if (clickListener != null)
-                        clickListener.onClick(view);
-                }
-            });
+            final ListCommentViewHolder rcv = new ListCommentViewHolder(layoutView);
+            rcv.setClickListener(clickListener);
             return rcv;
         }
         else {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_comment_list, parent, false);
-            ListCommentViewHolder rcv = new ListCommentViewHolder(layoutView);
-            rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    if (clickListener != null)
-                        clickListener.onClick(view);
-                }
-            });
+            final ListCommentViewHolder rcv = new ListCommentViewHolder(layoutView);
+            rcv.setClickListener(clickListener);
             return rcv;
         }
     }

@@ -47,7 +47,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
-                openUserProfile();
+                onClickUserProfile();
             }
         };
 
@@ -63,7 +63,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
-                openLikes();
+                onClickLikes();
             }
         });
         likeStatusImage.setClickable(true);
@@ -71,7 +71,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
-                openLikes();
+                onClickLikes();
             }
         });
 
@@ -79,7 +79,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
-                openComments();
+                onClickComments();
             }
         };
         commentsField.setClickable(true);

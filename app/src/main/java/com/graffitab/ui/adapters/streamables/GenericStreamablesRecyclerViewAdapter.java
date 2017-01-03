@@ -60,54 +60,26 @@ public class GenericStreamablesRecyclerViewAdapter extends AdvancedEndlessRecycl
     public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         if (viewType == VIEW_TYPE_TRENDING) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_trending, parent, false);
-            TrendingStreamableViewHolder rcv = new TrendingStreamableViewHolder(layoutView);
-            rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    if (clickListener != null)
-                        clickListener.onClick(view);
-                }
-            });
+            final TrendingStreamableViewHolder rcv = new TrendingStreamableViewHolder(layoutView);
+            rcv.setClickListener(clickListener);
             return rcv;
         }
         else if (viewType == VIEW_TYPE_LIST_FULL) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_list, parent, false);
-            ListStreamableViewHolder rcv = new ListStreamableViewHolder(layoutView);
-            rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    if (clickListener != null)
-                        clickListener.onClick(view);
-                }
-            });
+            final ListStreamableViewHolder rcv = new ListStreamableViewHolder(layoutView);
+            rcv.setClickListener(clickListener);
             return rcv;
         }
         else if (viewType == VIEW_TYPE_SWIMLANE) {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_swimlane, parent, false);
-            SwimlaneStreamableViewHolder rcv = new SwimlaneStreamableViewHolder(layoutView);
-            rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    if (clickListener != null)
-                        clickListener.onClick(view);
-                }
-            });
+            final SwimlaneStreamableViewHolder rcv = new SwimlaneStreamableViewHolder(layoutView);
+            rcv.setClickListener(clickListener);
             return rcv;
         }
         else { // Grid is default case.
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_streamable_grid, parent, false);
-            GridStreamableViewHolder rcv = new GridStreamableViewHolder(layoutView);
-            rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-                    if (clickListener != null)
-                        clickListener.onClick(view);
-                }
-            });
+            final GridStreamableViewHolder rcv = new GridStreamableViewHolder(layoutView);
+            rcv.setClickListener(clickListener);
             return rcv;
         }
     }

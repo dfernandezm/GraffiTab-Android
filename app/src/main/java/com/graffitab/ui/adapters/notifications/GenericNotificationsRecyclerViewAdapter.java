@@ -60,67 +60,32 @@ public class GenericNotificationsRecyclerViewAdapter extends AdvancedEndlessRecy
         switch (viewType) {
             case VIEW_TYPE_WELCOME: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_welcome, parent, false);
-                WelcomeNotificationViewHolder rcv = new WelcomeNotificationViewHolder(layoutView);
-                rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        if (clickListener != null)
-                            clickListener.onClick(view);
-                    }
-                });
+                final WelcomeNotificationViewHolder rcv = new WelcomeNotificationViewHolder(layoutView);
+                rcv.setClickListener(clickListener);
                 return rcv;
             }
             case VIEW_TYPE_LIKE: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_like, parent, false);
-                LikeNotificationViewHolder rcv = new LikeNotificationViewHolder(layoutView);
-                rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        if (clickListener != null)
-                            clickListener.onClick(view);
-                    }
-                });
+                final LikeNotificationViewHolder rcv = new LikeNotificationViewHolder(layoutView);
+                rcv.setClickListener(clickListener);
                 return rcv;
             }
             case VIEW_TYPE_FOLLOW: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_follow, parent, false);
-                FollowNotificationViewHolder rcv = new FollowNotificationViewHolder(layoutView);
-                rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        if (clickListener != null)
-                            clickListener.onClick(view);
-                    }
-                });
+                final FollowNotificationViewHolder rcv = new FollowNotificationViewHolder(layoutView);
+                rcv.setClickListener(clickListener);
                 return rcv;
             }
             case VIEW_TYPE_MENTION: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_mention, parent, false);
-                MentionNotificationViewHolder rcv = new MentionNotificationViewHolder(layoutView);
-                rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        if (clickListener != null)
-                            clickListener.onClick(view);
-                    }
-                });
+                final MentionNotificationViewHolder rcv = new MentionNotificationViewHolder(layoutView);
+                rcv.setClickListener(clickListener);
                 return rcv;
             }
             case VIEW_TYPE_COMMENT: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_notification_comment, parent, false);
-                CommentNotificationViewHolder rcv = new CommentNotificationViewHolder(layoutView);
-                rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        if (clickListener != null)
-                            clickListener.onClick(view);
-                    }
-                });
+                final CommentNotificationViewHolder rcv = new CommentNotificationViewHolder(layoutView);
+                rcv.setClickListener(clickListener);
                 return rcv;
             }
         }

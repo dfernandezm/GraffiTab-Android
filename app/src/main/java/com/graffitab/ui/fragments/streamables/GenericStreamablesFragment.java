@@ -1,5 +1,6 @@
 package com.graffitab.ui.fragments.streamables;
 
+import android.content.Intent;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,7 +10,12 @@ import android.view.View;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.ui.activities.home.streamables.CommentsActivity;
+import com.graffitab.ui.activities.home.streamables.LikesActivity;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
+import com.graffitab.ui.adapters.streamables.OnStreamableClickListener;
+import com.graffitab.ui.adapters.streamables.viewholders.StreamableViewHolder;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
@@ -18,6 +24,7 @@ import com.graffitab.utils.Utils;
 import com.graffitab.utils.display.DisplayUtils;
 import com.graffitabsdk.model.GTAsset;
 import com.graffitabsdk.model.GTStreamable;
+import com.graffitabsdk.model.GTUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +34,7 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericStreamablesFragment extends GenericItemListFragment<GTStreamable> {
+public abstract class GenericStreamablesFragment extends GenericItemListFragment<GTStreamable> implements OnStreamableClickListener {
 
     public enum ViewType {GRID, TRENDING, SWIMLANE, LIST_FULL}
 
@@ -67,6 +74,36 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
         configureLayout();
     }
 
+    @Override
+    public void onRowSelected(GTStreamable streamable) {
+        System.out.println("SELECTED " + streamable);
+    }
+
+    @Override
+    public void onOpenComments(GTStreamable streamable) {
+        startActivity(new Intent(getActivity(), CommentsActivity.class));
+    }
+
+    @Override
+    public void onOpenLikes(GTStreamable streamable) {
+        startActivity(new Intent(getActivity(), LikesActivity.class));
+    }
+
+    @Override
+    public void onOpenOwnerProfile(GTStreamable streamable, GTUser owner) {
+        startActivity(new Intent(getActivity(), ProfileActivity.class));
+    }
+
+    @Override
+    public void onShare(GTStreamable streamable) {
+        // No-op.
+    }
+
+    @Override
+    public void onToggleLike(GTStreamable streamable, StreamableViewHolder holder) {
+        // No-op.
+    }
+
     // Configuration
 
     @Override
@@ -103,6 +140,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
         GenericStreamablesRecyclerViewAdapter customAdapter = new GenericStreamablesRecyclerViewAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
         customAdapter.setViewType(viewType);
+        customAdapter.setClickListener(this);
         return customAdapter;
     }
 

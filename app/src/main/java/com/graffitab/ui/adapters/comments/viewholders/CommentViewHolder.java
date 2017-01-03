@@ -1,7 +1,5 @@
 package com.graffitab.ui.adapters.comments.viewholders;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,9 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
-import com.graffitab.ui.activities.home.SearchActivity;
-import com.graffitab.ui.activities.home.users.ProfileActivity;
-import com.graffitab.utils.Utils;
+import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitabsdk.model.GTComment;
 import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkOnClickListener;
@@ -35,6 +31,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     @BindView(textField) public AutoLinkTextView autoLinkTextView;
 
     protected GTComment item;
+    protected OnCommentClickListener clickListener;
 
     public CommentViewHolder(View itemView) {
         super(itemView);
@@ -48,9 +45,12 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         autoLinkTextView.setAutoLinkText(comment.text);
     }
 
-    public void openUserProfile() {
-        Context context = itemView.getContext();
-        context.startActivity(new Intent(context, ProfileActivity.class));
+    public void setClickListener(OnCommentClickListener listener) {
+        this.clickListener = listener;
+    }
+
+    public GTComment getItem() {
+        return item;
     }
 
     // Setup
@@ -60,7 +60,8 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void onClick(View view) {
-                openUserProfile();
+                if (clickListener != null)
+                    clickListener.onOpenCommenterProfile(item, item.user);
             }
         };
         avatar.setClickable(true);
@@ -78,18 +79,28 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
             @Override
             public void onAutoLinkTextClick(AutoLinkMode autoLinkMode, String matchedText) {
-                Context context = itemView.getContext();
-                if (autoLinkMode == AutoLinkMode.MODE_URL) {
-                    Utils.openUrl(context, matchedText.trim());
-                }
+                if (clickListener == null)
+                    return;
+
+                if (autoLinkMode == AutoLinkMode.MODE_URL)
+                    clickListener.onOpenLink(item, matchedText.trim());
                 else if (autoLinkMode == AutoLinkMode.MODE_HASHTAG) {
                     String text = matchedText.substring(1);
-                    context.startActivity(new Intent(context, SearchActivity.class));
+                    clickListener.onOpenHashtag(item, text);
                 }
                 else if (autoLinkMode == AutoLinkMode.MODE_MENTION) {
                     String text = matchedText.substring(1);
-                    context.startActivity(new Intent(context, ProfileActivity.class));
+                    clickListener.onOpenMention(item, text);
                 }
+            }
+        });
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (clickListener != null)
+                    clickListener.onRowSelected(item);
             }
         });
     }

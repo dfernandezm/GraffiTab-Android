@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.ui.adapters.locations.OnLocationClickListener;
 import com.graffitabsdk.model.GTLocation;
 
 import butterknife.BindView;
@@ -22,10 +23,12 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.menuButton) public ImageView menu;
 
     protected GTLocation item;
+    protected OnLocationClickListener clickListener;
 
     public LocationViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        setupViews();
     }
 
     public void setItem(GTLocation location) {
@@ -34,5 +37,32 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
     public GTLocation getItem() {
         return item;
+    }
+
+    public void setClickListener(OnLocationClickListener listener) {
+        this.clickListener = listener;
+    }
+
+    // Setup
+
+    protected void setupViews() {
+        menu.setClickable(true);
+        menu.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (clickListener != null)
+                    clickListener.onMenuSelected(item);
+            }
+        });
+
+        itemView.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (clickListener != null)
+                    clickListener.onRowSelected(item);
+            }
+        });
     }
 }

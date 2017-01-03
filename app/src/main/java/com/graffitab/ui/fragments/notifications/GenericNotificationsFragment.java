@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.ui.adapters.notifications.GenericNotificationsRecyclerViewAdapter;
+import com.graffitab.ui.adapters.notifications.OnNotificationClickListener;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
@@ -21,7 +22,7 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericNotificationsFragment extends GenericItemListFragment<GTNotification> {
+public abstract class GenericNotificationsFragment extends GenericItemListFragment<GTNotification> implements OnNotificationClickListener {
 
     @Override
     public int emptyViewImageResource() {
@@ -38,6 +39,11 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
         return getString(R.string.notifications_empty_description);
     }
 
+    @Override
+    public void onRowSelected(GTNotification notification) {
+        System.out.println("SELECTED " + notification);
+    }
+
     // Configuration
 
     @Override
@@ -47,7 +53,9 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
-        return new GenericNotificationsRecyclerViewAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
+        GenericNotificationsRecyclerViewAdapter customAdapter = new GenericNotificationsRecyclerViewAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
+        customAdapter.setClickListener(this);
+        return customAdapter;
     }
 
     @Override

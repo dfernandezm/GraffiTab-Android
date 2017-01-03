@@ -34,22 +34,7 @@ public class GenericLocationsRecyclerViewAdapter extends AdvancedEndlessRecycler
     public RecyclerView.ViewHolder onCreateItemViewHolder(ViewGroup parent, int viewType) {
         View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_location_list, parent, false);
         final ListLocationViewHolder rcv = new ListLocationViewHolder(layoutView);
-        rcv.itemView.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (clickListener != null)
-                    clickListener.onRowSelected(rcv.getItem());
-            }
-        });
-        rcv.menu.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                if (clickListener != null)
-                    clickListener.onMenuSelected(rcv.getItem());
-            }
-        });
+        rcv.setClickListener(clickListener);
         return rcv;
     }
 

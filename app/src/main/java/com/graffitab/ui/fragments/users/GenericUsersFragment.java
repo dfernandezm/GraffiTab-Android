@@ -1,11 +1,15 @@
 package com.graffitab.ui.fragments.users;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.users.GenericUsersRecyclerViewAdapter;
+import com.graffitab.ui.adapters.users.OnUserClickListener;
+import com.graffitab.ui.adapters.users.viewholders.UserViewHolder;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
@@ -21,7 +25,7 @@ import java.util.Random;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericUsersFragment extends GenericItemListFragment<GTUser> {
+public abstract class GenericUsersFragment extends GenericItemListFragment<GTUser> implements OnUserClickListener {
 
     public enum ViewType {LIST_FULL}
 
@@ -57,6 +61,16 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
         configureLayout();
     }
 
+    @Override
+    public void onRowSelected(GTUser user) {
+        startActivity(new Intent(getActivity(), ProfileActivity.class));
+    }
+
+    @Override
+    public void onToggleFollow(GTUser user, UserViewHolder holder) {
+        // No-op.
+    }
+
     // Configuration
 
     @Override
@@ -70,6 +84,7 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
         GenericUsersRecyclerViewAdapter customAdapter = new GenericUsersRecyclerViewAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
         customAdapter.setViewType(viewType);
+        customAdapter.setClickListener(this);
         return customAdapter;
     }
 

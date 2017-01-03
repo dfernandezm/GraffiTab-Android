@@ -46,7 +46,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
-                openUserProfile();
+                onClickUserProfile();
             }
         };
 
@@ -62,7 +62,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
-                openLikes();
+                onClickLikes();
             }
         });
 
@@ -70,7 +70,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
-                openComments();
+                onClickComments();
             }
         };
         commentsField.setClickable(true);
@@ -83,7 +83,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
-                share();
+                onClickShare();
             }
         });
     }

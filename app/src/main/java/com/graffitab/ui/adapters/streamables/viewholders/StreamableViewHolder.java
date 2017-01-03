@@ -1,7 +1,5 @@
 package com.graffitab.ui.adapters.streamables.viewholders;
 
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -9,9 +7,7 @@ import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
-import com.graffitab.ui.activities.home.streamables.CommentsActivity;
-import com.graffitab.ui.activities.home.streamables.LikesActivity;
-import com.graffitab.ui.activities.home.users.ProfileActivity;
+import com.graffitab.ui.adapters.streamables.OnStreamableClickListener;
 import com.graffitabsdk.model.GTStreamable;
 
 import butterknife.BindView;
@@ -27,6 +23,7 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.streamableView) public ImageView streamableView;
 
     protected GTStreamable item;
+    protected OnStreamableClickListener clickListener;
 
     public StreamableViewHolder(View itemView) {
         super(itemView);
@@ -40,42 +37,48 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
         streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
     }
 
-    public void openUserProfile() {
-        Context context = itemView.getContext();
-        context.startActivity(new Intent(context, ProfileActivity.class));
+    public GTStreamable getItem() {
+        return item;
     }
 
-    public void openPost() {
-        System.out.println("POST");
+    public void setClickListener(OnStreamableClickListener listener) {
+        this.clickListener = listener;
     }
 
-    public void openLikes() {
-        Context context = itemView.getContext();
-        context.startActivity(new Intent(context, LikesActivity.class));
+    public void onClickUserProfile() {
+        if (clickListener != null)
+            clickListener.onOpenOwnerProfile(item, item.user);
     }
 
-    public void openComments() {
-        Context context = itemView.getContext();
-        context.startActivity(new Intent(context, CommentsActivity.class));
+    public void onClickLikes() {
+        if (clickListener != null)
+            clickListener.onOpenLikes(item);
     }
 
-    public void share() {
-        System.out.println("SHARE");
+    public void onClickComments() {
+        if (clickListener != null)
+            clickListener.onOpenComments(item);
     }
 
-    public void toggleLike() {
-        System.out.println("LIKE");
+    public void onClickShare() {
+        if (clickListener != null)
+            clickListener.onShare(item);
+    }
+
+    public void onClickToggleLike() {
+        if (clickListener != null)
+            clickListener.onToggleLike(item, this);
     }
 
     // Setup
 
     protected void setupViews() {
-        streamableView.setClickable(true);
-        streamableView.setOnClickListener(new View.OnClickListener() {
+        itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                openPost();
+                if (clickListener != null)
+                    clickListener.onRowSelected(item);
             }
         });
     }

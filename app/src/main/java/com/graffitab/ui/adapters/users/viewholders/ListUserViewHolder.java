@@ -39,4 +39,18 @@ public class ListUserViewHolder extends UserViewHolder {
                 user.followedByCurrentUser ? R.drawable.ic_action_unfollow : R.drawable.ic_action_follow,
                 user.followedByCurrentUser ? Color.WHITE : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary)));
     }
+
+    @Override
+    protected void setupViews() {
+        super.setupViews();
+
+        followBtn.setClickable(true);
+        followBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                onClickToggleFollow();
+            }
+        });
+    }
 }

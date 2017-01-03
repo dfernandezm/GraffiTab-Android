@@ -1,5 +1,6 @@
 package com.graffitab.ui.fragments.comments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +13,18 @@ import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.ui.activities.home.SearchActivity;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.comments.GenericCommentsRecyclerViewAdapter;
+import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.autocomplete.UserTagMultiAutoCompleteTextView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitab.utils.Utils;
 import com.graffitabsdk.model.GTComment;
+import com.graffitabsdk.model.GTUser;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
 import java.util.ArrayList;
@@ -33,7 +39,7 @@ import butterknife.OnClick;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericCommentsFragment extends GenericItemListFragment<GTComment> {
+public abstract class GenericCommentsFragment extends GenericItemListFragment<GTComment> implements OnCommentClickListener {
 
     public enum ViewType {LIST_FULL}
 
@@ -95,6 +101,31 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
         configureLayout();
     }
 
+    @Override
+    public void onRowSelected(GTComment comment) {
+        System.out.println("SELECTED " + comment);
+    }
+
+    @Override
+    public void onOpenCommenterProfile(GTComment comment, GTUser commenter) {
+        startActivity(new Intent(getActivity(), ProfileActivity.class));
+    }
+
+    @Override
+    public void onOpenHashtag(GTComment comment, String hashtag) {
+        startActivity(new Intent(getActivity(), SearchActivity.class));
+    }
+
+    @Override
+    public void onOpenLink(GTComment comment, String url) {
+        Utils.openUrl(getActivity(), url);
+    }
+
+    @Override
+    public void onOpenMention(GTComment comment, String mention) {
+        startActivity(new Intent(getActivity(), ProfileActivity.class));
+    }
+
     // Configuration
 
     @Override
@@ -108,6 +139,7 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
         GenericCommentsRecyclerViewAdapter customAdapter = new GenericCommentsRecyclerViewAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
         customAdapter.setViewType(viewType);
+        customAdapter.setClickListener(this);
         return customAdapter;
     }
 
