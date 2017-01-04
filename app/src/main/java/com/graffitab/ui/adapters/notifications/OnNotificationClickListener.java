@@ -9,5 +9,5 @@ import com.graffitabsdk.model.GTNotification;
  */
 public interface OnNotificationClickListener {
 
-    void onRowSelected(GTNotification notification);
+    void onRowSelected(GTNotification notification, int adapterPosition);
 }

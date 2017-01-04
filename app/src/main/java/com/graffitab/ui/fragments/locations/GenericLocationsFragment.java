@@ -49,12 +49,12 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
     }
 
     @Override
-    public void onRowSelected(GTLocation location) {
+    public void onRowSelected(GTLocation location, int adapterPosition) {
         startActivity(new Intent(getActivity(), ExplorerActivity.class));
     }
 
     @Override
-    public void onMenuSelected(final GTLocation location) {
+    public void onMenuSelected(final GTLocation location, final int adapterPosition) {
         BottomSheet.Builder builder = new BottomSheet.Builder(getActivity(), R.style.BottomSheet_StyleDialog)
                 .title(R.string.locations_menu_title)
                 .sheet(R.menu.menu_locations);
@@ -73,7 +73,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
                     Toast.makeText(getActivity(), getString(R.string.other_copied), Toast.LENGTH_SHORT).show();
                 }
                 else if (which == R.id.action_remove) {
-                    adapter.removeItem(1, getRecyclerView().getRecyclerView());
+                    adapter.removeItem(adapterPosition, getRecyclerView().getRecyclerView());
                 }
             }
         });

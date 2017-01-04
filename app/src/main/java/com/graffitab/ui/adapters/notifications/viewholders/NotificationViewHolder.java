@@ -52,7 +52,7 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (clickListener != null)
-                    clickListener.onRowSelected(item);
+                    clickListener.onRowSelected(item, getAdapterPosition());
             }
         });
     }

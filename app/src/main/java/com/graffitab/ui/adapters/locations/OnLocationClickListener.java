@@ -9,6 +9,6 @@ import com.graffitabsdk.model.GTLocation;
  */
 public interface OnLocationClickListener {
 
-    void onRowSelected(GTLocation location);
-    void onMenuSelected(GTLocation location);
+    void onRowSelected(GTLocation location, int adapterPosition);
+    void onMenuSelected(GTLocation location, int adapterPosition);
 }

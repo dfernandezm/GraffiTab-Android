@@ -10,9 +10,10 @@ import com.graffitabsdk.model.GTUser;
  */
 public interface OnCommentClickListener {
 
-    void onRowSelected(GTComment comment);
-    void onOpenCommenterProfile(GTComment comment, GTUser commenter);
-    void onOpenHashtag(GTComment comment, String hashtag);
-    void onOpenMention(GTComment comment, String mention);
-    void onOpenLink(GTComment comment, String url);
+    void onRowSelected(GTComment comment, int adapterPosition);
+    void onRowLongSelected(GTComment comment, int adapterPosition);
+    void onOpenCommenterProfile(GTComment comment, GTUser commenter, int adapterPosition);
+    void onOpenHashtag(GTComment comment, String hashtag, int adapterPosition);
+    void onOpenMention(GTComment comment, String mention, int adapterPosition);
+    void onOpenLink(GTComment comment, String url, int adapterPosition);
 }

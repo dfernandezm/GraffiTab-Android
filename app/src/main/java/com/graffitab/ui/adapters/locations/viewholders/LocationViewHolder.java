@@ -52,7 +52,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (clickListener != null)
-                    clickListener.onMenuSelected(item);
+                    clickListener.onMenuSelected(item, getAdapterPosition());
             }
         });
 
@@ -61,7 +61,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (clickListener != null)
-                    clickListener.onRowSelected(item);
+                    clickListener.onRowSelected(item, getAdapterPosition());
             }
         });
     }

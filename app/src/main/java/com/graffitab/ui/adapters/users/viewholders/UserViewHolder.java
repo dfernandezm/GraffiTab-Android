@@ -43,7 +43,7 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
 
     public void onClickToggleFollow() {
         if (clickListener != null)
-            clickListener.onToggleFollow(item, this);
+            clickListener.onToggleFollow(item, this, getAdapterPosition());
     }
 
     // Setup
@@ -54,7 +54,7 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (clickListener != null)
-                    clickListener.onRowSelected(item);
+                    clickListener.onRowSelected(item, getAdapterPosition());
             }
         });
     }

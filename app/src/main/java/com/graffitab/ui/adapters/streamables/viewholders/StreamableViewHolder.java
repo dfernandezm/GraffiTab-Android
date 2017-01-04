@@ -47,27 +47,27 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
 
     public void onClickUserProfile() {
         if (clickListener != null)
-            clickListener.onOpenOwnerProfile(item, item.user);
+            clickListener.onOpenOwnerProfile(item, item.user, getAdapterPosition());
     }
 
     public void onClickLikes() {
         if (clickListener != null)
-            clickListener.onOpenLikes(item);
+            clickListener.onOpenLikes(item, getAdapterPosition());
     }
 
     public void onClickComments() {
         if (clickListener != null)
-            clickListener.onOpenComments(item);
+            clickListener.onOpenComments(item, getAdapterPosition());
     }
 
     public void onClickShare() {
         if (clickListener != null)
-            clickListener.onShare(item);
+            clickListener.onShare(item, getAdapterPosition());
     }
 
     public void onClickToggleLike() {
         if (clickListener != null)
-            clickListener.onToggleLike(item, this);
+            clickListener.onToggleLike(item, this, getAdapterPosition());
     }
 
     // Setup
@@ -78,7 +78,7 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (clickListener != null)
-                    clickListener.onRowSelected(item);
+                    clickListener.onRowSelected(item, getAdapterPosition());
             }
         });
     }

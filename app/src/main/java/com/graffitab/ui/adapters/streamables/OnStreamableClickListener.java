@@ -11,10 +11,10 @@ import com.graffitabsdk.model.GTUser;
  */
 public interface OnStreamableClickListener {
 
-    void onRowSelected(GTStreamable streamable);
-    void onOpenOwnerProfile(GTStreamable streamable, GTUser owner);
-    void onOpenLikes(GTStreamable streamable);
-    void onOpenComments(GTStreamable streamable);
-    void onShare(GTStreamable streamable);
-    void onToggleLike(GTStreamable streamable, StreamableViewHolder holder);
+    void onRowSelected(GTStreamable streamable, int adapterPosition);
+    void onOpenOwnerProfile(GTStreamable streamable, GTUser owner, int adapterPosition);
+    void onOpenLikes(GTStreamable streamable, int adapterPosition);
+    void onOpenComments(GTStreamable streamable, int adapterPosition);
+    void onShare(GTStreamable streamable, int adapterPosition);
+    void onToggleLike(GTStreamable streamable, StreamableViewHolder holder, int adapterPosition);
 }

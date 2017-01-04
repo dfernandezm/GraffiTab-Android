@@ -62,12 +62,12 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
     }
 
     @Override
-    public void onRowSelected(GTUser user) {
+    public void onRowSelected(GTUser user, int adapterPosition) {
         startActivity(new Intent(getActivity(), ProfileActivity.class));
     }
 
     @Override
-    public void onToggleFollow(GTUser user, UserViewHolder holder) {
+    public void onToggleFollow(GTUser user, UserViewHolder holder, int adapterPosition) {
         // No-op.
     }
 

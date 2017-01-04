@@ -1,5 +1,9 @@
 package com.graffitab.ui.fragments.comments;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -10,7 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.ui.activities.home.SearchActivity;
@@ -23,6 +29,7 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerVie
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.model.GTComment;
 import com.graffitabsdk.model.GTUser;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
@@ -46,6 +53,8 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
     @BindView(R.id.messageField) UserTagMultiAutoCompleteTextView commentField;
 
     private ViewType viewType;
+    private GTComment toEdit;
+    private int toEditPosition;
 
     public void basicInit() {
         setViewType(ViewType.LIST_FULL);
@@ -66,10 +75,19 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
     public void onClickSend(View view) {
         String text = commentField.getText().toString().trim();
         if (text.length() > 0) {
-            Log.i(getClass().getSimpleName(), "Posting comment");
-            GTComment comment = new GTComment();
-            comment.text = text;
-            items.add(0, comment);
+            if (toEdit != null) {
+                Log.i(getClass().getSimpleName(), "Editing comment");
+                toEdit.text = text;
+                items.set(toEditPosition, toEdit);
+            }
+            else {
+                Log.i(getClass().getSimpleName(), "Posting comment");
+                GTComment comment = new GTComment();
+                comment.text = text;
+                items.add(0, comment);
+            }
+            toEdit = null;
+            toEditPosition = -1;
             adapter.setItems(items, getRecyclerView().getRecyclerView());
             commentField.setText("");
         }
@@ -102,28 +120,63 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
     }
 
     @Override
-    public void onRowSelected(GTComment comment) {
-        System.out.println("SELECTED " + comment);
+    public void onRowSelected(GTComment comment, int adapterPosition) {
+        showOptionsMenu(comment, adapterPosition);
     }
 
     @Override
-    public void onOpenCommenterProfile(GTComment comment, GTUser commenter) {
+    public void onRowLongSelected(GTComment comment, int adapterPosition) {
+        showOptionsMenu(comment, adapterPosition);
+    }
+
+    @Override
+    public void onOpenCommenterProfile(GTComment comment, GTUser commenter, int adapterPosition) {
         startActivity(new Intent(getActivity(), ProfileActivity.class));
     }
 
     @Override
-    public void onOpenHashtag(GTComment comment, String hashtag) {
+    public void onOpenHashtag(GTComment comment, String hashtag, int adapterPosition) {
         startActivity(new Intent(getActivity(), SearchActivity.class));
     }
 
     @Override
-    public void onOpenLink(GTComment comment, String url) {
+    public void onOpenLink(GTComment comment, String url, int adapterPosition) {
         Utils.openUrl(getActivity(), url);
     }
 
     @Override
-    public void onOpenMention(GTComment comment, String mention) {
+    public void onOpenMention(GTComment comment, String mention, int adapterPosition) {
         startActivity(new Intent(getActivity(), ProfileActivity.class));
+    }
+
+    private void showOptionsMenu(final GTComment comment, final int adapterPosition) {
+        BottomSheet.Builder builder = new BottomSheet.Builder(getActivity(), R.style.BottomSheet_StyleDialog)
+                .title(R.string.comments_menu_title)
+                .sheet(R.menu.menu_comments);
+
+        builder = builder.listener(new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == R.id.action_edit) {
+                    toEdit = comment;
+                    toEditPosition = adapterPosition;
+
+                    commentField.setText(comment.text);
+                    KeyboardUtils.showKeyboard(getActivity(), commentField);
+                }
+                else if (which == R.id.action_copy) {
+                    ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
+                    ClipData clip = ClipData.newPlainText("Text", comment.text);
+                    clipboard.setPrimaryClip(clip);
+                    Toast.makeText(getActivity(), getString(R.string.other_copied), Toast.LENGTH_SHORT).show();
+                }
+                else if (which == R.id.action_remove) {
+                    adapter.removeItem(adapterPosition, getRecyclerView().getRecyclerView());
+                }
+            }
+        });
+        builder.show();
     }
 
     // Configuration

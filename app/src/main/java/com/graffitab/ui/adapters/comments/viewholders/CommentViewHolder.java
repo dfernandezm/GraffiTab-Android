@@ -61,7 +61,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (clickListener != null)
-                    clickListener.onOpenCommenterProfile(item, item.user);
+                    clickListener.onOpenCommenterProfile(item, item.user, getAdapterPosition());
             }
         };
         avatar.setClickable(true);
@@ -83,14 +83,14 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
                     return;
 
                 if (autoLinkMode == AutoLinkMode.MODE_URL)
-                    clickListener.onOpenLink(item, matchedText.trim());
+                    clickListener.onOpenLink(item, matchedText.trim(), getAdapterPosition());
                 else if (autoLinkMode == AutoLinkMode.MODE_HASHTAG) {
                     String text = matchedText.substring(1);
-                    clickListener.onOpenHashtag(item, text);
+                    clickListener.onOpenHashtag(item, text, getAdapterPosition());
                 }
                 else if (autoLinkMode == AutoLinkMode.MODE_MENTION) {
                     String text = matchedText.substring(1);
-                    clickListener.onOpenMention(item, text);
+                    clickListener.onOpenMention(item, text, getAdapterPosition());
                 }
             }
         });
@@ -100,8 +100,19 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View view) {
                 if (clickListener != null)
-                    clickListener.onRowSelected(item);
+                    clickListener.onRowSelected(item, getAdapterPosition());
             }
         });
+
+        View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if (clickListener != null)
+                    clickListener.onRowLongSelected(item, getAdapterPosition());
+                return true;
+            }
+        };
+        itemView.setOnLongClickListener(longClickListener);
+        autoLinkTextView.setOnLongClickListener(longClickListener);
     }
 }

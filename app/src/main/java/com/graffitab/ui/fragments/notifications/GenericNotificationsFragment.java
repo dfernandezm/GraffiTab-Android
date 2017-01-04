@@ -40,7 +40,7 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
     }
 
     @Override
-    public void onRowSelected(GTNotification notification) {
+    public void onRowSelected(GTNotification notification, int adapterPosition) {
         System.out.println("SELECTED " + notification);
     }
 

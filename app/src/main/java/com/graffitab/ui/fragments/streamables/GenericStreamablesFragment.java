@@ -76,32 +76,32 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     }
 
     @Override
-    public void onRowSelected(GTStreamable streamable) {
+    public void onRowSelected(GTStreamable streamable, int adapterPosition) {
         startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
     }
 
     @Override
-    public void onOpenComments(GTStreamable streamable) {
+    public void onOpenComments(GTStreamable streamable, int adapterPosition) {
         startActivity(new Intent(getActivity(), CommentsActivity.class));
     }
 
     @Override
-    public void onOpenLikes(GTStreamable streamable) {
+    public void onOpenLikes(GTStreamable streamable, int adapterPosition) {
         startActivity(new Intent(getActivity(), LikesActivity.class));
     }
 
     @Override
-    public void onOpenOwnerProfile(GTStreamable streamable, GTUser owner) {
+    public void onOpenOwnerProfile(GTStreamable streamable, GTUser owner, int adapterPosition) {
         startActivity(new Intent(getActivity(), ProfileActivity.class));
     }
 
     @Override
-    public void onShare(GTStreamable streamable) {
+    public void onShare(GTStreamable streamable, int adapterPosition) {
         // No-op.
     }
 
     @Override
-    public void onToggleLike(GTStreamable streamable, StreamableViewHolder holder) {
+    public void onToggleLike(GTStreamable streamable, StreamableViewHolder holder, int adapterPosition) {
         // No-op.
     }
 

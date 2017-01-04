@@ -10,6 +10,6 @@ import com.graffitabsdk.model.GTUser;
  */
 public interface OnUserClickListener {
 
-    void onRowSelected(GTUser user);
-    void onToggleFollow(GTUser user, UserViewHolder holder);
+    void onRowSelected(GTUser user, int adapterPosition);
+    void onToggleFollow(GTUser user, UserViewHolder holder, int adapterPosition);
 }
