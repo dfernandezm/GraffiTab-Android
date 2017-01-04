@@ -40,7 +40,8 @@
                 android:layout_height="wrap_content"
                 android:text="Georgi Christov"
                 android:textStyle="bold"
-                android:textColor="#000"/>
+                android:textColor="#000"
+                android:textSize="15sp"/>
 
             <TextView
                 android:id="@+id/usernameField"
@@ -49,7 +50,7 @@
                 android:layout_marginTop="1dp"
                 android:text="georgi"
                 android:textColor="#AAAAAA"
-                android:textSize="11sp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <TextView
@@ -76,7 +77,6 @@
         android:background="@drawable/stream_shadow"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingBottom="7dp"
         android:paddingLeft="12dp"
         android:paddingRight="12dp"
         android:paddingTop="10dp" >
@@ -92,7 +92,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/likes_count_plural"
                 android:textColor="#AAAAAA"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/commentsField"
@@ -101,7 +101,7 @@
                 android:layout_marginLeft="13dp"
                 android:text="@string/comments_count_plural"
                 android:textColor="#AAAAAA"
-                android:textSize="13sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
         <View
@@ -115,16 +115,19 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="5dp" >
+            android:layout_marginBottom="5dp"
+            android:gravity="center"
+            android:paddingTop="4dp"
+            android:paddingBottom="6dp">
 
             <LinearLayout
                 android:id="@+id/likeButton"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingRight="17dp" >
+                android:paddingRight="17dp">
 
                 <ImageView
                     android:id="@+id/likeStatusImage"
@@ -139,14 +142,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/likes_like"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:layout_marginLeft="7dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/commentButton"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
@@ -162,14 +165,14 @@
                     android:layout_height="wrap_content"
                     android:text="@string/comments_comment"
                     android:textColor="@color/colorMetadata"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:layout_marginLeft="7dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/shareButton"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal" >
@@ -185,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/other_share"
                     android:textColor="@color/colorMetadata"
-                    android:textSize="13sp"
+                    android:textSize="14sp"
                     android:layout_marginLeft="7dp" />
             </LinearLayout>
         </LinearLayout>

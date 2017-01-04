@@ -17,6 +17,7 @@ import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.graffitab.R;
 import com.graffitab.managers.GTLocationManager;
+import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterItem;
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterRenderer;
 import com.graffitab.ui.activities.home.streamables.explorer.staticcontainers.ClusterActivity;
@@ -209,6 +210,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public boolean onClusterItemClick(GTClusterItem gtClusterItem) {
+                startActivity(new Intent(ExplorerActivity.this, StreamableDetailsActivity.class));
                 return true;
             }
         });
