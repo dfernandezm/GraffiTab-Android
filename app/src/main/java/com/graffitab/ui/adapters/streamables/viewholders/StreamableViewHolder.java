@@ -31,10 +31,10 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
         setupViews();
     }
 
-    public void setItem(GTStreamable notification, int position) {
-        this.item = notification;
+    public void setItem(GTStreamable streamable) {
+        this.item = streamable;
 
-        streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[position % Constants.PALLETE.length]));
+        streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[getAdapterPosition() % Constants.PALLETE.length]));
     }
 
     public GTStreamable getItem() {

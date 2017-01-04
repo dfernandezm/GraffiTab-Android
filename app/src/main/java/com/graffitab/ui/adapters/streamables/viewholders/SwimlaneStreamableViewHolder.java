@@ -21,8 +21,8 @@ public class SwimlaneStreamableViewHolder extends StreamableViewHolder {
     }
 
     @Override
-    public void setItem(GTStreamable notification, int position) {
-        super.setItem(notification, position);
+    public void setItem(GTStreamable streamable) {
+        super.setItem(streamable);
 
         streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
     }

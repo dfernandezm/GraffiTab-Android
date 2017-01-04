@@ -90,19 +90,19 @@ public class GenericStreamablesRecyclerViewAdapter extends AdvancedEndlessRecycl
 
         if (holder instanceof TrendingStreamableViewHolder) {
             TrendingStreamableViewHolder customHolder = (TrendingStreamableViewHolder) holder;
-            customHolder.setItem(item, position);
+            customHolder.setItem(item);
         }
         else if (holder instanceof ListStreamableViewHolder) {
             ListStreamableViewHolder customHolder = (ListStreamableViewHolder) holder;
-            customHolder.setItem(item, position);
+            customHolder.setItem(item);
         }
         else if (holder instanceof SwimlaneStreamableViewHolder) {
             SwimlaneStreamableViewHolder customHolder = (SwimlaneStreamableViewHolder) holder;
-            customHolder.setItem(item, position);
+            customHolder.setItem(item);
         }
         else if (holder instanceof GridStreamableViewHolder) {
             GridStreamableViewHolder customHolder = (GridStreamableViewHolder) holder;
-            customHolder.setItem(item, position);
+            customHolder.setItem(item);
         }
     }
 }

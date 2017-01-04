@@ -68,7 +68,8 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
     @Override
     public void onToggleFollow(GTUser user, UserViewHolder holder, int adapterPosition) {
-        // No-op.
+        user.followedByCurrentUser = !user.followedByCurrentUser;
+        adapter.notifyDataSetChanged();
     }
 
     // Configuration

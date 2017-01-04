@@ -7,6 +7,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.application.MyApplication;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
 
 import butterknife.BindView;
@@ -33,8 +35,15 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
     }
 
     @Override
-    public void setItem(GTStreamable notification, int position) {
-        super.setItem(notification, position);
+    public void setItem(GTStreamable streamable) {
+        super.setItem(streamable);
+
+        int color = !streamable.likedByCurrentUser ? MyApplication.getInstance().getResources().getColor(R.color.colorMetadata) : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary);
+        likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
+        likesField.setTextColor(color);
+
+        likesField.setText(streamable.likersCount + "");
+        commentsField.setText(streamable.commentsCount + "");
 
         streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
     }

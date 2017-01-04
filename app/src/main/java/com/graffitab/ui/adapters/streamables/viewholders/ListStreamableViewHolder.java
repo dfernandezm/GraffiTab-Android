@@ -5,6 +5,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.application.MyApplication;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
 
 import butterknife.BindView;
@@ -24,6 +26,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
     @BindView(R.id.likesField) public TextView likesField;
     @BindView(R.id.commentsField) public TextView commentsField;
     @BindView(R.id.likeStatusImage) public ImageView likeStatusImage;
+    @BindView(R.id.likeStatus) public TextView likeStatus;
     @BindView(R.id.likeButton) public View likeButton;
     @BindView(R.id.commentButton) public View commentButton;
     @BindView(R.id.shareButton) public View shareButton;
@@ -34,8 +37,18 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
     }
 
     @Override
-    public void setItem(GTStreamable notification, int position) {
-        super.setItem(notification, position);
+    public void setItem(GTStreamable streamable) {
+        super.setItem(streamable);
+
+        int color = !streamable.likedByCurrentUser ? MyApplication.getInstance().getResources().getColor(R.color.colorMetadata) : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary);
+        likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
+        likeStatus.setTextColor(color);
+        likeStatus.setText(streamable.likedByCurrentUser ? MyApplication.getInstance().getString(R.string.likes_liked) : MyApplication.getInstance().getString(R.string.likes_like));
+
+        boolean plural = streamable.likersCount != 1;
+        likesField.setText(MyApplication.getInstance().getString(plural ? R.string.likes_count_plural : R.string.likes_count, streamable.likersCount));
+        plural = streamable.commentsCount != 1;
+        commentsField.setText(MyApplication.getInstance().getString(plural ? R.string.comments_count_plural : R.string.comments_count, streamable.commentsCount));
     }
 
     @Override
@@ -77,6 +90,15 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
         commentsField.setOnClickListener(commentListener);
         commentButton.setClickable(true);
         commentButton.setOnClickListener(commentListener);
+
+        likeButton.setClickable(true);
+        likeButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                onClickToggleLike();
+            }
+        });
 
         shareButton.setClickable(true);
         shareButton.setOnClickListener(new View.OnClickListener() {

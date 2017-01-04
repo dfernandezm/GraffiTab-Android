@@ -29,6 +29,7 @@ import com.graffitabsdk.model.GTUser;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -102,7 +103,10 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public void onToggleLike(GTStreamable streamable, StreamableViewHolder holder, int adapterPosition) {
-        // No-op.
+        streamable.likedByCurrentUser = !streamable.likedByCurrentUser;
+        if (streamable.likedByCurrentUser) streamable.likersCount++;
+        else streamable.likersCount--;
+        adapter.notifyDataSetChanged();
     }
 
     // Configuration
@@ -176,12 +180,16 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     @Override
     public List<GTStreamable> generateDummyData() {
         List<GTStreamable> loaded = new ArrayList();
+        Random random = new Random();
         for (int i = 0; i < 25; i++) {
             GTStreamable streamable = new GTStreamable();
             GTAsset asset = new GTAsset();
             asset.thumbnailWidth = Utils.randInt(300, 400);
             asset.thumbnailHeight = Utils.randInt(500, 1024);
             streamable.asset = asset;
+            streamable.likedByCurrentUser = random.nextBoolean();
+            streamable.likersCount = random.nextInt(21);
+            streamable.commentsCount = random.nextInt(21);
             loaded.add(streamable);
         }
         return loaded;

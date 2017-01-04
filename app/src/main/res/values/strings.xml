@@ -73,11 +73,18 @@
     <!-- Likes -->
     <string name="likes">Likes</string>
     <string name="likes_likers">Likers</string>
+    <string name="likes_like">Like</string>
+    <string name="likes_liked">Liked</string>
+    <string name="likes_count">%1$d Like</string>
+    <string name="likes_count_plural">%1$d Likes</string>
 
     <!-- Comments -->
     <string name="comments">Comments</string>
+    <string name="comments_comment">Comment</string>
     <string name="comments_hint">Write your comment here</string>
     <string name="comments_menu_title">What would you like to do with this comment?</string>
+    <string name="comments_count">%1$d Comment</string>
+    <string name="comments_count_plural">%1$d Comments</string>
 
     <!-- Mentions -->
     <string name="mentions">Mentioned in</string>
@@ -155,6 +162,7 @@
     <!-- Other -->
     <string name="other_copied">Text copied to clipboard</string>
     <string name="other_edit">Edit</string>
+    <string name="other_share">Share</string>
     <string name="other_copy">Copy</string>
     <string name="other_delete">Delete</string>
     <string name="other_toggle">Switch Layout</string>
