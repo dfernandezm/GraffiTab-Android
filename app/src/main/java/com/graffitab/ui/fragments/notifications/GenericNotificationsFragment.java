@@ -1,10 +1,13 @@
 package com.graffitab.ui.fragments.notifications;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.notifications.GenericNotificationsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.notifications.OnNotificationClickListener;
 import com.graffitab.ui.fragments.GenericItemListFragment;
@@ -41,7 +44,21 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
 
     @Override
     public void onRowSelected(GTNotification notification, int adapterPosition) {
-        System.out.println("SELECTED " + notification);
+        if (notification.type == GTNotification.GTNotificationType.FOLLOW) {
+            startActivity(new Intent(getActivity(), ProfileActivity.class));
+        }
+        else if (notification.type == GTNotification.GTNotificationType.COMMENT) {
+            startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
+        }
+        else if (notification.type == GTNotification.GTNotificationType.LIKE) {
+            startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
+        }
+        else if (notification.type == GTNotification.GTNotificationType.MENTION) {
+            startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
+        }
+        else {
+            // No-op - Welcome notification type is not handled.
+        }
     }
 
     // Configuration

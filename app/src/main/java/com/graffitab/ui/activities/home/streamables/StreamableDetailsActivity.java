@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
@@ -28,6 +30,8 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class StreamableDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.streamableView) ImageView streamableView;
+    @BindView(R.id.likesField) public TextView likesField;
+    @BindView(R.id.likeStatusImage) public ImageButton likeStatusImage;
 
     private PhotoViewAttacher mAttacher;
 
@@ -40,6 +44,8 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupDummyContent();
+
+        loadData();
     }
 
     @OnClick(R.id.avatar)
@@ -112,6 +118,12 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     private void onClickProfile() {
         startActivity(new Intent(this, ProfileActivity.class));
+    }
+
+    // Loading
+
+    private void loadData() {
+
     }
 
     // Setup
