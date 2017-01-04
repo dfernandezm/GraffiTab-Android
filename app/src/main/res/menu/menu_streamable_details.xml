@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_edit"
+        android:icon="@drawable/ic_mode_edit_black_24dp"
+        android:title="@string/other_edit"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_toggle_privacy"
+        android:icon="@drawable/ic_visibility_off_black_24dp"
+        android:title="@string/streamable_details_mark_private"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_save"
+        android:icon="@drawable/ic_file_download_black_24dp"
+        android:title="@string/streamable_details_save"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_flag"
+        android:icon="@drawable/ic_flag_black_24dp"
+        android:title="@string/streamable_details_flag"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_explore"
+        android:icon="@drawable/ic_location_on_black_24dp"
+        android:title="@string/streamable_details_explore"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_remove"
+        android:icon="@drawable/ic_clear_black_24dp"
+        android:title="@string/other_delete"
+        app:showAsAction="always" />
+</menu>

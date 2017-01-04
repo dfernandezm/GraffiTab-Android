@@ -72,6 +72,7 @@
         android:padding="10dp">
 
         <LinearLayout
+            android:id="@+id/optionsBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_streamable_detail"
@@ -87,10 +88,12 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_more_horiz_black_24dp"
-                android:tint="#fff" />
+                android:tint="#fff"
+                android:clickable="false"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/shareBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -107,7 +110,8 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_share_black_24dp"
-                android:tint="#fff" />
+                android:tint="#fff"
+                android:clickable="false"/>
         </LinearLayout>
 
         <View
@@ -116,6 +120,7 @@
             android:layout_weight="1" />
 
         <LinearLayout
+            android:id="@+id/likeBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_corner_streamable_detail_liked"
@@ -131,7 +136,8 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_thumb_up_black_24dp"
-                android:tint="#fff" />
+                android:tint="#fff"
+                android:clickable="false"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -142,6 +148,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/commentBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -158,7 +165,8 @@
                 android:background="@null"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_chat_bubble_black_24dp"
-                android:tint="#fff" />
+                android:tint="#fff"
+                android:clickable="false"/>
 
             <TextView
                 android:layout_width="wrap_content"

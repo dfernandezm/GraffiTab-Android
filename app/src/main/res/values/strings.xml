@@ -143,6 +143,14 @@
     <string name="settings_copyright">© 2016 GraffiTab All Rights Reserved</string>
     <string name="settings_prompt_logout">Are you sure you want to log out?</string>
 
+    <!-- Streamable Details -->
+    <string name="streamable_details_menu_title">What would you like to do with this graffiti?</string>
+    <string name="streamable_details_mark_private">Mark Private</string>
+    <string name="streamable_details_mark_public">Mark Public</string>
+    <string name="streamable_details_save">Save to Photos Album</string>
+    <string name="streamable_details_flag">Flag Inappropriate</string>
+    <string name="streamable_details_explore">Explore Map Area</string>
+
     <!-- Other -->
     <string name="other_copied">Text copied to clipboard</string>
     <string name="other_edit">Edit</string>
