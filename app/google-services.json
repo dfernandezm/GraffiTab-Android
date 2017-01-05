@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "1065027076259",
+    "firebase_url": "https://fir-graffitab.firebaseio.com",
+    "project_id": "firebase-graffitab",
+    "storage_bucket": "firebase-graffitab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1065027076259:android:95dd16a9b7c92c22",
+        "android_client_info": {
+          "package_name": "com.graffitab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1065027076259-lkbo9f885qhj9k3bcgbnt8hi8c1dvss0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.graffitab",
+            "certificate_hash": "0DE06575ECB3D58D4FA650F5A6DB598128F86491"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9tKLAANr5lOycJoOvfL-Ps3eo07eoyLM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

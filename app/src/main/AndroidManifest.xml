@@ -3,6 +3,7 @@
     package="com.graffitab"
     android:installLocation="auto">
 
+    <!-- Screen sizes -->
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -11,6 +12,7 @@
         android:smallScreens="true"
         android:xlargeScreens="true" />
 
+    <!-- Standard permissions -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -21,6 +23,12 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
+    <!-- GCM permissions -->
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <permission android:name="com.graffitab.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="com.graffitab.permission.C2D_MESSAGE" />
+
+    <!-- Required features -->
     <uses-feature
         android:name="android.hardware.camera"
         android:required="true" />
@@ -36,13 +44,40 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- Facebook metadata -->
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
+
+        <!-- Google Maps metadata -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
+        <!-- GCM listeners -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver" android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+                <category android:name="com.graffitab" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".gcm.GcmIntentService" android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+        <service
+            android:name=".gcm.GcmIDListenerService" android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <!-- Activities -->
         <activity android:name=".ui.activities.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

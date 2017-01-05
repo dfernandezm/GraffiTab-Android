@@ -16,6 +16,7 @@ import android.view.Window;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
+import com.graffitab.managers.GTGcmManager;
 import com.graffitab.managers.GTLocationManager;
 import com.graffitab.ui.activities.home.me.locations.LocationsActivity;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
@@ -50,13 +51,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private CustomResideMenu resideMenu;
 
-    private int[] tabIcons = {
-            R.drawable.ic_home_black_24dp,
-            R.drawable.ic_whatshot_black_24dp,
-            R.drawable.ic_notifications_none_black_24dp,
-            R.drawable.ic_access_time_black_24dp
-    };
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -69,6 +63,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setupViewPager();
         setupTabBar();
         setupMenu();
+
+        registerForPushNotifications();
     }
 
     @Override
@@ -123,6 +119,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // GCM
+
+    private void registerForPushNotifications() {
+        GTGcmManager.sharedInstance.refreshGcmToken(this);
     }
 
     // Setup
@@ -187,6 +189,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void setupTabBarColors(int selectedPosition) {
+        int[] tabIcons = {
+                R.drawable.ic_home_black_24dp,
+                R.drawable.ic_whatshot_black_24dp,
+                R.drawable.ic_notifications_none_black_24dp,
+                R.drawable.ic_access_time_black_24dp
+        };
+
         for (int i = 0; i < tabIcons.length; i++)
             tabLayout.getTabAt(i).setIcon(ImageUtils.tintIcon(this, tabIcons[i], getResources().getColor(i == selectedPosition ? R.color.colorPrimary : R.color.colorHomeUnselected)));
     }

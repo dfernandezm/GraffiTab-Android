@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.managers.GTGcmManager;
 import com.graffitab.settings.Settings;
 import com.graffitab.ui.activities.home.WebActivity;
 import com.graffitab.ui.activities.home.me.edit.ChangePasswordActivity;
@@ -53,10 +54,6 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    private void logout() {
-
     }
 
     // Setup
@@ -246,6 +243,9 @@ public class SettingsActivity extends AppCompatActivity {
 
                 @Override
                 public void run() {
+                    // Unregister GCM token.
+                    GTGcmManager.sharedInstance.unregisterToken(getActivity());
+
                     // Logout user.
                     GTSDK.getUserManager().logout(new GTResponseHandler<Void>() {
 
