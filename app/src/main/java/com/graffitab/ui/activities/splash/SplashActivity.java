@@ -84,6 +84,11 @@ public class SplashActivity extends AppCompatActivity {
                         Log.e(getClass().getSimpleName(), "Failed to refresh profile. Showing Home screen");
                         showHomeScreen();
                     }
+
+                    @Override
+                    public void onCache(GTResponse<GTUser> gtResponse) {
+                        Log.i(getClass().getSimpleName(), "User is cached\nUsername: " + gtResponse.getObject().username);
+                    }
                 });
             }
             else { // Offline, so show home screen
