@@ -14,6 +14,7 @@
     <string name="login_sign_up">Sign up</string>
     <string name="login_error_username">Please enter your username.</string>
     <string name="login_error_password">Please enter your password.</string>
+    <string name="login_error_credentials">These credentials are incorrect. Please try again.</string>
 
     <!-- Reset password -->
     <string name="reset_password">Reset password</string>
@@ -161,6 +162,52 @@
     <string name="streamable_details_flag">Flag Inappropriate</string>
     <string name="streamable_details_explore">Explore Map Area</string>
 
+    <!-- API Errors -->
+
+    <string name="api_error_unsupported_file_type">This file type is not supported.</string>
+    <string name="api_error_invalid_token">The provided token is invalid.</string>
+    <string name="api_error_stream_could_not_be_read">The file stream could not be read.</string>
+    <string name="api_error_invalid_argument">Invalid argument passed in the request.</string>
+    <string name="api_error_missing_argument">Missing argument in the request.</string>
+    <string name="api_error_invalid_json">Invalid JSON in the request.</string>
+    <string name="api_error_invalid_followee">You cannot follow yourself.</string>
+    <string name="api_error_empty_mandatory_field">Mandatory fields missing.</string>
+    <string name="api_error_invalid_username">This username is invalid.</string>
+    <string name="api_error_invalid_email">This email is invalid.</string>
+    <string name="api_error_username_already_in_use">This username already exists.</string>
+    <string name="api_error_email_already_in_use">This email already exists.</string>
+    <string name="api_error_invalid_id">You cannot pass ID to create request.</string>
+
+    <string name="api_error_user_not_logged_in">Your session has expired. Please login to continue.</string>
+    <string name="api_error_user_not_owner">You do not have permission to edit this item.</string>
+
+    <string name="api_error_incorrect_password">Your password is incorrect. Please try again.</string>
+    <string name="api_error_max_login_attempts">Maximum login attempts have been reached. Please reset your password to continue.</string>
+    <string name="api_error_forbidden">This resource is forbidden.</string>
+
+    <string name="api_error_external_provider_not_found">This social account does not exist.</string>
+    <string name="api_error_external_provider_not_linked">This social account has not been linked.</string>
+    <string name="api_error_device_not_found">The requested device does not exist.</string>
+    <string name="api_error_user_not_found">The requested user does not exist.</string>
+    <string name="api_error_asset_not_found">The requested asset does not exist.</string>
+    <string name="api_error_streamable_not_found">The requested streamable does not exist.</string>
+    <string name="api_error_comment_not_found">The requested comment does not exist.</string>
+    <string name="api_error_location_not_found">The requested location does not exist.</string>
+    <string name="api_error_token_not_found">This token does not exist.</string>
+
+    <string name="api_error_token_expired">The provided token has expired.</string>
+    <string name="api_error_user_not_in_expected_state">You have not yet activated your account or have requested to reset your password. Please check your email or contact Support to report this issue.</string>
+
+    <string name="api_error_device_already_exists">This device already exists.</string>
+    <string name="api_error_external_provider_already_linked">This social account has already been linked.</string>
+    <string name="api_error_external_provider_already_linked_for_another_user">This external provider has already been linked for another user.</string>
+
+    <string name="api_error_general">An unexpected error has ocurred. Please contast support to raise a ticket.</string>
+
+    <string name="api_error_other">Looks like we are experiencing some errors processing your request. Make sure your Internet connection is working and try again. Otherwise please check our status page for more information.</string>
+
+    <string name="api_error">An unexpected error has ocurred. Please contast support to raise a ticket.</string>
+    
     <!-- Other -->
     <string name="other_copied">Text copied to clipboard</string>
     <string name="other_edit">Edit</string>

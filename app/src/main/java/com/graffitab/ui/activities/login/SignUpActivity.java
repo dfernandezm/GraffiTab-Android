@@ -19,6 +19,7 @@ import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.text.TextUtils;
@@ -110,7 +111,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Log.e(getClass().getSimpleName(), "Failed to register");
                     TaskDialog.getInstance().hideDialog();
 
-                    DialogBuilder.buildOKDialog(SignUpActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
+                    DialogBuilder.buildOKDialog(SignUpActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
                 }
             });
         }

@@ -19,6 +19,7 @@ import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
@@ -100,7 +101,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     TaskDialog.getInstance().hideDialog();
 
                     if (responseObject.getResultCode() != ResultCode.USER_NOT_FOUND) {
-                        DialogBuilder.buildOKDialog(ResetPasswordActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
+                        DialogBuilder.buildOKDialog(ResetPasswordActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
                         return;
                     }
 

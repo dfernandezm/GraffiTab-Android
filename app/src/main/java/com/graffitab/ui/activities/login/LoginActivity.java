@@ -18,6 +18,7 @@ import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.text.TextUtils;
@@ -25,6 +26,7 @@ import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.GTResponse;
 import com.graffitabsdk.network.common.GTResponseHandler;
+import com.graffitabsdk.network.common.ResultCode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -80,7 +82,12 @@ public class LoginActivity extends FacebookUtilsActivity {
                 public void onFailure(GTResponse<GTUser> responseObject) {
                     Log.e(getClass().getSimpleName(), "Failed to login");
                     TaskDialog.getInstance().hideDialog();
-                    DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
+
+                    if (responseObject.getResultCode() == ResultCode.USER_NOT_LOGGED_IN) {
+                        DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), getString(R.string.login_error_credentials));
+                        return;
+                    }
+                    DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
                 }
             });
         }
