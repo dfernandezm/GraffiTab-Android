@@ -15,9 +15,17 @@ import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.graffitab.R;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.TaskDialog;
+import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.text.TextUtils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.GTResponse;
+import com.graffitabsdk.network.common.GTResponseHandler;
+import com.graffitabsdk.network.common.ResultCode;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,7 +69,44 @@ public class ResetPasswordActivity extends AppCompatActivity {
         String em = emailField.getText().toString();
 
         if (TextUtils.isValidEmailAddress(em)) {
-            finish();
+            TaskDialog.getInstance().showDialog(null, this, null);
+
+            final Runnable successHandler = new Runnable() {
+
+                @Override
+                public void run() {
+                    DialogBuilder.buildOKDialog(ResetPasswordActivity.this, getString(R.string.app_name), getString(R.string.reset_password_detail), new OnOkHandler() {
+
+                        @Override
+                        public void onClickOk() {
+                            finish();
+                        }
+                    });
+                }
+            };
+
+            GTSDK.getUserManager().resetPassword(em, new GTResponseHandler<String>() {
+
+                @Override
+                public void onSuccess(GTResponse<String> responseObject) {
+                    Log.i(getClass().getSimpleName(), "Successfully reset password");
+                    TaskDialog.getInstance().hideDialog();
+                    successHandler.run();
+                }
+
+                @Override
+                public void onFailure(GTResponse<String> responseObject) {
+                    Log.e(getClass().getSimpleName(), "Failed to reset password");
+                    TaskDialog.getInstance().hideDialog();
+
+                    if (responseObject.getResultCode() != ResultCode.USER_NOT_FOUND) {
+                        DialogBuilder.buildOKDialog(ResetPasswordActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
+                        return;
+                    }
+
+                    successHandler.run();
+                }
+            });
         }
     }
 
