@@ -15,10 +15,17 @@ import android.widget.TextView;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.WebActivity;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.TaskDialog;
+import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.text.TextUtils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.GTResponse;
+import com.graffitabsdk.network.common.GTResponseHandler;
+import com.graffitabsdk.network.common.ResultCode;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
@@ -81,7 +88,31 @@ public class SignUpActivity extends AppCompatActivity {
         String cpw = confirmPassword.getText().toString();
 
         if (InputValidator.validateSignUp(this, fn, ln, em, un, pw, cpw)) {
-            finish();
+            TaskDialog.getInstance().showDialog(null, this, null);
+
+            GTSDK.getUserManager().register(fn, ln, em, un, pw, new GTResponseHandler<String>() {
+
+                @Override
+                public void onSuccess(GTResponse<String> responseObject) {
+                    Log.i(getClass().getSimpleName(), "Successfully registered");
+                    TaskDialog.getInstance().hideDialog();
+                    DialogBuilder.buildOKDialog(SignUpActivity.this, getString(R.string.sign_up_confirmation_title), getString(R.string.sign_up_confirmation_detail), new OnOkHandler() {
+
+                        @Override
+                        public void onClickOk() {
+                            finish();
+                        }
+                    });
+                }
+
+                @Override
+                public void onFailure(GTResponse<String> responseObject) {
+                    Log.e(getClass().getSimpleName(), "Failed to register");
+                    TaskDialog.getInstance().hideDialog();
+
+                    DialogBuilder.buildOKDialog(SignUpActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
+                }
+            });
         }
     }
 

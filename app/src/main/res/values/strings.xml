@@ -35,6 +35,8 @@
     <string name="sign_up_error_password">Please enter a password.</string>
     <string name="sign_up_error_confirm_password">Passwords do not match.</string>
     <string name="sign_up_error_invalid_email">This email address is not valid.</string>
+    <string name="sign_up_confirmation_title">Almost done!</string>
+    <string name="sign_up_confirmation_detail">You have successfully registered! Please check your email to activate your account.</string>
 
     <!-- Home -->
     <string name="home">Home</string>
