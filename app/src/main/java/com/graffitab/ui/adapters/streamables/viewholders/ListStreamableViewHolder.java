@@ -40,6 +40,9 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
     public void setItem(GTStreamable streamable) {
         super.setItem(streamable);
 
+        nameField.setText(streamable.user.fullName());
+        usernameField.setText(streamable.user.mentionUsername());
+
         int color = !streamable.likedByCurrentUser ? MyApplication.getInstance().getResources().getColor(R.color.colorMetadata) : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary);
         likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
         likeStatus.setTextColor(color);

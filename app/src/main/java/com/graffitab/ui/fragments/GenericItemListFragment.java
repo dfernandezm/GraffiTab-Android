@@ -15,22 +15,24 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.graffitab.R;
-import com.graffitab.constants.Constants;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
-import com.graffitabsdk.network.common.result.GTListItemsResult;
+import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.common.result.GTListItemsResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.graffitabsdk.constants.GTConstants.MAX_ITEMS;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -209,7 +211,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
                 items.addAll(loaded.items);
 
                 // Configure load more layout.
-                if (loaded.items.size() <= 0 || loaded.items.size()< Constants.MAX_ITEMS)
+                if (loaded.items.size() <= 0 || loaded.items.size() < MAX_ITEMS)
                     canLoadMore = false;
 
                 adapter.setCanLoadMore(canLoadMore, advancedRecyclerView.getRecyclerView());
@@ -310,7 +312,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
             @Override
             public void onLoadMore() {
             if (canLoadMore && !isDownloading) {
-                offset += Constants.MAX_ITEMS;
+                offset += GTConstants.MAX_ITEMS;
                 loadItems(false, offset);
             }
             else {

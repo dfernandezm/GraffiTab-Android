@@ -12,8 +12,6 @@ public class Constants {
     public static final String EXTRA_HTML_FILE = "EXTRA_HTML_FILE";
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
 
-    public static final Integer MAX_ITEMS = 20;
-
     public static final String[] PALLETE = {"#cad0cc", "#cdc7b9", "#a9b3b2", "#b9bbb8", "#c2d1cc", "#c2c8c4", "#b4bfb9"};
 
     public static final String PREFERENCE_TITLE = "GraffiTabPreferences";
