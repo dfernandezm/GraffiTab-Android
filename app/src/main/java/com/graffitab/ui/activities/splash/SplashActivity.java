@@ -72,7 +72,7 @@ public class SplashActivity extends AppCompatActivity {
             Log.i(getClass().getSimpleName(), "User logged in");
             if (Utils.isNetworkConnected(this)) { // Online, so refresh profile
                 Log.i(getClass().getSimpleName(), "Refreshing profile");
-                GTSDK.getMeManager().getMyFullProfile(new GTResponseHandler<GTUserResponse>() {
+                GTSDK.getMeManager().getMyFullProfile(true, new GTResponseHandler<GTUserResponse>() {
 
                     @Override
                     public void onSuccess(GTResponse<GTUserResponse> gtResponse) {

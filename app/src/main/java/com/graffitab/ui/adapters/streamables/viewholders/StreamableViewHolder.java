@@ -9,6 +9,7 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.adapters.streamables.OnStreamableClickListener;
 import com.graffitabsdk.model.GTStreamable;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -35,6 +36,12 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
         this.item = streamable;
 
         streamableView.setBackgroundColor(Color.parseColor(Constants.PALLETE[getAdapterPosition() % Constants.PALLETE.length]));
+
+        loadStreamableImage();
+    }
+
+    public void loadStreamableImage() {
+        Picasso.with(streamableView.getContext()).load(item.asset.thumbnail).into(streamableView);
     }
 
     public GTStreamable getItem() {

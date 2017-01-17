@@ -25,9 +25,8 @@ import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.ResultCode;
+import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.network.common.result.GTPasswordResetCompleteResult;
-import com.graffitabsdk.network.common.result.GTRegistrationCompleteResult;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -101,7 +100,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     Log.e(getClass().getSimpleName(), "Failed to reset password");
                     TaskDialog.getInstance().hideDialog();
 
-                    if (responseObject.getResultCode() != ResultCode.USER_NOT_FOUND) {
+                    if (responseObject.getResultCode() != GTResultCode.USER_NOT_FOUND) {
                         DialogBuilder.buildOKDialog(ResetPasswordActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
                         return;
                     }

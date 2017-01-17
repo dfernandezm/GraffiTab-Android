@@ -8,6 +8,7 @@ import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +53,20 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
         likesField.setText(MyApplication.getInstance().getString(plural ? R.string.likes_count_plural : R.string.likes_count, streamable.likersCount));
         plural = streamable.commentsCount != 1;
         commentsField.setText(MyApplication.getInstance().getString(plural ? R.string.comments_count_plural : R.string.comments_count, streamable.commentsCount));
+
+        loadAvatar();
+    }
+
+    @Override
+    public void loadStreamableImage() {
+        Picasso.with(streamableView.getContext()).load(item.asset.link).into(streamableView);
+    }
+
+    public void loadAvatar() {
+        if (item.user.hasAvatar())
+            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).into(avatar);
+        else
+            Picasso.with(avatar.getContext()).load(R.drawable.default_avatar).into(avatar);
     }
 
     @Override

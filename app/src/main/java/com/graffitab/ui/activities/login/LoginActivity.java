@@ -23,10 +23,9 @@ import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
-import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.ResultCode;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 
 import java.io.IOException;
@@ -84,7 +83,7 @@ public class LoginActivity extends FacebookUtilsActivity {
                     Log.e(getClass().getSimpleName(), "Failed to login");
                     TaskDialog.getInstance().hideDialog();
 
-                    if (responseObject.getResultCode() == ResultCode.USER_NOT_LOGGED_IN) {
+                    if (responseObject.getResultCode() == GTResultCode.USER_NOT_LOGGED_IN) {
                         DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), getString(R.string.login_error_credentials));
                         return;
                     }
@@ -127,7 +126,7 @@ public class LoginActivity extends FacebookUtilsActivity {
 
     private void refreshCurrentUserAndFinishLogin() {
         Log.i(getClass().getSimpleName(), "Refreshing profile");
-        GTSDK.getMeManager().getMe(new GTResponseHandler<GTUserResponse>() {
+        GTSDK.getMeManager().getMe(false, new GTResponseHandler<GTUserResponse>() {
 
             @Override
             public void onSuccess(GTResponse<GTUserResponse> gtResponse) {

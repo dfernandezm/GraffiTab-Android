@@ -246,7 +246,6 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
             return;
 
         adapter.setItems(items, getRecyclerView().getRecyclerView());
-        adapter.finishLoadingMore();
     }
 
     public void finalizeLoad() {

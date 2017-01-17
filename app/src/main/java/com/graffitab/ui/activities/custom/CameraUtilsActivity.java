@@ -61,7 +61,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
                 }
             }
             else // Error
-                Log.e(getClass().getSimpleName(), "Failed to retrieve captured image. ResultCode is not OK");
+                Log.e(getClass().getSimpleName(), "Failed to retrieve captured image. GTResultCode is not OK");
         }
         else if (requestCode == REQUEST_PICK_IMAGE) {
             if (resultCode == RESULT_OK) { // Success
@@ -79,7 +79,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
                 }
             }
             else // Error
-                Log.e(getClass().getSimpleName(), "Failed to retrieve chosen image. ResultCode is not OK");
+                Log.e(getClass().getSimpleName(), "Failed to retrieve chosen image. GTResultCode is not OK");
         }
     }
 
