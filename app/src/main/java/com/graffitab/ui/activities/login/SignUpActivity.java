@@ -24,9 +24,9 @@ import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
-import com.graffitabsdk.network.common.GTResponse;
-import com.graffitabsdk.network.common.GTResponseHandler;
-import com.graffitabsdk.network.common.ResultCode;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.common.result.GTRegistrationCompleteResult;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import java.io.IOException;
@@ -91,10 +91,10 @@ public class SignUpActivity extends AppCompatActivity {
         if (InputValidator.validateSignUp(this, fn, ln, em, un, pw, cpw)) {
             TaskDialog.getInstance().showDialog(null, this, null);
 
-            GTSDK.getUserManager().register(fn, ln, em, un, pw, new GTResponseHandler<String>() {
+            GTSDK.getUserManager().register(fn, ln, em, un, pw, new GTResponseHandler<GTRegistrationCompleteResult>() {
 
                 @Override
-                public void onSuccess(GTResponse<String> responseObject) {
+                public void onSuccess(GTResponse<GTRegistrationCompleteResult> responseObject) {
                     Log.i(getClass().getSimpleName(), "Successfully registered");
                     TaskDialog.getInstance().hideDialog();
                     DialogBuilder.buildOKDialog(SignUpActivity.this, getString(R.string.sign_up_confirmation_title), getString(R.string.sign_up_confirmation_detail), new OnOkHandler() {
@@ -107,7 +107,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(GTResponse<String> responseObject) {
+                public void onFailure(GTResponse<GTRegistrationCompleteResult> responseObject) {
                     Log.e(getClass().getSimpleName(), "Failed to register");
                     TaskDialog.getInstance().hideDialog();
 

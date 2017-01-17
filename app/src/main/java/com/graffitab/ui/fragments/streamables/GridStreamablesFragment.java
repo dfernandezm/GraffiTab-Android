@@ -5,7 +5,7 @@ package com.graffitab.ui.fragments.streamables;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class GridStreamablesFragment extends GenericStreamablesFragment {
+public abstract class GridStreamablesFragment extends GenericStreamablesFragment {
 
     @Override
     public void basicInit() {

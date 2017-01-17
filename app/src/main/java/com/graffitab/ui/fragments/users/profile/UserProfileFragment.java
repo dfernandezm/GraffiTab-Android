@@ -31,6 +31,7 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerVie
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.ImageUtils;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -58,6 +59,11 @@ public class UserProfileFragment extends ListStreamablesFragment {
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         setupHeaderView();
+    }
+
+    @Override
+    public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
+
     }
 
     // Configuration

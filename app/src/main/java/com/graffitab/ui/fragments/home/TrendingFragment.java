@@ -1,6 +1,7 @@
 package com.graffitab.ui.fragments.home;
 
 import com.graffitab.ui.fragments.streamables.TrendingStreamablesFragment;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -9,4 +10,8 @@ import com.graffitab.ui.fragments.streamables.TrendingStreamablesFragment;
  */
 public class TrendingFragment extends TrendingStreamablesFragment {
 
+    @Override
+    public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
+
+    }
 }

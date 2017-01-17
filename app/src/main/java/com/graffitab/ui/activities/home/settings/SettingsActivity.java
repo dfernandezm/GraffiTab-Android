@@ -26,8 +26,8 @@ import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.utils.Utils;
 import com.graffitabsdk.config.GTSDK;
-import com.graffitabsdk.network.common.GTResponse;
-import com.graffitabsdk.network.common.GTResponseHandler;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.instabug.library.Instabug;
 
 /**

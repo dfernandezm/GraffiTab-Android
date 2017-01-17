@@ -4,7 +4,7 @@ import android.content.Context;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
-import com.graffitabsdk.network.common.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.ResultCode;
 
 /**

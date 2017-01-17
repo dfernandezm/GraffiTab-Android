@@ -10,6 +10,7 @@ import android.view.Window;
 import com.graffitab.R;
 import com.graffitab.ui.fragments.comments.GenericCommentsFragment;
 import com.graffitab.ui.fragments.comments.ListCommentsFragment;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 import butterknife.ButterKnife;
 
@@ -55,11 +56,19 @@ public class GenericCommentsActivity extends AppCompatActivity {
     }
 
     private void setupContent() {
-        content = new ListCommentsFragment();
+        content = new ContentFragment();
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, content);
         transaction.commit();
+    }
+
+    public static class ContentFragment extends  ListCommentsFragment {
+
+        @Override
+        public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
+
+        }
     }
 }

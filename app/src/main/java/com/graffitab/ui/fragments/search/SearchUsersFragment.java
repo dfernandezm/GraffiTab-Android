@@ -2,6 +2,7 @@ package com.graffitab.ui.fragments.search;
 
 import com.graffitab.ui.fragments.users.ListUsersFragment;
 import com.graffitab.utils.display.DisplayUtils;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 /**
  * Created by georgichristov on 18/11/2016
@@ -9,6 +10,11 @@ import com.graffitab.utils.display.DisplayUtils;
  * Copyright © GraffiTab Inc. 2016
  */
 public class SearchUsersFragment extends ListUsersFragment {
+
+    @Override
+    public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
+
+    }
 
     @Override
     public void setupCustomViews() {

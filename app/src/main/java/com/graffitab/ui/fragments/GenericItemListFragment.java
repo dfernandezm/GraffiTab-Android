@@ -16,11 +16,15 @@ import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitabsdk.network.common.result.GTListItemsResult;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -161,7 +165,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
     // Loading
 
-//    public abstract void loadItems(boolean isStart, int offset, GTNetworkResponseHandler handler);
+    public abstract void loadItems(boolean isFirstLoad, int offset, GTResponseHandler<T> handler);
 
     public void reload() {
         refresh();
@@ -178,38 +182,34 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         loadItems(false, offset);
     }
 
-    private void loadItems(boolean isStart, final int o) {
+    private void loadItems(boolean isFirstLoad, final int o) {
         if (getActivity() == null)
             return;
 
         if (items.size() <= 0 && !isDownloading) {
-            if (isStart)
+            if (isFirstLoad)
                 advancedRecyclerView.beginRefreshing();
         }
 
         isDownloading = true;
 
-        // TODO: Remove
-        Utils.runWithDelay(new Runnable() {
+        loadItems(isFirstLoad, o, new GTResponseHandler<T>() {
+
             @Override
-            public void run() {
+            public void onSuccess(GTResponse<T> gtResponse) {
                 if (getActivity() == null)
                     return;
-
-                // TODO: This is just a dummy procedure to generate some random content.
-                List<T> loaded = generateDummyData();
-                if (offset > 70)
-                    loaded.clear();
 
                 // Clear items if we are pulling to refresh.
                 if (o == 0)
                     items.clear();
 
                 // Merge newly loaded items.
-                items.addAll(loaded);
+                GTListItemsResult<T> loaded = (GTListItemsResult<T>) gtResponse.getObject();
+                items.addAll(loaded.items);
 
                 // Configure load more layout.
-                if (loaded.size() <= 0 || loaded.size() < Constants.MAX_ITEMS)
+                if (loaded.items.size() <= 0 || loaded.items.size()< Constants.MAX_ITEMS)
                     canLoadMore = false;
 
                 adapter.setCanLoadMore(canLoadMore, advancedRecyclerView.getRecyclerView());
@@ -217,7 +217,26 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
                 // Finalize and refresh UI.
                 finalizeLoad();
             }
-        }, 3000);
+
+            @Override
+            public void onFailure(GTResponse<T> gtResponse) {
+                canLoadMore = false;
+                adapter.setCanLoadMore(canLoadMore, advancedRecyclerView.getRecyclerView());
+                finalizeLoad();
+                DialogBuilder.buildAPIErrorDialog(getActivity(), getString(R.string.app_name), gtResponse.getResultDetail(), false);
+            }
+
+            @Override
+            public void onCache(GTResponse<T> gtResponse) {
+                super.onCache(gtResponse);
+
+                items.clear();
+
+                GTListItemsResult<T> loaded = (GTListItemsResult<T>) gtResponse.getObject();
+                items.addAll(loaded.items);
+                finalizeCacheLoad();
+            }
+        });
     }
 
     private void finalizeCacheLoad() {

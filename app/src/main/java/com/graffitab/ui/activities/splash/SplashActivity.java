@@ -17,8 +17,9 @@ import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.BitmapUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTUser;
-import com.graffitabsdk.network.common.GTResponse;
-import com.graffitabsdk.network.common.GTResponseHandler;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -71,23 +72,23 @@ public class SplashActivity extends AppCompatActivity {
             Log.i(getClass().getSimpleName(), "User logged in");
             if (Utils.isNetworkConnected(this)) { // Online, so refresh profile
                 Log.i(getClass().getSimpleName(), "Refreshing profile");
-                GTSDK.getUserManager().getMyFullProfile(new GTResponseHandler<GTUser>() {
+                GTSDK.getMeManager().getMyFullProfile(new GTResponseHandler<GTUserResponse>() {
 
                     @Override
-                    public void onSuccess(GTResponse<GTUser> gtResponse) {
+                    public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
                         Log.i(getClass().getSimpleName(), "Profile refreshed. Showing Home screen");
                         showHomeScreen();
                     }
 
                     @Override
-                    public void onFailure(GTResponse<GTUser> responseObject) {
+                    public void onFailure(GTResponse<GTUserResponse> responseObject) {
                         Log.e(getClass().getSimpleName(), "Failed to refresh profile. Showing Home screen");
                         showHomeScreen();
                     }
 
                     @Override
-                    public void onCache(GTResponse<GTUser> gtResponse) {
-                        Log.i(getClass().getSimpleName(), "User is cached\nUser: " + gtResponse.getObject());
+                    public void onCache(GTResponse<GTUserResponse> gtResponse) {
+                        Log.i(getClass().getSimpleName(), "User is cached\nUser: " + gtResponse.getObject().user);
                     }
                 });
             }

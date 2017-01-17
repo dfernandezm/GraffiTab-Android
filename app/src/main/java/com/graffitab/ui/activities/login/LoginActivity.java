@@ -24,9 +24,10 @@ import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTUser;
-import com.graffitabsdk.network.common.GTResponse;
-import com.graffitabsdk.network.common.GTResponseHandler;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.common.ResultCode;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -70,16 +71,16 @@ public class LoginActivity extends FacebookUtilsActivity {
         if (InputValidator.validateLogin(this, un, pw)) {
             TaskDialog.getInstance().showDialog(null, this, null);
 
-            GTSDK.getUserManager().login(un, pw, new GTResponseHandler<GTUser>() {
+            GTSDK.getUserManager().login(un, pw, new GTResponseHandler<GTUserResponse>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTUser> responseObject) {
+                public void onSuccess(GTResponse<GTUserResponse> responseObject) {
                     Log.i(getClass().getSimpleName(), "Logged in");
                     refreshCurrentUserAndFinishLogin();
                 }
 
                 @Override
-                public void onFailure(GTResponse<GTUser> responseObject) {
+                public void onFailure(GTResponse<GTUserResponse> responseObject) {
                     Log.e(getClass().getSimpleName(), "Failed to login");
                     TaskDialog.getInstance().hideDialog();
 
@@ -126,17 +127,17 @@ public class LoginActivity extends FacebookUtilsActivity {
 
     private void refreshCurrentUserAndFinishLogin() {
         Log.i(getClass().getSimpleName(), "Refreshing profile");
-        GTSDK.getUserManager().getMe(new GTResponseHandler<GTUser>() {
+        GTSDK.getMeManager().getMe(new GTResponseHandler<GTUserResponse>() {
 
             @Override
-            public void onSuccess(GTResponse<GTUser> gtResponse) {
+            public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
                 Log.i(getClass().getSimpleName(), "Profile refreshed. Showing Home screen");
                 TaskDialog.getInstance().hideDialog();
                 showHomeScreen();
             }
 
             @Override
-            public void onFailure(GTResponse<GTUser> responseObject) {
+            public void onFailure(GTResponse<GTUserResponse> responseObject) {
                 Log.e(getClass().getSimpleName(), "Failed to refresh profile. Showing Home screen");
                 TaskDialog.getInstance().hideDialog();
                 DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), responseObject.getResultDetail());

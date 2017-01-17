@@ -5,7 +5,7 @@ package com.graffitab.ui.fragments.users;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ListUsersFragment extends GenericUsersFragment {
+public abstract class ListUsersFragment extends GenericUsersFragment {
 
     @Override
     public void basicInit() {

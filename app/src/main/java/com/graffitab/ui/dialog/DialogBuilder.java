@@ -14,12 +14,47 @@ import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.ui.dialog.handlers.OnYesNoInputHandler;
 
+import java.util.Date;
+
 public class DialogBuilder {
-	
+
+    private static Date lastErrorDate;
+
 	public static void buildOKDialog(Context context, String title, String message) {
 		buildOKDialog(context, title, message, null);
 	}
-	
+
+    public static void buildAPIErrorDialog(Context context, String title, String message) {
+        buildAPIErrorDialog(context, title, message, false, null);
+    }
+
+    public static void buildAPIErrorDialog(Context context, String title, String message, boolean forceShow) {
+        buildAPIErrorDialog(context, title, message, forceShow, null);
+    }
+
+	public static void buildAPIErrorDialog(Context context, String title, String message, boolean forceShow, final OnOkHandler handler) {
+        if (forceShow)
+            buildOKDialog(context, title, message, null);
+        else {
+            Date errorDate = new Date();
+            boolean shouldShowError = false;
+            if (lastErrorDate == null) {
+                shouldShowError = true;
+                lastErrorDate = errorDate;
+            }
+            else {
+                long seconds = (errorDate.getTime() - lastErrorDate.getTime()) / 1000;
+                if (seconds > 30) {
+                    shouldShowError = true;
+                    lastErrorDate = errorDate;
+                }
+            }
+
+            if (shouldShowError)
+                buildOKDialog(context, title, message, null);
+        }
+    }
+
 	public static void buildOKDialog(Context context, String title, String message, final OnOkHandler handler) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage(message)

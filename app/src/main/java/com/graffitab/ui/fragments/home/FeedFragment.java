@@ -2,6 +2,8 @@ package com.graffitab.ui.fragments.home;
 
 import com.graffitab.R;
 import com.graffitab.ui.fragments.streamables.ListStreamablesFragment;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -23,5 +25,10 @@ public class FeedFragment extends ListStreamablesFragment {
     @Override
     public String emptyViewSubtitle() {
         return getString(R.string.feed_empty_description);
+    }
+
+    @Override
+    public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
+        GTSDK.getMeManager().getFeed(handler);
     }
 }
