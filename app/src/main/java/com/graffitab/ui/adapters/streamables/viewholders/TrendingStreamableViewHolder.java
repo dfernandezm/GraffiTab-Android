@@ -8,8 +8,10 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.utils.display.DisplayUtils;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +40,9 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
     public void setItem(GTStreamable streamable) {
         super.setItem(streamable);
 
+        nameField.setText(streamable.user.fullName());
+        usernameField.setText(streamable.user.mentionUsername());
+
         int color = !streamable.likedByCurrentUser ? MyApplication.getInstance().getResources().getColor(R.color.colorMetadata) : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary);
         likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
         likesField.setTextColor(color);
@@ -45,7 +50,16 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
         likesField.setText(streamable.likersCount + "");
         commentsField.setText(streamable.commentsCount + "");
 
-        streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
+        streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtils.pxToDip(MyApplication.getInstance(), item.asset.thumbnailHeight)));
+
+        loadAvatar();
+    }
+
+    public void loadAvatar() {
+        if (item.user.hasAvatar())
+            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).into(avatar);
+        else
+            Picasso.with(avatar.getContext()).load(R.drawable.default_avatar).into(avatar);
     }
 
     @Override

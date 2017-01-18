@@ -4,6 +4,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.graffitab.application.MyApplication;
+import com.graffitab.utils.display.DisplayUtils;
 import com.graffitabsdk.model.GTStreamable;
 
 import butterknife.ButterKnife;
@@ -24,6 +26,6 @@ public class SwimlaneStreamableViewHolder extends StreamableViewHolder {
     public void setItem(GTStreamable streamable) {
         super.setItem(streamable);
 
-        streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, item.asset.thumbnailHeight));
+        streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtils.pxToDip(MyApplication.getInstance(), item.asset.thumbnailHeight)));
     }
 }
