@@ -1,5 +1,6 @@
 package com.graffitab.ui.adapters.streamables.viewholders;
 
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,6 +13,8 @@ import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.text.format.DateUtils.FORMAT_ABBREV_ALL;
 
 /**
  * Created by georgichristov on 17/11/2016
@@ -44,6 +47,9 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
         nameField.setText(streamable.user.fullName());
         usernameField.setText(streamable.user.mentionUsername());
 
+        int flags = FORMAT_ABBREV_ALL;
+        dateField.setText(DateUtils.getRelativeTimeSpanString(item.createdOn.getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS, flags));
+
         int color = !streamable.likedByCurrentUser ? MyApplication.getInstance().getResources().getColor(R.color.colorMetadata) : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary);
         likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
         likeStatus.setTextColor(color);
@@ -64,7 +70,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
     public void loadAvatar() {
         if (item.user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).into(avatar);
+            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).error(R.drawable.default_avatar).into(avatar);
         else
             Picasso.with(avatar.getContext()).load(R.drawable.default_avatar).into(avatar);
     }

@@ -2,6 +2,7 @@ package com.graffitab.ui.adapters.notifications.viewholders;
 
 import android.view.View;
 
+import com.graffitab.R;
 import com.graffitabsdk.model.GTNotification;
 
 import butterknife.ButterKnife;
@@ -21,5 +22,11 @@ public class MentionNotificationViewHolder extends NotificationViewHolder {
     @Override
     public void setItem(GTNotification notification) {
         super.setItem(notification);
+
+        actionLbl.setText(itemView.getContext().getString(R.string.notifications_mention, item.mentioner.fullName()));
+        descriptionLbl.setText(item.mentionedComment.text);
+
+        loadAvatar(item.mentioner);
+        loadStreamable(item.mentionedStreamable);
     }
 }
