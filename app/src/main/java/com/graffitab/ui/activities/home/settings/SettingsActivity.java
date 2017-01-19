@@ -228,6 +228,8 @@ public class SettingsActivity extends AppCompatActivity {
                 public void run() {
                     TaskDialog.getInstance().hideDialog();
 
+                    // Clear any data on disk for the current user.
+
                     // Show login screen.
                     Intent intent = new Intent(getActivity(), LoginActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
