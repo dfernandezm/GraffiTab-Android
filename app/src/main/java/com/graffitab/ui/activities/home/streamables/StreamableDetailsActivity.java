@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -41,7 +40,8 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     @BindView(R.id.usernameField) public TextView usernameField;
     @BindView(R.id.streamableView) ImageView streamableView;
     @BindView(R.id.likesField) public TextView likesField;
-    @BindView(R.id.likeStatusImage) public ImageButton likeStatusImage;
+    @BindView(R.id.commentsField) public TextView commentsField;
+    @BindView(R.id.likeBtn) public View likeBtn;
 
     private GTStreamable streamable;
     private PhotoViewAttacher mAttacher;
@@ -144,15 +144,11 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         nameField.setText(streamable.user.fullName());
         usernameField.setText(streamable.user.mentionUsername());
 
-//        int color = !streamable.likedByCurrentUser ? getResources().getColor(R.color.colorMetadata) : getResources().getColor(R.color.colorPrimary);
-//        likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
-//        likeStatus.setTextColor(color);
-//        likeStatus.setText(streamable.likedByCurrentUser ? MyApplication.getInstance().getString(R.string.likes_liked) : MyApplication.getInstance().getString(R.string.likes_like));
-//
-//        boolean plural = streamable.likersCount != 1;
-//        likesField.setText(MyApplication.getInstance().getString(plural ? R.string.likes_count_plural : R.string.likes_count, streamable.likersCount));
-//        plural = streamable.commentsCount != 1;
-//        commentsField.setText(MyApplication.getInstance().getString(plural ? R.string.comments_count_plural : R.string.comments_count, streamable.commentsCount));
+        int background = streamable.likedByCurrentUser ? R.drawable.rounded_corner_streamable_detail_liked : R.drawable.rounded_corner_streamable_detail;
+        likeBtn.setBackgroundResource(background);
+
+        likesField.setText(streamable.likersCount + "");
+        commentsField.setText(streamable.commentsCount + "");
 
         loadAvatar();
     }

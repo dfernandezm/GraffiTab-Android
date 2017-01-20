@@ -132,7 +132,6 @@
             android:paddingTop="6dp">
 
             <ImageButton
-                android:id="@+id/likeStatusImage"
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:background="@null"
@@ -172,6 +171,7 @@
                 android:clickable="false"/>
 
             <TextView
+                android:id="@+id/commentsField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1"
