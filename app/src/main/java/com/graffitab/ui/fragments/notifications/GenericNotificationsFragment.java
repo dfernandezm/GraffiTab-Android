@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.notifications.GenericNotificationsRecyclerViewAdapter;
@@ -48,13 +49,19 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
             startActivity(new Intent(getActivity(), ProfileActivity.class));
         }
         else if (notification.type == GTNotification.GTNotificationType.COMMENT) {
-            startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
+            Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
+            intent.putExtra(Constants.EXTRA_STREAMABLE, notification.commentedStreamable);
+            startActivity(intent);
         }
         else if (notification.type == GTNotification.GTNotificationType.LIKE) {
-            startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
+            Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
+            intent.putExtra(Constants.EXTRA_STREAMABLE, notification.likedStreamable);
+            startActivity(intent);
         }
         else if (notification.type == GTNotification.GTNotificationType.MENTION) {
-            startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
+            Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
+            intent.putExtra(Constants.EXTRA_STREAMABLE, notification.mentionedStreamable);
+            startActivity(intent);
         }
         else {
             // No-op - Welcome notification type is not handled.

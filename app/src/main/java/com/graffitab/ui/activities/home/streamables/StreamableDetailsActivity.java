@@ -2,7 +2,6 @@ package com.graffitab.ui.activities.home.streamables;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -13,9 +12,17 @@ import android.widget.TextView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
+import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.model.GTStreamable;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -29,23 +36,34 @@ import uk.co.senab.photoview.PhotoViewAttacher;
  */
 public class StreamableDetailsActivity extends AppCompatActivity {
 
+    @BindView(R.id.avatar) ImageView avatar;
+    @BindView(R.id.nameField) public TextView nameField;
+    @BindView(R.id.usernameField) public TextView usernameField;
     @BindView(R.id.streamableView) ImageView streamableView;
     @BindView(R.id.likesField) public TextView likesField;
     @BindView(R.id.likeStatusImage) public ImageButton likeStatusImage;
 
+    private GTStreamable streamable;
     private PhotoViewAttacher mAttacher;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            streamable = (GTStreamable) extras.getSerializable(Constants.EXTRA_STREAMABLE);
+        }
+        else finish();
+
         ActivityUtils.hideActionBar(this);
         setContentView(R.layout.activity_streamable_details);
         ButterKnife.bind(this);
 
-        setupDummyContent();
+        setupImageView();
 
         loadData();
+        refreshStreamable();
     }
 
     @OnClick(R.id.avatar)
@@ -123,15 +141,70 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     // Loading
 
     private void loadData() {
+        nameField.setText(streamable.user.fullName());
+        usernameField.setText(streamable.user.mentionUsername());
 
+//        int color = !streamable.likedByCurrentUser ? getResources().getColor(R.color.colorMetadata) : getResources().getColor(R.color.colorPrimary);
+//        likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
+//        likeStatus.setTextColor(color);
+//        likeStatus.setText(streamable.likedByCurrentUser ? MyApplication.getInstance().getString(R.string.likes_liked) : MyApplication.getInstance().getString(R.string.likes_like));
+//
+//        boolean plural = streamable.likersCount != 1;
+//        likesField.setText(MyApplication.getInstance().getString(plural ? R.string.likes_count_plural : R.string.likes_count, streamable.likersCount));
+//        plural = streamable.commentsCount != 1;
+//        commentsField.setText(MyApplication.getInstance().getString(plural ? R.string.comments_count_plural : R.string.comments_count, streamable.commentsCount));
+
+        loadAvatar();
+    }
+
+    private void loadAvatar() {
+        if (streamable.user.hasAvatar())
+            Picasso.with(this).load(streamable.user.avatar.thumbnail).error(R.drawable.default_avatar).into(avatar);
+        else
+            Picasso.with(this).load(R.drawable.default_avatar).into(avatar);
+    }
+
+    private void refreshStreamable() {
+        GTSDK.getStreamableManager().getStreamable(streamable.id, true, new GTResponseHandler<GTStreamableResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+                streamable = gtResponse.getObject().streamable;
+                finishRefresh();
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+                finishRefresh();
+            }
+
+            @Override
+            public void onCache(GTResponse<GTStreamableResponse> gtResponse) {
+                super.onCache(gtResponse);
+                streamable = gtResponse.getObject().streamable;
+                finishRefresh();
+            }
+        });
+    }
+
+    private void finishRefresh() {
+        Picasso.with(this).load(streamable.asset.link).into(streamableView, new Callback() {
+
+            @Override
+            public void onSuccess() {
+                mAttacher.update();
+            }
+
+            @Override
+            public void onError() {
+                mAttacher.update();
+            }
+        });
     }
 
     // Setup
 
-    private void setupDummyContent() {
-        Drawable bitmap = getResources().getDrawable(R.drawable.login);
-        streamableView.setImageDrawable(bitmap);
-
+    private void setupImageView() {
         mAttacher = new PhotoViewAttacher(streamableView);
     }
 }

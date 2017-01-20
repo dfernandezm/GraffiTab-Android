@@ -56,13 +56,13 @@ public class SplashActivity extends AppCompatActivity {
     private void showLoginScreen() {
         startActivity(new Intent(getBaseContext(), LoginActivity.class));
         finish();
-        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+//        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
     }
 
     private void showHomeScreen() {
         startActivity(new Intent(getBaseContext(), HomeActivity.class));
         finish();
-        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+//        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
     }
 
     // Login

@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.CommentsActivity;
 import com.graffitab.ui.activities.home.streamables.LikesActivity;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
@@ -78,7 +79,9 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public void onRowSelected(GTStreamable streamable, int adapterPosition) {
-        startActivity(new Intent(getActivity(), StreamableDetailsActivity.class));
+        Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_STREAMABLE, streamable);
+        startActivity(intent);
     }
 
     @Override
