@@ -20,7 +20,6 @@ import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.ui.activities.home.SearchActivity;
-import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.comments.GenericCommentsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitab.ui.fragments.GenericItemListFragment;
@@ -29,6 +28,7 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerVie
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.model.GTComment;
 import com.graffitabsdk.model.GTUser;
@@ -131,7 +131,7 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
 
     @Override
     public void onOpenCommenterProfile(GTComment comment, GTUser commenter, int adapterPosition) {
-        startActivity(new Intent(getActivity(), ProfileActivity.class));
+        ActivityUtils.showProfile(commenter, getActivity());
     }
 
     @Override
@@ -146,7 +146,7 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
 
     @Override
     public void onOpenMention(GTComment comment, String mention, int adapterPosition) {
-        startActivity(new Intent(getActivity(), ProfileActivity.class));
+//        startActivity(new Intent(getActivity(), ProfileActivity.class));
     }
 
     private void showOptionsMenu(final GTComment comment, final int adapterPosition) {

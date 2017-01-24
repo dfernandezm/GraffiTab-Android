@@ -8,7 +8,6 @@ import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
-import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.notifications.GenericNotificationsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.notifications.OnNotificationClickListener;
 import com.graffitab.ui.fragments.GenericItemListFragment;
@@ -16,6 +15,7 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerVie
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitabsdk.model.GTNotification;
 
 import java.util.ArrayList;
@@ -45,9 +45,8 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
 
     @Override
     public void onRowSelected(GTNotification notification, int adapterPosition) {
-        if (notification.type == GTNotification.GTNotificationType.FOLLOW) {
-            startActivity(new Intent(getActivity(), ProfileActivity.class));
-        }
+        if (notification.type == GTNotification.GTNotificationType.FOLLOW)
+            ActivityUtils.showProfile(notification.follower, getActivity());
         else if (notification.type == GTNotification.GTNotificationType.COMMENT) {
             Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
             intent.putExtra(Constants.EXTRA_STREAMABLE, notification.commentedStreamable);

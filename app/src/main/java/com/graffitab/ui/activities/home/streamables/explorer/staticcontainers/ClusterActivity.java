@@ -6,6 +6,7 @@ import android.support.v7.widget.Toolbar;
 
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.streamables.GenericStreamablesActivity;
+import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.DisplayUtils;
 import com.graffitabsdk.model.GTStreamable;
@@ -39,6 +40,11 @@ public class ClusterActivity extends GenericStreamablesActivity {
     @Override
     public int getLayoutResId() {
         return R.layout.activity_dialog_fragment_holder;
+    }
+
+    @Override
+    public GenericStreamablesFragment getFragment() {
+        return null;
     }
 
     // Setup

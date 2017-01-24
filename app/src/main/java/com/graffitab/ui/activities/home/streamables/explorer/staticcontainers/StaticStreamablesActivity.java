@@ -2,6 +2,7 @@ package com.graffitab.ui.activities.home.streamables.explorer.staticcontainers;
 
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.streamables.GenericStreamablesActivity;
+import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 
 /**
  * Created by georgichristov on 23/12/2016
@@ -9,6 +10,11 @@ import com.graffitab.ui.activities.custom.streamables.GenericStreamablesActivity
  * Copyright © GraffiTab Inc. 2016
  */
 public class StaticStreamablesActivity extends GenericStreamablesActivity {
+
+    @Override
+    public GenericStreamablesFragment getFragment() {
+        return null;
+    }
 
     // Setup
 

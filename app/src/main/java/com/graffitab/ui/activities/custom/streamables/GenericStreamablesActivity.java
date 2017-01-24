@@ -9,8 +9,6 @@ import android.view.Window;
 
 import com.graffitab.R;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
-import com.graffitab.ui.fragments.streamables.GridStreamablesFragment;
-import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 import butterknife.ButterKnife;
 
@@ -23,6 +21,8 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
 
     private GenericStreamablesFragment content;
 
+    public abstract GenericStreamablesFragment getFragment();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,7 +32,7 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupTopBar();
-        setupContent(new ContentFragment());
+        setupContent(getFragment());
     }
 
     @Override
@@ -65,13 +65,5 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, content);
         transaction.commit();
-    }
-
-    public static class ContentFragment extends GridStreamablesFragment {
-
-        @Override
-        public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
-
-        }
     }
 }

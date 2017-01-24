@@ -152,7 +152,9 @@ public class SettingsActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(getActivity(), UserLikesActivity.class));
+                    Intent i = new Intent(getActivity(), UserLikesActivity.class);
+                    i.putExtra(Constants.EXTRA_USER, GTSDK.getAccountManager().getLoggedInUser());
+                    startActivity(i);
                     return true;
                 }
             });

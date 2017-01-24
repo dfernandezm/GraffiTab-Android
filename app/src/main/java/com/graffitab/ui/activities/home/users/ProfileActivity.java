@@ -11,11 +11,13 @@ import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
+import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.profile.UserProfileFragment;
 import com.graffitab.utils.image.ImageUtils;
+import com.graffitabsdk.model.GTUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,12 +32,19 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     @BindView(R.id.fab) FloatingActionButton fab;
 
+    private GTUser user;
     private UserProfileFragment content;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            user = (GTUser) extras.getSerializable(Constants.EXTRA_USER);
+        }
+        else finish();
 
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);
@@ -65,7 +74,9 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     public void onClickPosts(View view) {
-        startActivity(new Intent(this, UserPostsActivity.class));
+        Intent i = new Intent(this, UserPostsActivity.class);
+        i.putExtra(Constants.EXTRA_USER, user);
+        startActivity(i);
     }
 
     public void onClickFollowers(View view) {

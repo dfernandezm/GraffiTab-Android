@@ -14,7 +14,6 @@ import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.CommentsActivity;
 import com.graffitab.ui.activities.home.streamables.LikesActivity;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
-import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.streamables.OnStreamableClickListener;
 import com.graffitab.ui.adapters.streamables.viewholders.StreamableViewHolder;
@@ -23,6 +22,7 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerVie
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.display.DisplayUtils;
 import com.graffitabsdk.model.GTAsset;
 import com.graffitabsdk.model.GTStreamable;
@@ -96,7 +96,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public void onOpenOwnerProfile(GTStreamable streamable, GTUser owner, int adapterPosition) {
-        startActivity(new Intent(getActivity(), ProfileActivity.class));
+        ActivityUtils.showProfile(owner, getActivity());
     }
 
     @Override

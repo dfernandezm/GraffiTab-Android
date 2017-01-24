@@ -13,7 +13,6 @@ import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
-import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
@@ -135,7 +134,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void onClickProfile() {
-        startActivity(new Intent(this, ProfileActivity.class));
+        ActivityUtils.showProfile(streamable.user, this);
     }
 
     // Loading
