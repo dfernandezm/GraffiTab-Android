@@ -9,8 +9,6 @@ import android.view.Window;
 
 import com.graffitab.R;
 import com.graffitab.ui.fragments.users.GenericUsersFragment;
-import com.graffitab.ui.fragments.users.ListUsersFragment;
-import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 import butterknife.ButterKnife;
 
@@ -23,6 +21,8 @@ public abstract class GenericUsersActivity extends AppCompatActivity {
 
     private GenericUsersFragment content;
 
+    public abstract GenericUsersFragment getFragment();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,7 +32,7 @@ public abstract class GenericUsersActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupTopBar();
-        setupContent();
+        setupContent(getFragment());
     }
 
     @Override
@@ -54,20 +54,12 @@ public abstract class GenericUsersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setupContent() {
-        content = new ContentFragment();
+    public void setupContent(GenericUsersFragment contentFragment) {
+        content = contentFragment;
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, content);
         transaction.commit();
-    }
-
-    public static class ContentFragment extends ListUsersFragment {
-
-        @Override
-        public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
-
-        }
     }
 }

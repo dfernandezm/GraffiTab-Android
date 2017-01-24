@@ -86,11 +86,15 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     public void onClickFollowers(View view) {
-        startActivity(new Intent(this, UserFollowersActivity.class));
+        Intent i = new Intent(this, UserFollowersActivity.class);
+        i.putExtra(Constants.EXTRA_USER, user);
+        startActivity(i);
     }
 
     public void onClickFollowing(View view) {
-        startActivity(new Intent(this, UserFollowingActivity.class));
+        Intent i = new Intent(this, UserFollowingActivity.class);
+        i.putExtra(Constants.EXTRA_USER, user);
+        startActivity(i);
     }
 
     public void onClickGrid(View view) {
