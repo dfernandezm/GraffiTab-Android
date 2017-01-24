@@ -96,11 +96,15 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     public void onClickLikes(View view) {
-        startActivity(new Intent(this, UserLikesActivity.class));
+        Intent i = new Intent(this, UserLikesActivity.class);
+        i.putExtra(Constants.EXTRA_USER, user);
+        startActivity(i);
     }
 
     public void onClickMentions(View view) {
-        startActivity(new Intent(this, UserMentionsActivity.class));
+        Intent i = new Intent(this, UserMentionsActivity.class);
+        i.putExtra(Constants.EXTRA_USER, user);
+        startActivity(i);
     }
 
     public void onClickAvatar(View view) {
