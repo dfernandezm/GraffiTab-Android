@@ -91,7 +91,9 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public void onOpenLikes(GTStreamable streamable, int adapterPosition) {
-        startActivity(new Intent(getActivity(), LikesActivity.class));
+        Intent intent = new Intent(getActivity(), LikesActivity.class);
+        intent.putExtra(Constants.EXTRA_STREAMABLE, streamable);
+        startActivity(intent);
     }
 
     @Override
