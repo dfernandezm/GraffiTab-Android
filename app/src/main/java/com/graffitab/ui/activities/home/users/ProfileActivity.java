@@ -14,10 +14,16 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
+import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.profile.UserProfileFragment;
+import com.graffitab.utils.Utils;
 import com.graffitab.utils.image.ImageUtils;
+import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,6 +58,14 @@ public class ProfileActivity extends CameraUtilsActivity {
         setupTopBar();
         setupContent();
         setupButtons();
+
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                reloadUserData();
+            }
+        }, 300);
     }
 
     @Override
@@ -117,6 +131,35 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     public void onClickCover(View view) {
         showImagePicker((ImageView) view);
+    }
+
+    // Loading
+
+    public void reloadUserData() {
+        GTSDK.getUserManager().getFullUserProfile(user.id, true, new GTResponseHandler<GTUserResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
+                user = gtResponse.getObject().user;
+                content.setUser(user);
+                content.loadUserStats();
+                content.loadUserData();
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTUserResponse> gtResponse) {
+                DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name), gtResponse.getResultDetail());
+            }
+
+            @Override
+            public void onCache(GTResponse<GTUserResponse> gtResponse) {
+                super.onCache(gtResponse);
+                user = gtResponse.getObject().user;
+                content.setUser(user);
+                content.loadUserStats();
+                content.loadUserData();
+            }
+        });
     }
 
     // Setup

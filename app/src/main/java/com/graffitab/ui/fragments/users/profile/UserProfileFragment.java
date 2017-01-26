@@ -27,7 +27,6 @@ import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.profile.UserProfileHeaderAdapter;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.viewpagers.ProfileViewPagerAdapter;
-import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.fragments.streamables.ListStreamablesFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
@@ -37,9 +36,7 @@ import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
-import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.squareup.picasso.Picasso;
 
 import me.relex.circleindicator.CircleIndicator;
@@ -60,8 +57,11 @@ public class UserProfileFragment extends ListStreamablesFragment {
     private TextView postsField;
     private TextView followersField;
     private TextView followingField;
+    private ViewPager viewPager;
+    private CircleIndicator circleIndicator;
 
     private int lastScrollYOffset;
+    private boolean loadedInitially = false;
     protected GTUser user;
 
     @Override
@@ -81,44 +81,13 @@ public class UserProfileFragment extends ListStreamablesFragment {
 
     // Loading
 
-    private void reloadUserData() {
-        GTSDK.getUserManager().getFullUserProfile(user.id, true, new GTResponseHandler<GTUserResponse>() {
-
-            @Override
-            public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
-                if (getActivity() == null)
-                    return;
-                user = gtResponse.getObject().user;
-                loadUserStats();
-                loadUserData();
-            }
-
-            @Override
-            public void onFailure(GTResponse<GTUserResponse> gtResponse) {
-                if (getActivity() == null)
-                    return;
-                DialogBuilder.buildAPIErrorDialog(getActivity(), getString(R.string.app_name), gtResponse.getResultDetail());
-            }
-
-            @Override
-            public void onCache(GTResponse<GTUserResponse> gtResponse) {
-                super.onCache(gtResponse);
-                if (getActivity() == null)
-                    return;
-                user = gtResponse.getObject().user;
-                loadUserStats();
-                loadUserData();
-            }
-        });
-    }
-
-    private void loadUserStats() {
+    public void loadUserStats() {
         postsField.setText(user.streamablesCountAsString());
         followersField.setText(user.followersCountAsString());
         followingField.setText(user.followingCountAsString());
     }
 
-    private void loadUserData() {
+    public void loadUserData() {
         nameField.setText(user.fullName());
         usernameField.setText(user.mentionUsername());
 
@@ -147,8 +116,9 @@ public class UserProfileFragment extends ListStreamablesFragment {
         parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
         GTSDK.getUserManager().getPosts(user.id, isFirstLoad, parameters, handler);
 
-        if (offset == 0) // If we pull, refresh user profile.
-            reloadUserData();
+        if (offset == 0 && loadedInitially) // If we pull, refresh user profile. Skip first time.
+            ((ProfileActivity) getActivity()).reloadUserData();
+        loadedInitially = true;
     }
 
     // Configuration
@@ -266,8 +236,8 @@ public class UserProfileFragment extends ListStreamablesFragment {
         followingField = (TextView) header.findViewById(R.id.followingField);
         cover = (ImageView) header.findViewById(R.id.cover);
         avatar = (ImageView) header.findViewById(R.id.avatar);
-        ViewPager viewPager = (ViewPager) header.findViewById(R.id.viewpager);
-        CircleIndicator circleIndicator = (CircleIndicator) header.findViewById(R.id.indicator);
+        viewPager = (ViewPager) header.findViewById(R.id.viewpager);
+        circleIndicator = (CircleIndicator) header.findViewById(R.id.indicator);
 
         final GestureDetector tapGestureDetector = new GestureDetector(getActivity(), new TapGestureListener());
         viewPager.setOnTouchListener(new View.OnTouchListener() {
