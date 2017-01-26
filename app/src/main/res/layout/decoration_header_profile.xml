@@ -64,7 +64,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="1dp"
                 android:layout_toRightOf="@id/avatar"
-                android:text="georgi"
+                android:text="username"
                 android:textColor="#AAAAAA"
                 android:textSize="14sp" />
 
@@ -74,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/usernameField"
                 android:layout_alignLeft="@id/usernameField"
-                android:text="Georgi Christov"
+                android:text="Firstname Lastname"
                 android:textColor="#000"
                 android:textSize="18sp"
                 android:textStyle="bold" />
@@ -99,10 +99,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/postsField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="18"
+                    android:text="--"
                     android:textColor="#000"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -131,10 +132,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/followersField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="18"
+                    android:text="--"
                     android:textColor="#000"
                     android:textSize="22sp"
                     android:textStyle="bold" />
@@ -163,10 +165,11 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/followingField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="18"
+                    android:text="--"
                     android:textColor="#000"
                     android:textSize="22sp"
                     android:textStyle="bold" />

@@ -19,6 +19,7 @@ import android.view.MenuInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
@@ -26,12 +27,20 @@ import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.profile.UserProfileHeaderAdapter;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.viewpagers.ProfileViewPagerAdapter;
+import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.fragments.streamables.ListStreamablesFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.ImageUtils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.constants.GTConstants;
+import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.params.GTQueryParameters;
+import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
+import com.squareup.picasso.Picasso;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -46,12 +55,21 @@ public class UserProfileFragment extends ListStreamablesFragment {
     private View header;
     private ImageView cover;
     private ImageView avatar;
+    private TextView usernameField;
+    private TextView nameField;
+    private TextView postsField;
+    private TextView followersField;
+    private TextView followingField;
 
     private int lastScrollYOffset;
+    protected GTUser user;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_settings, menu);
+        if (user.isMe()) // Show settings only if user is current logged in user.
+            inflater.inflate(R.menu.menu_settings, menu);
+        else
+            super.onCreateOptionsMenu(menu, inflater);
         this.menu = menu;
     }
 
@@ -61,9 +79,76 @@ public class UserProfileFragment extends ListStreamablesFragment {
         setupHeaderView();
     }
 
+    // Loading
+
+    private void reloadUserData() {
+        GTSDK.getUserManager().getFullUserProfile(user.id, true, new GTResponseHandler<GTUserResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
+                if (getActivity() == null)
+                    return;
+                user = gtResponse.getObject().user;
+                loadUserStats();
+                loadUserData();
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTUserResponse> gtResponse) {
+                if (getActivity() == null)
+                    return;
+                DialogBuilder.buildAPIErrorDialog(getActivity(), getString(R.string.app_name), gtResponse.getResultDetail());
+            }
+
+            @Override
+            public void onCache(GTResponse<GTUserResponse> gtResponse) {
+                super.onCache(gtResponse);
+                if (getActivity() == null)
+                    return;
+                user = gtResponse.getObject().user;
+                loadUserStats();
+                loadUserData();
+            }
+        });
+    }
+
+    private void loadUserStats() {
+        postsField.setText(user.streamablesCountAsString());
+        followersField.setText(user.followersCountAsString());
+        followingField.setText(user.followingCountAsString());
+    }
+
+    private void loadUserData() {
+        nameField.setText(user.fullName());
+        usernameField.setText(user.mentionUsername());
+
+        loadAvatar();
+        loadCover();
+    }
+
+    private void loadAvatar() {
+        if (user.hasAvatar())
+            Picasso.with(getActivity()).load(user.avatar.link).placeholder(R.drawable.default_avatar).error(R.drawable.default_avatar).into(avatar);
+        else
+            Picasso.with(getActivity()).load(R.drawable.default_avatar).placeholder(R.drawable.default_avatar).into(avatar);
+    }
+
+    private void loadCover() {
+        if (user.hasCover())
+            Picasso.with(getActivity()).load(user.cover.link).placeholder(R.drawable.login).error(R.drawable.login).into(cover);
+        else
+            Picasso.with(getActivity()).load(R.drawable.login).placeholder(R.drawable.login).into(cover);
+    }
+
     @Override
     public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
+        GTQueryParameters parameters = new GTQueryParameters();
+        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
+        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+        GTSDK.getUserManager().getPosts(user.id, isFirstLoad, parameters, handler);
 
+        if (offset == 0) // If we pull, refresh user profile.
+            reloadUserData();
     }
 
     // Configuration
@@ -136,8 +221,8 @@ public class UserProfileFragment extends ListStreamablesFragment {
                     actionBarDrawable.setAlpha(newAlpha);
 
                     if (lastScrollYOffset > 400) {
-                        String title = "Georgi Christov";
-                        String subtitle = "@georgi";
+                        String title = user.fullName();
+                        String subtitle = user.mentionUsername();
 
                         Spannable coloredTitle = new SpannableString(title);
                         coloredTitle.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.colorPrimary)), 0, coloredTitle.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
@@ -164,12 +249,21 @@ public class UserProfileFragment extends ListStreamablesFragment {
         });
     }
 
+    public void setUser(GTUser user) {
+        this.user = user;
+    }
+
     // Setup
 
     private void setupHeaderView() {
         if (header == null)
             header = LayoutInflater.from(getActivity()).inflate(R.layout.decoration_header_profile, advancedRecyclerView, false);
 
+        nameField = (TextView) header.findViewById(R.id.nameField);
+        usernameField = (TextView) header.findViewById(R.id.usernameField);
+        postsField = (TextView) header.findViewById(R.id.postsField);
+        followersField = (TextView) header.findViewById(R.id.followersField);
+        followingField = (TextView) header.findViewById(R.id.followingField);
         cover = (ImageView) header.findViewById(R.id.cover);
         avatar = (ImageView) header.findViewById(R.id.avatar);
         ViewPager viewPager = (ViewPager) header.findViewById(R.id.viewpager);
@@ -195,6 +289,8 @@ public class UserProfileFragment extends ListStreamablesFragment {
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ProfileViewPagerAdapter.ProfilePagerChangeListener(viewPager));
         circleIndicator.setViewPager(viewPager);
+
+        loadUserData();
     }
 
     class TapGestureListener extends GestureDetector.SimpleOnGestureListener{

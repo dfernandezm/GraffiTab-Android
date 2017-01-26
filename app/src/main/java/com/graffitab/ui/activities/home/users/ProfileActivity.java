@@ -4,10 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.ImageView;
 
@@ -19,11 +17,7 @@ import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.profile.UserProfileFragment;
 import com.graffitab.utils.image.ImageUtils;
-import com.graffitabsdk.config.GTSDK;
-import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTUser;
-import com.graffitabsdk.network.common.params.GTQueryParameters;
-import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -133,7 +127,8 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     private void setupContent() {
-        content = new ContentFragment();
+        content = new UserProfileFragment();
+        content.setUser(user);
         content.hasOptionsMenu = true;
         Bundle args = new Bundle();
         args.putInt(Constants.EXTRA_USER, user.id);
@@ -146,26 +141,6 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     private void setupButtons() {
         fab.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_action_follow, getResources().getColor(R.color.colorPrimary)));
-    }
-
-    public static class ContentFragment extends UserProfileFragment {
-
-        private int userId;
-
-        @Nullable
-        @Override
-        public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-            Bundle arguments = getArguments();
-            this.userId = arguments.getInt(Constants.EXTRA_USER);
-            return super.onCreateView(inflater, container, savedInstanceState);
-        }
-
-        @Override
-        public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
-            GTQueryParameters parameters = new GTQueryParameters();
-            parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
-            parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
-            GTSDK.getUserManager().getPosts(userId, isFirstLoad, parameters, handler);
-        }
+        fab.setVisibility(user.isMe() ? View.GONE : View.VISIBLE);
     }
 }
