@@ -60,7 +60,7 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
     public void loadAvatar(GTUser user) {
         int p = R.drawable.default_avatar;
         if (user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).error(p).into(avatar);
+            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
         else
             Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
     }

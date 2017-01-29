@@ -25,6 +25,6 @@ public class WelcomeNotificationViewHolder extends NotificationViewHolder {
         super.setItem(notification);
 
         actionLbl.setText(itemView.getContext().getString(R.string.notifications_welcome));
-        Picasso.with(avatar.getContext()).load(R.mipmap.ic_launcher).into(avatar);
+        Picasso.with(avatar.getContext()).load(R.mipmap.ic_launcher).placeholder(R.mipmap.ic_launcher).into(avatar);
     }
 }

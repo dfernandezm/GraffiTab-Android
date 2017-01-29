@@ -58,7 +58,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
     public void loadAvatar() {
         int p = R.drawable.default_avatar;
         if (item.user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).error(p).into(avatar);
+            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
         else
             Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
     }
