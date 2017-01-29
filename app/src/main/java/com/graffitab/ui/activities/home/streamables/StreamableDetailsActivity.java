@@ -13,6 +13,7 @@ import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
@@ -130,11 +131,13 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.commentBtn)
     public void onClickComment(View view) {
-        startActivity(new Intent(this, CommentsActivity.class));
+        Intent i = new Intent(this, CommentsActivity.class);
+        i.putExtra(Constants.EXTRA_STREAMABLE, streamable);
+        startActivity(i);
     }
 
     private void onClickProfile() {
-        ActivityUtils.showProfile(streamable.user, this);
+        ProfileActivity.show(streamable.user, this);
     }
 
     // Loading
@@ -153,10 +156,11 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void loadAvatar() {
+        int p = R.drawable.default_avatar;
         if (streamable.user.hasAvatar())
-            Picasso.with(this).load(streamable.user.avatar.thumbnail).error(R.drawable.default_avatar).into(avatar);
+            Picasso.with(this).load(streamable.user.avatar.thumbnail).error(p).into(avatar);
         else
-            Picasso.with(this).load(R.drawable.default_avatar).into(avatar);
+            Picasso.with(this).load(p).placeholder(p).into(avatar);
     }
 
     private void refreshStreamable() {

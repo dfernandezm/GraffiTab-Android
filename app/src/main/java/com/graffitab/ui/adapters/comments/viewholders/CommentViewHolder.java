@@ -2,6 +2,7 @@ package com.graffitab.ui.adapters.comments.viewholders;
 
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,10 +13,12 @@ import com.graffitabsdk.model.GTComment;
 import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkOnClickListener;
 import com.luseen.autolinklibrary.AutoLinkTextView;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static android.text.format.DateUtils.FORMAT_ABBREV_ALL;
 import static com.graffitab.R.id.textField;
 
 /**
@@ -29,6 +32,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.nameField) public TextView nameField;
     @BindView(R.id.usernameField) public TextView usernameField;
     @BindView(textField) public AutoLinkTextView autoLinkTextView;
+    @BindView(R.id.dateField) public TextView dateField;
 
     protected GTComment item;
     protected OnCommentClickListener clickListener;
@@ -42,7 +46,15 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     public void setItem(GTComment comment) {
         this.item = comment;
 
+        nameField.setText(comment.user.fullName());
+        usernameField.setText(comment.user.mentionUsername());
+
+        int flags = FORMAT_ABBREV_ALL;
+        dateField.setText(DateUtils.getRelativeTimeSpanString(item.createdOn.getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS, flags));
+
         autoLinkTextView.setAutoLinkText(comment.text);
+
+        loadAvatar();
     }
 
     public void setClickListener(OnCommentClickListener listener) {
@@ -51,6 +63,14 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
     public GTComment getItem() {
         return item;
+    }
+
+    public void loadAvatar() {
+        int p = R.drawable.default_avatar;
+        if (item.user.hasAvatar())
+            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).error(p).into(avatar);
+        else
+            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
     }
 
     // Setup

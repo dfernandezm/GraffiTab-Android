@@ -96,10 +96,11 @@ public class UserProfileFragment extends ListStreamablesFragment {
     }
 
     private void loadAvatar() {
+        int p = R.drawable.default_avatar;
         if (user.hasAvatar())
-            Picasso.with(getActivity()).load(user.avatar.link).placeholder(R.drawable.default_avatar).error(R.drawable.default_avatar).into(avatar);
+            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).error(p).into(avatar);
         else
-            Picasso.with(getActivity()).load(R.drawable.default_avatar).placeholder(R.drawable.default_avatar).into(avatar);
+            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
     }
 
     private void loadCover() {

@@ -22,10 +22,6 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDe
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitabsdk.model.GTLocation;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 /**
  * Created by georgichristov on 14/11/2016
  * --
@@ -102,19 +98,5 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
         return null;
-    }
-
-    // Loading
-
-    @Override
-    public List<GTLocation> generateDummyData() {
-        List<GTLocation> loaded = new ArrayList();
-        Random random = new Random();
-        for (int i = 0; i < 25; i++) {
-            GTLocation location = new GTLocation();
-            location.address = "This is a sample address.";
-            loaded.add(location);
-        }
-        return loaded;
     }
 }

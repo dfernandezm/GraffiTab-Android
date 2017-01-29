@@ -8,18 +8,14 @@ import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.notifications.GenericNotificationsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.notifications.OnNotificationClickListener;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
-import com.graffitab.utils.Utils;
-import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitabsdk.model.GTNotification;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -46,7 +42,7 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
     @Override
     public void onRowSelected(GTNotification notification, int adapterPosition) {
         if (notification.type == GTNotification.GTNotificationType.FOLLOW)
-            ActivityUtils.showProfile(notification.follower, getActivity());
+            ProfileActivity.show(notification.follower, getActivity());
         else if (notification.type == GTNotification.GTNotificationType.COMMENT) {
             Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
             intent.putExtra(Constants.EXTRA_STREAMABLE, notification.commentedStreamable);
@@ -89,19 +85,5 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
         return null;
-    }
-
-    // Loading
-
-    @Override
-    public List<GTNotification> generateDummyData() {
-        List<GTNotification> loaded = new ArrayList();
-        for (int i = 0; i < 25; i++) {
-            GTNotification notification = new GTNotification();
-            notification.type = GTNotification.GTNotificationType.values()[Utils.randInt(0, GTNotification.GTNotificationType.values().length - 1)];
-            notification.isRead = i > 2;
-            loaded.add(notification);
-        }
-        return loaded;
     }
 }

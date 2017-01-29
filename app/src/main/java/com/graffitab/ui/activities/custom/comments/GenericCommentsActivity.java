@@ -9,8 +9,6 @@ import android.view.Window;
 
 import com.graffitab.R;
 import com.graffitab.ui.fragments.comments.GenericCommentsFragment;
-import com.graffitab.ui.fragments.comments.ListCommentsFragment;
-import com.graffitabsdk.network.common.response.GTResponseHandler;
 
 import butterknife.ButterKnife;
 
@@ -19,20 +17,22 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class GenericCommentsActivity extends AppCompatActivity {
+public abstract class GenericCommentsActivity extends AppCompatActivity {
 
     private GenericCommentsFragment content;
+
+    public abstract GenericCommentsFragment getFragment();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_fragment_holder);
+        setContentView(getLayoutResId());
         ButterKnife.bind(this);
 
         setupTopBar();
-        setupContent();
+        setupContent(getFragment());
     }
 
     @Override
@@ -42,6 +42,10 @@ public class GenericCommentsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public int getLayoutResId() {
+        return R.layout.activity_fragment_holder;
     }
 
     public GenericCommentsFragment getContent() {
@@ -55,20 +59,12 @@ public class GenericCommentsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    private void setupContent() {
-        content = new ContentFragment();
+    public void setupContent(GenericCommentsFragment contentFragment) {
+        content = contentFragment;
         content.hasOptionsMenu = true;
 
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, content);
         transaction.commit();
-    }
-
-    public static class ContentFragment extends  ListCommentsFragment {
-
-        @Override
-        public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
-
-        }
     }
 }

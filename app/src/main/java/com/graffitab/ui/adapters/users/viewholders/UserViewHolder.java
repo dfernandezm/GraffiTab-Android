@@ -37,10 +37,11 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void loadAvatar() {
+        int p = R.drawable.default_avatar;
         if (item.hasAvatar())
-            Picasso.with(avatar.getContext()).load(item.avatar.thumbnail).error(R.drawable.default_avatar).into(avatar);
+            Picasso.with(avatar.getContext()).load(item.avatar.thumbnail).error(p).into(avatar);
         else
-            Picasso.with(avatar.getContext()).load(R.drawable.default_avatar).into(avatar);
+            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
     }
 
     public GTUser getItem() {

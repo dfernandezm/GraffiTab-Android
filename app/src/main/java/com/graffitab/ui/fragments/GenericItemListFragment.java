@@ -173,8 +173,6 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         refresh();
     }
 
-    public abstract List<T> generateDummyData();
-
     private void refresh() {
         if (isDownloading) return;
 

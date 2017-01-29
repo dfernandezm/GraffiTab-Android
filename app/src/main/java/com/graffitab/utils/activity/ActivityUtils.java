@@ -1,7 +1,6 @@
 package com.graffitab.utils.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -13,18 +12,9 @@ import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 
 import com.graffitab.R;
-import com.graffitab.constants.Constants;
-import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.utils.display.DisplayUtils;
-import com.graffitabsdk.model.GTUser;
 
 public class ActivityUtils {
-
-	public static void showProfile(GTUser user, Context context) {
-        Intent i = new Intent(context, ProfileActivity.class);
-        i.putExtra(Constants.EXTRA_USER, user);
-        context.startActivity(i);
-    }
 
 	public static void setOrientation( AppCompatActivity a ) {
 		if ( !DisplayUtils.isTablet(a) )

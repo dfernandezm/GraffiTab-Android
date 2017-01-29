@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home.users;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -40,6 +41,12 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     private GTUser user;
     private UserProfileFragment content;
+
+    public static void show(GTUser user, Context context) {
+        Intent i = new Intent(context, ProfileActivity.class);
+        i.putExtra(Constants.EXTRA_USER, user);
+        context.startActivity(i);
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

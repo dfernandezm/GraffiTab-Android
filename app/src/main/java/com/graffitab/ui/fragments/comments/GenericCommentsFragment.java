@@ -20,6 +20,7 @@ import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.ui.activities.home.SearchActivity;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.comments.GenericCommentsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitab.ui.fragments.GenericItemListFragment;
@@ -28,14 +29,10 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerVie
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
-import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.model.GTComment;
 import com.graffitabsdk.model.GTUser;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -131,7 +128,7 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
 
     @Override
     public void onOpenCommenterProfile(GTComment comment, GTUser commenter, int adapterPosition) {
-        ActivityUtils.showProfile(commenter, getActivity());
+        ProfileActivity.show(commenter, getActivity());
     }
 
     @Override
@@ -206,19 +203,6 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
         return null;
-    }
-
-    // Loading
-
-    @Override
-    public List<GTComment> generateDummyData() {
-        List<GTComment> loaded = new ArrayList();
-        for (int i = 0; i < 25; i++) {
-            GTComment comment = new GTComment();
-            comment.text = "This is some #random #text to @georgi. Check out this link - https://www.graffitab.com.";
-            loaded.add(comment);
-        }
-        return loaded;
     }
 
     // Setup

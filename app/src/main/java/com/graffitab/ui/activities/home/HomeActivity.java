@@ -21,6 +21,7 @@ import com.graffitab.managers.GTLocationManager;
 import com.graffitab.ui.activities.home.me.locations.LocationsActivity;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
+import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
 import com.graffitab.ui.fragments.home.FeedFragment;
 import com.graffitab.ui.fragments.home.NotificationsFragment;
@@ -84,7 +85,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 if ((int) view.getTag() == 0) // Profile.
-                    ActivityUtils.showProfile(GTSDK.getAccountManager().getLoggedInUser(), HomeActivity.this);
+                    ProfileActivity.show(GTSDK.getAccountManager().getLoggedInUser(), HomeActivity.this);
                 else if ((int) view.getTag() == 1) // Locations.
                     startActivity(new Intent(HomeActivity.this, LocationsActivity.class));
                 else if ((int) view.getTag() == 2) // Search.
