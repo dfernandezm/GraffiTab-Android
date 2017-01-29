@@ -89,7 +89,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 else if ((int) view.getTag() == 1) // Locations.
                     startActivity(new Intent(HomeActivity.this, LocationsActivity.class));
                 else if ((int) view.getTag() == 2) // Search.
-                    startActivity(new Intent(HomeActivity.this, SearchActivity.class));
+                    SearchActivity.openSearch(HomeActivity.this, null);
                 else if ((int) view.getTag() == 3) // Settings.
                     startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
             }

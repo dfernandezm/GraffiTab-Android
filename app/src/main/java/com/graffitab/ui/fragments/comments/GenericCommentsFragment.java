@@ -4,7 +4,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -133,7 +132,7 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
 
     @Override
     public void onOpenHashtag(GTComment comment, String hashtag, int adapterPosition) {
-        startActivity(new Intent(getActivity(), SearchActivity.class));
+        SearchActivity.openSearch(getActivity(), hashtag);
     }
 
     @Override

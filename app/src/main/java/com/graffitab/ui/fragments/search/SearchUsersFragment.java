@@ -14,12 +14,30 @@ import com.graffitabsdk.network.common.response.GTResponseHandler;
  */
 public class SearchUsersFragment extends ListUsersFragment {
 
+    private String searchQuery;
+
+    public void search(String query) {
+        presetSearchQuery(query);
+        reload();
+    }
+
+    public void presetSearchQuery(String query) {
+        this.searchQuery = query;
+    }
+
     @Override
     public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
         GTQueryParameters parameters = new GTQueryParameters();
         parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
         parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
-        GTSDK.getUserManager().getMostActiveUsers(isFirstLoad, parameters, handler);
+
+        if (searchQuery == null) // Load default search results.
+            GTSDK.getUserManager().getMostActiveUsers(isFirstLoad, parameters, handler);
+        else {
+            getRecyclerView().beginRefreshing();
+            parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, searchQuery);
+            GTSDK.getUserManager().search(parameters, handler);
+        }
     }
 
     @Override
