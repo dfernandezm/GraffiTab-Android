@@ -3,13 +3,18 @@ package com.graffitab.ui.adapters.comments.viewholders;
 import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.format.DateUtils;
+import android.text.style.AbsoluteSizeSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.application.MyApplication;
 import com.graffitab.model.GTCommentExtension;
 import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitabsdk.model.GTComment;
@@ -56,6 +61,13 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         dateField.setText(DateUtils.getRelativeTimeSpanString(item.createdOn.getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS, flags));
 
         autoLinkTextView.setAutoLinkText(comment.text);
+        if (comment.updatedOn != null) {
+            String edited = " " + MyApplication.getInstance().getString(R.string.comments_edited);
+            SpannableString span = new SpannableString(edited);
+            span.setSpan(new ForegroundColorSpan(Color.parseColor("#d0d0d0")), 0, edited.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            span.setSpan(new AbsoluteSizeSpan((int) autoLinkTextView.getTextSize() - 15), 0, edited.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+            autoLinkTextView.append(span);
+        }
 
         // Comment state.
         if (comment instanceof GTCommentExtension) {

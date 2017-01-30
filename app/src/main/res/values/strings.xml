@@ -95,6 +95,7 @@
     <string name="comments_count">%1$d Comment</string>
     <string name="comments_count_plural">%1$d Comments</string>
     <string name="comments_error_title">This comment was not sent.</string>
+    <string name="comments_edited">(edited)</string>
 
     <!-- Mentions -->
     <string name="mentions">Mentioned in</string>

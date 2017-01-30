@@ -88,8 +88,13 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
 
             if (toEdit != null) {
                 Log.i(getClass().getSimpleName(), "Editing comment");
+                // Edit local comment.
                 toEdit.text = text;
+                toEdit.updatedOn = new Date();
                 items.set(toEditPosition, toEdit);
+
+                // Send comment to server.
+                editComment(toEdit);
             }
             else {
                 Log.i(getClass().getSimpleName(), "Posting comment");
@@ -205,6 +210,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
                     toEditPosition = adapterPosition;
 
                     commentField.setText(comment.text);
+                    commentField.requestFocus();
                     KeyboardUtils.showKeyboard(getActivity(), commentField);
                 }
                 else if (which == R.id.action_copy) {
@@ -225,6 +231,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
     private void deleteComment(final GTComment comment, final int adapterPosition, boolean shouldDeleteRemotely) {
         removeItemAtIndex(adapterPosition);
         if (shouldDeleteRemotely) {
+            // TODO: Handle more intelligently.
             GTSDK.getStreamableManager().deleteComment(streamable.id, comment.id, new GTResponseHandler<GTCommentDeletedResult>() {
 
                 @Override
@@ -240,6 +247,22 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
         }
     }
 
+    private void editComment(final GTComment comment) {
+        // TODO: Handle more intelligently.
+        GTSDK.getStreamableManager().editComment(streamable.id, comment.id, comment.text, new GTResponseHandler<GTCommentResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTCommentResponse> gtResponse) {
+                Log.i(getClass().getSimpleName(), "Comment edited");
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTCommentResponse> gtResponse) {
+                Log.i(getClass().getSimpleName(), "Could not edit comment");
+            }
+        });
+    }
+
     private void postComment(final GTCommentExtension comment) {
         // Reset adapter state.
         comment.setState(GTCommentExtension.State.SENDING);
@@ -251,6 +274,8 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
             @Override
             public void onSuccess(GTResponse<GTCommentResponse> gtResponse) {
                 Log.i(getClass().getSimpleName(), "Comment posted");
+                if (getActivity() == null)
+                    return;
                 comment.setState(GTCommentExtension.State.SENT);
                 comment.id = gtResponse.getObject().comment.id;
                 adapter.notifyDataSetChanged();
@@ -259,6 +284,8 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
             @Override
             public void onFailure(GTResponse<GTCommentResponse> gtResponse) {
                 Log.i(getClass().getSimpleName(), "Could not post comment");
+                if (getActivity() == null)
+                    return;
                 comment.setState(GTCommentExtension.State.FAILED);
                 adapter.notifyDataSetChanged();
             }
