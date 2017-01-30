@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.model.GTCommentExtension;
 import com.graffitab.ui.activities.home.SearchActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.comments.GenericCommentsRecyclerViewAdapter;
@@ -29,9 +30,20 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDe
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.input.KeyboardUtils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTComment;
+import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.params.GTQueryParameters;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.common.result.GTCommentDeletedResult;
+import com.graffitabsdk.network.service.streamable.response.GTCommentResponse;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+
+import java.util.Date;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,12 +54,13 @@ import butterknife.OnClick;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericCommentsFragment extends GenericItemListFragment<GTComment> implements OnCommentClickListener {
+public class GenericCommentsFragment extends GenericItemListFragment<GTComment> implements OnCommentClickListener {
 
     public enum ViewType {LIST_FULL}
 
     @BindView(R.id.messageField) UserTagMultiAutoCompleteTextView commentField;
 
+    private GTStreamable streamable;
     private ViewType viewType;
     private GTComment toEdit;
     private int toEditPosition;
@@ -71,6 +84,8 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
     public void onClickSend(View view) {
         String text = commentField.getText().toString().trim();
         if (text.length() > 0) {
+            KeyboardUtils.hideKeyboard(getActivity());
+
             if (toEdit != null) {
                 Log.i(getClass().getSimpleName(), "Editing comment");
                 toEdit.text = text;
@@ -78,9 +93,17 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
             }
             else {
                 Log.i(getClass().getSimpleName(), "Posting comment");
-                GTComment comment = new GTComment();
+                // Add local comment.
+                GTCommentExtension comment = new GTCommentExtension();
                 comment.text = text;
+                comment.createdOn = new Date();
+                comment.id = new Random().nextInt();
+                comment.user = GTSDK.getAccountManager().getLoggedInUser();
+                comment.setState(GTCommentExtension.State.SENDING);
                 items.add(0, comment);
+
+                // Send comment to server.
+                postComment(comment);
             }
             toEdit = null;
             toEditPosition = -1;
@@ -115,6 +138,10 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
         configureLayout();
     }
 
+    public void setStreamable(GTStreamable streamable) {
+        this.streamable = streamable;
+    }
+
     @Override
     public void onRowSelected(GTComment comment, int adapterPosition) {
         showOptionsMenu(comment, adapterPosition);
@@ -145,6 +172,25 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
 //        startActivity(new Intent(getActivity(), ProfileActivity.class));
     }
 
+    @Override
+    public void onErrorSelected(final GTComment comment, final int adapterPosition) {
+        KeyboardUtils.hideKeyboard(getActivity());
+        BottomSheet.Builder builder = new BottomSheet.Builder(getActivity(), R.style.BottomSheet_StyleDialog)
+                .title(R.string.comments_error_title)
+                .sheet(R.menu.menu_comments_error);
+        builder = builder.listener(new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == R.id.action_retry)
+                    postComment((GTCommentExtension) comment);
+                else if (which == R.id.action_remove)
+                    deleteComment(comment, adapterPosition, false);
+            }
+        });
+        builder.show();
+    }
+
     private void showOptionsMenu(final GTComment comment, final int adapterPosition) {
         BottomSheet.Builder builder = new BottomSheet.Builder(getActivity(), R.style.BottomSheet_StyleDialog)
                 .title(R.string.comments_menu_title)
@@ -167,12 +213,56 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
                     clipboard.setPrimaryClip(clip);
                     Toast.makeText(getActivity(), getString(R.string.other_copied), Toast.LENGTH_SHORT).show();
                 }
-                else if (which == R.id.action_remove) {
-                    adapter.removeItem(adapterPosition, getRecyclerView().getRecyclerView());
-                }
+                else if (which == R.id.action_remove)
+                    deleteComment(comment, adapterPosition, true);
             }
         });
         builder.show();
+    }
+
+    // Comments
+
+    private void deleteComment(final GTComment comment, final int adapterPosition, boolean shouldDeleteRemotely) {
+        removeItemAtIndex(adapterPosition);
+        if (shouldDeleteRemotely) {
+            GTSDK.getStreamableManager().deleteComment(streamable.id, comment.id, new GTResponseHandler<GTCommentDeletedResult>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTCommentDeletedResult> gtResponse) {
+                    Log.i(getClass().getSimpleName(), "Comment deleted");
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTCommentDeletedResult> gtResponse) {
+                    Log.i(getClass().getSimpleName(), "Could not delete comment");
+                }
+            });
+        }
+    }
+
+    private void postComment(final GTCommentExtension comment) {
+        // Reset adapter state.
+        comment.setState(GTCommentExtension.State.SENDING);
+        adapter.notifyDataSetChanged();
+
+        // TODO: Handle more intelligently.
+        GTSDK.getStreamableManager().postComment(streamable.id, comment.text, new GTResponseHandler<GTCommentResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTCommentResponse> gtResponse) {
+                Log.i(getClass().getSimpleName(), "Comment posted");
+                comment.setState(GTCommentExtension.State.SENT);
+                comment.id = gtResponse.getObject().comment.id;
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTCommentResponse> gtResponse) {
+                Log.i(getClass().getSimpleName(), "Could not post comment");
+                comment.setState(GTCommentExtension.State.FAILED);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     // Configuration
@@ -202,6 +292,16 @@ public abstract class GenericCommentsFragment extends GenericItemListFragment<GT
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
         return null;
+    }
+
+    // Loading
+
+    @Override
+    public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
+        GTQueryParameters parameters = new GTQueryParameters();
+        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
+        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+        GTSDK.getStreamableManager().getComments(streamable.id, isFirstLoad, parameters, handler);
     }
 
     // Setup

@@ -50,14 +50,31 @@
                 android:textSize="11sp" />
         </LinearLayout>
 
-        <com.luseen.autolinklibrary.AutoLinkTextView
-            android:id="@+id/textField"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:text="This is some random comment that should go on multiple lines hopefully."
-            android:textColor="#555555"
-            android:textSize="15sp" />
+            android:orientation="horizontal">
+
+            <com.luseen.autolinklibrary.AutoLinkTextView
+                android:id="@+id/textField"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:layout_weight="1"
+                android:text="This is some random comment that should go on multiple lines hopefully."
+                android:textColor="#555555"
+                android:textSize="15sp" />
+
+            <ImageButton
+                android:id="@+id/errorBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="12dp"
+                android:background="@null"
+                android:src="@drawable/ic_info_outline_black_24dp"
+                android:tint="#ff0000" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/dateField"

@@ -1,13 +1,16 @@
 package com.graffitab.ui.adapters.comments.viewholders;
 
+import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitab.model.GTCommentExtension;
 import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitabsdk.model.GTComment;
 import com.luseen.autolinklibrary.AutoLinkMode;
@@ -19,7 +22,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.text.format.DateUtils.FORMAT_ABBREV_ALL;
-import static com.graffitab.R.id.textField;
 
 /**
  * Created by georgichristov on 09/12/2016
@@ -31,8 +33,9 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.avatar) public ImageView avatar;
     @BindView(R.id.nameField) public TextView nameField;
     @BindView(R.id.usernameField) public TextView usernameField;
-    @BindView(textField) public AutoLinkTextView autoLinkTextView;
+    @BindView(R.id.textField) public AutoLinkTextView autoLinkTextView;
     @BindView(R.id.dateField) public TextView dateField;
+    @BindView(R.id.errorBtn) public ImageButton errorBtn;
 
     protected GTComment item;
     protected OnCommentClickListener clickListener;
@@ -53,6 +56,17 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         dateField.setText(DateUtils.getRelativeTimeSpanString(item.createdOn.getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS, flags));
 
         autoLinkTextView.setAutoLinkText(comment.text);
+
+        // Comment state.
+        if (comment instanceof GTCommentExtension) {
+            GTCommentExtension commentExtension = (GTCommentExtension) comment;
+            errorBtn.setVisibility(commentExtension.getState() == GTCommentExtension.State.FAILED ? View.VISIBLE : View.GONE);
+            autoLinkTextView.setTextColor(commentExtension.getState() == GTCommentExtension.State.SENT ? Color.parseColor("#555555") : Color.parseColor("#d0d0d0"));
+        }
+        else {
+            errorBtn.setVisibility(View.GONE);
+            autoLinkTextView.setTextColor(Color.parseColor("#555555"));
+        }
 
         loadAvatar();
     }
@@ -90,6 +104,16 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         nameField.setOnClickListener(profileListener);
         usernameField.setClickable(true);
         usernameField.setOnClickListener(profileListener);
+
+        View.OnClickListener errorListener = new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                if (clickListener != null)
+                    clickListener.onErrorSelected(item, getAdapterPosition());
+            }
+        };
+        errorBtn.setOnClickListener(errorListener);
 
         autoLinkTextView.setHashtagModeColor(ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary));
         autoLinkTextView.setMentionModeColor(ContextCompat.getColor(itemView.getContext(), R.color.colorPrimary));

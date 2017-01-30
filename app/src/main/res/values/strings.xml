@@ -94,6 +94,7 @@
     <string name="comments_menu_title">What would you like to do with this comment?</string>
     <string name="comments_count">%1$d Comment</string>
     <string name="comments_count_plural">%1$d Comments</string>
+    <string name="comments_error_title">This comment was not sent.</string>
 
     <!-- Mentions -->
     <string name="mentions">Mentioned in</string>
@@ -215,6 +216,7 @@
     <string name="api_error">An unexpected error has ocurred. Please contast support to raise a ticket.</string>
     
     <!-- Other -->
+    <string name="other_retry">Try again</string>
     <string name="other_copied">Text copied to clipboard</string>
     <string name="other_edit">Edit</string>
     <string name="other_share">Share</string>

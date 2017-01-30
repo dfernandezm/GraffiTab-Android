@@ -5,7 +5,7 @@ package com.graffitab.ui.fragments.comments;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class ListCommentsFragment extends GenericCommentsFragment {
+public class ListCommentsFragment extends GenericCommentsFragment {
 
     @Override
     public void basicInit() {

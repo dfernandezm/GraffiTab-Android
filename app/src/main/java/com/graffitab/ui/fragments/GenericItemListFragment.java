@@ -270,6 +270,13 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         }
     }
 
+    // Items
+
+    public void removeItemAtIndex(int adapterPosition) {
+        items.remove(adapterPosition);
+        adapter.removeItem(adapterPosition, getRecyclerView().getRecyclerView());
+    }
+
     // Setup
 
     public void setupCustomViews() {
