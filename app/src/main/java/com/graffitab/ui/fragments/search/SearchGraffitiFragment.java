@@ -33,6 +33,9 @@ public class SearchGraffitiFragment extends GridStreamablesFragment {
         if (searchQuery == null) // Load default search results.
             GTSDK.getStreamableManager().getPopular(isFirstLoad, parameters, handler);
         else {
+            searchQuery = searchQuery.replace("#", "");
+            searchQuery = searchQuery.replace("@", "");
+
             getRecyclerView().beginRefreshing();
             parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, searchQuery);
             GTSDK.getStreamableManager().search(parameters, handler);

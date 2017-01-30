@@ -34,6 +34,9 @@ public class SearchUsersFragment extends ListUsersFragment {
         if (searchQuery == null) // Load default search results.
             GTSDK.getUserManager().getMostActiveUsers(isFirstLoad, parameters, handler);
         else {
+            searchQuery = searchQuery.replace("#", "");
+            searchQuery = searchQuery.replace("@", "");
+
             getRecyclerView().beginRefreshing();
             parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, searchQuery);
             GTSDK.getUserManager().search(parameters, handler);
