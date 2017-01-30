@@ -257,10 +257,11 @@ public class UserProfileFragment extends ListStreamablesFragment {
             }
         });
 
-        PagerAdapter adapter = new ProfileViewPagerAdapter(getContext(), viewPager);
+        PagerAdapter adapter = new ProfileViewPagerAdapter(getContext(), viewPager, user);
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new ProfileViewPagerAdapter.ProfilePagerChangeListener(viewPager));
         circleIndicator.setViewPager(viewPager);
+        circleIndicator.setVisibility(user.aboutString().length() > 0 ? View.VISIBLE : View.GONE);
 
         loadUserData();
     }

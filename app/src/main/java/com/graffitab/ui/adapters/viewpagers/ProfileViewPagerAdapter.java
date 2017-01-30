@@ -7,8 +7,10 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.graffitab.R;
+import com.graffitabsdk.model.GTUser;
 
 /**
  * Created by georgichristov on 25/11/2016
@@ -19,10 +21,12 @@ public class ProfileViewPagerAdapter extends PagerAdapter {
 
     private Context context;
     private ViewPager pager;
+    private GTUser user;
 
-    public ProfileViewPagerAdapter(Context context, ViewPager pager) {
+    public ProfileViewPagerAdapter(Context context, ViewPager pager, GTUser user) {
         this.context = context;
         this.pager = pager;
+        this.user = user;
     }
 
     @Override
@@ -36,6 +40,17 @@ public class ProfileViewPagerAdapter extends PagerAdapter {
         }
         else {
             layout = (ViewGroup) inflater.inflate(R.layout.pager_user_profile_about, container, false);
+
+            TextView aboutField = (TextView) layout.findViewById(R.id.about);
+            TextView websiteField = (TextView) layout.findViewById(R.id.website);
+            View separator = layout.findViewById(R.id.separator);
+
+            separator.setVisibility(user.about != null && user.website != null ? View.VISIBLE : View.GONE);
+            aboutField.setVisibility(user.about != null ? View.VISIBLE : View.GONE);
+            aboutField.setText(user.about != null ? user.about : "");
+            websiteField.setVisibility(user.website != null ? View.VISIBLE : View.GONE);
+            websiteField.setText(user.website != null ? user.website : "");
+
             container.addView(layout);
         }
         return layout;
@@ -48,7 +63,7 @@ public class ProfileViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return user.aboutString().length() > 0 ? 2 : 1;
     }
 
     @Override
