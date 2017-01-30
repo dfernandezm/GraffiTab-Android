@@ -133,11 +133,18 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     public void onClickAvatar(View view) {
-        showImagePicker((ImageView) view);
+        if (user.isMe())
+            showImagePicker((ImageView) view);
     }
 
     public void onClickCover(View view) {
-        showImagePicker((ImageView) view);
+        if (user.isMe())
+            showImagePicker((ImageView) view);
+    }
+
+    public void onClickAbout(View view) {
+        if (user.website != null)
+            Utils.openUrl(this, user.website);
     }
 
     // Loading

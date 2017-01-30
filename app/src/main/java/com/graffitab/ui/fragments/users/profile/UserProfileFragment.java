@@ -270,7 +270,10 @@ public class UserProfileFragment extends ListStreamablesFragment {
 
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
-            ((ProfileActivity) getActivity()).onClickCover(cover);
+            if (viewPager.getCurrentItem() == 0)
+                ((ProfileActivity) getActivity()).onClickCover(cover);
+            else
+                ((ProfileActivity) getActivity()).onClickAbout(null);
             return true;
         }
     }

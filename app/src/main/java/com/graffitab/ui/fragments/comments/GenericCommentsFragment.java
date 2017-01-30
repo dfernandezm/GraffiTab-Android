@@ -199,7 +199,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
     private void showOptionsMenu(final GTComment comment, final int adapterPosition) {
         BottomSheet.Builder builder = new BottomSheet.Builder(getActivity(), R.style.BottomSheet_StyleDialog)
                 .title(R.string.comments_menu_title)
-                .sheet(R.menu.menu_comments);
+                .sheet(comment.user.isMe() ? R.menu.menu_comments_mine : R.menu.menu_comments);
 
         builder = builder.listener(new DialogInterface.OnClickListener() {
 
