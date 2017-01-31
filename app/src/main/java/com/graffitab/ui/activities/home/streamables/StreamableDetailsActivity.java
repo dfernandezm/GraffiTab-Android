@@ -126,7 +126,38 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.likeBtn)
     public void onClickToggleLike(View view) {
-        System.out.println("LIKE");
+        streamable.likedByCurrentUser = !streamable.likedByCurrentUser;
+        if (streamable.likedByCurrentUser) {
+            streamable.likersCount++;
+            GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+            });
+        }
+        else {
+            streamable.likersCount--;
+            GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+            });
+        }
+        loadData();
     }
 
     @OnClick(R.id.commentBtn)

@@ -23,8 +23,12 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerVie
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.display.DisplayUtils;
+import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -105,8 +109,36 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     @Override
     public void onToggleLike(GTStreamable streamable, StreamableViewHolder holder, int adapterPosition) {
         streamable.likedByCurrentUser = !streamable.likedByCurrentUser;
-        if (streamable.likedByCurrentUser) streamable.likersCount++;
-        else streamable.likersCount--;
+        if (streamable.likedByCurrentUser) {
+            streamable.likersCount++;
+            GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+            });
+        }
+        else {
+            streamable.likersCount--;
+            GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+            });
+        }
         adapter.notifyDataSetChanged();
     }
 
