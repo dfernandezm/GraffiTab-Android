@@ -90,7 +90,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     public void onClickOptions(View view) {
         BottomSheet.Builder builder = new BottomSheet.Builder(this, R.style.BottomSheet_StyleDialog)
                 .title(R.string.streamable_details_menu_title)
-                .sheet(streamable.isMine() ? R.menu.menu_streamable_details_mine : R.menu.menu_streamable_details);
+                .sheet(streamable.isMine() ? streamable.isPrivate ? R.menu.menu_streamable_details_mine_public : R.menu.menu_streamable_details_mine_private : R.menu.menu_streamable_details);
 
         builder = builder.listener(new DialogInterface.OnClickListener() {
 
@@ -100,7 +100,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
                 }
                 else if (which == R.id.action_toggle_privacy) {
-
+                    togglePrivacy();
                 }
                 else if (which == R.id.action_save) {
 
@@ -169,6 +169,36 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     private void onClickProfile() {
         ProfileActivity.show(streamable.user, this);
+    }
+
+    private void togglePrivacy() {
+        streamable.isPrivate = !streamable.isPrivate;
+        if (streamable.isPrivate)
+            GTSDK.getStreamableManager().makePrivate(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+            });
+        else
+            GTSDK.getStreamableManager().makePublic(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+
+                }
+            });
     }
 
     // Loading
