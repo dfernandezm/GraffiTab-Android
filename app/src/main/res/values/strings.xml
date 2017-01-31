@@ -116,6 +116,7 @@
     <string name="edit_profile_about">About</string>
     <string name="edit_profile_website">Website</string>
     <string name="edit_profile_private_description">Private graffiti can only be viewed by you</string>
+    <string name="edit_profile_success">Profile updated!</string>
 
     <!-- Explorer -->
     <string name="explorer">Explorer</string>

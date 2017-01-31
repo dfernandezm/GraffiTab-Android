@@ -53,6 +53,22 @@ public class InputValidator {
         return true;
     }
 
+    public static boolean validateEditProfile(Context context, String firstname, String lastname, String email) {
+        if (firstname.length() <= 0) {
+            DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name), context.getString(R.string.sign_up_error_firstname));
+            return false;
+        }
+        if (lastname.length() <= 0) {
+            DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name), context.getString(R.string.sign_up_error_lastname));
+            return false;
+        }
+        if (email.length() <= 0) {
+            DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name), context.getString(R.string.sign_up_error_email));
+            return false;
+        }
+        return true;
+    }
+
     public static boolean validateChangePassword(Context context, String password, String newPassword, String confirmPassword) {
         if (password.length() <= 0) {
             DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name), context.getString(R.string.change_password_error_password));

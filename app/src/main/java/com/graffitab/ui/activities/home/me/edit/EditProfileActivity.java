@@ -2,6 +2,7 @@ package com.graffitab.ui.activities.home.me.edit;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +14,18 @@ import android.widget.TextView;
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.activities.home.me.PrivateStreamablesActivity;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.api.ApiUtils;
+import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.input.KeyboardUtils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,6 +46,8 @@ public class EditProfileActivity extends CameraUtilsActivity {
     @BindView(R.id.about) TextView about;
     @BindView(R.id.website) TextView website;
 
+    private GTUser me = GTSDK.getAccountManager().getLoggedInUser();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +56,8 @@ public class EditProfileActivity extends CameraUtilsActivity {
         ButterKnife.bind(this);
 
         setupTopBar();
+
+        loadData();
     }
 
     @OnClick(R.id.avatarLayout)
@@ -80,7 +96,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
             return true;
         }
         else if (item.getItemId() == R.id.action_save) {
-            finish();
+            saveProfile();
             return true;
         }
 
@@ -95,6 +111,71 @@ public class EditProfileActivity extends CameraUtilsActivity {
         int ratioW = 5;
         int ratioH = 3;
         return new Pair<>(ratioW, ratioH);
+    }
+
+    private void saveProfile() {
+        Log.i(getClass().getSimpleName(), "Saving user");
+        String fn = firstName.getText().toString().trim();
+        String ln = lastName.getText().toString().trim();
+        String em = email.getText().toString().trim();
+        String a = about.getText().toString().trim();
+        String w = website.getText().toString().trim();
+
+        if (InputValidator.validateEditProfile(this, fn, ln, em)) {
+            KeyboardUtils.hideKeyboard(this);
+            TaskDialog.getInstance().showDialog(null, this, null);
+
+            GTSDK.getMeManager().edit(fn, ln, em, a.length() > 0 ? a : null, w.length() > 0 ? w : null, new GTResponseHandler<GTUserResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTUserResponse> responseObject) {
+                    Log.i(getClass().getSimpleName(), "Successfully saved profile");
+                    TaskDialog.getInstance().hideDialog();
+
+                    me = GTSDK.getAccountManager().getLoggedInUser();
+                    loadData();
+
+                    DialogBuilder.buildOKDialog(EditProfileActivity.this, getString(R.string.app_name), getString(R.string.edit_profile_success));
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTUserResponse> responseObject) {
+                    Log.e(getClass().getSimpleName(), "Failed to save profile");
+                    TaskDialog.getInstance().hideDialog();
+
+                    DialogBuilder.buildOKDialog(EditProfileActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
+                }
+            });
+        }
+    }
+
+    // Loading
+
+    private void loadData() {
+        firstName.setText(me.firstName);
+        lastName.setText(me.lastName);
+        email.setText(me.email);
+        if (me.about != null) about.setText(me.about);
+        if (me.website != null) website.setText(me.website);
+
+        loadAvatar();
+        loadCover();
+    }
+
+    private void loadAvatar() {
+        int p = R.drawable.default_avatar;
+        if (me.hasAvatar())
+            Picasso.with(this).load(me.avatar.thumbnail).placeholder(p).error(p).into(avatar);
+        else
+            Picasso.with(this).load(p).placeholder(p).into(avatar);
+    }
+
+    private void loadCover() {
+        int p = R.drawable.login;
+        if (me.hasCover())
+            Picasso.with(this).load(me.cover.link).placeholder(p).placeholder(p).error(p).into(cover);
+        else
+            Picasso.with(this).load(p).placeholder(p).into(cover);
     }
 
     // Setup
