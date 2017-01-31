@@ -90,7 +90,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     public void onClickOptions(View view) {
         BottomSheet.Builder builder = new BottomSheet.Builder(this, R.style.BottomSheet_StyleDialog)
                 .title(R.string.streamable_details_menu_title)
-                .sheet(R.menu.menu_streamable_details);
+                .sheet(streamable.isMine() ? R.menu.menu_streamable_details_mine : R.menu.menu_streamable_details);
 
         builder = builder.listener(new DialogInterface.OnClickListener() {
 
