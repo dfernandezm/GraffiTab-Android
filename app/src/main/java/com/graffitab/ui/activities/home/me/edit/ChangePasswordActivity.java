@@ -60,7 +60,7 @@ public class ChangePasswordActivity extends AppCompatActivity {
             String cpw = confirmPassword.getText().toString();
 
             if (InputValidator.validateChangePassword(this, pw, npw, cpw)) {
-                
+
             }
             return true;
         }

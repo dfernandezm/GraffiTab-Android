@@ -204,6 +204,7 @@ public class SettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+            logoutPreference.setSummary(GTSDK.getAccountManager().getLoggedInUser().fullName());
             logoutPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
                 @Override
