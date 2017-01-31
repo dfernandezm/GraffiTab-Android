@@ -17,7 +17,7 @@ import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTGcmManager;
 import com.graffitab.settings.Settings;
 import com.graffitab.ui.activities.home.WebActivity;
-import com.graffitab.ui.activities.home.me.edit.ChangePasswordActivity;
+import com.graffitab.ui.activities.home.me.edit.EditPasswordActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.activities.home.users.UserLikesActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
@@ -144,7 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                 @Override
                 public boolean onPreferenceClick(Preference preference) {
-                    startActivity(new Intent(getActivity(), ChangePasswordActivity.class));
+                    startActivity(new Intent(getActivity(), EditPasswordActivity.class));
                     return true;
                 }
             });

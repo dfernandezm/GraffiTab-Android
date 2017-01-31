@@ -131,6 +131,7 @@
     <string name="change_password_current">Your password</string>
     <string name="change_password_new">New password</string>
     <string name="change_password_error_password">Please enter your current password.</string>
+    <string name="change_password_success">Password updated!</string>
 
     <!-- Static Streamables -->
     <string name="static_streamables_count">%1$d graffiti</string>
