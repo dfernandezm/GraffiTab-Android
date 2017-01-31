@@ -23,6 +23,8 @@ import com.graffitab.ui.activities.home.SearchActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.comments.GenericCommentsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.comments.OnCommentClickListener;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.autocomplete.UserTagMultiAutoCompleteTextView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
@@ -210,8 +212,8 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
                     toEditPosition = adapterPosition;
 
                     commentField.setText(comment.text);
-                    commentField.requestFocus();
-                    KeyboardUtils.showKeyboard(getActivity(), commentField);
+                    commentField.setSelection(commentField.getText().length());
+                    KeyboardUtils.toggleKeyboard(getActivity(), commentField);
                 }
                 else if (which == R.id.action_copy) {
                     ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -219,8 +221,18 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
                     clipboard.setPrimaryClip(clip);
                     Toast.makeText(getActivity(), getString(R.string.other_copied), Toast.LENGTH_SHORT).show();
                 }
-                else if (which == R.id.action_remove)
-                    deleteComment(comment, adapterPosition, true);
+                else if (which == R.id.action_remove) {
+                    DialogBuilder.buildYesNoDialog(getContext(), getString(R.string.app_name), getString(R.string.other_confirm_delete), getString(R.string.other_delete), getString(R.string.other_cancel), new OnYesNoHandler() {
+
+                        @Override
+                        public void onClickYes() {
+                            deleteComment(comment, adapterPosition, true);
+                        }
+
+                        @Override
+                        public void onClickNo() {}
+                    });
+                }
             }
         });
         builder.show();

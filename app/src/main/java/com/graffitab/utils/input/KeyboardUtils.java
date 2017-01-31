@@ -13,7 +13,13 @@ public class KeyboardUtils {
 			imm.hideSoftInputFromWindow(c.getCurrentFocus().getWindowToken(), 0);
 		} catch (Exception e) {}
 	}
-	
+
+	public static void toggleKeyboard(Context c, EditText editText) {
+        editText.requestFocus();
+        InputMethodManager imm = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, InputMethodManager.HIDE_IMPLICIT_ONLY);
+	}
+
 	public static void showKeyboard(Context c, EditText editText) {
 		InputMethodManager imm = (InputMethodManager) c.getSystemService(Context.INPUT_METHOD_SERVICE);
 		imm.showSoftInput(editText, InputMethodManager.SHOW_IMPLICIT);

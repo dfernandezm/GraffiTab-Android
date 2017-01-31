@@ -210,13 +210,14 @@
     <string name="api_error_external_provider_already_linked">This social account has already been linked.</string>
     <string name="api_error_external_provider_already_linked_for_another_user">This external provider has already been linked for another user.</string>
 
-    <string name="api_error_general">An unexpected error has ocurred. Please contast support to raise a ticket.</string>
+    <string name="api_error_general">An unexpected error has occurred. Please contact support to raise a ticket.</string>
 
     <string name="api_error_other">Looks like we are experiencing some errors processing your request. Make sure your Internet connection is working and try again. Otherwise please check our status page for more information.</string>
 
-    <string name="api_error">An unexpected error has ocurred. Please contast support to raise a ticket.</string>
+    <string name="api_error">An unexpected error has occurred. Please contact support to raise a ticket.</string>
     
     <!-- Other -->
+    <string name="other_confirm_delete">Confirm delete?</string>
     <string name="other_retry">Try again</string>
     <string name="other_copied">Text copied to clipboard</string>
     <string name="other_edit">Edit</string>
