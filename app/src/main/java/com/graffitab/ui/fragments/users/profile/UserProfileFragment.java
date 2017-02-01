@@ -34,6 +34,7 @@ import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
+import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponse;
@@ -161,12 +162,18 @@ public class UserProfileFragment extends ListStreamablesFragment {
         loadedInitially = true;
     }
 
+    @Override
+    public void onOpenOwnerProfile(GTStreamable streamable, GTUser owner, int adapterPosition) {
+        // Profile is already opened.
+    }
+
     // Configuration
 
     @Override
     public AdvancedEndlessRecyclerViewAdapter getAdapterForViewType() {
         GenericStreamablesRecyclerViewAdapter customAdapter = new UserProfileHeaderAdapter(MyApplication.getInstance(), items, getRecyclerView().getRecyclerView());
         customAdapter.setViewType(getViewType());
+        customAdapter.setClickListener(this);
         return customAdapter;
     }
 
