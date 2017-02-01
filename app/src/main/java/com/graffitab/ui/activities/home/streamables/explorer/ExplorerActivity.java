@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.graffitab.R;
+import com.graffitab.config.AppConfig;
 import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTLocationManager;
 import com.graffitab.ui.activities.home.me.locations.CreateLocationActivity;
@@ -31,10 +32,15 @@ import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.model.GTStreamable;
+import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.location.response.GTLocationResponse;
+import com.graffitabsdk.network.service.streamable.response.GTListStreamablesResponse;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,6 +57,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     private ClusterManager<GTClusterItem> mClusterManager;
     private Timer timer;
     private Location customLocation;
+    private List<GTStreamable> items = new ArrayList<>();
 
     public static void openForLocation(Context context, double latitude, double longitude) {
         Intent i = new Intent(context, ExplorerActivity.class);
@@ -153,7 +160,33 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     private void refreshMap() {
         Log.i(getClass().getSimpleName(), "Refreshing map...");
-        addDummyItems();
+        LatLng center = mMap.getCameraPosition().target;
+        GTQueryParameters parameters = new GTQueryParameters();
+        parameters.addParameter(GTQueryParameters.GTParameterType.LATITUDE, center.latitude + "");
+        parameters.addParameter(GTQueryParameters.GTParameterType.LONGITUDE, center.longitude + "");
+        parameters.addParameter(GTQueryParameters.GTParameterType.RADIUS, AppConfig.configuration.locationRadius + "");
+        GTSDK.getStreamableManager().searchLocation(parameters, new GTResponseHandler<GTListStreamablesResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTListStreamablesResponse> gtResponse) {
+                processAnnotations(gtResponse.getObject().items);
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTListStreamablesResponse> gtResponse) {
+                DialogBuilder.buildAPIErrorDialog(ExplorerActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+            }
+        });
+    }
+
+    private void processAnnotations(List<GTStreamable> streamables) {
+        for (GTStreamable streamable : streamables) {
+            if (!items.contains(streamable)) {
+                GTClusterItem offsetItem = new GTClusterItem(streamable.latitude, streamable.longitude);
+                mClusterManager.addItem(offsetItem);
+                items.add(streamable);
+            }
+        }
     }
 
     // Timer
@@ -166,7 +199,13 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public void run() {
-                refreshMap();
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        refreshMap();
+                    }
+                });
             }
         }, 0, 3000);
     }
@@ -179,21 +218,6 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     // Map
-
-    private void addDummyItems() {
-        // Set some lat/lng coordinates to start with.
-        double lat = 51.5145160;
-        double lng = -0.1270060;
-
-        // Add ten cluster items in close proximity, for purposes of this example.
-        for (int i = 0; i < 10; i++) {
-            double offset = i / 60d;
-            lat = lat + offset;
-            lng = lng + offset;
-            GTClusterItem offsetItem = new GTClusterItem(lat, lng);
-            mClusterManager.addItem(offsetItem);
-        }
-    }
 
     private void awaitCurrentLocation() {
         new Thread() {
@@ -251,6 +275,8 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
             zoomToLocation(customLocation);
         else
             awaitCurrentLocation();
+
+        startTimer();
     }
 
     // Setup
@@ -295,7 +321,5 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setCompassEnabled(false);
-
-        startTimer();
     }
 }
