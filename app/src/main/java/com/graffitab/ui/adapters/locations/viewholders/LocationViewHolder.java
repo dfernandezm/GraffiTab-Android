@@ -7,7 +7,9 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.ui.adapters.locations.OnLocationClickListener;
+import com.graffitab.utils.google.GoogleUtils;
 import com.graffitabsdk.model.GTLocation;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,6 +21,7 @@ import butterknife.ButterKnife;
  */
 public class LocationViewHolder extends RecyclerView.ViewHolder {
 
+    @BindView(R.id.thumbnail) public ImageView thumbnail;
     @BindView(R.id.address) public TextView address;
     @BindView(R.id.menuButton) public ImageView menu;
 
@@ -33,6 +36,15 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
 
     public void setItem(GTLocation location) {
         this.item = location;
+
+        address.setText(location.address);
+
+        loadImage();
+    }
+
+    public void loadImage() {
+        String url = GoogleUtils.getStaticMapUrl(item.latitude, item.longitude);
+        Picasso.with(thumbnail.getContext()).load(url).into(thumbnail);
     }
 
     public GTLocation getItem() {

@@ -4,9 +4,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.cocosw.bottomsheet.BottomSheet;
@@ -16,11 +16,17 @@ import com.graffitab.ui.activities.home.me.locations.CreateLocationActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.adapters.locations.GenericLocationsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.locations.OnLocationClickListener;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTLocation;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.common.result.GTLocationDeletedResult;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -46,7 +52,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     @Override
     public void onRowSelected(GTLocation location, int adapterPosition) {
-        startActivity(new Intent(getActivity(), ExplorerActivity.class));
+        ExplorerActivity.openForLocation(getActivity(), location.latitude, location.longitude);
     }
 
     @Override
@@ -60,7 +66,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 if (which == R.id.action_edit) {
-                    startActivity(new Intent(getActivity(), CreateLocationActivity.class));
+                    CreateLocationActivity.openForLocation(getActivity(), location);
                 }
                 else if (which == R.id.action_copy_address) {
                     ClipboardManager clipboard = (ClipboardManager) getActivity().getSystemService(Context.CLIPBOARD_SERVICE);
@@ -69,11 +75,38 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
                     Toast.makeText(getActivity(), getString(R.string.other_copied), Toast.LENGTH_SHORT).show();
                 }
                 else if (which == R.id.action_remove) {
-                    adapter.removeItem(adapterPosition, getRecyclerView().getRecyclerView());
+                    DialogBuilder.buildYesNoDialog(getContext(), getString(R.string.app_name), getString(R.string.other_confirm_delete), getString(R.string.other_delete), getString(R.string.other_cancel), new OnYesNoHandler() {
+
+                        @Override
+                        public void onClickYes() {
+                            deleteLocation(location, adapterPosition);
+                        }
+
+                        @Override
+                        public void onClickNo() {}
+                    });
                 }
             }
         });
         builder.show();
+    }
+
+    // Locations
+
+    private void deleteLocation(final GTLocation location, final int adapterPosition) {
+        removeItemAtIndex(adapterPosition);
+        GTSDK.getMeManager().deleteLocation(location.id, new GTResponseHandler<GTLocationDeletedResult>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTLocationDeletedResult> gtResponse) {
+                Log.i(getClass().getSimpleName(), "Location deleted");
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTLocationDeletedResult> gtResponse) {
+                Log.i(getClass().getSimpleName(), "Could not delete location");
+            }
+        });
     }
 
     // Configuration

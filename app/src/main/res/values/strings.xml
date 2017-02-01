@@ -123,6 +123,7 @@
 
     <!-- Create Location -->
     <string name="create_location_no_matches">No address matches found.</string>
+    <string name="create_location_success">Location saved successfully. Now you will get notifications when new content is available around that area.</string>
 
     <!-- Private Streamables -->
     <string name="private_posts">Private Graffiti</string>

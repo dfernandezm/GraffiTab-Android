@@ -1,7 +1,9 @@
 package com.graffitab.ui.activities.home.streamables.explorer;
 
+import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.graffitab.R;
+import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTLocationManager;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterItem;
@@ -37,6 +40,14 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     private boolean shouldCheckForCurrentLocation = true;
     private ClusterManager<GTClusterItem> mClusterManager;
     private Timer timer;
+    private Location customLocation;
+
+    public static void openForLocation(Context context, double latitude, double longitude) {
+        Intent i = new Intent(context, ExplorerActivity.class);
+        i.putExtra(Constants.EXTRA_LATITUDE, latitude);
+        i.putExtra(Constants.EXTRA_LONGITUDE, longitude);
+        context.startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,9 +57,18 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         setContentView(R.layout.activity_explorer);
         ButterKnife.bind(this);
 
-        setupMapView();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            double lat = extras.getDouble(Constants.EXTRA_LATITUDE);
+            double lon = extras.getDouble(Constants.EXTRA_LONGITUDE);
+            if (lat != 0.0 && lon != 0.0) {
+                customLocation = new Location(LocationManager.GPS_PROVIDER);
+                customLocation.setLatitude(lat);
+                customLocation.setLongitude(lon);
+            }
+        }
 
-        awaitCurrentLocation();
+        setupMapView();
     }
 
     @Override
@@ -176,6 +196,11 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         mMap = googleMap;
 
         setupMapOnceAvailable();
+
+        if (customLocation != null)
+            zoomToLocation(customLocation);
+        else
+            awaitCurrentLocation();
     }
 
     // Setup

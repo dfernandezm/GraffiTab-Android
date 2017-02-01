@@ -109,7 +109,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
                 }
                 else if (which == R.id.action_explore) {
-                    startActivity(new Intent(StreamableDetailsActivity.this, ExplorerActivity.class));
+                    ExplorerActivity.openForLocation(StreamableDetailsActivity.this, streamable.latitude, streamable.longitude);
                 }
                 else if (which == R.id.action_remove) {
                     finish();

@@ -1,5 +1,7 @@
 package com.graffitab.ui.activities.home.me.locations;
 
+import android.content.Context;
+import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -20,13 +22,22 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.graffitab.R;
+import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTLocationManager;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
+import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.KeyboardUtils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.model.GTLocation;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.location.response.GTLocationResponse;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
@@ -48,6 +59,14 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
     private GoogleMap mMap;
     private boolean shouldCheckForCurrentLocation = true;
     private boolean isSearching = false;
+    private Location customLocation;
+    private GTLocation toEdit;
+
+    public static void openForLocation(Context context, GTLocation location) {
+        Intent i = new Intent(context, CreateLocationActivity.class);
+        i.putExtra(Constants.EXTRA_LOCATION, location);
+        context.startActivity(i);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,10 +76,19 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
         setContentView(R.layout.activity_create_location);
         ButterKnife.bind(this);
 
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            Serializable serializable = extras.getSerializable(Constants.EXTRA_LOCATION);
+            if (serializable != null) {
+                toEdit = (GTLocation) serializable;
+                customLocation = new Location(LocationManager.GPS_PROVIDER);
+                customLocation.setLatitude(toEdit.latitude);
+                customLocation.setLongitude(toEdit.longitude);
+            }
+        }
+
         setupMapView();
         setupTextFields();
-
-        awaitCurrentLocation();
     }
 
     @Override
@@ -77,7 +105,48 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
 
     @OnClick(R.id.fab)
     public void onClickCreateLocation(View view) {
-        finish();
+        final LatLng center = mMap.getCameraPosition().target;
+        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        findAddressForLocation(center.latitude, center.longitude, new OnAddressFoundListener() {
+
+            @Override
+            public void onAddressFound(String address) {
+                if (customLocation != null) { // Edit location.
+                    GTSDK.getMeManager().editLocation(toEdit.id, address, center.latitude, center.longitude, new GTResponseHandler<GTLocationResponse>() {
+
+                        @Override
+                        public void onSuccess(GTResponse<GTLocationResponse> gtResponse) {
+                            finishSuccessfulSave();
+                        }
+
+                        @Override
+                        public void onFailure(GTResponse<GTLocationResponse> gtResponse) {
+                            finishSaveWithError(gtResponse);
+                        }
+                    });
+                }
+                else { // Create location.
+                    GTSDK.getMeManager().createLocation(address, center.latitude, center.longitude, new GTResponseHandler<GTLocationResponse>() {
+
+                        @Override
+                        public void onSuccess(GTResponse<GTLocationResponse> gtResponse) {
+                            finishSuccessfulSave();
+                        }
+
+                        @Override
+                        public void onFailure(GTResponse<GTLocationResponse> gtResponse) {
+                            finishSaveWithError(gtResponse);
+                        }
+                    });
+                }
+            }
+
+            @Override
+            public void onAddressNotFound() {
+                TaskDialog.getInstance().hideDialog();
+                DialogBuilder.buildOKDialog(CreateLocationActivity.this, getString(R.string.app_name), getString(R.string.create_location_no_matches));
+            }
+        });
     }
 
     @OnClick(R.id.searchBtn)
@@ -107,7 +176,71 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
         }
     }
 
+    private void finishSuccessfulSave() {
+        TaskDialog.getInstance().hideDialog();
+        DialogBuilder.buildOKDialog(this, getString(R.string.app_name), getString(R.string.create_location_success), new OnOkHandler() {
+
+            @Override
+            public void onClickOk() {
+                finish();
+            }
+        });
+    }
+
+    private void finishSaveWithError(GTResponse<GTLocationResponse> gtResponse) {
+        TaskDialog.getInstance().hideDialog();
+        DialogBuilder.buildAPIErrorDialog(this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
+    }
+
     // Search
+
+    private void findAddressForLocation(final double latitude, final double longitude, final OnAddressFoundListener listener) {
+        new Thread() {
+
+            @Override
+            public void run() {
+                Geocoder geoCoder = new Geocoder(CreateLocationActivity.this, Locale.getDefault());
+                try {
+                    List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
+                    if (addresses.size() > 0) {
+                        Address address = addresses.get(0);
+                        final String addressString = parseAddress(address);
+
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (listener != null)
+                                    listener.onAddressFound(addressString);
+                            }
+                        });
+                    }
+                    else {
+                        runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (listener != null)
+                                    listener.onAddressNotFound();
+                            }
+                        });
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    private String parseAddress(Address address) {
+        String addressString = "";
+        int i;
+        for(i = 0; i < address.getMaxAddressLineIndex() - 1; i++) {
+            addressString += address.getAddressLine(i) + ", ";
+        }
+        addressString += address.getAddressLine(i);
+        return addressString;
+    }
 
     private void findAddress(final String address) {
         TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
@@ -206,6 +339,11 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
         mMap = googleMap;
 
         setupMapOnceAvailable();
+
+        if (customLocation != null)
+            zoomToLocation(customLocation);
+        else
+            awaitCurrentLocation();
     }
 
     // Setup
@@ -244,5 +382,10 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
                 return false;
             }
         });
+    }
+
+    interface OnAddressFoundListener {
+        void onAddressFound(String address);
+        void onAddressNotFound();
     }
 }

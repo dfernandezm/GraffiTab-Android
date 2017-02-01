@@ -16,7 +16,6 @@
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:scaleType="centerCrop"
-        android:background="#efefef"
         app:riv_corner_radius="5dp" />
 
     <LinearLayout
@@ -31,10 +30,9 @@
             android:id="@+id/address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="Some address string goes here and can be on multiple lines."
             android:textColor="@color/colorLightBlack"
             android:textSize="15sp"
-            android:lines="2"
+            android:maxLines="2"
             android:ellipsize="end"/>
     </LinearLayout>
 
