@@ -115,6 +115,7 @@ public class SettingsActivity extends AppCompatActivity {
         private Preference userLikesPreference;
         private CheckBoxPreference rememberMePreference;
 
+        private Preference cachePreference;
         private CheckBoxPreference assistantPreference;
 
         private Preference helpPreference;
@@ -135,6 +136,7 @@ public class SettingsActivity extends AppCompatActivity {
             changePasswordPreference = findPreference("changePassword");
             userLikesPreference = findPreference("likedPosts");
             rememberMePreference = (CheckBoxPreference) findPreference("rememberMe");
+            cachePreference = findPreference("clearCache");
             assistantPreference = (CheckBoxPreference) findPreference("drawingAssistant");
             helpPreference = findPreference("helpCenter");
             reportPreference = findPreference("reportProblem");
@@ -161,6 +163,23 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         private void bindPreferences() {
+            cachePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    DialogBuilder.buildYesNoDialog(getActivity(), getString(R.string.app_name), getString(R.string.settings_prompt_cache), getString(R.string.settings_clear_cache), getString(R.string.other_cancel), new OnYesNoHandler() {
+
+                        @Override
+                        public void onClickYes() {
+                            GTSDK.invalidateCache();
+                        }
+
+                        @Override
+                        public void onClickNo() {}
+                    });
+                    return true;
+                }
+            });
             assistantPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
                 @Override

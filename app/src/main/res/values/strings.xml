@@ -163,6 +163,7 @@
     <string name="settings_build">Build</string>
     <string name="settings_copyright">© 2016 GraffiTab All Rights Reserved</string>
     <string name="settings_prompt_logout">Are you sure you want to log out?</string>
+    <string name="settings_prompt_cache">Are you sure you want to clear the app\'s cache? Clearing the cache will force the app to re-download all images and may incur additional charges if you are not using WiFi.</string>
 
     <!-- Streamable Details -->
     <string name="streamable_details_menu_title">What would you like to do with this graffiti?</string>
