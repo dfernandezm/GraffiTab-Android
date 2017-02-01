@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home.me.locations;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -68,6 +69,95 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
         context.startActivity(i);
     }
 
+    public static void findAddressForLocation(final Activity context, final double latitude, final double longitude, final OnAddressFoundListener listener) {
+        new Thread() {
+
+            @Override
+            public void run() {
+                Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
+                try {
+                    List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
+                    if (addresses.size() > 0) {
+                        Address address = addresses.get(0);
+                        final String addressString = parseAddress(address);
+
+                        context.runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (listener != null)
+                                    listener.onAddressFound(addressString);
+                            }
+                        });
+                    }
+                    else {
+                        context.runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (listener != null)
+                                    listener.onAddressNotFound();
+                            }
+                        });
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    public static String parseAddress(Address address) {
+        String addressString = "";
+        int i;
+        for(i = 0; i < address.getMaxAddressLineIndex() - 1; i++) {
+            addressString += address.getAddressLine(i) + ", ";
+        }
+        addressString += address.getAddressLine(i);
+        return addressString;
+    }
+
+    public static void findAddress(final Activity context, final String address, final OnLocationFoundListener listener) {
+        new Thread() {
+
+            @Override
+            public void run() {
+                Geocoder geoCoder = new Geocoder(context, Locale.getDefault());
+                try {
+                    List<Address> addresses = geoCoder.getFromLocationName(address , 1);
+                    if (addresses.size() > 0) {
+                        final double lat = addresses.get(0).getLatitude();
+                        final double lng = addresses.get(0).getLongitude();
+                        final Location temp = new Location(LocationManager.GPS_PROVIDER);
+                        temp.setLatitude(lat);
+                        temp.setLongitude(lng);
+
+                        context.runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (listener != null)
+                                    listener.onLocationFound(temp);
+                            }
+                        });
+                    }
+                    else {
+                        context.runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (listener != null)
+                                    listener.onLocationNotFound();
+                            }
+                        });
+                    }
+                } catch(Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,7 +197,7 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
     public void onClickCreateLocation(View view) {
         final LatLng center = mMap.getCameraPosition().target;
         TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
-        findAddressForLocation(center.latitude, center.longitude, new OnAddressFoundListener() {
+        findAddressForLocation(this, center.latitude, center.longitude, new OnAddressFoundListener() {
 
             @Override
             public void onAddressFound(String address) {
@@ -192,100 +282,6 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
         DialogBuilder.buildAPIErrorDialog(this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
     }
 
-    // Search
-
-    private void findAddressForLocation(final double latitude, final double longitude, final OnAddressFoundListener listener) {
-        new Thread() {
-
-            @Override
-            public void run() {
-                Geocoder geoCoder = new Geocoder(CreateLocationActivity.this, Locale.getDefault());
-                try {
-                    List<Address> addresses = geoCoder.getFromLocation(latitude, longitude, 1);
-                    if (addresses.size() > 0) {
-                        Address address = addresses.get(0);
-                        final String addressString = parseAddress(address);
-
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                if (listener != null)
-                                    listener.onAddressFound(addressString);
-                            }
-                        });
-                    }
-                    else {
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                if (listener != null)
-                                    listener.onAddressNotFound();
-                            }
-                        });
-                    }
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
-    private String parseAddress(Address address) {
-        String addressString = "";
-        int i;
-        for(i = 0; i < address.getMaxAddressLineIndex() - 1; i++) {
-            addressString += address.getAddressLine(i) + ", ";
-        }
-        addressString += address.getAddressLine(i);
-        return addressString;
-    }
-
-    private void findAddress(final String address) {
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
-        new Thread() {
-
-            @Override
-            public void run() {
-                Geocoder geoCoder = new Geocoder(CreateLocationActivity.this, Locale.getDefault());
-                try {
-                    List<Address> addresses = geoCoder.getFromLocationName(address , 1);
-                    if (addresses.size() > 0) {
-                        final double lat = addresses.get(0).getLatitude();
-                        final double lng = addresses.get(0).getLongitude();
-
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                TaskDialog.getInstance().hideDialog();
-
-                                Location temp = new Location(LocationManager.GPS_PROVIDER);
-                                temp.setLatitude(lat);
-                                temp.setLongitude(lng);
-                                zoomToLocation(temp);
-                            }
-                        });
-                    }
-                    else {
-                        runOnUiThread(new Runnable() {
-
-                            @Override
-                            public void run() {
-                                TaskDialog.getInstance().hideDialog();
-
-                                DialogBuilder.buildOKDialog(CreateLocationActivity.this, getString(R.string.app_name), getString(R.string.create_location_no_matches));
-                            }
-                        });
-                    }
-                } catch(Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-
     // Map
 
     private void awaitCurrentLocation() {
@@ -346,6 +342,26 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
             awaitCurrentLocation();
     }
 
+    // Search
+
+    private void search(String query) {
+        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        findAddress(this, query, new OnLocationFoundListener() {
+
+            @Override
+            public void onLocationFound(Location location) {
+                TaskDialog.getInstance().hideDialog();
+                zoomToLocation(location);
+            }
+
+            @Override
+            public void onLocationNotFound() {
+                TaskDialog.getInstance().hideDialog();
+                DialogBuilder.buildOKDialog(CreateLocationActivity.this, getString(R.string.app_name), getString(R.string.create_location_no_matches));
+            }
+        });
+    }
+
     // Setup
 
     private void setupMapView() {
@@ -375,7 +391,7 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     if (searchField.getText().toString().length() > 0) {
                         KeyboardUtils.hideKeyboard(CreateLocationActivity.this);
-                        findAddress(searchField.getText().toString());
+                        search(searchField.getText().toString());
                     }
                     return true;
                 }
@@ -384,8 +400,13 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
         });
     }
 
-    interface OnAddressFoundListener {
+    public interface OnAddressFoundListener {
         void onAddressFound(String address);
         void onAddressNotFound();
+    }
+
+    public interface OnLocationFoundListener {
+        void onLocationFound(Location location);
+        void onLocationNotFound();
     }
 }

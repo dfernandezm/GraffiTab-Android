@@ -20,11 +20,20 @@ import com.google.maps.android.clustering.ClusterManager;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTLocationManager;
+import com.graffitab.ui.activities.home.me.locations.CreateLocationActivity;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterItem;
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterRenderer;
 import com.graffitab.ui.activities.home.streamables.explorer.staticcontainers.ClusterActivity;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.TaskDialog;
+import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.api.ApiUtils;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.location.response.GTLocationResponse;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -33,6 +42,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 import static com.graffitab.R.id.map;
+import static com.graffitab.ui.activities.home.me.locations.CreateLocationActivity.findAddressForLocation;
 
 public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -96,7 +106,47 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.createLocationBtn)
     public void onClickCreateLocation(View view) {
+        DialogBuilder.buildYesNoDialog(this, getString(R.string.app_name), getString(R.string.explorer_save_location_prompt), getString(R.string.other_save), getString(R.string.other_cancel), new OnYesNoHandler() {
 
+            @Override
+            public void onClickYes() {
+                saveLocation();
+            }
+
+            @Override
+            public void onClickNo() {}
+        });
+    }
+
+    private void saveLocation() {
+        final LatLng center = mMap.getCameraPosition().target;
+        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        findAddressForLocation(this, center.latitude, center.longitude, new CreateLocationActivity.OnAddressFoundListener() {
+
+            @Override
+            public void onAddressFound(String address) {
+                GTSDK.getMeManager().createLocation(address, center.latitude, center.longitude, new GTResponseHandler<GTLocationResponse>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTLocationResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildOKDialog(ExplorerActivity.this, getString(R.string.app_name), getString(R.string.create_location_success));
+                    }
+
+                    @Override
+                    public void onFailure(GTResponse<GTLocationResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildAPIErrorDialog(ExplorerActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
+                    }
+                });
+            }
+
+            @Override
+            public void onAddressNotFound() {
+                TaskDialog.getInstance().hideDialog();
+                DialogBuilder.buildOKDialog(ExplorerActivity.this, getString(R.string.app_name), getString(R.string.create_location_no_matches));
+            }
+        });
     }
 
     // Loading

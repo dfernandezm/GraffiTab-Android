@@ -120,6 +120,7 @@
 
     <!-- Explorer -->
     <string name="explorer">Explorer</string>
+    <string name="explorer_save_location_prompt">Save this area to your Locations?</string>
 
     <!-- Create Location -->
     <string name="create_location_no_matches">No address matches found.</string>
