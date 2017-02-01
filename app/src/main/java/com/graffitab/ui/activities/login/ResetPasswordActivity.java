@@ -21,6 +21,7 @@ import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.BitmapUtils;
+import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
@@ -70,6 +71,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         String em = emailField.getText().toString();
 
         if (TextUtils.isValidEmailAddress(em)) {
+            KeyboardUtils.hideKeyboard(this);
             TaskDialog.getInstance().showDialog(null, this, null);
 
             final Runnable successHandler = new Runnable() {
@@ -101,7 +103,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
                     TaskDialog.getInstance().hideDialog();
 
                     if (responseObject.getResultCode() != GTResultCode.USER_NOT_FOUND) {
-                        DialogBuilder.buildOKDialog(ResetPasswordActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
+                        DialogBuilder.buildAPIErrorDialog(ResetPasswordActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
                         return;
                     }
 

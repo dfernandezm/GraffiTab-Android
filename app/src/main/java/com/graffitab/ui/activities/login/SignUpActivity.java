@@ -22,6 +22,7 @@ import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
@@ -89,6 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
         String cpw = confirmPassword.getText().toString();
 
         if (InputValidator.validateSignUp(this, fn, ln, em, un, pw, cpw)) {
+            KeyboardUtils.hideKeyboard(this);
             TaskDialog.getInstance().showDialog(null, this, null);
 
             GTSDK.getUserManager().register(fn, ln, em, un, pw, new GTResponseHandler<GTRegistrationCompleteResult>() {
@@ -111,7 +113,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Log.e(getClass().getSimpleName(), "Failed to register");
                     TaskDialog.getInstance().hideDialog();
 
-                    DialogBuilder.buildOKDialog(SignUpActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
+                    DialogBuilder.buildAPIErrorDialog(SignUpActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
                 }
             });
         }

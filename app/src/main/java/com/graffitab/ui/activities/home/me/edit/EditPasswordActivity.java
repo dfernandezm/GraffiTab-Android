@@ -90,7 +90,7 @@ public class EditPasswordActivity extends AppCompatActivity {
                     public void onFailure(GTResponse<GTEditPasswordResult> responseObject) {
                         Log.e(getClass().getSimpleName(), "Failed to edit password");
                         TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildOKDialog(EditPasswordActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
+                        DialogBuilder.buildAPIErrorDialog(EditPasswordActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
                     }
                 });
             }

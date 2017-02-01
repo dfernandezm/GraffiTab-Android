@@ -21,6 +21,7 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerVie
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
@@ -226,7 +227,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
                 canLoadMore = false;
                 adapter.setCanLoadMore(canLoadMore, advancedRecyclerView.getRecyclerView());
                 finalizeLoad();
-                DialogBuilder.buildAPIErrorDialog(getActivity(), getString(R.string.app_name), gtResponse.getResultDetail(), false, gtResponse.getResultCode());
+                DialogBuilder.buildAPIErrorDialog(getActivity(), getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
             }
 
             @Override

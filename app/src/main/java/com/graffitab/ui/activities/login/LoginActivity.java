@@ -84,10 +84,10 @@ public class LoginActivity extends FacebookUtilsActivity {
                     TaskDialog.getInstance().hideDialog();
 
                     if (responseObject.getResultCode() == GTResultCode.USER_NOT_LOGGED_IN) {
-                        DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), getString(R.string.login_error_credentials));
+                        DialogBuilder.buildAPIErrorDialog(LoginActivity.this, getString(R.string.app_name), getString(R.string.login_error_credentials), true, responseObject.getResultCode());
                         return;
                     }
-                    DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
+                    DialogBuilder.buildAPIErrorDialog(LoginActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
                 }
             });
         }
@@ -139,7 +139,7 @@ public class LoginActivity extends FacebookUtilsActivity {
             public void onFailure(GTResponse<GTUserResponse> responseObject) {
                 Log.e(getClass().getSimpleName(), "Failed to refresh profile. Showing Home screen");
                 TaskDialog.getInstance().hideDialog();
-                DialogBuilder.buildOKDialog(LoginActivity.this, getString(R.string.app_name), responseObject.getResultDetail());
+                DialogBuilder.buildAPIErrorDialog(LoginActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
             }
         });
     }

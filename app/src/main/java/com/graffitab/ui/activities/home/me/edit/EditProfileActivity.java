@@ -143,7 +143,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
                     Log.e(getClass().getSimpleName(), "Failed to save profile");
                     TaskDialog.getInstance().hideDialog();
 
-                    DialogBuilder.buildOKDialog(EditProfileActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject));
+                    DialogBuilder.buildAPIErrorDialog(EditProfileActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
                 }
             });
         }

@@ -20,6 +20,7 @@ import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.profile.UserProfileFragment;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTUser;
@@ -171,7 +172,7 @@ public class ProfileActivity extends CameraUtilsActivity {
 
             @Override
             public void onFailure(GTResponse<GTUserResponse> gtResponse) {
-                DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name), gtResponse.getResultDetail(), gtResponse.getResultCode());
+                DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
             }
 
             @Override

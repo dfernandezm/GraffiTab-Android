@@ -93,6 +93,7 @@
                 android:layout_marginTop="5dp"
                 android:background="@null"
                 android:hint="@string/login_hint_username"
+                android:inputType="textNoSuggestions"
                 app:met_baseColor="@color/colorResetPasswordWhite"
                 app:met_floatingLabel="highlight"
                 app:met_primaryColor="@color/colorResetPasswordWhite"
