@@ -1,5 +1,6 @@
 package com.graffitab.ui.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,9 +11,12 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.graffitab.R;
+import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.ui.dialog.handlers.OnYesNoInputHandler;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.GTResultCode;
 
 import java.util.Date;
 
@@ -24,17 +28,29 @@ public class DialogBuilder {
 		buildOKDialog(context, title, message, null);
 	}
 
-    public static void buildAPIErrorDialog(Context context, String title, String message) {
-        buildAPIErrorDialog(context, title, message, false, null);
+    public static void buildAPIErrorDialog(Activity context, String title, String message, GTResultCode resultCode) {
+        buildAPIErrorDialog(context, title, message, false, resultCode, null);
     }
 
-    public static void buildAPIErrorDialog(Context context, String title, String message, boolean forceShow) {
-        buildAPIErrorDialog(context, title, message, forceShow, null);
+    public static void buildAPIErrorDialog(Activity context, String title, String message, boolean forceShow, GTResultCode resultCode) {
+        buildAPIErrorDialog(context, title, message, forceShow, resultCode, null);
     }
 
-	public static void buildAPIErrorDialog(Context context, String title, String message, boolean forceShow, final OnOkHandler handler) {
+	public static void buildAPIErrorDialog(final Activity context, String title, String message, boolean forceShow, final GTResultCode resultCode, final OnOkHandler handler) {
+        // Define custom action to listen for logout events.
+		OnOkHandler action = new OnOkHandler() {
+
+			@Override
+			public void onClickOk() {
+                if ((resultCode == GTResultCode.USER_NOT_LOGGED_IN || resultCode == GTResultCode.USER_NOT_IN_EXPECTED_STATE) && GTSDK.getAccountManager().isUserLoggedIn())
+                    SettingsActivity.logout(context);
+                else if (handler != null)
+                    handler.onClickOk();
+			}
+		};
+
         if (forceShow)
-            buildOKDialog(context, title, message, null);
+            buildOKDialog(context, title, message, action);
         else {
             Date errorDate = new Date();
             boolean shouldShowError = false;
@@ -51,7 +67,7 @@ public class DialogBuilder {
             }
 
             if (shouldShowError)
-                buildOKDialog(context, title, message, null);
+                buildOKDialog(context, title, message, action);
         }
     }
 

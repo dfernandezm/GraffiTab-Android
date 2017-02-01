@@ -36,6 +36,7 @@ public class ListUserViewHolder extends UserViewHolder {
         nameField.setText(item.fullName());
         usernameField.setText(item.mentionUsername());
 
+        followBtn.setVisibility(user.isMe() ? View.GONE : View.VISIBLE);
         followBtn.setImageResource(user.followedByCurrentUser ? R.drawable.ic_action_unfollow : R.drawable.ic_action_follow);
         followBtn.setBackgroundResource(user.followedByCurrentUser ? R.drawable.rounded_corner_unfollow : R.drawable.rounded_corner_follow);
         followBtn.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(),

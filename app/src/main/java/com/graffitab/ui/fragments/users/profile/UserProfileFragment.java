@@ -36,7 +36,9 @@ import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
+import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.squareup.picasso.Picasso;
 
 import me.relex.circleindicator.CircleIndicator;
@@ -79,12 +81,48 @@ public class UserProfileFragment extends ListStreamablesFragment {
         setupHeaderView();
     }
 
+    public boolean toggleFollow() {
+        user.followedByCurrentUser = !user.followedByCurrentUser;
+        if (user.followedByCurrentUser) { // Follow.
+            user.followersCount++;
+            GTSDK.getUserManager().follow(user.id, new GTResponseHandler<GTUserResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
+                    user = gtResponse.getObject().user;
+                    loadUserStats();
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
+            });
+        }
+        else { // Unfollow.
+            user.followersCount--;
+            if (user.followersCount < 0) user.followersCount = 0;
+            GTSDK.getUserManager().unfollow(user.id, new GTResponseHandler<GTUserResponse>() {
+
+                @Override
+                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
+                    user = gtResponse.getObject().user;
+                    loadUserStats();
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
+            });
+        }
+        loadUserStats();
+        return user.followedByCurrentUser;
+    }
+
     // Loading
 
     public void loadUserStats() {
         postsField.setText(user.streamablesCountAsString());
         followersField.setText(user.followersCountAsString());
         followingField.setText(user.followingCountAsString());
+
     }
 
     public void loadUserData() {

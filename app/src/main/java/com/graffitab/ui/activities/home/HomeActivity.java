@@ -64,8 +64,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         setupViewPager();
         setupTabBar();
         setupMenu();
+        setupButtons();
 
         registerForPushNotifications();
+
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                performStartUpAnimations();
+            }
+        }, 1500);
     }
 
     @Override
@@ -120,6 +129,14 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    // Loading
+
+    private void performStartUpAnimations() {
+        fab.setVisibility(View.VISIBLE);
+        fab.animate().scaleX(1);
+        fab.animate().scaleY(1);
     }
 
     // GCM
@@ -199,5 +216,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         for (int i = 0; i < tabIcons.length; i++)
             tabLayout.getTabAt(i).setIcon(ImageUtils.tintIcon(this, tabIcons[i], getResources().getColor(i == selectedPosition ? R.color.colorPrimary : R.color.colorHomeUnselected)));
+    }
+
+    private void setupButtons() {
+        fab.setVisibility(View.GONE);
+        fab.animate().scaleX(0);
+        fab.animate().scaleY(0);
     }
 }

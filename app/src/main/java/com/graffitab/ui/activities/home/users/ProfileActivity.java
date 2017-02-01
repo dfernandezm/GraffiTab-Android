@@ -2,6 +2,7 @@ package com.graffitab.ui.activities.home.users;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -41,6 +42,7 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     private GTUser user;
     private UserProfileFragment content;
+    private boolean profileRefreshedOnce = false;
 
     public static void show(GTUser user, Context context) {
         Intent i = new Intent(context, ProfileActivity.class);
@@ -66,6 +68,7 @@ public class ProfileActivity extends CameraUtilsActivity {
         setupContent();
         setupButtons();
 
+        loadData();
         Utils.runWithDelay(new Runnable() {
 
             @Override
@@ -91,7 +94,8 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     @OnClick(R.id.fab)
     public void onClickFollow(View view) {
-
+        user.followedByCurrentUser = content.toggleFollow();
+        loadData();
     }
 
     public void onClickPosts(View view) {
@@ -149,31 +153,54 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     // Loading
 
+    private void loadData() {
+        fab.setImageDrawable(user.followedByCurrentUser ? ImageUtils.tintIcon(this, R.drawable.ic_action_unfollow, getResources().getColor(R.color.colorWhite)) : ImageUtils.tintIcon(this, R.drawable.ic_action_follow, getResources().getColor(R.color.colorPrimary)));
+        fab.setColorNormalResId(user.followedByCurrentUser ? R.color.colorPrimary : R.color.colorWhite);
+        fab.setColorPressed(user.followedByCurrentUser ? getResources().getColor(R.color.colorPrimaryDark) : Color.parseColor("#efefef"));
+        fab.setColorRipple(user.followedByCurrentUser ? getResources().getColor(R.color.colorPrimaryDark) : Color.parseColor("#efefef"));
+    }
+
     public void reloadUserData() {
-        GTSDK.getUserManager().getFullUserProfile(user.id, true, new GTResponseHandler<GTUserResponse>() {
+        GTSDK.getUserManager().getFullUserProfile(user.id, !profileRefreshedOnce, new GTResponseHandler<GTUserResponse>() {
 
             @Override
             public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
                 user = gtResponse.getObject().user;
-                content.setUser(user);
-                content.loadUserStats();
-                content.loadUserData();
+                finishLoadingUser();
             }
 
             @Override
             public void onFailure(GTResponse<GTUserResponse> gtResponse) {
-                DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name), gtResponse.getResultDetail());
+                DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name), gtResponse.getResultDetail(), gtResponse.getResultCode());
             }
 
             @Override
             public void onCache(GTResponse<GTUserResponse> gtResponse) {
                 super.onCache(gtResponse);
                 user = gtResponse.getObject().user;
-                content.setUser(user);
-                content.loadUserStats();
-                content.loadUserData();
+                finishLoadingUser();
             }
         });
+        profileRefreshedOnce = true;
+    }
+
+    private void finishLoadingUser() {
+        loadData();
+        content.setUser(user);
+        content.loadUserStats();
+        content.loadUserData();
+
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                if (!user.isMe()) {
+                    fab.setVisibility(View.VISIBLE);
+                    fab.animate().scaleX(1);
+                    fab.animate().scaleY(1);
+                }
+            }
+        }, 700);
     }
 
     // Setup
@@ -197,7 +224,8 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     private void setupButtons() {
-        fab.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_action_follow, getResources().getColor(R.color.colorPrimary)));
-        fab.setVisibility(user.isMe() ? View.GONE : View.VISIBLE);
+        fab.setVisibility(View.GONE);
+        fab.animate().scaleX(0);
+        fab.animate().scaleY(0);
     }
 }

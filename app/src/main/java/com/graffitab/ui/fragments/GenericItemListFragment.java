@@ -226,7 +226,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
                 canLoadMore = false;
                 adapter.setCanLoadMore(canLoadMore, advancedRecyclerView.getRecyclerView());
                 finalizeLoad();
-                DialogBuilder.buildAPIErrorDialog(getActivity(), getString(R.string.app_name), gtResponse.getResultDetail(), false);
+                DialogBuilder.buildAPIErrorDialog(getActivity(), getString(R.string.app_name), gtResponse.getResultDetail(), false, gtResponse.getResultCode());
             }
 
             @Override

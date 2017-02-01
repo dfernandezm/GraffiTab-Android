@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home.settings;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -36,6 +37,50 @@ import com.instabug.library.Instabug;
  * Copyright © GraffiTab Inc. 2016
  */
 public class SettingsActivity extends AppCompatActivity {
+
+    public static void logout(final Activity activity) {
+        final Runnable handlerBlock = new Runnable() {
+
+            @Override
+            public void run() {
+                TaskDialog.getInstance().hideDialog();
+
+                // Clear any data on disk for the current user.
+
+                // Show login screen.
+                Intent intent = new Intent(activity, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.startActivity(intent);
+                activity.finish();
+                activity.overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+            }
+        };
+
+        TaskDialog.getInstance().showDialog(activity.getString(R.string.other_processing), activity, null);
+
+        Utils.runWithDelay(new Runnable() { // Give time to the loading dialog to appear.
+
+            @Override
+            public void run() {
+                // Unregister GCM token.
+                GTGcmManager.sharedInstance.unregisterToken(activity);
+
+                // Logout user.
+                GTSDK.getUserManager().logout(new GTResponseHandler<Void>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<Void> gtResponse) {
+                        handlerBlock.run();
+                    }
+
+                    @Override
+                    public void onFailure(GTResponse<Void> responseObject) {
+                        handlerBlock.run();
+                    }
+                });
+            }
+        }, 300);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -213,7 +258,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                         @Override
                         public void onClickYes() {
-                            logout();
+                            logout(getActivity());
                         }
 
                         @Override
@@ -222,50 +267,6 @@ public class SettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
-        }
-
-        private void logout() {
-            final Runnable handlerBlock = new Runnable() {
-
-                @Override
-                public void run() {
-                    TaskDialog.getInstance().hideDialog();
-
-                    // Clear any data on disk for the current user.
-
-                    // Show login screen.
-                    Intent intent = new Intent(getActivity(), LoginActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(intent);
-                    getActivity().finish();
-                    getActivity().overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
-                }
-            };
-
-            TaskDialog.getInstance().showDialog(getString(R.string.other_processing), getActivity(), null);
-
-            Utils.runWithDelay(new Runnable() { // Give time to the loading dialog to appear.
-
-                @Override
-                public void run() {
-                    // Unregister GCM token.
-                    GTGcmManager.sharedInstance.unregisterToken(getActivity());
-
-                    // Logout user.
-                    GTSDK.getUserManager().logout(new GTResponseHandler<Void>() {
-
-                        @Override
-                        public void onSuccess(GTResponse<Void> gtResponse) {
-                            handlerBlock.run();
-                        }
-
-                        @Override
-                        public void onFailure(GTResponse<Void> responseObject) {
-                            handlerBlock.run();
-                        }
-                    });
-                }
-            }, 300);
         }
     }
 }

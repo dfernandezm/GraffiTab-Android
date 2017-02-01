@@ -13,7 +13,11 @@ import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -65,6 +69,30 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
     public void onToggleFollow(GTUser user, UserViewHolder holder, int adapterPosition) {
         user.followedByCurrentUser = !user.followedByCurrentUser;
         adapter.notifyDataSetChanged();
+        if (user.followedByCurrentUser)
+            GTSDK.getUserManager().follow(user.id, new GTResponseHandler<GTUserResponse>() {
+                @Override
+                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
+
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTUserResponse> gtResponse) {
+
+                }
+            });
+        else
+            GTSDK.getUserManager().unfollow(user.id, new GTResponseHandler<GTUserResponse>() {
+                @Override
+                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
+
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTUserResponse> gtResponse) {
+
+                }
+            });
     }
 
     // Configuration
