@@ -176,6 +176,7 @@
     <string name="streamable_details_mark_public">Mark Public</string>
     <string name="streamable_details_save">Save to Photos Album</string>
     <string name="streamable_details_flag">Flag Inappropriate</string>
+    <string name="streamable_details_flag_prompt">Mark this post as inappropriate?</string>
     <string name="streamable_details_explore">Explore Map Area</string>
 
     <!-- API Errors -->

@@ -15,6 +15,8 @@ import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
@@ -116,7 +118,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
                 }
                 else if (which == R.id.action_flag) {
-
+                    flag();
                 }
                 else if (which == R.id.action_explore) {
                     ExplorerActivity.openForLocation(StreamableDetailsActivity.this, streamable.latitude, streamable.longitude);
@@ -209,6 +211,26 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
                 }
             });
+    }
+
+    private void flag() {
+        DialogBuilder.buildYesNoDialog(this, getString(R.string.app_name), getString(R.string.streamable_details_flag_prompt), getString(R.string.streamable_details_flag), getString(R.string.other_cancel), new OnYesNoHandler() {
+
+            @Override
+            public void onClickYes() {
+                GTSDK.getStreamableManager().flag(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
+
+                    @Override
+                    public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
+                });
+            }
+
+            @Override
+            public void onClickNo() {}
+        });
     }
 
     // Loading
