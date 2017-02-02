@@ -8,11 +8,13 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
@@ -32,6 +34,9 @@ import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.user.response.GTUnseenNotificationsResponse;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -45,12 +50,15 @@ import butterknife.ButterKnife;
  */
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
 
+    static final int NOTIFICATIONS_POSITION = 2;
+
     @BindView(R.id.toolbar) Toolbar toolbar;
     @BindView(R.id.tabs) TabLayout tabLayout;
     @BindView(R.id.viewpager) ViewPager viewPager;
     @BindView(R.id.fab) FloatingActionButton fab;
 
     private CustomResideMenu resideMenu;
+    private View notificationsIndicator;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -75,6 +83,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 performStartUpAnimations();
             }
         }, 1500);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshUnseenNotifications();
     }
 
     @Override
@@ -131,7 +145,35 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    private boolean isNotificationsTabSepected() {
+        return viewPager.getCurrentItem() == NOTIFICATIONS_POSITION;
+    }
+
     // Loading
+
+    private void refreshNotificationsTab() {
+        ViewPagerTabAdapter adapter = (ViewPagerTabAdapter) viewPager.getAdapter();
+        NotificationsFragment fragment = (NotificationsFragment) adapter.getItem(NOTIFICATIONS_POSITION);
+        fragment.advancedRecyclerView.beginRefreshing(); // Force notifications refresh.
+        fragment.reload();
+    }
+
+    private void refreshUnseenNotifications() {
+        GTSDK.getMeManager().getUnseenNotifications(new GTResponseHandler<GTUnseenNotificationsResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTUnseenNotificationsResponse> gtResponse) {
+                if (gtResponse.getObject().count <= 0) return; // No new notifications.
+                if (isNotificationsTabSepected())
+                    refreshNotificationsTab();
+                else
+                    notificationsIndicator.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTUnseenNotificationsResponse> gtResponse) {}
+        });
+    }
 
     private void performStartUpAnimations() {
         fab.setVisibility(View.VISIBLE);
@@ -194,6 +236,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onPageSelected(int position) {
                 getSupportActionBar().setTitle(adapter.getCurrentPageTitle(position));
                 setupTabBarColors(position);
+
+                if (isNotificationsTabSepected()) {
+                    if (notificationsIndicator.getVisibility() == View.VISIBLE) // We have new notifications, so when switching to the tab refresh the content.
+                        refreshNotificationsTab();
+                    notificationsIndicator.setVisibility(View.INVISIBLE);
+                }
             }
 
             @Override
@@ -203,6 +251,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupTabBar() {
         tabLayout.setupWithViewPager(viewPager);
+
+        // Set custom views for all tabs.
+        for (int i = 0; i < tabLayout.getTabCount(); i++) {
+            View v = LayoutInflater.from(this).inflate(R.layout.view_tab_home, null);
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            tab.setCustomView(v);
+
+            if (i == NOTIFICATIONS_POSITION)
+                notificationsIndicator = v.findViewById(R.id.tabNotificationsIndicator);
+        }
         setupTabBarColors(0);
     }
 
@@ -214,8 +272,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 R.drawable.ic_access_time_black_24dp
         };
 
-        for (int i = 0; i < tabIcons.length; i++)
-            tabLayout.getTabAt(i).setIcon(ImageUtils.tintIcon(this, tabIcons[i], getResources().getColor(i == selectedPosition ? R.color.colorPrimary : R.color.colorHomeUnselected)));
+        for (int i = 0; i < tabIcons.length; i++) {
+            TabLayout.Tab tab = tabLayout.getTabAt(i);
+            ImageView tabImage = (ImageView) tab.getCustomView().findViewById(R.id.tabIcon);
+            tabImage.setImageDrawable(ImageUtils.tintIcon(this, tabIcons[i], getResources().getColor(i == selectedPosition ? R.color.colorPrimary : R.color.colorHomeUnselected)));
+        }
     }
 
     private void setupButtons() {
