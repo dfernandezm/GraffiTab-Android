@@ -57,7 +57,7 @@ public class MyApplication extends Application {
 
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction() == ACTION_LOCALE_CHANGED)
+            if (intent.getAction().equals(ACTION_LOCALE_CHANGED))
                 GTSDK.setLanguage(Locale.getDefault().getLanguage());
         }
     }

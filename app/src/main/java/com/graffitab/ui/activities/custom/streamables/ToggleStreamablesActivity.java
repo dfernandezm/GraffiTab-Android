@@ -13,7 +13,7 @@ import com.graffitab.utils.activity.ActivityUtils;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class ToggleStreamablesActivity extends GenericStreamablesActivity {
+public abstract class ToggleStreamablesActivity extends BaseStreamablesActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

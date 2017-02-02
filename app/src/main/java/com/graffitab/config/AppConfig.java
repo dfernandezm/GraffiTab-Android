@@ -1,5 +1,6 @@
 package com.graffitab.config;
 
+import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitabsdk.config.GTConfig;
 import com.graffitabsdk.config.GTSDK;
@@ -23,11 +24,11 @@ public class AppConfig {
     public final int maxUndoActions = 10;
     public final int onboardingFeedbackDaysTrigger = 2;
 
+    public final int locationUpdateInterval = 20 * 1000; // 20 seconds.
     public final int locationRadius = 500 * 1000; // Distance in kilometers.
     public final int locationTimeout = 10; // Waiting time for location to become available for publishing.
-    public final int mapInitialSpanDistance = 1 * 1000; // Distance in kilometers.
-    public final int mapMaxSpanDistance = 3000 * 1000; // Distance in kilometers.
-    public final int mapRefreshRate = 3;
+    public final int mapInitialZoomLevel = 16;
+    public final int mapRefreshRate = 3 * 1000;
 
     public final boolean logEnabled = true;
     public final boolean httpEnabled = true;
@@ -75,7 +76,7 @@ public class AppConfig {
     // Instabug
 
     private void configureInstabug() {
-        new Instabug.Builder(MyApplication.getInstance(), "95a2ae49aceb3d7c2b0d32c573a6231f")
+        new Instabug.Builder(MyApplication.getInstance(), MyApplication.getInstance().getString(R.string.instabug_token))
                 .setInvocationEvent(InstabugInvocationEvent.SHAKE)
                 .setIntroMessageEnabled(false)
                 .setCrashReportingState(Feature.State.DISABLED) // Disbale crash reporting, as we have Google Analytics.

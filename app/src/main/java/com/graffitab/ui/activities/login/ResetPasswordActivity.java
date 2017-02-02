@@ -1,8 +1,6 @@
 package com.graffitab.ui.activities.login;
 
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.ui.dialog.DialogBuilder;
@@ -20,17 +17,13 @@ import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
-import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.network.common.result.GTPasswordResetCompleteResult;
-
-import java.io.IOException;
-import java.io.InputStream;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -116,18 +109,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     // Setup
 
     private void setupBackgroundImage() {
-        int resId = R.drawable.login;
-
-        InputStream is = getResources().openRawResource(resId);
-        byte[] b;
-
-        try {
-            b = BitmapUtils.getBytes(is);
-            Drawable drawable = new BitmapDrawable(getResources(), BitmapUtils.decodeSampledBitmapFromBytesForCurrentScreen(b, getBaseContext()));
-
-            ImageView background = (ImageView) findViewById(R.id.background);
-            background.setImageDrawable(drawable);
-        } catch (IOException e) {}
+        ActivityUtils.setupBackgroundImage(this, R.drawable.login, R.id.background);
     }
 
     private void setupTextViews() {

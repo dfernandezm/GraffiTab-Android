@@ -52,7 +52,7 @@ public class CustomResideMenu extends FrameLayout {
     /** the decorview of the activity    */
     private ViewGroup viewDecor;
     /** the viewgroup of the activity    */
-    private CustomTouchDisableView viewActivity;
+    private CustomTouchDisabledView viewActivity;
     /** the flag of menu open status     */
     private boolean              isOpened;
     private GestureDetector gestureDetector;
@@ -118,7 +118,7 @@ public class CustomResideMenu extends FrameLayout {
         ignoredViews    = new ArrayList<View>();
         viewDecor = (ViewGroup) ((ViewGroup) activity
                 .findViewById(android.R.id.content));
-        viewActivity = new CustomTouchDisableView(this.activity);
+        viewActivity = new CustomTouchDisabledView(this.activity);
 
         View mContent   = viewDecor.getChildAt(0);
         viewDecor.removeViewAt(0);

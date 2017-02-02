@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 
 import com.graffitab.constants.Constants;
-import com.graffitab.ui.activities.custom.comments.GenericCommentsActivity;
+import com.graffitab.ui.activities.custom.comments.BaseCommentsActivity;
 import com.graffitab.ui.fragments.comments.GenericCommentsFragment;
 import com.graffitab.ui.fragments.comments.ListCommentsFragment;
 import com.graffitabsdk.model.GTStreamable;
@@ -14,7 +14,7 @@ import com.graffitabsdk.model.GTStreamable;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class CommentsActivity extends GenericCommentsActivity {
+public class CommentsActivity extends BaseCommentsActivity {
 
     private GTStreamable streamable;
 

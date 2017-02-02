@@ -1,7 +1,7 @@
 package com.graffitab.ui.activities.home.streamables.explorer.staticcontainers;
 
 import com.graffitab.R;
-import com.graffitab.ui.activities.custom.streamables.GenericStreamablesActivity;
+import com.graffitab.ui.activities.custom.streamables.BaseStreamablesActivity;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 
 /**
@@ -9,7 +9,7 @@ import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class StaticStreamablesActivity extends GenericStreamablesActivity {
+public class StaticStreamablesActivity extends BaseStreamablesActivity {
 
     @Override
     public GenericStreamablesFragment getFragment() {

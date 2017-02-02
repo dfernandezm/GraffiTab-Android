@@ -1,4 +1,4 @@
-package com.graffitab.ui.activities.custom.streamables;
+package com.graffitab.ui.activities.custom.users;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.graffitab.R;
-import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
+import com.graffitab.ui.fragments.users.GenericUsersFragment;
 
 import butterknife.ButterKnife;
 
@@ -17,18 +17,18 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericStreamablesActivity extends AppCompatActivity {
+public abstract class BaseUsersActivity extends AppCompatActivity {
 
-    private GenericStreamablesFragment content;
+    private GenericUsersFragment content;
 
-    public abstract GenericStreamablesFragment getFragment();
+    public abstract GenericUsersFragment getFragment();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        setContentView(getLayoutResId());
+        setContentView(R.layout.activity_fragment_holder);
         ButterKnife.bind(this);
 
         setupTopBar();
@@ -44,11 +44,7 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public int getLayoutResId() {
-        return R.layout.activity_fragment_holder;
-    }
-
-    public GenericStreamablesFragment getContent() {
+    public GenericUsersFragment getContent() {
         return content;
     }
 
@@ -58,7 +54,7 @@ public abstract class GenericStreamablesActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void setupContent(GenericStreamablesFragment contentFragment) {
+    public void setupContent(GenericUsersFragment contentFragment) {
         content = contentFragment;
         content.hasOptionsMenu = true;
 

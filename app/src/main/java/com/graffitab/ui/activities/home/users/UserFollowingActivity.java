@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
-import com.graffitab.ui.activities.custom.users.GenericUsersActivity;
+import com.graffitab.ui.activities.custom.users.BaseUsersActivity;
 import com.graffitab.ui.fragments.users.GenericUsersFragment;
 import com.graffitab.ui.fragments.users.ListUsersFragment;
 import com.graffitabsdk.config.GTSDK;
@@ -22,7 +22,7 @@ import com.graffitabsdk.network.common.response.GTResponseHandler;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class UserFollowingActivity extends GenericUsersActivity {
+public class UserFollowingActivity extends BaseUsersActivity {
 
     private GTUser user;
 

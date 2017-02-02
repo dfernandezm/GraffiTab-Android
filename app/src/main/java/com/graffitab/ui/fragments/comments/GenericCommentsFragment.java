@@ -26,7 +26,7 @@ import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.views.autocomplete.UserTagMultiAutoCompleteTextView;
+import com.graffitab.ui.views.autocomplete.UserHashtagMultiAutoCompleteTextView;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
@@ -60,7 +60,8 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
 
     public enum ViewType {LIST_FULL}
 
-    @BindView(R.id.messageField) UserTagMultiAutoCompleteTextView commentField;
+    @BindView(R.id.messageField)
+    UserHashtagMultiAutoCompleteTextView commentField;
 
     private GTStreamable streamable;
     private ViewType viewType;

@@ -10,6 +10,7 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.graffitab.application.MyApplication;
+import com.graffitab.config.AppConfig;
 
 /**
  * Created by georgichristov on 17/12/2016
@@ -33,7 +34,7 @@ public class GTLocationManager implements LocationListener, GoogleApiClient.Conn
         Log.i(getClass().getSimpleName(), "Google API connected");
         mLocationRequest = LocationRequest.create();
         mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-        mLocationRequest.setInterval(20000); // 20 seconds.
+        mLocationRequest.setInterval(AppConfig.configuration.locationUpdateInterval);
 
         try {
             LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);

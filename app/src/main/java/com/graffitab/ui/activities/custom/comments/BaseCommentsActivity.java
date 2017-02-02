@@ -17,7 +17,7 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericCommentsActivity extends AppCompatActivity {
+public abstract class BaseCommentsActivity extends AppCompatActivity {
 
     private GenericCommentsFragment content;
 

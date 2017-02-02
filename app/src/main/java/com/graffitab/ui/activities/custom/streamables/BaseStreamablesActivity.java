@@ -1,4 +1,4 @@
-package com.graffitab.ui.activities.custom.users;
+package com.graffitab.ui.activities.custom.streamables;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.graffitab.R;
-import com.graffitab.ui.fragments.users.GenericUsersFragment;
+import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 
 import butterknife.ButterKnife;
 
@@ -17,18 +17,18 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public abstract class GenericUsersActivity extends AppCompatActivity {
+public abstract class BaseStreamablesActivity extends AppCompatActivity {
 
-    private GenericUsersFragment content;
+    private GenericStreamablesFragment content;
 
-    public abstract GenericUsersFragment getFragment();
+    public abstract GenericStreamablesFragment getFragment();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_fragment_holder);
+        setContentView(getLayoutResId());
         ButterKnife.bind(this);
 
         setupTopBar();
@@ -44,7 +44,11 @@ public abstract class GenericUsersActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public GenericUsersFragment getContent() {
+    public int getLayoutResId() {
+        return R.layout.activity_fragment_holder;
+    }
+
+    public GenericStreamablesFragment getContent() {
         return content;
     }
 
@@ -54,7 +58,7 @@ public abstract class GenericUsersActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-    public void setupContent(GenericUsersFragment contentFragment) {
+    public void setupContent(GenericStreamablesFragment contentFragment) {
         content = contentFragment;
         content.hasOptionsMenu = true;
 

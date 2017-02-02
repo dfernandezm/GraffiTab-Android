@@ -1,8 +1,10 @@
 package com.graffitab.utils.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.graphics.PorterDuff;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -10,11 +12,31 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
+import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.utils.display.DisplayUtils;
+import com.graffitab.utils.image.BitmapUtils;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class ActivityUtils {
+
+    public static void setupBackgroundImage(Activity activity, int imageResId, int backgroundResId) {
+        InputStream is = activity.getResources().openRawResource(imageResId);
+        byte[] b;
+
+        try {
+            b = BitmapUtils.getBytes(is);
+            Drawable drawable = new BitmapDrawable(activity.getResources(), BitmapUtils.decodeSampledBitmapFromBytesForCurrentScreen(b, activity));
+
+            ImageView background = (ImageView) activity.findViewById(backgroundResId);
+            background.setImageDrawable(drawable);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 	public static void setOrientation( AppCompatActivity a ) {
 		if ( !DisplayUtils.isTablet(a) )

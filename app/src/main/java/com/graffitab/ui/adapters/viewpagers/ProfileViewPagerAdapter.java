@@ -82,17 +82,15 @@ public class ProfileViewPagerAdapter extends PagerAdapter {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            if (position == previousPosition && positionOffset > 0)
+            if (position == previousPosition && positionOffset > 0) // Dim background when pager is swiped.
                 pager.setBackgroundColor(Color.argb((int)(positionOffset * 120), 0, 0, 0));
             previousPosition = position;
         }
 
         @Override
-        public void onPageScrollStateChanged(int state) {
-        }
+        public void onPageScrollStateChanged(int state) {}
 
         @Override
-        public void onPageSelected(int position) {
-        }
+        public void onPageSelected(int position) {}
     }
 }

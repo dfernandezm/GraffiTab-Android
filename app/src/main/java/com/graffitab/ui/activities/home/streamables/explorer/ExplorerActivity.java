@@ -25,7 +25,7 @@ import com.graffitab.ui.activities.home.me.locations.CreateLocationActivity;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterItem;
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterRenderer;
-import com.graffitab.ui.activities.home.streamables.explorer.staticcontainers.ClusterActivity;
+import com.graffitab.ui.activities.home.streamables.explorer.staticcontainers.StaticClusterActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
@@ -104,7 +104,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.gridBtn)
     public void onClickGrid(View view) {
-        ClusterActivity.openCluster(ExplorerActivity.this, items);
+        StaticClusterActivity.openCluster(ExplorerActivity.this, items);
     }
 
     @OnClick(R.id.locate)
@@ -212,7 +212,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
                     }
                 });
             }
-        }, 0, 3000);
+        }, 0, AppConfig.configuration.mapRefreshRate);
     }
 
     private void stopTimer() {
@@ -256,7 +256,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         if (location != null) { // Make sure we have a valid location.
             Log.i(getClass().getSimpleName(), "Zooming to location (latitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + ")");
             LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
-            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(sydney, 16);
+            CameraUpdate update = CameraUpdateFactory.newLatLngZoom(sydney, AppConfig.configuration.mapInitialZoomLevel);
             mMap.animateCamera(update);
         }
     }
@@ -312,7 +312,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
                 ArrayList<GTStreamable> clusterItems = new ArrayList<>();
                 for (GTClusterItem item : cluster.getItems())
                     clusterItems.add(item.getStreamable());
-                ClusterActivity.openCluster(ExplorerActivity.this, clusterItems);
+                StaticClusterActivity.openCluster(ExplorerActivity.this, clusterItems);
                 return true;
             }
         });

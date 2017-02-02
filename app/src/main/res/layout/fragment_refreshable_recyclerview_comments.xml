@@ -23,7 +23,7 @@
         android:paddingRight="5dp"
         android:paddingTop="4dp">
 
-        <com.graffitab.ui.views.autocomplete.UserTagMultiAutoCompleteTextView
+        <com.graffitab.ui.views.autocomplete.UserHashtagMultiAutoCompleteTextView
             android:id="@+id/messageField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

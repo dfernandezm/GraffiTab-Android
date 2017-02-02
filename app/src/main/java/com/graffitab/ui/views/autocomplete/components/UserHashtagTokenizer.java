@@ -10,7 +10,7 @@ import android.widget.MultiAutoCompleteTextView;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class UserTagTokenizer implements MultiAutoCompleteTextView.Tokenizer {
+public class UserHashtagTokenizer implements MultiAutoCompleteTextView.Tokenizer {
 
     @Override
     public CharSequence terminateToken(CharSequence text) {

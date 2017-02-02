@@ -189,7 +189,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name=".ui.activities.home.streamables.explorer.staticcontainers.ClusterActivity"
+            android:name=".ui.activities.home.streamables.explorer.staticcontainers.StaticClusterActivity"
             android:theme="@style/AllTimeDialogTheme"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />

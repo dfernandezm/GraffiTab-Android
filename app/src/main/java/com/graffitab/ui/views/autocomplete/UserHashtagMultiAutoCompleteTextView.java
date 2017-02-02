@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.widget.MultiAutoCompleteTextView;
 
 import com.graffitab.ui.views.autocomplete.components.AutoCompleteAdapter;
-import com.graffitab.ui.views.autocomplete.components.UserTagTokenizer;
+import com.graffitab.ui.views.autocomplete.components.UserHashtagTokenizer;
 
 import butterknife.ButterKnife;
 
@@ -16,21 +16,21 @@ import butterknife.ButterKnife;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class UserTagMultiAutoCompleteTextView extends MultiAutoCompleteTextView {
+public class UserHashtagMultiAutoCompleteTextView extends MultiAutoCompleteTextView {
 
     private AutoCompleteAdapter adapter;
 
-    public UserTagMultiAutoCompleteTextView(Context context) {
+    public UserHashtagMultiAutoCompleteTextView(Context context) {
         super(context);
         baseInit(context);
     }
 
-    public UserTagMultiAutoCompleteTextView(Context context, AttributeSet attrs) {
+    public UserHashtagMultiAutoCompleteTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         baseInit(context);
     }
 
-    public UserTagMultiAutoCompleteTextView(Context context, AttributeSet attrs, int defStyle) {
+    public UserHashtagMultiAutoCompleteTextView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         baseInit(context);
     }
@@ -46,7 +46,7 @@ public class UserTagMultiAutoCompleteTextView extends MultiAutoCompleteTextView 
     private void baseInit(Context context) {
         adapter = new AutoCompleteAdapter(getContext());
 
-        setTokenizer(new UserTagTokenizer());
+        setTokenizer(new UserHashtagTokenizer());
         setThreshold(1);
         setAdapter(adapter);
         addTextChangedListener(new UserTagWatcher());

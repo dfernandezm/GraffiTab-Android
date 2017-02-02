@@ -120,12 +120,10 @@ public class FacebookUtilsActivity extends AppCompatActivity {
     // Callbacks.
 
     public interface FacebookLoginCallback {
-
-        public void loginComplete();
+        void loginComplete();
     }
 
     public interface FacebookMeCallback {
-
-        public void profileFetched(String firstName, String lastName, String userId, String email, String accessToken);
+        void profileFetched(String firstName, String lastName, String userId, String email, String accessToken);
     }
 }

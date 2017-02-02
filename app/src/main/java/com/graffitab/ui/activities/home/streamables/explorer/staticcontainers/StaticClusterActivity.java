@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
-import com.graffitab.ui.activities.custom.streamables.GenericStreamablesActivity;
+import com.graffitab.ui.activities.custom.streamables.BaseStreamablesActivity;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.streamables.GridStreamablesFragment;
 import com.graffitab.utils.activity.ActivityUtils;
@@ -31,14 +31,14 @@ import okhttp3.internal.huc.HttpsURLConnectionImpl;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class ClusterActivity extends GenericStreamablesActivity {
+public class StaticClusterActivity extends BaseStreamablesActivity {
 
     @BindView(R.id.toolbar) Toolbar toolbar;
 
     private ArrayList<GTStreamable> staticItems = new ArrayList();
 
     public static void openCluster(Context context, ArrayList<GTStreamable> items) {
-        Intent i = new Intent(context, ClusterActivity.class);
+        Intent i = new Intent(context, StaticClusterActivity.class);
         i.putExtra(Constants.EXTRA_CLUSTER, items);
         context.startActivity(i);
     }

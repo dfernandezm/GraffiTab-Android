@@ -11,18 +11,18 @@ import android.view.ViewGroup;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-class CustomTouchDisableView extends ViewGroup {
+class CustomTouchDisabledView extends ViewGroup {
 
     private View mContent;
 
     //	private int mMode;
     private boolean mTouchDisabled = false;
 
-    public CustomTouchDisableView(Context context) {
+    public CustomTouchDisabledView(Context context) {
         this(context, null);
     }
 
-    public CustomTouchDisableView(Context context, AttributeSet attrs) {
+    public CustomTouchDisabledView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
