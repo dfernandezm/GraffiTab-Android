@@ -1,5 +1,6 @@
 package com.graffitab.ui.activities.home.streamables;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -46,15 +47,24 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     private GTStreamable streamable;
     private PhotoViewAttacher mAttacher;
 
+    public static void openStreamableDetails(Context context, GTStreamable streamable) {
+        Intent intent = new Intent(context, StreamableDetailsActivity.class);
+        intent.putExtra(Constants.EXTRA_STREAMABLE, streamable);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null && extras.getSerializable(Constants.EXTRA_STREAMABLE) != null) {
             streamable = (GTStreamable) extras.getSerializable(Constants.EXTRA_STREAMABLE);
         }
-        else finish();
+        else {
+            finish();
+            return;
+        }
 
         ActivityUtils.hideActionBar(this);
         setContentView(R.layout.activity_streamable_details);

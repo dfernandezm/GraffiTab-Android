@@ -39,7 +39,6 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.location.response.GTLocationResponse;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Locale;
 
@@ -169,14 +168,11 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
         ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            Serializable serializable = extras.getSerializable(Constants.EXTRA_LOCATION);
-            if (serializable != null) {
-                toEdit = (GTLocation) serializable;
-                customLocation = new Location(LocationManager.GPS_PROVIDER);
-                customLocation.setLatitude(toEdit.latitude);
-                customLocation.setLongitude(toEdit.longitude);
-            }
+        if (extras != null && extras.getSerializable(Constants.EXTRA_LOCATION) != null) {
+            toEdit = (GTLocation) extras.getSerializable(Constants.EXTRA_LOCATION);
+            customLocation = new Location(LocationManager.GPS_PROVIDER);
+            customLocation.setLatitude(toEdit.latitude);
+            customLocation.setLongitude(toEdit.longitude);
         }
 
         setupMapView();

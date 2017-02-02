@@ -57,10 +57,13 @@ public class ProfileActivity extends CameraUtilsActivity {
         super.onCreate(savedInstanceState);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null && extras.getSerializable(Constants.EXTRA_USER) != null) {
             user = (GTUser) extras.getSerializable(Constants.EXTRA_USER);
         }
-        else finish();
+        else {
+            finish();
+            return;
+        }
 
         setContentView(R.layout.activity_profile);
         ButterKnife.bind(this);

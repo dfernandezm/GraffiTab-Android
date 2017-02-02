@@ -38,8 +38,10 @@ public class WebActivity extends AppCompatActivity {
             htmlFile = extras.getString(Constants.EXTRA_HTML_FILE);
             title = extras.getString(Constants.EXTRA_TITLE);
         }
-        else
+        else {
             finish();
+            return;
+        }
 
         setupTopBar();
         setupWebView();

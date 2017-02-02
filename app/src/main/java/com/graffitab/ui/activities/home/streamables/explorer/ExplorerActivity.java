@@ -57,7 +57,8 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     private ClusterManager<GTClusterItem> mClusterManager;
     private Timer timer;
     private Location customLocation;
-    private List<GTStreamable> items = new ArrayList<>();
+    private ArrayList<GTStreamable> items = new ArrayList<>();
+    private int previousMarkerSize = 0;
 
     public static void openForLocation(Context context, double latitude, double longitude) {
         Intent i = new Intent(context, ExplorerActivity.class);
@@ -103,7 +104,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.gridBtn)
     public void onClickGrid(View view) {
-        startActivity(new Intent(ExplorerActivity.this, ClusterActivity.class));
+        ClusterActivity.openCluster(ExplorerActivity.this, items);
     }
 
     @OnClick(R.id.locate)
@@ -182,11 +183,15 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     private void processAnnotations(List<GTStreamable> streamables) {
         for (GTStreamable streamable : streamables) {
             if (!items.contains(streamable)) {
-                GTClusterItem offsetItem = new GTClusterItem(streamable.latitude, streamable.longitude);
+                GTClusterItem offsetItem = new GTClusterItem(streamable, streamable.latitude, streamable.longitude);
                 mClusterManager.addItem(offsetItem);
                 items.add(streamable);
             }
         }
+
+        if (previousMarkerSize != items.size())
+            mClusterManager.cluster();
+        previousMarkerSize = items.size();
     }
 
     // Timer
@@ -303,7 +308,11 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public boolean onClusterClick(Cluster<GTClusterItem> cluster) {
-                startActivity(new Intent(ExplorerActivity.this, ClusterActivity.class));
+                // Get cluster items.
+                ArrayList<GTStreamable> clusterItems = new ArrayList<>();
+                for (GTClusterItem item : cluster.getItems())
+                    clusterItems.add(item.getStreamable());
+                ClusterActivity.openCluster(ExplorerActivity.this, clusterItems);
                 return true;
             }
         });
@@ -311,7 +320,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public boolean onClusterItemClick(GTClusterItem gtClusterItem) {
-                startActivity(new Intent(ExplorerActivity.this, StreamableDetailsActivity.class));
+                StreamableDetailsActivity.openStreamableDetails(ExplorerActivity.this, gtClusterItem.getStreamable());
                 return true;
             }
         });

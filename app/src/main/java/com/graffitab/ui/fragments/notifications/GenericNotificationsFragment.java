@@ -1,12 +1,10 @@
 package com.graffitab.ui.fragments.notifications;
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
-import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.notifications.GenericNotificationsRecyclerViewAdapter;
@@ -44,19 +42,13 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
         if (notification.type == GTNotification.GTNotificationType.FOLLOW)
             ProfileActivity.show(notification.follower, getActivity());
         else if (notification.type == GTNotification.GTNotificationType.COMMENT) {
-            Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
-            intent.putExtra(Constants.EXTRA_STREAMABLE, notification.commentedStreamable);
-            startActivity(intent);
+            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.commentedStreamable);
         }
         else if (notification.type == GTNotification.GTNotificationType.LIKE) {
-            Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
-            intent.putExtra(Constants.EXTRA_STREAMABLE, notification.likedStreamable);
-            startActivity(intent);
+            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.likedStreamable);
         }
         else if (notification.type == GTNotification.GTNotificationType.MENTION) {
-            Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
-            intent.putExtra(Constants.EXTRA_STREAMABLE, notification.mentionedStreamable);
-            startActivity(intent);
+            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.mentionedStreamable);
         }
         else {
             // No-op - Welcome notification type is not handled.

@@ -21,10 +21,13 @@ public class CommentsActivity extends GenericCommentsActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         Bundle extras = getIntent().getExtras();
-        if (extras != null) {
+        if (extras != null && extras.getSerializable(Constants.EXTRA_STREAMABLE) != null) {
             streamable = (GTStreamable) extras.getSerializable(Constants.EXTRA_STREAMABLE);
         }
-        else finish();
+        else {
+            finish();
+            return;
+        }
 
         super.onCreate(savedInstanceState);
     }

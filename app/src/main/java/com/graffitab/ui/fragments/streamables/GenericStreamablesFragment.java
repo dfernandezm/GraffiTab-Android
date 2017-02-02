@@ -77,9 +77,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public void onRowSelected(GTStreamable streamable, int adapterPosition) {
-        Intent intent = new Intent(getActivity(), StreamableDetailsActivity.class);
-        intent.putExtra(Constants.EXTRA_STREAMABLE, streamable);
-        startActivity(intent);
+        StreamableDetailsActivity.openStreamableDetails(getActivity(), streamable);
     }
 
     @Override
