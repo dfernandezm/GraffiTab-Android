@@ -6,11 +6,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.ui.adapters.BaseItemAdapter;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.params.GTQueryParameters;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.streamable.response.GTListHashtagsResponse;
+import com.graffitabsdk.network.service.user.response.GTListUsersResponse;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,12 +65,15 @@ public class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filt
         Object item = getItem(position);
         if (item instanceof GTUser) { // @
             View v = mInflater.inflate(R.layout.row_suggestion_user, null);
+            ImageView avatar = (ImageView) v.findViewById(R.id.avatar);
             TextView nameField = (TextView) v.findViewById(R.id.nameField);
             TextView usernameField = (TextView) v.findViewById(R.id.usernameField);
 
             GTUser user = (GTUser) item;
             nameField.setText(user.firstName + " " + user.lastName);
-            usernameField.setText(user.username);
+            usernameField.setText(user.mentionUsername());
+
+            loadAvatar(avatar, user);
 
             return v;
         }
@@ -76,6 +88,14 @@ public class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filt
         }
     }
 
+    private void loadAvatar(ImageView avatar, GTUser user) {
+        int p = R.drawable.default_avatar;
+        if (user.hasAvatar())
+            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
+        else
+            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+    }
+
     @Override
     public Filter getFilter() {
         return filter;
@@ -83,55 +103,8 @@ public class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filt
 
     private class CustomFilter extends Filter {
 
-        private List<GTUser> generateUserList() {
-            if (!usersCache.isEmpty())
-                return new ArrayList<>();
-            List<GTUser> suggestions = new ArrayList();
-            GTUser user = new GTUser();
-            user.firstName = "Georgi";
-            user.lastName = "Christov";
-            user.username = "georgi";
-            suggestions.add(user);
-            user = new GTUser();
-            user.firstName = "Lussi";
-            user.lastName = "Hristova";
-            user.username = "lussi";
-            suggestions.add(user);
-            user = new GTUser();
-            user.firstName = "Teba";
-            user.lastName = "Rios";
-            user.username = "teba";
-            suggestions.add(user);
-            user = new GTUser();
-            user.firstName = "Test";
-            user.lastName = "Test";
-            user.username = "test";
-            suggestions.add(user);
-            user = new GTUser();
-            user.firstName = "Test 2";
-            user.lastName = "Test 2";
-            user.username = "test2";
-            suggestions.add(user);
-            return suggestions;
-        }
-
-        private List<String> generateTagList() {
-            if (!tagsCache.isEmpty())
-                return new ArrayList<>();
-            List<String> suggestions = new ArrayList();
-            suggestions.add("hashtag1");
-            suggestions.add("hashtag2");
-            suggestions.add("hashtag23");
-            suggestions.add("hashtag23423");
-            suggestions.add("tree");
-            suggestions.add("test");
-            suggestions.add("nature");
-            suggestions.add("truth");
-            return suggestions;
-        }
-
         @Override
-        protected FilterResults performFiltering(CharSequence constraint) {
+        protected FilterResults performFiltering(final CharSequence constraint) {
             suggestions.clear();
 
             if (searchTerm != null && constraint != null) {
@@ -146,13 +119,27 @@ public class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filt
                         }
                     }
 
-                    if (suggestions.size() <= 0) {
-                        // TODO: Fetch suggestions from API and refresh adapter.
-                        List<GTUser> loadedItems = generateUserList();
-                        if (loadedItems.size() > 0) {
-                            usersCache.addAll(loadedItems);
-                            performFiltering(constraint);
-                        }
+                    if (suggestions.size() <= 0) { // No local suggestions, so fetch from server.
+                        GTQueryParameters parameters = new GTQueryParameters();
+                        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, 0);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, query);
+                        GTSDK.getUserManager().search(parameters, new GTResponseHandler<GTListUsersResponse>() {
+
+                            @Override
+                            public void onSuccess(GTResponse<GTListUsersResponse> gtResponse) {
+                                if (gtResponse.getObject().items.size() > 0) {
+                                    for (GTUser user : gtResponse.getObject().items) {
+                                        if (!usersCache.contains(user))
+                                            usersCache.add(user);
+                                    }
+                                    performFiltering(constraint);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(GTResponse<GTListUsersResponse> gtResponse) {}
+                        });
                     }
                 }
                 else if (searchTerm.equals("#")) {
@@ -163,13 +150,27 @@ public class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filt
                         }
                     }
 
-                    if (suggestions.size() <= 0) {
-                        // TODO: Fetch suggestions from API and refresh adapter.
-                        List<String> loadedItems = generateTagList();
-                        if (loadedItems.size() > 0) {
-                            tagsCache.addAll(loadedItems);
-                            performFiltering(constraint);
-                        }
+                    if (suggestions.size() <= 0) { // No local suggestions, so fetch from server.
+                        GTQueryParameters parameters = new GTQueryParameters();
+                        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, 0);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, query);
+                        GTSDK.getStreamableManager().searchHashtags(parameters, new GTResponseHandler<GTListHashtagsResponse>() {
+
+                            @Override
+                            public void onSuccess(GTResponse<GTListHashtagsResponse> gtResponse) {
+                                if (gtResponse.getObject().items.size() > 0) {
+                                    for (String hashtag : gtResponse.getObject().items) {
+                                        if (!tagsCache.contains(hashtag))
+                                            tagsCache.add(hashtag);
+                                    }
+                                    performFiltering(constraint);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(GTResponse<GTListHashtagsResponse> gtResponse) {}
+                        });
                     }
                 }
 
