@@ -113,7 +113,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        return new AdvancedRecyclerViewItemDecoration(1, 0);
+        return new AdvancedRecyclerViewItemDecoration(1, 20);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.graffitab.ui.fragments.locations;
 
-import com.graffitab.application.MyApplication;
-import com.graffitab.utils.display.DisplayUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
@@ -20,13 +18,5 @@ public class LocationsFragment extends GenericLocationsFragment {
         parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
         parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
         GTSDK.getMeManager().getLocations(isFirstLoad, parameters, handler);
-    }
-
-    @Override
-    public void setupCustomViews() {
-        super.setupCustomViews();
-
-        int padding = DisplayUtils.pxToDip(MyApplication.getInstance(), 10);
-        getRecyclerView().setPadding(padding, padding, padding, 0);
     }
 }

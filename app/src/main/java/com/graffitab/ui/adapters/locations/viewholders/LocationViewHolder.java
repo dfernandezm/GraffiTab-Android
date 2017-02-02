@@ -43,7 +43,7 @@ public class LocationViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void loadImage() {
-        String url = GoogleUtils.getStaticMapUrl(item.latitude, item.longitude);
+        String url = GoogleUtils.getStreetViewUrl(item.latitude, item.longitude);
         Picasso.with(thumbnail.getContext()).load(url).into(thumbnail);
     }
 

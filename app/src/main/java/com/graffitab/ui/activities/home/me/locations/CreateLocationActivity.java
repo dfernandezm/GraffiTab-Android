@@ -16,6 +16,7 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -56,6 +57,7 @@ import static com.graffitab.R.id.map;
 public class CreateLocationActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     @BindView(R.id.searchField) EditText searchField;
+    @BindView(R.id.fab) FloatingActionButton fab;
 
     private GoogleMap mMap;
     private boolean shouldCheckForCurrentLocation = true;
@@ -179,6 +181,7 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
 
         setupMapView();
         setupTextFields();
+        setupButtons();
     }
 
     @Override
@@ -282,6 +285,12 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
         DialogBuilder.buildAPIErrorDialog(this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
     }
 
+    private void performStartUpAnimations() {
+        fab.setVisibility(View.VISIBLE);
+        fab.animate().scaleX(1);
+        fab.animate().scaleY(1);
+    }
+
     // Map
 
     private void awaitCurrentLocation() {
@@ -340,6 +349,14 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
             zoomToLocation(customLocation);
         else
             awaitCurrentLocation();
+
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                performStartUpAnimations();
+            }
+        }, 1500);
     }
 
     // Search
@@ -398,6 +415,12 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
                 return false;
             }
         });
+    }
+
+    private void setupButtons() {
+        fab.setVisibility(View.GONE);
+        fab.animate().scaleX(0);
+        fab.animate().scaleY(0);
     }
 
     public interface OnAddressFoundListener {
