@@ -25,18 +25,23 @@ public class DialogBuilder {
     private static Date lastErrorDate;
 
 	public static void buildOKDialog(Context context, String title, String message) {
+		if (context == null) return;
 		buildOKDialog(context, title, message, null);
 	}
 
     public static void buildAPIErrorDialog(Activity context, String title, String message, GTResultCode resultCode) {
+        if (context == null) return;
         buildAPIErrorDialog(context, title, message, false, resultCode, null);
     }
 
     public static void buildAPIErrorDialog(Activity context, String title, String message, boolean forceShow, GTResultCode resultCode) {
+        if (context == null) return;
         buildAPIErrorDialog(context, title, message, forceShow, resultCode, null);
     }
 
 	public static void buildAPIErrorDialog(final Activity context, String title, String message, boolean forceShow, final GTResultCode resultCode, final OnOkHandler handler) {
+        if (context == null) return;
+
         // Define custom action to listen for logout events.
 		OnOkHandler action = new OnOkHandler() {
 
@@ -72,6 +77,8 @@ public class DialogBuilder {
     }
 
 	public static void buildOKDialog(Context context, String title, String message, final OnOkHandler handler) {
+        if (context == null) return;
+
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setMessage(message)
 			   .setTitle(title)
@@ -89,6 +96,8 @@ public class DialogBuilder {
 	}
 	
 	public static void buildYesNoDialog(Context context, String title, String message, String yesTitle, String noTitle, final OnYesNoHandler handler) {
+        if (context == null) return;
+
 		OnClickListener dialogClickListener = new OnClickListener() {
 		    @Override
 		    public void onClick(DialogInterface dialog, int which) {
@@ -120,6 +129,8 @@ public class DialogBuilder {
 	}
 	
 	public static void buildYesNoInputDialog(Context context, String hint, String title, String message, String yesTitle, String noTitle, final OnYesNoInputHandler handler) {
+        if (context == null) return;
+
 		// Create dialog.
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
 		builder.setTitle(title);

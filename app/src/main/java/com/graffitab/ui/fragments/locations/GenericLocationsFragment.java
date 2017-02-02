@@ -4,7 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.widget.Toast;
@@ -22,6 +22,7 @@ import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitab.utils.display.DisplayUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTLocation;
 import com.graffitabsdk.network.common.response.GTResponse;
@@ -113,7 +114,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        return new AdvancedRecyclerViewItemDecoration(1, 20);
+        return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(getActivity()) ? 2 : 1, 20);
     }
 
     @Override
@@ -125,11 +126,11 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        return new LinearLayoutManager(MyApplication.getInstance());
+        return new GridLayoutManager(MyApplication.getInstance(), 1);
     }
 
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
-        return null;
+        return new AdvancedRecyclerViewLayoutConfiguration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 2 : 1);
     }
 }

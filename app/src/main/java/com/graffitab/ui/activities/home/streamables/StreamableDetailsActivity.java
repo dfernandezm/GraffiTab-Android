@@ -3,12 +3,16 @@ package com.graffitab.ui.activities.home.streamables;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
@@ -16,12 +20,15 @@ import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.common.result.GTStreamableDeletedResult;
 import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -115,7 +122,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
                     togglePrivacy();
                 }
                 else if (which == R.id.action_save) {
-
+                    save();
                 }
                 else if (which == R.id.action_flag) {
                     flag();
@@ -124,7 +131,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
                     ExplorerActivity.openForLocation(StreamableDetailsActivity.this, streamable.latitude, streamable.longitude);
                 }
                 else if (which == R.id.action_remove) {
-                    finish();
+                    delete();
                 }
             }
         });
@@ -224,13 +231,62 @@ public class StreamableDetailsActivity extends AppCompatActivity {
                     public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
 
                     @Override
-                    public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
+                    public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+                        DialogBuilder.buildAPIErrorDialog(StreamableDetailsActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
+                    }
                 });
             }
 
             @Override
             public void onClickNo() {}
         });
+    }
+
+    private void delete() {
+        DialogBuilder.buildYesNoDialog(this, getString(R.string.app_name), getString(R.string.other_confirm_delete), getString(R.string.other_delete), getString(R.string.other_cancel), new OnYesNoHandler() {
+
+            @Override
+            public void onClickYes() {
+                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), StreamableDetailsActivity.this, null);
+                GTSDK.getStreamableManager().delete(streamable.id, new GTResponseHandler<GTStreamableDeletedResult>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTStreamableDeletedResult> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        finish();
+                    }
+
+                    @Override
+                    public void onFailure(GTResponse<GTStreamableDeletedResult> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildAPIErrorDialog(StreamableDetailsActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
+                    }
+                });
+            }
+
+            @Override
+            public void onClickNo() {}
+        });
+    }
+
+    private void save() {
+        new Thread() {
+
+            @Override
+            public void run() {
+                BitmapDrawable drawable = (BitmapDrawable) streamableView.getDrawable();
+                Bitmap bitmap = drawable.getBitmap();
+                MediaStore.Images.Media.insertImage(getContentResolver(), bitmap, streamable.user.fullName() + "_" + streamable.createdOn.toString(), "");
+
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        Toast.makeText(StreamableDetailsActivity.this, getString(R.string.streamable_details_save_success), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        }.start();
     }
 
     // Loading
