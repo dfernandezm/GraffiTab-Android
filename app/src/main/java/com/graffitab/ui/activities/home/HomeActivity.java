@@ -59,6 +59,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private CustomResideMenu resideMenu;
     private View notificationsIndicator;
+    private boolean openedNotificationsOnce = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,17 +146,19 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
-    private boolean isNotificationsTabSepected() {
+    private boolean isNotificationsTabSelected() {
         return viewPager.getCurrentItem() == NOTIFICATIONS_POSITION;
     }
 
     // Loading
 
     private void refreshNotificationsTab() {
-        ViewPagerTabAdapter adapter = (ViewPagerTabAdapter) viewPager.getAdapter();
-        NotificationsFragment fragment = (NotificationsFragment) adapter.getItem(NOTIFICATIONS_POSITION);
-        fragment.advancedRecyclerView.beginRefreshing(); // Force notifications refresh.
-        fragment.reload();
+        if (openedNotificationsOnce) {
+            ViewPagerTabAdapter adapter = (ViewPagerTabAdapter) viewPager.getAdapter();
+            NotificationsFragment fragment = (NotificationsFragment) adapter.getItem(NOTIFICATIONS_POSITION);
+            fragment.advancedRecyclerView.beginRefreshing(); // Force notifications refresh.
+            fragment.reload();
+        }
     }
 
     private void refreshUnseenNotifications() {
@@ -164,7 +167,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onSuccess(GTResponse<GTUnseenNotificationsResponse> gtResponse) {
                 if (gtResponse.getObject().count <= 0) return; // No new notifications.
-                if (isNotificationsTabSepected())
+                if (isNotificationsTabSelected())
                     refreshNotificationsTab();
                 else
                     notificationsIndicator.setVisibility(View.VISIBLE);
@@ -237,10 +240,11 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 getSupportActionBar().setTitle(adapter.getCurrentPageTitle(position));
                 setupTabBarColors(position);
 
-                if (isNotificationsTabSepected()) {
+                if (isNotificationsTabSelected()) {
                     if (notificationsIndicator.getVisibility() == View.VISIBLE) // We have new notifications, so when switching to the tab refresh the content.
                         refreshNotificationsTab();
                     notificationsIndicator.setVisibility(View.INVISIBLE);
+                    openedNotificationsOnce = true;
                 }
             }
 
