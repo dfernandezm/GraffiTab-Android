@@ -3,9 +3,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#fff"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
-    <include layout="@layout/row_notification_include_left_user" />
-    <include layout="@layout/row_notification_include_middle" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:orientation="horizontal">
 
+        <include layout="@layout/row_notification_include_left_user" />
+        <include layout="@layout/row_notification_include_middle" />
+    </LinearLayout>
 </LinearLayout>

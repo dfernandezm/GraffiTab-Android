@@ -4,56 +4,62 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="#fff"
-    android:gravity="center"
-    android:orientation="horizontal"
-    android:paddingBottom="7dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="7dp">
-
-    <com.makeramen.roundedimageview.RoundedImageView
-        android:id="@+id/avatar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_avatar"
-        app:riv_corner_radius="5dp" />
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:background="?attr/selectableItemBackground"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingBottom="7dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="7dp">
 
-        <TextView
-            android:id="@+id/nameField"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="Georgi Christov"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:textSize="15sp"/>
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/avatar"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_avatar"
+            app:riv_corner_radius="5dp" />
 
-        <TextView
-            android:id="@+id/usernameField"
-            android:layout_width="fill_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
-            android:text="georgi"
-            android:textColor="#AAAAAA"
-            android:textSize="12sp" />
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameField"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Georgi Christov"
+                android:textColor="#000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/usernameField"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1dp"
+                android:text="georgi"
+                android:textColor="#AAAAAA"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/followButton"
+            android:layout_width="42dp"
+            android:layout_height="32dp"
+            android:background="@drawable/rounded_corner_follow"
+            android:padding="3dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_action_follow"
+            android:tint="@color/colorPrimary" />
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/followButton"
-        android:layout_width="42dp"
-        android:layout_height="32dp"
-        android:background="@drawable/rounded_corner_follow"
-        android:padding="3dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_action_follow"
-        android:tint="@color/colorPrimary" />
-
 </LinearLayout>

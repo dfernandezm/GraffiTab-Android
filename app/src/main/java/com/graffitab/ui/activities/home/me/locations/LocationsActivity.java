@@ -28,7 +28,7 @@ public class LocationsActivity extends AppCompatActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_locations);
+        setContentView(R.layout.activity_fragment_holder);
         ButterKnife.bind(this);
 
         setupTopBar();
