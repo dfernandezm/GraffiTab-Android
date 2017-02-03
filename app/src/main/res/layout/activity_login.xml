@@ -6,8 +6,8 @@
 
     <ImageView
         android:id="@+id/background"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -28,7 +28,7 @@
 
         <EditText
             android:id="@+id/username"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:background="@null"
