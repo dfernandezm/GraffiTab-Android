@@ -97,6 +97,8 @@
     <string name="profile_graffiti">graffiti</string>
     <string name="profile_followers">followers</string>
     <string name="profile_following">following</string>
+    <string name="profile_change_avatar_success">Avatar updated!</string>
+    <string name="profile_change_cover_success">Cover updated!</string>
 
     <!-- Likes -->
     <string name="likes">Likes</string>
