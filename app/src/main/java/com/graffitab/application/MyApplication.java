@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.graffitab.config.AppConfig;
 import com.graffitab.managers.GTLocationManager;
 import com.graffitabsdk.config.GTSDK;
 
@@ -37,6 +38,7 @@ public class MyApplication extends Application {
         // Initialize the SDK before executing any other operations.
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
+        AppConfig.configuration.configureApp();
 
         setupBroadcastReceivers();
         setupListeners();

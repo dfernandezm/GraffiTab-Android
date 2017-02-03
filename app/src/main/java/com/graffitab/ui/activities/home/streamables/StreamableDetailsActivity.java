@@ -336,6 +336,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void finishRefresh() {
+        loadData();
         Picasso.with(this).load(streamable.asset.link).into(streamableView, new Callback() {
 
             @Override

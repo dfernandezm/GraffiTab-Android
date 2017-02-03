@@ -123,7 +123,6 @@ public class UserProfileFragment extends ListStreamablesFragment {
         postsField.setText(user.streamablesCountAsString());
         followersField.setText(user.followersCountAsString());
         followingField.setText(user.followingCountAsString());
-
     }
 
     public void loadUserData() {

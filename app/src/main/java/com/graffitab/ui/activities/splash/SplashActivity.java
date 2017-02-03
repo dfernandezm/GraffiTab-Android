@@ -42,8 +42,6 @@ public class SplashActivity extends AppCompatActivity {
 
         setupBackgroundImage();
 
-        configureApp();
-
         Utils.runWithDelay(new Runnable() {
 
             @Override
@@ -101,12 +99,6 @@ public class SplashActivity extends AppCompatActivity {
             Log.i(getClass().getSimpleName(), "User not logged in. Showing login screen");
             showLoginScreen();
         }
-    }
-
-    // Configure
-
-    private void configureApp() {
-        AppConfig.configuration.configureApp();
     }
 
     // Setup

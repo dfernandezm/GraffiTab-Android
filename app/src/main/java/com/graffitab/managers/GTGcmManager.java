@@ -7,6 +7,10 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.graffitab.R;
+import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.response.GTResponse;
+import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.common.result.GTDeviceLinkResult;
 
 /**
  * Created by georgichristov on 05/01/2017
@@ -28,6 +32,19 @@ public class GTGcmManager {
                     InstanceID instanceID = InstanceID.getInstance(context);
                     String token = instanceID.getToken(context.getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
                     Log.i(getClass().getSimpleName(), "GCM token refreshed.\nToken: " + token);
+
+                    GTSDK.getMeManager().linkDevice(token, new GTResponseHandler<GTDeviceLinkResult>() {
+
+                        @Override
+                        public void onSuccess(GTResponse<GTDeviceLinkResult> gtResponse) {
+                            Log.i(getClass().getSimpleName(), "GCM token linked");
+                        }
+
+                        @Override
+                        public void onFailure(GTResponse<GTDeviceLinkResult> gtResponse) {
+                            Log.i(getClass().getSimpleName(), "GCM token could not be linked");
+                        }
+                    });
                 } catch (Exception e) {
                     Log.e(getClass().getSimpleName(), "Failed to refresh GCM token", e);
                 }
@@ -41,9 +58,22 @@ public class GTGcmManager {
 
             @Override
             public void run() {
-                Log.i(getClass().getSimpleName(), "Unregistering GCM token...");
                 try {
                     InstanceID instanceID = InstanceID.getInstance(context);
+                    String token = instanceID.getToken(context.getString(R.string.gcm_defaultSenderId), GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+                    Log.i(getClass().getSimpleName(), "Unregistering GCM token " + token);
+                    GTSDK.getMeManager().unlinkDevice(token, new GTResponseHandler<GTDeviceLinkResult>() {
+
+                        @Override
+                        public void onSuccess(GTResponse<GTDeviceLinkResult> gtResponse) {
+                            Log.i(getClass().getSimpleName(), "GCM token unlinked");
+                        }
+
+                        @Override
+                        public void onFailure(GTResponse<GTDeviceLinkResult> gtResponse) {
+                            Log.i(getClass().getSimpleName(), "GCM token could not be unlinked");
+                        }
+                    });
                     instanceID.deleteInstanceID();
                     Log.i(getClass().getSimpleName(), "GCM token unregistered");
                 } catch (Exception e) {

@@ -59,7 +59,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private CustomResideMenu resideMenu;
     private View notificationsIndicator;
-    private boolean openedNotificationsOnce = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -153,12 +152,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     // Loading
 
     private void refreshNotificationsTab() {
-        if (openedNotificationsOnce) {
-            ViewPagerTabAdapter adapter = (ViewPagerTabAdapter) viewPager.getAdapter();
-            NotificationsFragment fragment = (NotificationsFragment) adapter.getItem(NOTIFICATIONS_POSITION);
-            fragment.advancedRecyclerView.beginRefreshing(); // Force notifications refresh.
-            fragment.reload();
-        }
+        ViewPagerTabAdapter adapter = (ViewPagerTabAdapter) viewPager.getAdapter();
+        NotificationsFragment fragment = (NotificationsFragment) adapter.getItem(NOTIFICATIONS_POSITION);
+        fragment.advancedRecyclerView.beginRefreshing(); // Force notifications refresh.
+        fragment.reload();
     }
 
     private void refreshUnseenNotifications() {
@@ -244,7 +241,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                     if (notificationsIndicator.getVisibility() == View.VISIBLE) // We have new notifications, so when switching to the tab refresh the content.
                         refreshNotificationsTab();
                     notificationsIndicator.setVisibility(View.INVISIBLE);
-                    openedNotificationsOnce = true;
                 }
             }
 
