@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/background"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop" />
 
     <ScrollView
@@ -17,7 +17,7 @@
         android:fillViewport="true">
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
@@ -35,7 +35,7 @@
                 android:layout_marginTop="-10dp"
                 android:background="@null"
                 android:src="@drawable/ic_close_white_24dp"
-                android:tint="@color/colorResetPasswordWhite"/>
+                android:tint="@color/colorResetPasswordWhite" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/firstName"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:hint="@string/sign_up_first_name"
@@ -61,7 +61,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/lastName"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@null"
@@ -75,7 +75,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/email"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@null"
@@ -89,7 +89,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/username"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@null"
@@ -103,7 +103,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/password"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@null"
@@ -118,7 +118,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/confirmPassword"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
                 android:background="@null"
@@ -133,21 +133,27 @@
 
             <TextView
                 android:id="@+id/terms"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/sign_up_terms"
                 android:textColor="@color/colorLoginWhite"
                 android:textSize="15sp" />
 
-            <Button
-                android:id="@+id/signUpBtn"
-                android:layout_width="fill_parent"
-                android:layout_height="45dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="25dp"
-                android:background="@drawable/rounded_corner_login"
-                android:text="@string/sign_up"
-                android:textColor="#fff" />
+                android:background="@drawable/rounded_corner_login">
+
+                <Button
+                    android:id="@+id/signUpBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackground"
+                    android:text="@string/sign_up"
+                    android:textColor="#fff" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

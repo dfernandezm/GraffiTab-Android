@@ -38,6 +38,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     @BindView(R.id.email) EditText emailField;
     @BindView(R.id.resetBtn) Button resetBtn;
+    @BindView(R.id.resetBtnBackground) View resetBtnBackground;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -125,11 +126,11 @@ public class ResetPasswordActivity extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 if (TextUtils.isValidEmailAddress(editable.toString())) {
-                    resetBtn.setBackgroundResource(R.drawable.rounded_corner_password_reset_enabled);
+                    resetBtnBackground.setBackgroundResource(R.drawable.rounded_corner_password_reset_enabled);
                     resetBtn.setTextColor(Color.WHITE);
                 }
                 else {
-                    resetBtn.setBackgroundResource(R.drawable.rounded_corner_password_reset_disabled);
+                    resetBtnBackground.setBackgroundResource(R.drawable.rounded_corner_password_reset_disabled);
                     resetBtn.setTextColor(Color.parseColor("#e0e0e0"));
                 }
             }
