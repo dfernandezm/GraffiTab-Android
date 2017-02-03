@@ -2,6 +2,7 @@ package com.graffitab.ui.activities.home.users;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,13 +11,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.UserProfileFragment;
 import com.graffitab.utils.Utils;
@@ -25,16 +29,14 @@ import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.assets.response.GTAssetResponse;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserFollowedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
 import com.squareup.otto.Subscribe;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by georgichristov on 20/11/2016
@@ -48,6 +50,7 @@ public class ProfileActivity extends CameraUtilsActivity {
     private GTUser user;
     private UserProfileFragment content;
     private boolean profileRefreshedOnce = false;
+    private boolean pickingCoverImage = false;
 
     public static void show(GTUser user, Context context) {
         Intent i = new Intent(context, ProfileActivity.class);
@@ -152,13 +155,17 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     public void onClickAvatar(View view) {
-        if (user.isMe())
+        if (user.isMe()) {
             showImagePicker((ImageView) view);
+            pickingCoverImage = false;
+        }
     }
 
     public void onClickCover(View view) {
-        if (user.isMe())
+        if (user.isMe()) {
             showImagePicker((ImageView) view);
+            pickingCoverImage = true;
+        }
     }
 
     public void onClickAbout(View view) {
@@ -185,6 +192,15 @@ public class ProfileActivity extends CameraUtilsActivity {
         content.loadUserAssets();
     }
 
+    @Subscribe
+    public void userAvatarChangedEvent(GTUserAvatarUpdatedEvent event) {
+        if (user.isMe()) {
+            user = GTSDK.getAccountManager().getLoggedInUser();
+            content.setUser(user);
+            content.loadUserAssets();
+        }
+    }
+
     private void refreshUserAfterFollowStateChange(GTUser newUser) {
         // The current logged in user cannot be followed/unfollowed, so we only care about other users.
         if (user.equals(newUser)) // This user has been followed/unfollowed.
@@ -195,6 +211,37 @@ public class ProfileActivity extends CameraUtilsActivity {
         content.setUser(user);
         content.loadUserCountData();
         loadFollowButton();
+    }
+
+    @Override
+    public void finishPickingImage(Bitmap bitmap) {
+        super.finishPickingImage(bitmap);
+
+        if (bitmap != null) {
+
+            if (pickingCoverImage) {
+                //TODO: Cover
+            } else { // It is an avatar
+                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+                GTSDK.getMeManager().uploadAvatar(bitmap, new GTResponseHandler<GTAssetResponse>() {
+                    @Override
+                    public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildOKDialog(ProfileActivity.this, getString(R.string.profile_change_avatar_success),
+                                                    getString(R.string.app_name));
+                    }
+
+                    @Override
+                    public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name),
+                                ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                    }
+                });
+            }
+        } else {
+            //TODO: Remove image was selected
+        }
     }
 
     // Loading
