@@ -38,6 +38,7 @@
             android:inputType="textEmailAddress"
             android:textColor="#fff"
             android:textColorHint="@color/colorLoginWhite"
+            android:textCursorDrawable="@null"
             android:textSize="17sp" />
 
         <View
@@ -66,7 +67,8 @@
                 android:inputType="textPassword"
                 android:textColor="#fff"
                 android:textColorHint="@color/colorLoginWhite"
-                android:textSize="17sp" />
+                android:textSize="17sp"
+                android:textCursorDrawable="@null"/>
 
             <TextView
                 android:id="@+id/forgottenPassword"
