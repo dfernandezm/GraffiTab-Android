@@ -6,7 +6,9 @@
     <color name="colorMetadata">#a0a0a0</color>
     <color name="colorHomeUnselected">#d0d0d0</color>
 
-    <color name="colorLoginWhite">#66ffffff</color>
+    <color name="colorLoginBorder">#66ffffff</color>
+    <color name="colorLoginFill">#22ffffff</color>
+    <color name="colorLoginWhite">#99ffffff</color>
     <color name="colorResetPasswordWhite">#aaffffff</color>
 
     <color name="colorAwesome">#3F739A</color>

@@ -10,11 +10,12 @@
     <!-- Login -->
     <string name="login_hint_username">Username</string>
     <string name="login_hint_password">Password</string>
-    <string name="login_forgotten_password">Forgotten password?</string>
+    <string name="login_forgotten_password">Forgot?</string>
     <string name="login">Login</string>
-    <string name="login_facebook">Login with Facebook</string>
+    <string name="login_facebook">Facebook Connect</string>
     <string name="login_sign_up_prompt">Don\'t have an account yet? Sign up</string>
     <string name="login_sign_up">Sign up</string>
+    <string name="login_or">or</string>
     <string name="login_error_username">Please enter your username.</string>
     <string name="login_error_password">Please enter your password.</string>
     <string name="login_error_credentials">These credentials are incorrect. Please try again.</string>

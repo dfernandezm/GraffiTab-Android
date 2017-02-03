@@ -55,6 +55,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
     @OnClick(R.id.closeBtn)
     public void onClickClose(View view) {
+        KeyboardUtils.hideKeyboard(this);
         finish();
     }
 

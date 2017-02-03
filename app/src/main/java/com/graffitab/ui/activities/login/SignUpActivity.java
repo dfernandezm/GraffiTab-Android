@@ -61,6 +61,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.terms)
     public void onClickTerms(View view) {
+        KeyboardUtils.hideKeyboard(this);
         Intent i = new Intent(this, WebActivity.class);
         i.putExtra(Constants.EXTRA_HTML_FILE, "terms.html");
         i.putExtra(Constants.EXTRA_TITLE, getString(R.string.sign_up_terms_of_use));
@@ -69,6 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     @OnClick(R.id.closeBtn)
     public void onClickClose(View view) {
+        KeyboardUtils.hideKeyboard(this);
         finish();
     }
 

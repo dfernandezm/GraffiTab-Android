@@ -42,7 +42,7 @@ public class FileUtils {
      * Returns (and creates, if needed) the root app directory.
      */
     public static String getApplicationDirectory() {
-        String appDirectory = Environment.getExternalStorageDirectory() + File.separator + Constants.FILE_APP_FOLDER;
+        String appDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + Constants.FILE_APP_FOLDER;
         File file = new File(appDirectory);
         if (!file.exists())
             file.mkdirs();

@@ -144,6 +144,6 @@ public class LoginActivity extends FacebookUtilsActivity {
     }
 
     private void setupBackgroundImage() {
-        ActivityUtils.setupBackgroundImage(this, R.drawable.login, R.id.background);
+        ActivityUtils.setupBackgroundImage(this, R.drawable.login_full, R.id.background);
     }
 }
