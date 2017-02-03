@@ -17,6 +17,7 @@ import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
 import com.graffitabsdk.network.common.GTResultCode;
@@ -61,6 +62,7 @@ public class LoginActivity extends FacebookUtilsActivity {
         String pw = passwordField.getText().toString();
 
         if (InputValidator.validateLogin(this, un, pw)) {
+            KeyboardUtils.hideKeyboard(this);
             TaskDialog.getInstance().showDialog(null, this, null);
 
             GTSDK.getUserManager().login(un, pw, new GTResponseHandler<GTUserResponse>() {
