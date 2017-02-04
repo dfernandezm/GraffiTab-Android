@@ -12,28 +12,31 @@ import com.graffitab.config.AppConfig;
 import com.graffitab.managers.GTLocationManager;
 import com.graffitabsdk.config.GTSDK;
 
+import java.lang.ref.WeakReference;
 import java.util.Locale;
 
 import static android.content.Intent.ACTION_LOCALE_CHANGED;
 
 /**
- * Created by georgichristov on 06/07/16.
+ * Created by georgichristov on 12/11/2016
+ * --
+ * Copyright © GraffiTab Inc. 2016
  */
 public class MyApplication extends Application {
 
-    private static Application instance = null;
+    private static WeakReference<Application> instance = null;
 
     private MyBroadcastReceiver receiver;
 
     public static Application getInstance() {
-        return instance;
+        return instance != null ? instance.get() : null;
     }
 
     @Override
     public void onCreate() {
         super.onCreate();
 
-        instance = this;
+        instance = new WeakReference<Application>(this);
 
         // Initialize the SDK before executing any other operations.
         FacebookSdk.sdkInitialize(getApplicationContext());

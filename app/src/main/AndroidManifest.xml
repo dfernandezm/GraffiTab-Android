@@ -199,6 +199,11 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeTransparentAction"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".permissions.GTPermissionActivity"
+            android:theme="@style/AllTimeDialogTheme"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

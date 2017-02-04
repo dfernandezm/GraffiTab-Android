@@ -15,14 +15,6 @@ public class Settings {
 
     public static final Settings settings = new Settings();
 
-    public boolean hasAskedForPermission(String permissionKey) {
-        return getPreference(permissionKey, false);
-    }
-
-    public void setAskedForPermission(String permissionKey, boolean value) {
-        savePreference(value, permissionKey);
-    }
-
     public boolean rememberMe() {
         return getPreference(Constants.PREFERENCE_REMEMBER_ME, false);
     }
