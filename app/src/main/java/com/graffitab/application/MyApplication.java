@@ -10,6 +10,7 @@ import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.graffitab.config.AppConfig;
 import com.graffitab.managers.GTLocationManager;
+import com.graffitab.permissions.GTPermissions;
 import com.graffitabsdk.config.GTSDK;
 
 import java.lang.ref.WeakReference;
@@ -55,7 +56,8 @@ public class MyApplication extends Application {
     }
 
     private void setupListeners() {
-        GTLocationManager.sharedInstance.startLocationUpdates();
+        if (GTPermissions.manager.hasPermission(this, GTPermissions.PermissionType.LOCATION)) // Start location updates only if we have permission.
+            GTLocationManager.sharedInstance.startLocationUpdates();
     }
 
     private class MyBroadcastReceiver extends BroadcastReceiver {

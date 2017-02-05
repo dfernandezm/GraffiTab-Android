@@ -226,7 +226,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private void setupMenu() {
         // Attach to current activity.
         resideMenu = new CustomResideMenu(this);
-        resideMenu.setBackground(R.drawable.login);
+        resideMenu.setBackground(R.drawable.login_full);
         resideMenu.attachToActivity(this);
         resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT);
         resideMenu.addIgnoredView(viewPager);

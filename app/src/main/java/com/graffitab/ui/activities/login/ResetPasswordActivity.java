@@ -111,7 +111,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
     // Setup
 
     private void setupBackgroundImage() {
-        ActivityUtils.setupBackgroundImage(this, R.drawable.login, R.id.background);
+        ActivityUtils.setupBackgroundImage(this, R.drawable.login_full, R.id.background);
     }
 
     private void setupTextViews() {

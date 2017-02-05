@@ -14,9 +14,10 @@ import android.widget.ImageView;
 
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
+import com.graffitab.permissions.GTPermissions;
 import com.graffitab.utils.Utils;
-import com.graffitab.utils.image.BitmapUtils;
 import com.graffitab.utils.file.FileUtils;
+import com.graffitab.utils.image.BitmapUtils;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -88,23 +89,41 @@ public class CameraUtilsActivity extends AppCompatActivity {
      *
      * @param view target view.
      */
-    public void showImagePicker(ImageView view) {
-        targetView = view;
+    public void showImagePicker(final ImageView view) {
+        final Runnable pickerRunnable = new Runnable() {
+            @Override
+            public void run() {
+                targetView = view;
 
-        BottomSheet.Builder builder = buildImagePickerSheet();
-        builder = builder.listener(new DialogInterface.OnClickListener() {
+                BottomSheet.Builder builder = buildImagePickerSheet();
+                builder = builder.listener(new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (which == R.id.action_take_new)
+                            takePicture();
+                        else if (which == R.id.action_choose)
+                            choosePicture();
+                        else if (which == R.id.action_remove)
+                            finishPickingImage(null);
+                    }
+                });
+                builder.show();
+            }
+        };
+        GTPermissions.manager.checkPermission(this, GTPermissions.PermissionType.CAMERA_STORAGE, new GTPermissions.OnPermissionResultListener() {
 
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                if (which == R.id.action_take_new)
-                    takePicture();
-                else if (which == R.id.action_choose)
-                    choosePicture();
-                else if (which == R.id.action_remove)
-                    finishPickingImage(null);
+            public void onPermissionGranted() {
+                pickerRunnable.run();
             }
+
+            @Override
+            public void onPermissionDenied() {}
+
+            @Override
+            public void onDecideLater() {}
         });
-        builder.show();
     }
 
     /**

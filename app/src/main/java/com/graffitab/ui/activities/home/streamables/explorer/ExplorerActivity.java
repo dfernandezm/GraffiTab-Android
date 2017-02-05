@@ -254,7 +254,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void zoomToLocation(Location location) {
-        if (location != null) { // Make sure we have a valid location.
+        if (location != null) { // Make sure we have a valid location, in case we don't have permission.
             Log.i(getClass().getSimpleName(), "Zooming to location (latitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + ")");
             LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(sydney, AppConfig.configuration.mapInitialZoomLevel);

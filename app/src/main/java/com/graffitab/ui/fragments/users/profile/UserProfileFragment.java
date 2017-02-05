@@ -142,7 +142,7 @@ public class UserProfileFragment extends ListStreamablesFragment {
     }
 
     private void loadCover() {
-        int p = R.drawable.login;
+        int p = R.drawable.login_full;
         if (user.hasCover())
             Picasso.with(getActivity()).load(user.cover.link).placeholder(p).placeholder(p).error(p).into(cover);
         else

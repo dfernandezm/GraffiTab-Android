@@ -26,6 +26,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTLocationManager;
+import com.graffitab.permissions.GTPermissions;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnOkHandler;
@@ -318,7 +319,7 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
     }
 
     private void zoomToLocation(Location location) {
-        if (location != null) { // Make sure we have a valid location.
+        if (location != null) { // Make sure we have a valid location, in case we don't have permission
             Log.i(getClass().getSimpleName(), "Zooming to location (latitude=" + location.getLatitude() + ", longitude=" + location.getLongitude() + ")");
             LatLng sydney = new LatLng(location.getLatitude(), location.getLongitude());
             CameraUpdate update = CameraUpdateFactory.newLatLngZoom(sydney, 16);
@@ -385,16 +386,20 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
     }
 
     private void setupMapOnceAvailable() {
-        try {
-            mMap.setMyLocationEnabled(true);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            Log.e(getClass().getSimpleName(), "Location permission not granted", e);
-        }
-
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setCompassEnabled(false);
+
+        // Setup permission-based settings.
+        if (GTPermissions.manager.hasPermission(this, GTPermissions.PermissionType.LOCATION)) {
+            try {
+                mMap.setMyLocationEnabled(true);
+                GTLocationManager.sharedInstance.startLocationUpdates();
+            } catch (SecurityException e) {
+                Log.e(getClass().getSimpleName(), "Location permission was denied and we are still trying to access location. This should not happen", e);
+                e.printStackTrace();
+            }
+        }
     }
 
     private void setupTextFields() {

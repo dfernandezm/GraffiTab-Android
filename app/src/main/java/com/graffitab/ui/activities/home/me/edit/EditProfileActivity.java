@@ -171,7 +171,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
     }
 
     private void loadCover() {
-        int p = R.drawable.login;
+        int p = R.drawable.login_full;
         if (me.hasCover())
             Picasso.with(this).load(me.cover.link).placeholder(p).placeholder(p).error(p).into(cover);
         else
