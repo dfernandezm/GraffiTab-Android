@@ -21,6 +21,7 @@ import com.graffitab.R;
 import com.graffitab.config.AppConfig;
 import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTLocationManager;
+import com.graffitab.permissions.GTPermissions;
 import com.graffitab.ui.activities.home.me.locations.CreateLocationActivity;
 import com.graffitab.ui.activities.home.streamables.StreamableDetailsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterItem;
@@ -294,15 +295,8 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
     }
 
     private void setupMapOnceAvailable() {
-        try {
-            mMap.setMyLocationEnabled(true);
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            Log.e(getClass().getSimpleName(), "Location permission not granted", e);
-        }
-
         // Setup cluster manager.
-        mClusterManager = new ClusterManager<GTClusterItem>(this, mMap);
+        mClusterManager = new ClusterManager<>(this, mMap);
         mClusterManager.setRenderer(new GTClusterRenderer(this, mMap, mClusterManager));
         mClusterManager.setOnClusterClickListener(new ClusterManager.OnClusterClickListener<GTClusterItem>() {
 
@@ -330,5 +324,16 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.getUiSettings().setMyLocationButtonEnabled(false);
         mMap.getUiSettings().setMapToolbarEnabled(false);
         mMap.getUiSettings().setCompassEnabled(false);
+
+        // Setup permission-based settings.
+        if (GTPermissions.manager.hasPermission(this, GTPermissions.PermissionType.LOCATION)) {
+            try {
+                mMap.setMyLocationEnabled(true);
+                GTLocationManager.sharedInstance.startLocationUpdates();
+            } catch (SecurityException e) {
+                Log.e(getClass().getSimpleName(), "Location permission was denied and we are still trying to access location. This should not happen", e);
+                e.printStackTrace();
+            }
+        }
     }
 }

@@ -31,13 +31,15 @@
     <string name="permissions_storage_title">Save Pictures</string>
     <string name="permissions_storage_description">We\'ll make saving pictures to your device as easy as possible. We just need your permission first.\n\nOtherwise you won\'t be able to upload pictures or change your avatar.</string>
     <string name="permissions_storage_button">Allow Access</string>
-    <string name="permissions_photos_title">Photos</string>
-    <string name="permissions_photos_description">Want to change your avatar or set a background picture and draw on top of it? Awesome! We just need your permission first.\n\nPhotos will never be posted without your consent.</string>
-    <string name="permissions_photos_button">Use Photos</string>
-    <string name="permissions_photos_denied">We need your permission to access the photos library. Please enable this in Settings.</string>
+    <string name="permissions_camera_title">Camera and Photos</string>
+    <string name="permissions_camera_description">In order to use photos from your device, we need your permission first.\n\nPhotos will never be posted without your consent.</string>
+    <string name="permissions_camera_button">Use Photos</string>
     <string name="permissions_location_title">Location Services</string>
-    <string name="permissions_location_description">In order to use the Explorer or create graffiti, we need to know your location.\n\nOtherwise, you can still draw and publish graffiti but they won\'t appear on the map.</string>
+    <string name="permissions_location_description">In order to use the Explorer or post to the map, we need to know your location.\n\nOtherwise, you can still draw and publish graffiti but they won\'t appear on the map.</string>
     <string name="permissions_location_button">Use Location Services</string>
+    <string name="permissions_camera_storage_title">Camera and Photos</string>
+    <string name="permissions_camera_storage_description">In order to use photos from your device, we need your permission first.\n\nPhotos will never be posted without your consent.</string>
+    <string name="permissions_camera_storage_button">Use Photos</string>
 
     <!-- Sign up -->
     <string name="sign_up">Sign me up</string>

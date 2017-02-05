@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.managers.GTGcmManager;
-import com.graffitab.managers.GTLocationManager;
+import com.graffitab.permissions.GTPermissions;
 import com.graffitab.ui.activities.home.me.locations.LocationsActivity;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
@@ -137,8 +137,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             return true;
         }
         else if (item.getItemId() == R.id.action_map) {
-            GTLocationManager.sharedInstance.startLocationUpdates();
-            startActivity(new Intent(this, ExplorerActivity.class));
+            openExplorer();
             return true;
         }
 
@@ -147,6 +146,33 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private boolean isNotificationsTabSelected() {
         return viewPager.getCurrentItem() == NOTIFICATIONS_POSITION;
+    }
+
+    private void openExplorer() {
+        final Runnable explorer = new Runnable() {
+            @Override
+            public void run() {
+                startActivity(new Intent(HomeActivity.this, ExplorerActivity.class));
+            }
+        };
+
+        GTPermissions.manager.checkPermission(this, GTPermissions.PermissionType.LOCATION, new GTPermissions.OnPermissionResultListener() {
+
+            @Override
+            public void onPermissionGranted() {
+                explorer.run();
+            }
+
+            @Override
+            public void onPermissionDenied() {
+                explorer.run();
+            }
+
+            @Override
+            public void onDecideLater() {
+                explorer.run();
+            }
+        });
     }
 
     // Loading

@@ -33,11 +33,11 @@ public class GTPermissionActivity extends AppCompatActivity {
     @BindView(R.id.accessBtn) Button accessBtn;
 
     private GTPermissions.PermissionType permissionType;
-    private String permission;
+    private String[] permissions;
 
-    public static void openPermissionRequest(Activity context, GTPermissions.PermissionType permissionType, String permission) {
+    public static void openPermissionRequest(Activity context, GTPermissions.PermissionType permissionType, String[] permissions) {
         Intent i = new Intent(context, GTPermissionActivity.class);
-        i.putExtra(Constants.EXTRA_PERMISSION, permission);
+        i.putExtra(Constants.EXTRA_PERMISSIONS, permissions);
         i.putExtra(Constants.EXTRA_PERMISSION_TYPE, permissionType);
         context.startActivity(i);
     }
@@ -50,9 +50,9 @@ public class GTPermissionActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         Bundle extras = getIntent().getExtras();
-        if (extras != null && extras.get(Constants.EXTRA_PERMISSION) != null && extras.get(Constants.EXTRA_PERMISSION_TYPE) != null) {
+        if (extras != null && extras.get(Constants.EXTRA_PERMISSION_TYPE) != null && extras.get(Constants.EXTRA_PERMISSIONS) != null) {
             permissionType = (GTPermissions.PermissionType) extras.getSerializable(Constants.EXTRA_PERMISSION_TYPE);
-            permission = extras.getString(Constants.EXTRA_PERMISSION);
+            permissions = (String[]) extras.getSerializable(Constants.EXTRA_PERMISSIONS);
         }
         else {
             finish();
@@ -69,21 +69,20 @@ public class GTPermissionActivity extends AppCompatActivity {
 
     @OnClick(R.id.accessBtn)
     public void onClickAccess(View view) {
-        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(this,
-                new String[]{permission}, new PermissionsResultAction() {
+        PermissionsManager.getInstance().requestPermissionsIfNecessaryForResult(this, permissions, new PermissionsResultAction() {
 
-                    @Override
-                    public void onGranted() {
-                        GTPermissions.manager.permissionGranted();
-                        finish();
-                    }
+            @Override
+            public void onGranted() {
+                GTPermissions.manager.permissionGranted();
+                finish();
+            }
 
-                    @Override
-                    public void onDenied(String permission) {
-                        GTPermissions.manager.permissionDenied();
-                        finish();
-                    }
-                });
+            @Override
+            public void onDenied(String permission) {
+                GTPermissions.manager.permissionDenied();
+                finish();
+            }
+        });
     }
 
     @OnClick(R.id.laterBtn)
@@ -100,12 +99,14 @@ public class GTPermissionActivity extends AppCompatActivity {
                 title.setText(getString(R.string.permissions_location_title));
                 descriptionLbl.setText(getString(R.string.permissions_location_description));
                 accessBtn.setText(getString(R.string.permissions_location_button));
+                image.setImageResource(R.drawable.permission_location);
                 break;
             }
             case CAMERA: {
-                title.setText(getString(R.string.permissions_photos_title));
-                descriptionLbl.setText(getString(R.string.permissions_photos_description));
-                accessBtn.setText(getString(R.string.permissions_photos_button));
+                title.setText(getString(R.string.permissions_camera_title));
+                descriptionLbl.setText(getString(R.string.permissions_camera_description));
+                accessBtn.setText(getString(R.string.permissions_camera_button));
+                image.setImageResource(R.drawable.permission_camera);
                 break;
             }
             case STORAGE: {
@@ -113,6 +114,13 @@ public class GTPermissionActivity extends AppCompatActivity {
                 descriptionLbl.setText(getString(R.string.permissions_storage_description));
                 accessBtn.setText(getString(R.string.permissions_storage_button));
                 image.setImageResource(R.drawable.permission_storage);
+                break;
+            }
+            case CAMERA_STORAGE: {
+                title.setText(getString(R.string.permissions_camera_storage_title));
+                descriptionLbl.setText(getString(R.string.permissions_camera_storage_description));
+                accessBtn.setText(getString(R.string.permissions_camera_storage_button));
+                image.setImageResource(R.drawable.permission_camera);
                 break;
             }
         }

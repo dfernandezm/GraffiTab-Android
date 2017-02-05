@@ -10,15 +10,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.graffitab.R;
-import com.graffitab.permissions.GTPermissions;
 import com.graffitab.ui.activities.custom.facebook.FacebookUtilsActivity;
 import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
+import com.graffitab.utils.input.InputValidator;
+import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
@@ -55,52 +57,35 @@ public class LoginActivity extends FacebookUtilsActivity {
 
     @OnClick(R.id.loginBtn)
     public void onClickLogin(View view) {
-        GTPermissions.manager.checkPermission(this, GTPermissions.PermissionType.LOCATION, new GTPermissions.OnPermissionResultListener() {
+        Log.i(getClass().getSimpleName(), "Logging in");
+        String un = usernameField.getText().toString();
+        String pw = passwordField.getText().toString();
 
-            @Override
-            public void onPermissionGranted() {
-                System.out.println("PERMISSION GRANTED");
-            }
+        if (InputValidator.validateLogin(this, un, pw)) {
+            KeyboardUtils.hideKeyboard(this);
+            TaskDialog.getInstance().showDialog(null, this, null);
 
-            @Override
-            public void onPermissionDenied() {
-                System.out.println("PERMISSION DENIED");
-            }
+            GTSDK.getUserManager().login(un, pw, new GTResponseHandler<GTUserResponse>() {
 
-            @Override
-            public void onDecideLater() {
-                System.out.println("DECIDE LATER");
-            }
-        });
-//        Log.i(getClass().getSimpleName(), "Logging in");
-//        String un = usernameField.getText().toString();
-//        String pw = passwordField.getText().toString();
-//
-//        if (InputValidator.validateLogin(this, un, pw)) {
-//            KeyboardUtils.hideKeyboard(this);
-//            TaskDialog.getInstance().showDialog(null, this, null);
-//
-//            GTSDK.getUserManager().login(un, pw, new GTResponseHandler<GTUserResponse>() {
-//
-//                @Override
-//                public void onSuccess(GTResponse<GTUserResponse> responseObject) {
-//                    Log.i(getClass().getSimpleName(), "Logged in");
-//                    refreshCurrentUserAndFinishLogin();
-//                }
-//
-//                @Override
-//                public void onFailure(GTResponse<GTUserResponse> responseObject) {
-//                    Log.e(getClass().getSimpleName(), "Failed to login");
-//                    TaskDialog.getInstance().hideDialog();
-//
-//                    if (responseObject.getResultCode() == GTResultCode.USER_NOT_LOGGED_IN) {
-//                        DialogBuilder.buildAPIErrorDialog(LoginActivity.this, getString(R.string.app_name), getString(R.string.login_error_credentials), true, responseObject.getResultCode());
-//                        return;
-//                    }
-//                    DialogBuilder.buildAPIErrorDialog(LoginActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
-//                }
-//            });
-//        }
+                @Override
+                public void onSuccess(GTResponse<GTUserResponse> responseObject) {
+                    Log.i(getClass().getSimpleName(), "Logged in");
+                    refreshCurrentUserAndFinishLogin();
+                }
+
+                @Override
+                public void onFailure(GTResponse<GTUserResponse> responseObject) {
+                    Log.e(getClass().getSimpleName(), "Failed to login");
+                    TaskDialog.getInstance().hideDialog();
+
+                    if (responseObject.getResultCode() == GTResultCode.USER_NOT_LOGGED_IN) {
+                        DialogBuilder.buildAPIErrorDialog(LoginActivity.this, getString(R.string.app_name), getString(R.string.login_error_credentials), true, responseObject.getResultCode());
+                        return;
+                    }
+                    DialogBuilder.buildAPIErrorDialog(LoginActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
+                }
+            });
+        }
     }
 
     @OnClick(R.id.loginFacebookBtn)
