@@ -2,8 +2,8 @@ package com.graffitab.config;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
-import com.graffitabsdk.config.GTConfig;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTConfig;
+import com.graffitabsdk.sdk.GTSDK;
 import com.instabug.library.Feature;
 import com.instabug.library.Instabug;
 import com.instabug.library.invocation.InstabugInvocationEvent;

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,7 +25,8 @@ import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitab.utils.image.ImageUtils;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
@@ -52,6 +54,8 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     @BindView(R.id.likesField) public TextView likesField;
     @BindView(R.id.commentsField) public TextView commentsField;
     @BindView(R.id.likeBtn) public View likeBtn;
+    @BindView(R.id.likeIcon) public ImageView likeIcon;
+    @BindView(R.id.commentIcon) public ImageView commentIcon;
 
     private GTStreamable streamable;
     private PhotoViewAttacher mAttacher;
@@ -80,6 +84,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupImageView();
+        setupImageViews();
 
         loadData();
         refreshStreamable();
@@ -355,5 +360,10 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     private void setupImageView() {
         mAttacher = new PhotoViewAttacher(streamableView);
+    }
+
+    private void setupImageViews() {
+        likeIcon.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_thumb_up_black_24dp, Color.WHITE));
+        commentIcon.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_chat_bubble_black_24dp, Color.WHITE));
     }
 }

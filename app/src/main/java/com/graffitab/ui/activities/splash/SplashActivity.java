@@ -10,7 +10,7 @@ import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;

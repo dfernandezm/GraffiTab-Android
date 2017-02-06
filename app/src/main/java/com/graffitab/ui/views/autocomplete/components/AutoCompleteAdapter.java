@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.ui.adapters.BaseItemAdapter;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.params.GTQueryParameters;

@@ -7,7 +7,7 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 import com.graffitab.R;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.common.result.GTDeviceLinkResult;

@@ -15,7 +15,7 @@ import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.ui.dialog.handlers.OnOkHandler;
 import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
 import com.graffitab.ui.dialog.handlers.OnYesNoInputHandler;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.GTResultCode;
 
 import java.util.Date;

@@ -11,7 +11,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.graffitab.config.AppConfig;
 import com.graffitab.managers.GTLocationManager;
 import com.graffitab.permissions.GTPermissions;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 
 import java.lang.ref.WeakReference;
 import java.util.Locale;

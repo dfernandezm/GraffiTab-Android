@@ -2,7 +2,7 @@ package com.graffitab.ui.fragments.search;
 
 import com.graffitab.ui.fragments.users.ListUsersFragment;
 import com.graffitab.utils.display.DisplayUtils;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponseHandler;

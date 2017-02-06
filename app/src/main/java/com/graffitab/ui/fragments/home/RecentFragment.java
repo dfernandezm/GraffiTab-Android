@@ -1,7 +1,7 @@
 package com.graffitab.ui.fragments.home;
 
 import com.graffitab.ui.fragments.streamables.SwimlaneStreamablesFragment;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponseHandler;

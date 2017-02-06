@@ -132,6 +132,7 @@
             android:paddingTop="6dp">
 
             <ImageButton
+                android:id="@+id/likeIcon"
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:background="@null"
@@ -162,6 +163,7 @@
             android:paddingTop="5dp">
 
             <ImageButton
+                android:id="@+id/commentIcon"
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:background="@null"

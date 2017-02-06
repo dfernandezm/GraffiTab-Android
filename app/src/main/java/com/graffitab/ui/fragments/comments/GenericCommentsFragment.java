@@ -32,7 +32,7 @@ import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDe
 import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.input.KeyboardUtils;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTComment;
 import com.graffitabsdk.model.GTStreamable;

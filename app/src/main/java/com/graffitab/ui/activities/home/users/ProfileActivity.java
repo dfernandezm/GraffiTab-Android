@@ -22,7 +22,7 @@ import com.graffitab.ui.fragments.users.profile.UserProfileFragment;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.ImageUtils;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;

@@ -11,7 +11,7 @@ import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.custom.streamables.ToggleStreamablesActivity;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.streamables.GridStreamablesFragment;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.params.GTQueryParameters;

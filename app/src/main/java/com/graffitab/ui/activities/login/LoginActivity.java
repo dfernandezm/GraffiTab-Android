@@ -19,7 +19,7 @@ import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;

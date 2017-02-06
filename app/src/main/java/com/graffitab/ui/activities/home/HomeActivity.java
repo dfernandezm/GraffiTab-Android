@@ -33,7 +33,7 @@ import com.graffitab.ui.views.sidemenu.CustomResideMenu;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.ImageUtils;
-import com.graffitabsdk.config.GTSDK;
+import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUnseenNotificationsResponse;
