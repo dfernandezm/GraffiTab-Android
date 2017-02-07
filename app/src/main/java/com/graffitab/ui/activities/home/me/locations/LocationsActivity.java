@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.Window;
 
 import com.graffitab.R;
+import com.graffitab.permissions.GTPermissions;
 import com.graffitab.ui.fragments.locations.LocationsFragment;
 import com.graffitab.utils.activity.ActivityUtils;
 
@@ -52,7 +53,30 @@ public class LocationsActivity extends AppCompatActivity {
             return true;
         }
         else if (item.getItemId() == R.id.action_create) {
-            startActivity(new Intent(this, CreateLocationActivity.class));
+            final Runnable explorer = new Runnable() {
+                @Override
+                public void run() {
+                    startActivity(new Intent(LocationsActivity.this, CreateLocationActivity.class));
+                }
+            };
+
+            GTPermissions.manager.checkPermission(this, GTPermissions.PermissionType.LOCATION, new GTPermissions.OnPermissionResultListener() {
+
+                @Override
+                public void onPermissionGranted() {
+                    explorer.run();
+                }
+
+                @Override
+                public void onPermissionDenied() {
+                    explorer.run();
+                }
+
+                @Override
+                public void onDecideLater() {
+                    explorer.run();
+                }
+            });
             return true;
         }
 
