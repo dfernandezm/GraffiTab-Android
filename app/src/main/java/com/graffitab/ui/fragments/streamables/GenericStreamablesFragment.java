@@ -29,6 +29,10 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
 import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.comments.GTCommentDeletedEvent;
+import com.graffitabsdk.sdk.events.comments.GTCommentPostedEvent;
+import com.graffitabsdk.sdk.events.streamables.GTStreamableLikedEvent;
+import com.graffitabsdk.sdk.events.streamables.GTStreamableUnlikedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.squareup.otto.Subscribe;
 
@@ -64,23 +68,47 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                 }
             }
 
-//            @Subscribe
-//            public void userFollowedEvent(GTUserFollowedEvent event) {
-//                refreshUserAfterFollowToggle(event.getUser());
-//            }
-//
-//            @Subscribe
-//            public void userUnfollowedEvent(GTUserUnfollowedEvent event) {
-//                refreshUserAfterFollowToggle(event.getUser());
-//            }
-//
-//            private void refreshUserAfterFollowToggle(GTUser toggledUser) {
-//                int index = items.indexOf(toggledUser);
-//                if (index >= 0) {
-//                    items.set(index, toggledUser);
-//                    adapter.setItems(items, getRecyclerView().getRecyclerView());
-//                }
-//            }
+            @Subscribe
+            public void streamableLikedEvent(GTStreamableLikedEvent event) {
+                refreshStreamableAfterLikeToggle(event.getStreamable());
+            }
+
+            @Subscribe
+            public void streamableUnlikedEvent(GTStreamableUnlikedEvent event) {
+                refreshStreamableAfterLikeToggle(event.getStreamable());
+            }
+
+            @Subscribe
+            public void commentPostedEvent(GTCommentPostedEvent event) {
+                for (int i = 0; i < items.size(); i++) {
+                    GTStreamable streamable = items.get(i);
+                    if (streamable.equals(event.getComment().streamable)) {
+                        streamable.addToCommentsCount();
+                        adapter.setItems(items, getRecyclerView().getRecyclerView());
+                        break;
+                    }
+                }
+            }
+
+            @Subscribe
+            public void commentDeletedEvent(GTCommentDeletedEvent event) {
+                for (int i = 0; i < items.size(); i++) {
+                    GTStreamable streamable = items.get(i);
+                    if (streamable.id == event.getStreamableId()) {
+                        streamable.removeFromCommentsCount();
+                        adapter.setItems(items, getRecyclerView().getRecyclerView());
+                        break;
+                    }
+                }
+            }
+
+            private void refreshStreamableAfterLikeToggle(GTStreamable toggledStreamable) {
+                int index = items.indexOf(toggledStreamable);
+                if (index >= 0) {
+                    items.set(index, toggledStreamable);
+                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+                }
+            }
 
             private List<Integer> indexesOfStreamablesForOwner(GTUser owner) {
                 List<Integer> indexes = new ArrayList<>();
@@ -165,7 +193,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     public void onToggleLike(GTStreamable streamable, StreamableViewHolder holder, int adapterPosition) {
         streamable.likedByCurrentUser = !streamable.likedByCurrentUser;
         if (streamable.likedByCurrentUser) {
-            streamable.likersCount++;
+            streamable.addToLikersCount();
             GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
@@ -180,7 +208,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
             });
         }
         else {
-            streamable.likersCount--;
+            streamable.removeFromLikersCount();
             GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override

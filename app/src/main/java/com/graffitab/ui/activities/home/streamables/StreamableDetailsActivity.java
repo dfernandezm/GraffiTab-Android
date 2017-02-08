@@ -152,7 +152,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     public void onClickToggleLike(View view) {
         streamable.likedByCurrentUser = !streamable.likedByCurrentUser;
         if (streamable.likedByCurrentUser) {
-            streamable.likersCount++;
+            streamable.addToLikersCount();
             GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
@@ -167,7 +167,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
             });
         }
         else {
-            streamable.likersCount--;
+            streamable.removeFromLikersCount();
             GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
