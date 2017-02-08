@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
-import com.graffitab.utils.display.DisplayUtils;
+import com.graffitab.utils.device.DeviceUtils;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
 import com.squareup.picasso.Picasso;
@@ -50,7 +50,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
         likesField.setText(streamable.likersCount + "");
         commentsField.setText(streamable.commentsCount + "");
 
-        streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DisplayUtils.pxToDip(MyApplication.getInstance(), item.asset.thumbnailHeight)));
+        streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.pxToDip(MyApplication.getInstance(), item.asset.thumbnailHeight)));
 
         loadAvatar();
     }

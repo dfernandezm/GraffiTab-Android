@@ -14,16 +14,16 @@ import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.WebActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.ui.dialog.handlers.OnOkHandler;
+import com.graffitab.ui.dialog.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
+import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.result.GTRegistrationCompleteResult;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import butterknife.BindView;
@@ -88,10 +88,10 @@ public class SignUpActivity extends AppCompatActivity {
             KeyboardUtils.hideKeyboard(this);
             TaskDialog.getInstance().showDialog(null, this, null);
 
-            GTSDK.getUserManager().register(fn, ln, em, un, pw, new GTResponseHandler<GTRegistrationCompleteResult>() {
+            GTSDK.getUserManager().register(fn, ln, em, un, pw, new GTResponseHandler<GTActionCompleteResult>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTRegistrationCompleteResult> responseObject) {
+                public void onSuccess(GTResponse<GTActionCompleteResult> responseObject) {
                     Log.i(getClass().getSimpleName(), "Successfully registered");
                     TaskDialog.getInstance().hideDialog();
                     DialogBuilder.buildOKDialog(SignUpActivity.this, getString(R.string.sign_up_confirmation_title), getString(R.string.sign_up_confirmation_detail), new OnOkHandler() {
@@ -104,7 +104,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onFailure(GTResponse<GTRegistrationCompleteResult> responseObject) {
+                public void onFailure(GTResponse<GTActionCompleteResult> responseObject) {
                     Log.e(getClass().getSimpleName(), "Failed to register");
                     TaskDialog.getInstance().hideDialog();
 

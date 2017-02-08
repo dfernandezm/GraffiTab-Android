@@ -19,6 +19,10 @@ import com.graffitabsdk.model.GTUser;
  */
 public class ProfileViewPagerAdapter extends PagerAdapter {
 
+    private TextView aboutField;
+    private TextView websiteField;
+    private View separator;
+
     private Context context;
     private ViewPager pager;
     private GTUser user;
@@ -27,6 +31,11 @@ public class ProfileViewPagerAdapter extends PagerAdapter {
         this.context = context;
         this.pager = pager;
         this.user = user;
+    }
+
+    public void setUser(GTUser user) {
+        this.user = user;
+        loadUserAboutData();
     }
 
     @Override
@@ -41,19 +50,23 @@ public class ProfileViewPagerAdapter extends PagerAdapter {
         else {
             layout = (ViewGroup) inflater.inflate(R.layout.pager_user_profile_about, container, false);
 
-            TextView aboutField = (TextView) layout.findViewById(R.id.about);
-            TextView websiteField = (TextView) layout.findViewById(R.id.website);
-            View separator = layout.findViewById(R.id.separator);
+            aboutField = (TextView) layout.findViewById(R.id.about);
+            websiteField = (TextView) layout.findViewById(R.id.website);
+            separator = layout.findViewById(R.id.separator);
 
-            separator.setVisibility(user.about != null && user.website != null ? View.VISIBLE : View.GONE);
-            aboutField.setVisibility(user.about != null ? View.VISIBLE : View.GONE);
-            aboutField.setText(user.about != null ? user.about : "");
-            websiteField.setVisibility(user.website != null ? View.VISIBLE : View.GONE);
-            websiteField.setText(user.website != null ? user.website : "");
+            loadUserAboutData();
 
             container.addView(layout);
         }
         return layout;
+    }
+
+    private void loadUserAboutData() {
+        separator.setVisibility(user.about != null && user.website != null ? View.VISIBLE : View.GONE);
+        aboutField.setVisibility(user.about != null ? View.VISIBLE : View.GONE);
+        aboutField.setText(user.about != null ? user.about : "");
+        websiteField.setVisibility(user.website != null ? View.VISIBLE : View.GONE);
+        websiteField.setText(user.website != null ? user.website : "");
     }
 
     @Override
@@ -63,7 +76,7 @@ public class ProfileViewPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return user.aboutString().length() > 0 ? 2 : 1;
+        return 2;
     }
 
     @Override

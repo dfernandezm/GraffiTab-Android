@@ -9,6 +9,7 @@ public abstract class ListUsersFragment extends GenericUsersFragment {
 
     @Override
     public void basicInit() {
+        super.basicInit();
         setViewType(ViewType.LIST_FULL);
     }
 }

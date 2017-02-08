@@ -10,15 +10,15 @@ import android.view.MenuItem;
 import com.graffitab.R;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.ui.dialog.handlers.OnOkHandler;
+import com.graffitab.ui.dialog.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.input.KeyboardUtils;
+import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.result.GTEditPasswordResult;
 import com.rengwuxian.materialedittext.MaterialEditText;
 
 import butterknife.BindView;
@@ -71,10 +71,10 @@ public class EditPasswordActivity extends AppCompatActivity {
                 KeyboardUtils.hideKeyboard(this);
                 TaskDialog.getInstance().showDialog(null, this, null);
 
-                GTSDK.getMeManager().editPassword(pw, npw, new GTResponseHandler<GTEditPasswordResult>() {
+                GTSDK.getMeManager().editPassword(pw, npw, new GTResponseHandler<GTActionCompleteResult>() {
 
                     @Override
-                    public void onSuccess(GTResponse<GTEditPasswordResult> responseObject) {
+                    public void onSuccess(GTResponse<GTActionCompleteResult> responseObject) {
                         Log.i(getClass().getSimpleName(), "Successfully changed password");
                         TaskDialog.getInstance().hideDialog();
                         DialogBuilder.buildOKDialog(EditPasswordActivity.this, getString(R.string.app_name), getString(R.string.change_password_success), new OnOkHandler() {
@@ -87,7 +87,7 @@ public class EditPasswordActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(GTResponse<GTEditPasswordResult> responseObject) {
+                    public void onFailure(GTResponse<GTActionCompleteResult> responseObject) {
                         Log.e(getClass().getSimpleName(), "Failed to edit password");
                         TaskDialog.getInstance().hideDialog();
                         DialogBuilder.buildAPIErrorDialog(EditPasswordActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());

@@ -9,6 +9,7 @@ public abstract class GridStreamablesFragment extends GenericStreamablesFragment
 
     @Override
     public void basicInit() {
+        super.basicInit();
         setViewType(ViewType.GRID);
     }
 }

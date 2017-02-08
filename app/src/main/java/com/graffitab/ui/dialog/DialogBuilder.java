@@ -11,10 +11,8 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 
 import com.graffitab.R;
+import com.graffitab.config.AppConfig;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
-import com.graffitab.ui.dialog.handlers.OnOkHandler;
-import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
-import com.graffitab.ui.dialog.handlers.OnYesNoInputHandler;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.GTResultCode;
 
@@ -59,13 +57,13 @@ public class DialogBuilder {
         else {
             Date errorDate = new Date();
             boolean shouldShowError = false;
-            if (lastErrorDate == null) {
+            if (lastErrorDate == null) { // Error has not been shown.
                 shouldShowError = true;
                 lastErrorDate = errorDate;
             }
-            else {
+            else { // Show error only after error interval has passed.
                 long seconds = (errorDate.getTime() - lastErrorDate.getTime()) / 1000;
-                if (seconds > 30) {
+                if (seconds > AppConfig.configuration.apiErrorInterval) {
                     shouldShowError = true;
                     lastErrorDate = errorDate;
                 }

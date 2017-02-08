@@ -24,7 +24,7 @@ import com.graffitab.ui.activities.home.users.UserLikesActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
+import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.utils.Utils;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;

@@ -1,4 +1,4 @@
-package com.graffitab.ui.views.recyclerview.components;
+package com.graffitab.ui.views.recyclerview;
 
 /**
  * Created by georgichristov on 22/11/2016

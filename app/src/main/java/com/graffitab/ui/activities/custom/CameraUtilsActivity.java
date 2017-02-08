@@ -185,7 +185,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
     private void takePicture() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+        if (Utils.isIntentAvailable(this, takePictureIntent)) {
             ContentValues values = new ContentValues();
             values.put(MediaStore.Images.Media.TITLE, "New Picture");
             values.put(MediaStore.Images.Media.DESCRIPTION, "From your Camera");
@@ -203,9 +203,11 @@ public class CameraUtilsActivity extends AppCompatActivity {
         Intent pickIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         pickIntent.setType("image/*");
 
-        Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] {pickIntent});
+        if (Utils.isIntentAvailable(this, getIntent) && Utils.isIntentAvailable(this, pickIntent)) {
+            Intent chooserIntent = Intent.createChooser(getIntent, "Select Image");
+            chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{pickIntent});
 
-        startActivityForResult(chooserIntent, REQUEST_PICK_IMAGE);
+            startActivityForResult(chooserIntent, REQUEST_PICK_IMAGE);
+        }
     }
 }

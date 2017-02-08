@@ -29,7 +29,7 @@ import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClu
 import com.graffitab.ui.activities.home.streamables.explorer.staticcontainers.StaticClusterActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
+import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitabsdk.sdk.GTSDK;
@@ -231,7 +231,9 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void run() {
                 // Loop until we find a location or we close the current activity.
-                while (GTLocationManager.sharedInstance.getLastKnownLocation() == null && shouldCheckForCurrentLocation) {
+                int retryCount = 0;
+                while (GTLocationManager.sharedInstance.getLastKnownLocation() == null && shouldCheckForCurrentLocation && retryCount < AppConfig.configuration.locationTimeout) {
+                    retryCount++;
                     try {
                         Log.i(ExplorerActivity.this.getClass().getSimpleName(), "Polling for location...");
                         Thread.sleep(1000);

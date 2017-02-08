@@ -1,4 +1,4 @@
-package com.graffitab.ui.views.recyclerview.components;
+package com.graffitab.ui.views.recyclerview;
 
 import android.graphics.Rect;
 import android.support.annotation.IntRange;

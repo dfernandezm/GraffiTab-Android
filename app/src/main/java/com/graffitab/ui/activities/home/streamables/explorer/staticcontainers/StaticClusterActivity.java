@@ -15,7 +15,7 @@ import com.graffitab.ui.activities.custom.streamables.BaseStreamablesActivity;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.streamables.GridStreamablesFragment;
 import com.graffitab.utils.activity.ActivityUtils;
-import com.graffitab.utils.display.DisplayUtils;
+import com.graffitab.utils.device.DeviceUtils;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
@@ -56,10 +56,10 @@ public class StaticClusterActivity extends BaseStreamablesActivity {
 
         super.onCreate(savedInstanceState);
 
-        if (DisplayUtils.isTablet(this))
-            ActivityUtils.showAsPopup(this, DisplayUtils.pxToDip(this, 500), DisplayUtils.pxToDip(this, 450));
+        if (DeviceUtils.isTablet(this))
+            ActivityUtils.showAsPopup(this, DeviceUtils.pxToDip(this, 500), DeviceUtils.pxToDip(this, 450));
         else
-            ActivityUtils.showAsPopup(this, DisplayUtils.pxToDip(this, 350), DisplayUtils.pxToDip(this, 350));
+            ActivityUtils.showAsPopup(this, DeviceUtils.pxToDip(this, 350), DeviceUtils.pxToDip(this, 350));
     }
 
     @Override

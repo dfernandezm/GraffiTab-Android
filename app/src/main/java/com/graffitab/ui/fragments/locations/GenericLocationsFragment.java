@@ -17,17 +17,20 @@ import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.adapters.locations.GenericLocationsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.locations.OnLocationClickListener;
 import com.graffitab.ui.dialog.DialogBuilder;
-import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
+import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
-import com.graffitab.utils.display.DisplayUtils;
-import com.graffitabsdk.sdk.GTSDK;
+import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitab.utils.device.DeviceUtils;
 import com.graffitabsdk.model.GTLocation;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.result.GTLocationDeletedResult;
+import com.graffitabsdk.network.common.result.GTActionCompleteResult;
+import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.locations.GTLocationCreatedEvent;
+import com.graffitabsdk.sdk.events.locations.GTLocationUpdatedEvent;
+import com.squareup.otto.Subscribe;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -35,6 +38,39 @@ import com.graffitabsdk.network.common.result.GTLocationDeletedResult;
  * Copyright © GraffiTab Inc. 2016
  */
 public abstract class GenericLocationsFragment extends GenericItemListFragment<GTLocation> implements OnLocationClickListener {
+
+    private Object eventListener;
+
+    @Override
+    public void basicInit() {
+        super.basicInit();
+
+        eventListener = new Object() {
+
+            @Subscribe
+            public void locationCreatedEvent(GTLocationCreatedEvent event) {
+                items.add(event.getLocation());
+                adapter.setItems(items, getRecyclerView().getRecyclerView());
+            }
+
+            @Subscribe
+            public void locationUpdatedEvent(GTLocationUpdatedEvent event) {
+                int index = items.indexOf(event.getLocation());
+                if (index >= 0) {
+                    items.set(index, event.getLocation());
+                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+                }
+            }
+        };
+        GTSDK.registerEventListener(eventListener);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (eventListener != null)
+            GTSDK.unregisterEventListener(eventListener);
+        super.onDestroyView();
+    }
 
     @Override
     public int emptyViewImageResource() {
@@ -96,15 +132,15 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     private void deleteLocation(final GTLocation location, final int adapterPosition) {
         removeItemAtIndex(adapterPosition);
-        GTSDK.getMeManager().deleteLocation(location.id, new GTResponseHandler<GTLocationDeletedResult>() {
+        GTSDK.getMeManager().deleteLocation(location.id, new GTResponseHandler<GTActionCompleteResult>() {
 
             @Override
-            public void onSuccess(GTResponse<GTLocationDeletedResult> gtResponse) {
+            public void onSuccess(GTResponse<GTActionCompleteResult> gtResponse) {
                 Log.i(getClass().getSimpleName(), "Location deleted");
             }
 
             @Override
-            public void onFailure(GTResponse<GTLocationDeletedResult> gtResponse) {
+            public void onFailure(GTResponse<GTActionCompleteResult> gtResponse) {
                 Log.i(getClass().getSimpleName(), "Could not delete location");
             }
         });
@@ -114,7 +150,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(getActivity()) ? 2 : 1, 20);
+        return new AdvancedRecyclerViewItemDecoration(DeviceUtils.isLandscape(getActivity()) ? 2 : 1, 20);
     }
 
     @Override
@@ -131,6 +167,6 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
-        return new AdvancedRecyclerViewLayoutConfiguration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 2 : 1);
+        return new AdvancedRecyclerViewLayoutConfiguration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 2 : 1);
     }
 }

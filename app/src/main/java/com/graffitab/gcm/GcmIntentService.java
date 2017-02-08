@@ -35,6 +35,7 @@ public class GcmIntentService extends GcmListenerService {
 
         Bitmap bm = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher);
 
+        // Show notification.
         Intent resultIntent = new Intent(this, HomeActivity.class);
         resultIntent.setAction(Long.toString(System.currentTimeMillis()));
         PendingIntent resultPendingIntent =

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         app:srl_direction="top">
 
-        <com.graffitab.ui.views.recyclerview.components.AdvancedRecycleView
+        <com.graffitab.ui.views.recyclerview.AdvancedRecycleView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

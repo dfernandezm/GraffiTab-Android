@@ -1,4 +1,4 @@
-package com.graffitab.ui.views.recyclerview.components;
+package com.graffitab.ui.views.recyclerview;
 
 import android.content.Context;
 import android.support.v7.widget.GridLayoutManager;
@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.graffitab.R;
-import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
 
 import java.util.List;
 
@@ -59,6 +58,7 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
                 visibleItemCount = recyclerView.getChildCount();
                 totalItemCount = layoutManager.getItemCount();
 
+                // Find first visible item.
                 if (layoutManager != null && layoutManager instanceof LinearLayoutManager)
                     firstVisibleItem = ((LinearLayoutManager) layoutManager).findFirstVisibleItemPosition();
                 if (layoutManager != null && layoutManager instanceof GridLayoutManager)
@@ -68,11 +68,11 @@ public abstract class AdvancedEndlessRecyclerViewAdapter<T> extends AdvancedRecy
 
                     int[] firstVisibleItems = null;
                     firstVisibleItems = manager.findFirstVisibleItemPositions(firstVisibleItems);
-                    if (firstVisibleItems != null && firstVisibleItems.length > 0) {
+                    if (firstVisibleItems != null && firstVisibleItems.length > 0)
                         firstVisibleItem = firstVisibleItems[0];
-                    }
                 }
 
+                // Check if we should load more.
                 if (canLoadMore && !isMoreLoading && (totalItemCount - visibleItemCount) <= (firstVisibleItem + visibleThreshold)) {
                     if (onLoadMoreListener != null) {
                         onLoadMoreListener.onLoadMore();

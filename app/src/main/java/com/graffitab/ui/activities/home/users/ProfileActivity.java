@@ -18,15 +18,19 @@ import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
-import com.graffitab.ui.fragments.users.profile.UserProfileFragment;
+import com.graffitab.ui.fragments.users.UserProfileFragment;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.ImageUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
+import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.users.GTUserFollowedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
+import com.squareup.otto.Subscribe;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -71,15 +75,22 @@ public class ProfileActivity extends CameraUtilsActivity {
         setupTopBar();
         setupContent();
         setupButtons();
+        setupEventListeners();
 
-        loadData();
+        loadFollowButton();
         Utils.runWithDelay(new Runnable() {
 
             @Override
             public void run() {
-                reloadUserData();
+                reloadUserProfile();
             }
         }, 300);
+    }
+
+    @Override
+    protected void onDestroy() {
+        GTSDK.unregisterEventListener(this);
+        super.onDestroy();
     }
 
     @Override
@@ -99,7 +110,7 @@ public class ProfileActivity extends CameraUtilsActivity {
     @OnClick(R.id.fab)
     public void onClickFollow(View view) {
         user.followedByCurrentUser = content.toggleFollow();
-        loadData();
+        loadFollowButton();
     }
 
     public void onClickPosts(View view) {
@@ -155,22 +166,53 @@ public class ProfileActivity extends CameraUtilsActivity {
             Utils.openUrl(this, user.website);
     }
 
+    // Events
+
+    @Subscribe
+    public void userFollowedEvent(GTUserFollowedEvent event) {
+        refreshUserAfterFollowStateChange(event.getUser());
+    }
+
+    @Subscribe
+    public void userUnfollowedEvent(GTUserUnfollowedEvent event) {
+        refreshUserAfterFollowStateChange(event.getUser());
+    }
+
+    @Subscribe
+    public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+        refreshUserAfterFollowStateChange(event.getUser());
+        content.loadUserNamesAndHeaderData(); // Refresh profile assets.
+        content.loadUserAssets();
+    }
+
+    private void refreshUserAfterFollowStateChange(GTUser newUser) {
+        // The current logged in user cannot be followed/unfollowed, so we only care about other users.
+        if (user.equals(newUser)) // This user has been followed/unfollowed.
+            user = newUser;
+        else if (user.isMe()) // We are viewing the logged in user.
+            user = GTSDK.getAccountManager().getLoggedInUser();
+
+        content.setUser(user);
+        content.loadUserCountData();
+        loadFollowButton();
+    }
+
     // Loading
 
-    private void loadData() {
+    private void loadFollowButton() {
         fab.setImageDrawable(user.followedByCurrentUser ? ImageUtils.tintIcon(this, R.drawable.ic_action_unfollow, getResources().getColor(R.color.colorWhite)) : ImageUtils.tintIcon(this, R.drawable.ic_action_follow, getResources().getColor(R.color.colorPrimary)));
         fab.setColorNormalResId(user.followedByCurrentUser ? R.color.colorPrimary : R.color.colorWhite);
         fab.setColorPressed(user.followedByCurrentUser ? getResources().getColor(R.color.colorPrimaryDark) : Color.parseColor("#efefef"));
         fab.setColorRipple(user.followedByCurrentUser ? getResources().getColor(R.color.colorPrimaryDark) : Color.parseColor("#efefef"));
     }
 
-    public void reloadUserData() {
+    public void reloadUserProfile() {
         GTSDK.getUserManager().getFullUserProfile(user.id, !profileRefreshedOnce, new GTResponseHandler<GTUserResponse>() {
 
             @Override
             public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
                 user = gtResponse.getObject().user;
-                finishLoadingUser();
+                finishLoadingUserProfile();
             }
 
             @Override
@@ -182,29 +224,30 @@ public class ProfileActivity extends CameraUtilsActivity {
             public void onCache(GTResponse<GTUserResponse> gtResponse) {
                 super.onCache(gtResponse);
                 user = gtResponse.getObject().user;
-                finishLoadingUser();
+                finishLoadingUserProfile();
             }
         });
         profileRefreshedOnce = true;
     }
 
-    private void finishLoadingUser() {
-        loadData();
+    private void finishLoadingUserProfile() {
+        loadFollowButton();
         content.setUser(user);
-        content.loadUserStats();
-        content.loadUserData();
+        content.loadUserCountData();
+        content.loadUserNamesAndHeaderData();
+        content.loadUserAssets();
 
-        Utils.runWithDelay(new Runnable() {
+        if (!user.isMe()) { // Only show follow button if we're viewing some else's profile.
+            Utils.runWithDelay(new Runnable() {
 
-            @Override
-            public void run() {
-                if (!user.isMe()) {
+                @Override
+                public void run() {
                     fab.setVisibility(View.VISIBLE);
                     fab.animate().scaleX(1);
                     fab.animate().scaleY(1);
                 }
-            }
-        }, 700);
+            }, 700);
+        }
     }
 
     // Setup
@@ -231,5 +274,9 @@ public class ProfileActivity extends CameraUtilsActivity {
         fab.setVisibility(View.GONE);
         fab.animate().scaleX(0);
         fab.animate().scaleY(0);
+    }
+
+    private void setupEventListeners() {
+        GTSDK.registerEventListener(this);
     }
 }

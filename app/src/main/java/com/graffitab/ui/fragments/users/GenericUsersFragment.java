@@ -10,14 +10,17 @@ import com.graffitab.ui.adapters.users.GenericUsersRecyclerViewAdapter;
 import com.graffitab.ui.adapters.users.OnUserClickListener;
 import com.graffitab.ui.adapters.users.viewholders.UserViewHolder;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
-import com.graffitabsdk.sdk.GTSDK;
+import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
+import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.users.GTUserFollowedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
+import com.squareup.otto.Subscribe;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -29,9 +32,40 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
     public enum ViewType {LIST_FULL}
 
     private ViewType viewType;
+    private Object eventListener;
 
+    @Override
     public void basicInit() {
-        setViewType(ViewType.LIST_FULL);
+        super.basicInit();
+
+        eventListener = new Object() {
+
+            @Subscribe
+            public void userFollowedEvent(GTUserFollowedEvent event) {
+                refreshUserAfterFollowToggle(event.getUser());
+            }
+
+            @Subscribe
+            public void userUnfollowedEvent(GTUserUnfollowedEvent event) {
+                refreshUserAfterFollowToggle(event.getUser());
+            }
+
+            private void refreshUserAfterFollowToggle(GTUser toggledUser) {
+                int index = items.indexOf(toggledUser);
+                if (index >= 0) {
+                    items.set(index, toggledUser);
+                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+                }
+            }
+        };
+        GTSDK.registerEventListener(eventListener);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (eventListener != null)
+            GTSDK.unregisterEventListener(eventListener);
+        super.onDestroyView();
     }
 
     @Override

@@ -19,16 +19,21 @@ import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapt
 import com.graffitab.ui.adapters.streamables.OnStreamableClickListener;
 import com.graffitab.ui.adapters.streamables.viewholders.StreamableViewHolder;
 import com.graffitab.ui.fragments.GenericItemListFragment;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
-import com.graffitab.utils.display.DisplayUtils;
-import com.graffitabsdk.sdk.GTSDK;
+import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitab.utils.device.DeviceUtils;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
+import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
+import com.squareup.otto.Subscribe;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -40,9 +45,61 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     public enum ViewType {GRID, TRENDING, SWIMLANE, LIST_FULL}
 
     private ViewType viewType;
+    private Object eventListener;
 
+    @Override
     public void basicInit() {
-        setViewType(ViewType.GRID);
+        super.basicInit();
+
+        eventListener = new Object() {
+
+            @Subscribe
+            public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+                List<Integer> indexes = indexesOfStreamablesForOwner(event.getUser());
+                if (indexes.size() >= 0) {
+                    // Refresh streamable users.
+                    for (Integer index : indexes)
+                        items.get(index).user = event.getUser();
+                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+                }
+            }
+
+//            @Subscribe
+//            public void userFollowedEvent(GTUserFollowedEvent event) {
+//                refreshUserAfterFollowToggle(event.getUser());
+//            }
+//
+//            @Subscribe
+//            public void userUnfollowedEvent(GTUserUnfollowedEvent event) {
+//                refreshUserAfterFollowToggle(event.getUser());
+//            }
+//
+//            private void refreshUserAfterFollowToggle(GTUser toggledUser) {
+//                int index = items.indexOf(toggledUser);
+//                if (index >= 0) {
+//                    items.set(index, toggledUser);
+//                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+//                }
+//            }
+
+            private List<Integer> indexesOfStreamablesForOwner(GTUser owner) {
+                List<Integer> indexes = new ArrayList<>();
+                for (int i = 0; i < items.size(); i++) {
+                    GTStreamable streamable = items.get(i);
+                    if (streamable.user.equals(owner))
+                        indexes.add(i);
+                }
+                return indexes;
+            }
+        };
+        GTSDK.registerEventListener(eventListener);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (eventListener != null)
+            GTSDK.unregisterEventListener(eventListener);
+        super.onDestroyView();
     }
 
     @Override
@@ -145,7 +202,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
         if (viewType == ViewType.GRID)
-            return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3, 2);
+            return new AdvancedRecyclerViewItemDecoration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3, 2);
         else if (viewType == ViewType.LIST_FULL) {
             final int spacing = 10;
 
@@ -158,17 +215,17 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
                     outRect.right = 0;
                     outRect.left = 0;
-                    outRect.top = DisplayUtils.pxToDip(MyApplication.getInstance(), spacing);
+                    outRect.top = DeviceUtils.pxToDip(MyApplication.getInstance(), spacing);
 
                     if (position == itemCount - 1)
-                        outRect.bottom = DisplayUtils.pxToDip(MyApplication.getInstance(), spacing);
+                        outRect.bottom = DeviceUtils.pxToDip(MyApplication.getInstance(), spacing);
                 }
             };
         }
         else if (viewType == ViewType.SWIMLANE)
-            return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3, 5);
+            return new AdvancedRecyclerViewItemDecoration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3, 5);
         else if (viewType == ViewType.TRENDING)
-            return new AdvancedRecyclerViewItemDecoration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 3 : 2, 15);
+            return new AdvancedRecyclerViewItemDecoration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 3 : 2, 15);
         return null;
     }
 
@@ -196,13 +253,13 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
         if (viewType == ViewType.GRID)
-            return new AdvancedRecyclerViewLayoutConfiguration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3);
+            return new AdvancedRecyclerViewLayoutConfiguration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3);
         else if (viewType == ViewType.LIST_FULL)
             return null;
         else if (viewType == ViewType.SWIMLANE)
-            return new AdvancedRecyclerViewLayoutConfiguration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3);
+            return new AdvancedRecyclerViewLayoutConfiguration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3);
         else if (viewType == ViewType.TRENDING)
-            return new AdvancedRecyclerViewLayoutConfiguration(DisplayUtils.isLandscape(MyApplication.getInstance()) ? 3 : 2);
+            return new AdvancedRecyclerViewLayoutConfiguration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 3 : 2);
         return null;
     }
 }

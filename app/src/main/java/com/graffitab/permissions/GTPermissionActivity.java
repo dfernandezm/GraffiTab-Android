@@ -59,7 +59,7 @@ public class GTPermissionActivity extends AppCompatActivity {
             return;
         }
 
-        loadData();
+        loadPermissionData();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class GTPermissionActivity extends AppCompatActivity {
 
     // Loading
 
-    private void loadData() {
+    private void loadPermissionData() {
         switch (permissionType) {
             case LOCATION: {
                 title.setText(getString(R.string.permissions_location_title));

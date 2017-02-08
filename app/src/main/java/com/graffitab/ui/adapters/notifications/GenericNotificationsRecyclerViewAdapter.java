@@ -13,7 +13,7 @@ import com.graffitab.ui.adapters.notifications.viewholders.LikeNotificationViewH
 import com.graffitab.ui.adapters.notifications.viewholders.MentionNotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.NotificationViewHolder;
 import com.graffitab.ui.adapters.notifications.viewholders.WelcomeNotificationViewHolder;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitabsdk.model.GTNotification;
 
 import java.util.List;

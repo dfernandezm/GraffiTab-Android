@@ -1,4 +1,4 @@
-package com.graffitab.ui.views.recyclerview.components;
+package com.graffitab.ui.views.recyclerview;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

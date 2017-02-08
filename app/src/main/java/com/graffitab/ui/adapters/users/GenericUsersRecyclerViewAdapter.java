@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.graffitab.R;
 import com.graffitab.ui.adapters.users.viewholders.ListUserViewHolder;
 import com.graffitab.ui.fragments.users.GenericUsersFragment.ViewType;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitabsdk.model.GTUser;
 
 import java.util.List;

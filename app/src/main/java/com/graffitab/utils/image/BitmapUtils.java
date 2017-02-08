@@ -14,7 +14,7 @@ import android.net.Uri;
 import android.view.Display;
 import android.view.View;
 
-import com.graffitab.utils.display.DisplayUtils;
+import com.graffitab.utils.device.DeviceUtils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -326,7 +326,7 @@ public class BitmapUtils {
 	}
 	
 	public static Bitmap decodeSampledBitmapFromBytesForCurrentScreen( byte[] res, Context ctxt ) {
-		Display display = DisplayUtils.getScreenDisplay( ctxt );
+		Display display = DeviceUtils.getScreenDisplay( ctxt );
 		Point size = new Point();
 		display.getSize(size);
 		int width = size.x;

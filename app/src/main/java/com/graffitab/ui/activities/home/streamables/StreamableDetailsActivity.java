@@ -22,15 +22,15 @@ import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
+import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.ImageUtils;
+import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.result.GTStreamableDeletedResult;
 import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
@@ -253,16 +253,16 @@ public class StreamableDetailsActivity extends AppCompatActivity {
             @Override
             public void onClickYes() {
                 TaskDialog.getInstance().showDialog(getString(R.string.other_processing), StreamableDetailsActivity.this, null);
-                GTSDK.getStreamableManager().delete(streamable.id, new GTResponseHandler<GTStreamableDeletedResult>() {
+                GTSDK.getStreamableManager().delete(streamable.id, new GTResponseHandler<GTActionCompleteResult>() {
 
                     @Override
-                    public void onSuccess(GTResponse<GTStreamableDeletedResult> gtResponse) {
+                    public void onSuccess(GTResponse<GTActionCompleteResult> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
                         finish();
                     }
 
                     @Override
-                    public void onFailure(GTResponse<GTStreamableDeletedResult> gtResponse) {
+                    public void onFailure(GTResponse<GTActionCompleteResult> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
                         DialogBuilder.buildAPIErrorDialog(StreamableDetailsActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
                     }

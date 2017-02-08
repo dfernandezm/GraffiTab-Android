@@ -9,6 +9,7 @@ public abstract class TrendingStreamablesFragment extends GenericStreamablesFrag
 
     @Override
     public void basicInit() {
+        super.basicInit();
         setViewType(ViewType.TRENDING);
     }
 }

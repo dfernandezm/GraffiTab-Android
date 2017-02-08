@@ -24,12 +24,12 @@ import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.comments.GenericCommentsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitab.ui.dialog.DialogBuilder;
-import com.graffitab.ui.dialog.handlers.OnYesNoHandler;
+import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.autocomplete.UserHashtagMultiAutoCompleteTextView;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.sdk.GTSDK;
@@ -40,7 +40,7 @@ import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.result.GTCommentDeletedResult;
+import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.network.service.streamable.response.GTCommentResponse;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 
@@ -69,6 +69,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
     private int toEditPosition;
 
     public void basicInit() {
+        super.basicInit();
         setViewType(ViewType.LIST_FULL);
     }
 
@@ -245,15 +246,15 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
         removeItemAtIndex(adapterPosition);
         if (shouldDeleteRemotely) {
             // TODO: Handle more intelligently.
-            GTSDK.getStreamableManager().deleteComment(streamable.id, comment.id, new GTResponseHandler<GTCommentDeletedResult>() {
+            GTSDK.getStreamableManager().deleteComment(streamable.id, comment.id, new GTResponseHandler<GTActionCompleteResult>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTCommentDeletedResult> gtResponse) {
+                public void onSuccess(GTResponse<GTActionCompleteResult> gtResponse) {
                     Log.i(getClass().getSimpleName(), "Comment deleted");
                 }
 
                 @Override
-                public void onFailure(GTResponse<GTCommentDeletedResult> gtResponse) {
+                public void onFailure(GTResponse<GTActionCompleteResult> gtResponse) {
                     Log.i(getClass().getSimpleName(), "Could not delete comment");
                 }
             });

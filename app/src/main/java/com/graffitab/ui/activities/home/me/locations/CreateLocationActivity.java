@@ -29,7 +29,7 @@ import com.graffitab.managers.GTLocationManager;
 import com.graffitab.permissions.GTPermissions;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.ui.dialog.handlers.OnOkHandler;
+import com.graffitab.ui.dialog.OnOkHandler;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;

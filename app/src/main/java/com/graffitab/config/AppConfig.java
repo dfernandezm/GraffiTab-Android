@@ -23,6 +23,7 @@ public class AppConfig {
     public final boolean useAnalytics = true;
     public final int maxUndoActions = 10;
     public final int onboardingFeedbackDaysTrigger = 2;
+    public final int apiErrorInterval = 30; // 30 seconds.
 
     public final int locationUpdateInterval = 20 * 1000; // 20 seconds.
     public final int locationRadius = 500 * 1000; // Distance in kilometers.

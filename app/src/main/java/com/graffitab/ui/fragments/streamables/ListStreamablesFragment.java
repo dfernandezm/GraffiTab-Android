@@ -9,6 +9,7 @@ public abstract class ListStreamablesFragment extends GenericStreamablesFragment
 
     @Override
     public void basicInit() {
+        super.basicInit();
         setViewType(ViewType.LIST_FULL);
     }
 }

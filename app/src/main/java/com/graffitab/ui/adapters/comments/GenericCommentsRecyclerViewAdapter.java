@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.graffitab.R;
 import com.graffitab.ui.adapters.comments.viewholders.ListCommentViewHolder;
 import com.graffitab.ui.fragments.comments.GenericCommentsFragment;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitabsdk.model.GTComment;
 
 import java.util.List;

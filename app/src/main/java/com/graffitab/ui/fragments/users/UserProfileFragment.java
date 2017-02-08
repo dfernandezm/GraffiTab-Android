@@ -1,10 +1,9 @@
-package com.graffitab.ui.fragments.users.profile;
+package com.graffitab.ui.fragments.users;
 
 import android.content.res.Configuration;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -28,11 +27,10 @@ import com.graffitab.ui.adapters.profile.UserProfileHeaderAdapter;
 import com.graffitab.ui.adapters.streamables.GenericStreamablesRecyclerViewAdapter;
 import com.graffitab.ui.adapters.viewpagers.ProfileViewPagerAdapter;
 import com.graffitab.ui.fragments.streamables.ListStreamablesFragment;
-import com.graffitab.ui.views.recyclerview.components.AdvancedEndlessRecyclerViewAdapter;
-import com.graffitab.ui.views.recyclerview.components.AdvancedRecyclerViewItemDecoration;
+import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.ImageUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
@@ -40,6 +38,7 @@ import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
+import com.graffitabsdk.sdk.GTSDK;
 import com.squareup.picasso.Picasso;
 
 import me.relex.circleindicator.CircleIndicator;
@@ -63,9 +62,10 @@ public class UserProfileFragment extends ListStreamablesFragment {
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
 
+    private GTUser user;
+    private ProfileViewPagerAdapter pagerAdapter;
     private int lastScrollYOffset;
     private boolean loadedInitially = false;
-    protected GTUser user;
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -85,13 +85,13 @@ public class UserProfileFragment extends ListStreamablesFragment {
     public boolean toggleFollow() {
         user.followedByCurrentUser = !user.followedByCurrentUser;
         if (user.followedByCurrentUser) { // Follow.
-            user.followersCount++;
+            user.addToFollowersCount();
             GTSDK.getUserManager().follow(user.id, new GTResponseHandler<GTUserResponse>() {
 
                 @Override
                 public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
                     user = gtResponse.getObject().user;
-                    loadUserStats();
+                    loadUserCountData();
                 }
 
                 @Override
@@ -99,36 +99,39 @@ public class UserProfileFragment extends ListStreamablesFragment {
             });
         }
         else { // Unfollow.
-            user.followersCount--;
-            if (user.followersCount < 0) user.followersCount = 0;
+            user.removeFromFollowersCount();
             GTSDK.getUserManager().unfollow(user.id, new GTResponseHandler<GTUserResponse>() {
 
                 @Override
                 public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
                     user = gtResponse.getObject().user;
-                    loadUserStats();
+                    loadUserCountData();
                 }
 
                 @Override
                 public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
             });
         }
-        loadUserStats();
+        loadUserCountData();
         return user.followedByCurrentUser;
     }
 
     // Loading
 
-    public void loadUserStats() {
+    public void loadUserCountData() {
         postsField.setText(user.streamablesCountAsString());
         followersField.setText(user.followersCountAsString());
         followingField.setText(user.followingCountAsString());
     }
 
-    public void loadUserData() {
+    public void loadUserNamesAndHeaderData() {
         nameField.setText(user.fullName());
         usernameField.setText(user.mentionUsername());
+        circleIndicator.setVisibility(user.aboutString().length() > 0 ? View.VISIBLE : View.GONE);
+        viewPager.setVisibility(circleIndicator.getVisibility());
+    }
 
+    public void loadUserAssets() {
         loadAvatar();
         loadCover();
     }
@@ -157,7 +160,7 @@ public class UserProfileFragment extends ListStreamablesFragment {
         GTSDK.getUserManager().getPosts(user.id, isFirstLoad, parameters, handler);
 
         if (offset == 0 && loadedInitially) // If we pull, refresh user profile. Skip first time.
-            ((ProfileActivity) getActivity()).reloadUserData();
+            ((ProfileActivity) getActivity()).reloadUserProfile();
         loadedInitially = true;
     }
 
@@ -267,6 +270,7 @@ public class UserProfileFragment extends ListStreamablesFragment {
 
     public void setUser(GTUser user) {
         this.user = user;
+        if (pagerAdapter != null) pagerAdapter.setUser(user);
     }
 
     // Setup
@@ -301,13 +305,13 @@ public class UserProfileFragment extends ListStreamablesFragment {
             }
         });
 
-        PagerAdapter adapter = new ProfileViewPagerAdapter(getContext(), viewPager, user);
-        viewPager.setAdapter(adapter);
+        pagerAdapter = new ProfileViewPagerAdapter(getContext(), viewPager, user);
+        viewPager.setAdapter(pagerAdapter);
         viewPager.addOnPageChangeListener(new ProfileViewPagerAdapter.ProfilePagerChangeListener(viewPager));
         circleIndicator.setViewPager(viewPager);
-        circleIndicator.setVisibility(user.aboutString().length() > 0 ? View.VISIBLE : View.GONE);
 
-        loadUserData();
+        loadUserNamesAndHeaderData();
+        loadUserAssets();
     }
 
     class TapGestureListener extends GestureDetector.SimpleOnGestureListener{

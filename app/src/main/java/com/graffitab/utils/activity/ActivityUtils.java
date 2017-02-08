@@ -15,7 +15,7 @@ import android.view.WindowManager.LayoutParams;
 import android.widget.ImageView;
 
 import com.graffitab.R;
-import com.graffitab.utils.display.DisplayUtils;
+import com.graffitab.utils.device.DeviceUtils;
 import com.graffitab.utils.image.BitmapUtils;
 
 import java.io.IOException;
@@ -39,7 +39,7 @@ public class ActivityUtils {
     }
 
 	public static void setOrientation( AppCompatActivity a ) {
-		if ( !DisplayUtils.isTablet(a) )
+		if ( !DeviceUtils.isTablet(a) )
             a.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 	}
 	

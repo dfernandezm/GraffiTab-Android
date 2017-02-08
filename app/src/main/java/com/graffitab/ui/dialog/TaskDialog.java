@@ -16,7 +16,7 @@ public class TaskDialog {
 	private AsyncTask<?,?,?> task;
 	
 	private TaskDialog() {
-		
+		// No-op.
 	}
 	
 	public static TaskDialog getInstance() {

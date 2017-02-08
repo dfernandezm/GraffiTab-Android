@@ -1,4 +1,4 @@
-package com.graffitab.ui.views.autocomplete.components;
+package com.graffitab.ui.views.autocomplete;
 
 import android.content.Context;
 import android.util.Log;
@@ -29,7 +29,7 @@ import java.util.List;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filterable {
+class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filterable {
 
     private List<GTUser> usersCache = new ArrayList();
     private List<String> tagsCache = new ArrayList();

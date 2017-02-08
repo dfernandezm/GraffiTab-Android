@@ -6,9 +6,6 @@ import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.MultiAutoCompleteTextView;
 
-import com.graffitab.ui.views.autocomplete.components.AutoCompleteAdapter;
-import com.graffitab.ui.views.autocomplete.components.UserHashtagTokenizer;
-
 import butterknife.ButterKnife;
 
 /**

@@ -1,4 +1,4 @@
-package com.graffitab.utils.display;
+package com.graffitab.utils.device;
 
 import android.content.Context;
 import android.content.res.Configuration;
@@ -10,7 +10,7 @@ import android.view.WindowManager;
 
 import com.graffitab.R;
 
-public class DisplayUtils {
+public class DeviceUtils {
 
 	public static boolean isLandscape( Context c ) {
 		return getScreenOrientation( c ) == Configuration.ORIENTATION_LANDSCAPE;

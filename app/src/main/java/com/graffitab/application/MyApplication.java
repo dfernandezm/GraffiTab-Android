@@ -26,7 +26,6 @@ import static android.content.Intent.ACTION_LOCALE_CHANGED;
 public class MyApplication extends Application {
 
     private static WeakReference<Application> instance = null;
-
     private MyBroadcastReceiver receiver;
 
     public static Application getInstance() {
@@ -45,7 +44,7 @@ public class MyApplication extends Application {
         AppConfig.configuration.configureApp();
 
         setupBroadcastReceivers();
-        setupListeners();
+        setupLocationManager();
     }
 
     // Setup
@@ -55,7 +54,7 @@ public class MyApplication extends Application {
         registerReceiver(receiver, new IntentFilter(ACTION_LOCALE_CHANGED));
     }
 
-    private void setupListeners() {
+    private void setupLocationManager() {
         if (GTPermissions.manager.hasPermission(this, GTPermissions.PermissionType.LOCATION)) // Start location updates only if we have permission.
             GTLocationManager.sharedInstance.startLocationUpdates();
     }
@@ -65,7 +64,7 @@ public class MyApplication extends Application {
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(ACTION_LOCALE_CHANGED))
-                GTSDK.setLanguage(Locale.getDefault().getLanguage());
+                GTSDK.setLanguage(Locale.getDefault().getLanguage()); // Set the SDK language when the device language changes.
         }
     }
 }

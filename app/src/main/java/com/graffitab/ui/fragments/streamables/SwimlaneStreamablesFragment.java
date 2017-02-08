@@ -9,6 +9,7 @@ public abstract class SwimlaneStreamablesFragment extends GenericStreamablesFrag
 
     @Override
     public void basicInit() {
+        super.basicInit();
         setViewType(ViewType.SWIMLANE);
     }
 }

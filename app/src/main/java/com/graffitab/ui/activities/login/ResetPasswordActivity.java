@@ -14,16 +14,16 @@ import android.widget.EditText;
 import com.graffitab.R;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
-import com.graffitab.ui.dialog.handlers.OnOkHandler;
+import com.graffitab.ui.dialog.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
+import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.common.result.GTPasswordResetCompleteResult;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,17 +83,17 @@ public class ResetPasswordActivity extends AppCompatActivity {
                 }
             };
 
-            GTSDK.getUserManager().resetPassword(em, new GTResponseHandler<GTPasswordResetCompleteResult>() {
+            GTSDK.getUserManager().resetPassword(em, new GTResponseHandler<GTActionCompleteResult>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTPasswordResetCompleteResult> responseObject) {
+                public void onSuccess(GTResponse<GTActionCompleteResult> responseObject) {
                     Log.i(getClass().getSimpleName(), "Successfully reset password");
                     TaskDialog.getInstance().hideDialog();
                     successHandler.run();
                 }
 
                 @Override
-                public void onFailure(GTResponse<GTPasswordResetCompleteResult> responseObject) {
+                public void onFailure(GTResponse<GTActionCompleteResult> responseObject) {
                     Log.e(getClass().getSimpleName(), "Failed to reset password");
                     TaskDialog.getInstance().hideDialog();
 

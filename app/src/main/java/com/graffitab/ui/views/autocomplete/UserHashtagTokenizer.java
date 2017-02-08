@@ -1,4 +1,4 @@
-package com.graffitab.ui.views.autocomplete.components;
+package com.graffitab.ui.views.autocomplete;
 
 import android.text.SpannableString;
 import android.text.Spanned;
@@ -10,7 +10,7 @@ import android.widget.MultiAutoCompleteTextView;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class UserHashtagTokenizer implements MultiAutoCompleteTextView.Tokenizer {
+class UserHashtagTokenizer implements MultiAutoCompleteTextView.Tokenizer {
 
     @Override
     public CharSequence terminateToken(CharSequence text) {
