@@ -19,6 +19,7 @@ import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.sdk.events.users.GTUserFollowedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
 import com.squareup.otto.Subscribe;
 
@@ -47,6 +48,11 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
             @Subscribe
             public void userUnfollowedEvent(GTUserUnfollowedEvent event) {
+                refreshUserAfterFollowToggle(event.getUser());
+            }
+
+            @Subscribe
+            public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
                 refreshUserAfterFollowToggle(event.getUser());
             }
 
