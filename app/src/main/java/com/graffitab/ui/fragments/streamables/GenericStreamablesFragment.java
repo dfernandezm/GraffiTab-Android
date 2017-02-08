@@ -83,7 +83,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                 for (int i = 0; i < items.size(); i++) {
                     GTStreamable streamable = items.get(i);
                     if (streamable.equals(event.getComment().streamable)) {
-                        streamable.addToCommentsCount();
+                        items.set(i, event.getComment().streamable);
                         adapter.setItems(items, getRecyclerView().getRecyclerView());
                         break;
                     }

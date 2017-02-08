@@ -62,6 +62,7 @@ public class ProfileViewPagerAdapter extends PagerAdapter {
     }
 
     private void loadUserAboutData() {
+        if (separator == null) return; // UI components have not been initialized yet, so ignore this.
         separator.setVisibility(user.about != null && user.website != null ? View.VISIBLE : View.GONE);
         aboutField.setVisibility(user.about != null ? View.VISIBLE : View.GONE);
         aboutField.setText(user.about != null ? user.about : "");

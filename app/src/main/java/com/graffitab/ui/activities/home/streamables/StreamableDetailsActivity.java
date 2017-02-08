@@ -21,17 +21,23 @@ import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
-import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.OnYesNoHandler;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.ImageUtils;
-import com.graffitabsdk.network.common.result.GTActionCompleteResult;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
+import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.comments.GTCommentDeletedEvent;
+import com.graffitabsdk.sdk.events.comments.GTCommentPostedEvent;
+import com.graffitabsdk.sdk.events.streamables.GTStreamableLikedEvent;
+import com.graffitabsdk.sdk.events.streamables.GTStreamableUnlikedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -85,9 +91,16 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
         setupImageView();
         setupImageViews();
+        setupEventListeners();
 
-        loadData();
+        loadUserAndStreamableData();
         refreshStreamable();
+    }
+
+    @Override
+    protected void onDestroy() {
+        GTSDK.unregisterEventListener(this);
+        super.onDestroy();
     }
 
     @OnClick(R.id.avatar)
@@ -181,7 +194,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
                 }
             });
         }
-        loadData();
+        loadUserAndStreamableData();
     }
 
     @OnClick(R.id.commentBtn)
@@ -195,33 +208,68 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         ProfileActivity.show(streamable.user, this);
     }
 
+    // Events
+
+    @Subscribe
+    public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+        if (streamable.user.equals(event.getUser())) {
+            streamable.user = event.getUser();
+            loadUserAndStreamableData();
+        }
+    }
+
+    @Subscribe
+    public void streamableLikedEvent(GTStreamableLikedEvent event) {
+        refreshStreamableAfterLikeToggle(event.getStreamable());
+    }
+
+    @Subscribe
+    public void streamableUnlikedEvent(GTStreamableUnlikedEvent event) {
+        refreshStreamableAfterLikeToggle(event.getStreamable());
+    }
+
+    @Subscribe
+    public void commentPostedEvent(GTCommentPostedEvent event) {
+        if (streamable.equals(event.getComment().streamable)) {
+            streamable = event.getComment().streamable;
+            loadUserAndStreamableData();
+        }
+    }
+
+    @Subscribe
+    public void commentDeletedEvent(GTCommentDeletedEvent event) {
+        if (streamable.id == event.getStreamableId()) {
+            streamable.removeFromCommentsCount();
+            loadUserAndStreamableData();
+        }
+    }
+
+    private void refreshStreamableAfterLikeToggle(GTStreamable toggledStreamable) {
+        if (streamable.equals(toggledStreamable)) {
+            streamable = toggledStreamable;
+            loadUserAndStreamableData();
+        }
+    }
+
     private void togglePrivacy() {
         streamable.isPrivate = !streamable.isPrivate;
         if (streamable.isPrivate)
             GTSDK.getStreamableManager().makePrivate(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
 
                 @Override
-                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
             });
         else
             GTSDK.getStreamableManager().makePublic(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
 
                 @Override
-                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
             });
     }
 
@@ -296,7 +344,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     // Loading
 
-    private void loadData() {
+    private void loadUserAndStreamableData() {
         nameField.setText(streamable.user.fullName());
         usernameField.setText(streamable.user.mentionUsername());
 
@@ -341,7 +389,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void finishRefresh() {
-        loadData();
+        loadUserAndStreamableData();
         Picasso.with(this).load(streamable.asset.link).into(streamableView, new Callback() {
 
             @Override
@@ -365,5 +413,9 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     private void setupImageViews() {
         likeIcon.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_thumb_up_black_24dp, Color.WHITE));
         commentIcon.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_chat_bubble_black_24dp, Color.WHITE));
+    }
+
+    private void setupEventListeners() {
+        GTSDK.registerEventListener(this);
     }
 }
