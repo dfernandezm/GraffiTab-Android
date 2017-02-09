@@ -12,7 +12,8 @@ import android.graphics.drawable.Drawable;
 public class ImageUtils {
 
     public static Drawable tintIcon(Context context, int resource, int color) {
-        final Drawable upArrow = context.getResources().getDrawable(resource);
+        Drawable upArrow = context.getResources().getDrawable(resource);
+        upArrow = upArrow.mutate();
         upArrow.setColorFilter(color, PorterDuff.Mode.SRC_ATOP);
         return upArrow;
     }
