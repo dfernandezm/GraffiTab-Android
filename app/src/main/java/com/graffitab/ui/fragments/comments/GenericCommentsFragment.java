@@ -32,7 +32,6 @@ import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.input.KeyboardUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTComment;
 import com.graffitabsdk.model.GTStreamable;
@@ -42,7 +41,11 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.network.service.streamable.response.GTCommentResponse;
+import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
+import com.squareup.otto.Subscribe;
 
 import java.util.Date;
 import java.util.Random;
@@ -67,10 +70,40 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
     private ViewType viewType;
     private GTComment toEdit;
     private int toEditPosition;
+    private Object eventListener;
 
+    @Override
     public void basicInit() {
         super.basicInit();
-        setViewType(ViewType.LIST_FULL);
+
+        eventListener = new Object() {
+
+            @Subscribe
+            public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+                handleUserChanged(event.getUser());
+            }
+
+            @Subscribe
+            public void userAvatarUpdatedEvent(GTUserAvatarUpdatedEvent event) {
+                handleUserChanged(GTSDK.getAccountManager().getLoggedInUser());
+            }
+
+            private void handleUserChanged(GTUser user) {
+                for (GTComment comment : items) {
+                    if (comment.user.equals(user))
+                        comment.user = user;
+                }
+                adapter.setItems(items, getRecyclerView().getRecyclerView());
+            }
+        };
+        GTSDK.registerEventListener(eventListener);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (eventListener != null)
+            GTSDK.unregisterEventListener(eventListener);
+        super.onDestroyView();
     }
 
     @Nullable
