@@ -152,7 +152,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
     private void finishCapturingImage(byte[] bytes) {
         // Save full-size image to file.
-        final Uri uri = FileUtils.saveImageToCrop(bytes);
+        final Uri uri = FileUtils.saveImageToShare(bytes);
 
         // Pause the calculation of the aspect ratio because of the interface orientation. The default
         // orientation in Android is landscape, so even though the camera is in portrait, when control

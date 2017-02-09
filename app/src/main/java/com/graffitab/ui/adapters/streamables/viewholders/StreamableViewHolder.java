@@ -1,6 +1,7 @@
 package com.graffitab.ui.adapters.streamables.viewholders;
 
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -69,7 +70,7 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
 
     public void onClickShare() {
         if (clickListener != null)
-            clickListener.onShare(item, getAdapterPosition());
+            clickListener.onShare(item, ((BitmapDrawable) streamableView.getDrawable()).getBitmap(), getAdapterPosition());
     }
 
     public void onClickToggleLike() {

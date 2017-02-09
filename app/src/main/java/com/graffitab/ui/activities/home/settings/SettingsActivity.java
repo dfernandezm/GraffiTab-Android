@@ -26,6 +26,7 @@ import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.file.FileUtils;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
@@ -173,6 +174,7 @@ public class SettingsActivity extends AppCompatActivity {
 
                         @Override
                         public void onClickYes() {
+                            FileUtils.clearApplicationDirectory();
                             GTSDK.invalidateCache();
                         }
 

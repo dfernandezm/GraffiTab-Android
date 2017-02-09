@@ -170,7 +170,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.shareBtn)
     public void onClickShare(View view) {
-        System.out.println("SHARE");
+        Utils.shareImage(this, ((BitmapDrawable) streamableView.getDrawable()).getBitmap());
     }
 
     @OnClick(R.id.likeBtn)

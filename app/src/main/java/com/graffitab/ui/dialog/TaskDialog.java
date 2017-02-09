@@ -30,7 +30,7 @@ public class TaskDialog {
 		this.task = task;
 
 		dialog = ProgressDialog.show(a.getParent() != null ? a.getParent() : a, "", msg == null ? a.getString(R.string.other_processing) : msg, true);
-		dialog.setCancelable(true);
+		dialog.setCancelable(false);
 		dialog.setOnCancelListener(new OnCancelListener() {
 
 			@Override

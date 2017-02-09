@@ -1,5 +1,7 @@
 package com.graffitab.ui.adapters.streamables;
 
+import android.graphics.Bitmap;
+
 import com.graffitab.ui.adapters.streamables.viewholders.StreamableViewHolder;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
@@ -15,6 +17,6 @@ public interface OnStreamableClickListener {
     void onOpenOwnerProfile(GTStreamable streamable, GTUser owner, int adapterPosition);
     void onOpenLikes(GTStreamable streamable, int adapterPosition);
     void onOpenComments(GTStreamable streamable, int adapterPosition);
-    void onShare(GTStreamable streamable, int adapterPosition);
+    void onShare(GTStreamable streamable, Bitmap image, int adapterPosition);
     void onToggleLike(GTStreamable streamable, StreamableViewHolder holder, int adapterPosition);
 }

@@ -16,17 +16,17 @@ import java.io.FileOutputStream;
  */
 public class FileUtils {
 
-    /**
-     * Prepare image for cropping.
-     */
-    public static Uri saveImageToCrop(byte[] imageBytes) {
-        File photo = new File(getApplicationDirectory(), "toCrop.jpg");
+    private static final String APP_DIRECTORY = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + Constants.FILE_APP_FOLDER;
+
+    public static Uri saveImageToShare(byte[] imageBytes) {
+        File photo = new File(getApplicationDirectory(), "toShare_" + System.currentTimeMillis() + ".jpg");
         if (photo.exists()) // Cleanup.
             photo.delete();
 
         try {
             FileOutputStream fos = new FileOutputStream(photo.getPath());
             fos.write(imageBytes);
+            fos.flush();
             fos.close();
 
             return Uri.fromFile(photo);
@@ -42,10 +42,27 @@ public class FileUtils {
      * Returns (and creates, if needed) the root app directory.
      */
     public static String getApplicationDirectory() {
-        String appDirectory = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + Constants.FILE_APP_FOLDER;
-        File file = new File(appDirectory);
+        File file = new File(APP_DIRECTORY);
         if (!file.exists())
             file.mkdirs();
-        return appDirectory;
+        return APP_DIRECTORY;
+    }
+
+    public static void clearApplicationDirectory() {
+        new Thread() {
+
+            @Override
+            public void run() {
+                deleteRecursive(new File(getApplicationDirectory()));
+            }
+        }.start();
+    }
+
+    private static void deleteRecursive(File fileOrDirectory) {
+        if (fileOrDirectory.isDirectory())
+            for (File child : fileOrDirectory.listFiles())
+                deleteRecursive(child);
+
+        fileOrDirectory.delete();
     }
 }

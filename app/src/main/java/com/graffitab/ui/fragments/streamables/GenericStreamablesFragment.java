@@ -1,6 +1,7 @@
 package com.graffitab.ui.fragments.streamables;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Rect;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,7 @@ import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitab.utils.Utils;
 import com.graffitab.utils.device.DeviceUtils;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
@@ -185,8 +187,8 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     }
 
     @Override
-    public void onShare(GTStreamable streamable, int adapterPosition) {
-        // No-op.
+    public void onShare(GTStreamable streamable, Bitmap image, int adapterPosition) {
+        Utils.shareImage(getActivity(), image);
     }
 
     @Override

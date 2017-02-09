@@ -1,18 +1,50 @@
 package com.graffitab.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Handler;
 
+import com.graffitab.R;
+import com.graffitab.utils.file.FileUtils;
+import com.graffitab.utils.image.BitmapUtils;
+
 import java.util.List;
 import java.util.Random;
 
 public class Utils {
+
+	public static void shareImage(final Activity context, final Bitmap bitmap) {
+		new Thread() {
+
+			@Override
+			public void run() {
+                // Process bitmap.
+                byte[] bytes = BitmapUtils.getBitmapData(bitmap);
+                final Uri uri = FileUtils.saveImageToShare(bytes);
+
+                // Show share dialog.
+                context.runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        if (context == null) return;
+
+                        Intent share = new Intent(Intent.ACTION_SEND);
+                        share.setType("image/jpeg");
+                        share.putExtra(Intent.EXTRA_STREAM, uri);
+                        context.startActivity(Intent.createChooser(share, context.getString(R.string.other_share)));
+                    }
+                });
+			}
+		}.start();
+	}
 
 	public static int randInt(int min, int max) {
 		Random rand = new Random();
