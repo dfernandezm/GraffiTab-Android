@@ -197,14 +197,10 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
             GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
 
                 @Override
-                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
             });
         }
         else {
@@ -212,14 +208,10 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
             GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
 
                 @Override
-                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
             });
         }
         adapter.notifyDataSetChanged();

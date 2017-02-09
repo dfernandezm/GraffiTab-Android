@@ -23,6 +23,7 @@ import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.ui.dialog.TaskDialog;
+import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.ImageUtils;
@@ -62,6 +63,8 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     @BindView(R.id.likeBtn) public View likeBtn;
     @BindView(R.id.likeIcon) public ImageView likeIcon;
     @BindView(R.id.commentIcon) public ImageView commentIcon;
+    @BindView(R.id.topDisplay) public View topDisplay;
+    @BindView(R.id.bottomDisplay) public View bottomDisplay;
 
     private GTStreamable streamable;
     private PhotoViewAttacher mAttacher;
@@ -92,9 +95,18 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         setupImageView();
         setupImageViews();
         setupEventListeners();
+        setupDisplays();
 
         loadUserAndStreamableData();
         refreshStreamable();
+
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                toggleDisplay();
+            }
+        }, 1000);
     }
 
     @Override
@@ -169,14 +181,10 @@ public class StreamableDetailsActivity extends AppCompatActivity {
             GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
 
                 @Override
-                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
             });
         }
         else {
@@ -184,14 +192,10 @@ public class StreamableDetailsActivity extends AppCompatActivity {
             GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                 @Override
-                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
 
                 @Override
-                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
-
-                }
+                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
             });
         }
         loadUserAndStreamableData();
@@ -342,6 +346,17 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         }.start();
     }
 
+    private void toggleDisplay() {
+        if (topDisplay.getAlpha() == 0) {
+            topDisplay.animate().alpha(1.0f);
+            bottomDisplay.animate().alpha(1.0f);
+        }
+        else {
+            topDisplay.animate().alpha(0.0f);
+            bottomDisplay.animate().alpha(0.0f);
+        }
+    }
+
     // Loading
 
     private void loadUserAndStreamableData() {
@@ -389,6 +404,8 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void finishRefresh() {
+        if (avatar == null) return; // View is destroyed.
+
         loadUserAndStreamableData();
         Picasso.with(this).load(streamable.asset.link).into(streamableView, new Callback() {
 
@@ -408,6 +425,16 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     private void setupImageView() {
         mAttacher = new PhotoViewAttacher(streamableView);
+        mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+
+            @Override
+            public void onPhotoTap(View view, float x, float y) {
+                toggleDisplay();
+            }
+
+            @Override
+            public void onOutsidePhotoTap() {}
+        });
     }
 
     private void setupImageViews() {
@@ -417,5 +444,10 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     private void setupEventListeners() {
         GTSDK.registerEventListener(this);
+    }
+
+    private void setupDisplays() {
+        topDisplay.setAlpha(0.0f);
+        bottomDisplay.setAlpha(0.0f);
     }
 }

@@ -43,6 +43,8 @@ public class SettingsActivity extends AppCompatActivity {
 
             @Override
             public void run() {
+                if (activity == null) return; // View is destroyed.
+
                 TaskDialog.getInstance().hideDialog();
 
                 // Clear any data on disk for the current user.

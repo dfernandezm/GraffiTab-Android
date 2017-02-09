@@ -111,27 +111,21 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
         adapter.notifyDataSetChanged();
         if (user.followedByCurrentUser)
             GTSDK.getUserManager().follow(user.id, new GTResponseHandler<GTUserResponse>() {
-                @Override
-                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
-
-                }
 
                 @Override
-                public void onFailure(GTResponse<GTUserResponse> gtResponse) {
+                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {}
 
-                }
+                @Override
+                public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
             });
         else
             GTSDK.getUserManager().unfollow(user.id, new GTResponseHandler<GTUserResponse>() {
-                @Override
-                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
-
-                }
 
                 @Override
-                public void onFailure(GTResponse<GTUserResponse> gtResponse) {
+                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {}
 
-                }
+                @Override
+                public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
             });
     }
 

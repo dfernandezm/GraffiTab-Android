@@ -288,8 +288,8 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
             @Override
             public void onSuccess(GTResponse<GTCommentResponse> gtResponse) {
                 Log.i(getClass().getSimpleName(), "Comment posted");
-                if (getActivity() == null)
-                    return;
+                if (getActivity() == null) return;
+
                 comment.setState(GTCommentExtension.State.SENT);
                 comment.id = gtResponse.getObject().comment.id;
                 adapter.notifyDataSetChanged();
@@ -298,8 +298,8 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
             @Override
             public void onFailure(GTResponse<GTCommentResponse> gtResponse) {
                 Log.i(getClass().getSimpleName(), "Could not post comment");
-                if (getActivity() == null)
-                    return;
+                if (getActivity() == null) return;
+
                 comment.setState(GTCommentExtension.State.FAILED);
                 adapter.notifyDataSetChanged();
             }

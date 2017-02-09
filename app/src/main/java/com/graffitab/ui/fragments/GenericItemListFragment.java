@@ -198,8 +198,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
             @Override
             public void onSuccess(GTResponse<T> gtResponse) {
-                if (getActivity() == null)
-                    return;
+                if (getActivity() == null) return;
 
                 // Clear items if we are pulling to refresh.
                 if (o == 0)
@@ -221,8 +220,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
             @Override
             public void onFailure(GTResponse<T> gtResponse) {
-                if (getActivity() == null)
-                    return;
+                if (getActivity() == null) return;
 
                 canLoadMore = false;
                 adapter.setCanLoadMore(canLoadMore, advancedRecyclerView.getRecyclerView());
@@ -234,8 +232,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
             public void onCache(GTResponse<T> gtResponse) {
                 super.onCache(gtResponse);
 
-                if (getActivity() == null)
-                    return;
+                if (getActivity() == null) return;
 
                 items.clear();
 

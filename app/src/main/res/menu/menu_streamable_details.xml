@@ -3,11 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_save"
-        android:icon="@drawable/ic_file_download_black_24dp"
-        android:title="@string/streamable_details_save"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/action_flag"
         android:icon="@drawable/ic_flag_black_24dp"
         android:title="@string/streamable_details_flag"

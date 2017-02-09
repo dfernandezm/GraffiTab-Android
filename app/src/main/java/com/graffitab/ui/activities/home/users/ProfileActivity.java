@@ -231,6 +231,8 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     private void finishLoadingUserProfile() {
+        if (fab == null) return; // View is destroyed.
+
         loadFollowButton();
         content.setUser(user);
         content.loadUserCountData();

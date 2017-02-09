@@ -171,6 +171,8 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public void onSuccess(GTResponse<GTListStreamablesResponse> gtResponse) {
+                if (mMap == null) return; // View is destroyed.
+
                 processAnnotations(gtResponse.getObject().items);
             }
 

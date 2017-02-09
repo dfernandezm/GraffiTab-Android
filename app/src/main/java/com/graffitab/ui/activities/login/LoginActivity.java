@@ -69,12 +69,16 @@ public class LoginActivity extends FacebookUtilsActivity {
 
                 @Override
                 public void onSuccess(GTResponse<GTUserResponse> responseObject) {
+                    if (usernameField == null) return; // View is destroyed.
+
                     Log.i(getClass().getSimpleName(), "Logged in");
                     refreshCurrentUserAndFinishLogin();
                 }
 
                 @Override
                 public void onFailure(GTResponse<GTUserResponse> responseObject) {
+                    if (usernameField == null) return; // View is destroyed.
+
                     Log.e(getClass().getSimpleName(), "Failed to login");
                     TaskDialog.getInstance().hideDialog();
 

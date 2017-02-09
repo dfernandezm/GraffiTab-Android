@@ -75,6 +75,8 @@ public class EditPasswordActivity extends AppCompatActivity {
 
                     @Override
                     public void onSuccess(GTResponse<GTActionCompleteResult> responseObject) {
+                        if (password == null) return; // View is destroyed.
+
                         Log.i(getClass().getSimpleName(), "Successfully changed password");
                         TaskDialog.getInstance().hideDialog();
                         DialogBuilder.buildOKDialog(EditPasswordActivity.this, getString(R.string.app_name), getString(R.string.change_password_success), new OnOkHandler() {

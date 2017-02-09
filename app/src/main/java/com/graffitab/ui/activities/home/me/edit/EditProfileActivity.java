@@ -129,6 +129,8 @@ public class EditProfileActivity extends CameraUtilsActivity {
 
                 @Override
                 public void onSuccess(GTResponse<GTUserResponse> responseObject) {
+                    if (avatar == null) return; // View is destroyed.
+
                     Log.i(getClass().getSimpleName(), "Successfully saved profile");
                     TaskDialog.getInstance().hideDialog();
 

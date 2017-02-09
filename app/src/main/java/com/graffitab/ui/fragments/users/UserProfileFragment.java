@@ -119,6 +119,8 @@ public class UserProfileFragment extends ListStreamablesFragment {
     // Loading
 
     public void loadUserCountData() {
+        if (getActivity() == null) return; // View is destroyed.
+
         postsField.setText(user.streamablesCountAsString());
         followersField.setText(user.followersCountAsString());
         followingField.setText(user.followingCountAsString());

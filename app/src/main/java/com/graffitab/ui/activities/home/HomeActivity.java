@@ -189,6 +189,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
             @Override
             public void onSuccess(GTResponse<GTUnseenNotificationsResponse> gtResponse) {
+                if (viewPager == null) return; // View is destroyed.
+
                 if (gtResponse.getObject().count <= 0) return; // No new notifications.
                 if (isNotificationsTabSelected())
                     refreshNotificationsTab();

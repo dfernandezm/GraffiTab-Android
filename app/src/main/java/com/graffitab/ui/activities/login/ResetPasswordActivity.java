@@ -87,6 +87,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
                 @Override
                 public void onSuccess(GTResponse<GTActionCompleteResult> responseObject) {
+                    if (emailField == null) return; // View is destroyed.
+
                     Log.i(getClass().getSimpleName(), "Successfully reset password");
                     TaskDialog.getInstance().hideDialog();
                     successHandler.run();

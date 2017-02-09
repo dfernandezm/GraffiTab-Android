@@ -107,7 +107,6 @@ public class SignUpActivity extends AppCompatActivity {
                 public void onFailure(GTResponse<GTActionCompleteResult> responseObject) {
                     Log.e(getClass().getSimpleName(), "Failed to register");
                     TaskDialog.getInstance().hideDialog();
-
                     DialogBuilder.buildAPIErrorDialog(SignUpActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(responseObject), true, responseObject.getResultCode());
                 }
             });
