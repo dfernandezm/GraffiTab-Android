@@ -103,6 +103,8 @@ class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filterable 
 
     private class CustomFilter extends Filter {
 
+        private String previousSearchTerm;
+
         @Override
         protected FilterResults performFiltering(final CharSequence constraint) {
             suggestions.clear();
@@ -113,13 +115,14 @@ class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filterable 
                 if (searchTerm.equals("@")) {
                     Log.d(AutoCompleteAdapter.this.getClass().getSimpleName(), "Search term: " + constraint + ", total items in @ cache: " + usersCache.size());
                     for (GTUser user : usersCache) {
-                        if ((user.firstName + " " + user.lastName).toLowerCase().startsWith(query)
-                                || user.username.toLowerCase().startsWith(query)) {
+                        if ((user.firstName + " " + user.lastName).toLowerCase().contains(query)
+                                || user.username.toLowerCase().contains(query)) {
                             suggestions.add(user);
                         }
                     }
 
-                    if (suggestions.size() <= 0) { // No local suggestions, so fetch from server.
+                    if (suggestions.size() <= 0 && (previousSearchTerm == null || !previousSearchTerm.equals(query))) { // No local suggestions, so fetch from server.
+                        previousSearchTerm = query;
                         GTQueryParameters parameters = new GTQueryParameters();
                         parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, 0);
                         parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
@@ -145,12 +148,13 @@ class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filterable 
                 else if (searchTerm.equals("#")) {
                     Log.d(AutoCompleteAdapter.this.getClass().getSimpleName(), "Search term: " + constraint + ", total items in # cache: " + tagsCache.size());
                     for (String tag : tagsCache) {
-                        if (tag.toLowerCase().startsWith(query)) {
+                        if (tag.toLowerCase().contains(query)) {
                             suggestions.add(tag);
                         }
                     }
 
-                    if (suggestions.size() <= 0) { // No local suggestions, so fetch from server.
+                    if (suggestions.size() <= 0 && (previousSearchTerm == null || !previousSearchTerm.equals(query))) { // No local suggestions, so fetch from server.
+                        previousSearchTerm = query;
                         GTQueryParameters parameters = new GTQueryParameters();
                         parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, 0);
                         parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);

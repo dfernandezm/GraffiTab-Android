@@ -25,12 +25,14 @@ import com.graffitab.ui.adapters.comments.GenericCommentsRecyclerViewAdapter;
 import com.graffitab.ui.adapters.comments.OnCommentClickListener;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.OnYesNoHandler;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.autocomplete.UserHashtagMultiAutoCompleteTextView;
 import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTComment;
@@ -41,6 +43,7 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.network.service.streamable.response.GTCommentResponse;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
@@ -211,7 +214,24 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
 
     @Override
     public void onOpenMention(GTComment comment, String mention, int adapterPosition) {
-//        startActivity(new Intent(getActivity(), ProfileActivity.class));
+        // Check if the user profile exists.
+        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), getActivity(), null);
+        GTSDK.getUserManager().getFullUserProfileForUsername(mention.replace("@", ""), false, new GTResponseHandler<GTUserResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
+                if (getActivity() == null) return;
+                TaskDialog.getInstance().hideDialog();
+                ProfileActivity.show(gtResponse.getObject().user, getActivity());
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTUserResponse> gtResponse) {
+                if (getActivity() == null) return;
+                TaskDialog.getInstance().hideDialog();
+                DialogBuilder.buildAPIErrorDialog(getActivity(), getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
+            }
+        });
     }
 
     @Override
