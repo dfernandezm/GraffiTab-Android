@@ -1,6 +1,7 @@
 package com.graffitab.ui.activities.home.me.edit;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Pair;
@@ -20,11 +21,16 @@ import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.input.KeyboardUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.assets.response.GTAssetResponse;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
+import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserCoverUpdatedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
+import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -47,6 +53,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
     @BindView(R.id.website) TextView website;
 
     private GTUser me = GTSDK.getAccountManager().getLoggedInUser();
+    private boolean pickingCoverImage = false;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,17 +63,26 @@ public class EditProfileActivity extends CameraUtilsActivity {
         ButterKnife.bind(this);
 
         setupTopBar();
+        setupEventListeners();
 
-        loadData();
+        loadUserData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        GTSDK.unregisterEventListener(this);
+        super.onDestroy();
     }
 
     @OnClick(R.id.avatarLayout)
     public void onClickAvatar(View view) {
+        pickingCoverImage = false;
         showImagePicker(avatar);
     }
 
     @OnClick(R.id.coverLayout)
     public void onClickCover(View view) {
+        pickingCoverImage = true;
         showImagePicker(cover);
     }
 
@@ -113,6 +129,77 @@ public class EditProfileActivity extends CameraUtilsActivity {
         return new Pair<>(ratioW, ratioH);
     }
 
+    @Override
+    public void finishPickingImage(Bitmap bitmap) {
+        super.finishPickingImage(bitmap);
+
+        if (bitmap != null) {
+            if (pickingCoverImage) { // Cover
+                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+                GTSDK.getMeManager().uploadCover(bitmap, new GTResponseHandler<GTAssetResponse>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildOKDialog(EditProfileActivity.this, getString(R.string.app_name),
+                                getString(R.string.profile_change_cover_success));
+                    }
+
+                    @Override
+                    public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildAPIErrorDialog(EditProfileActivity.this, getString(R.string.app_name),
+                                ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                    }
+                });
+            } else { // Avatar
+                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+                GTSDK.getMeManager().uploadAvatar(bitmap, new GTResponseHandler<GTAssetResponse>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildOKDialog(EditProfileActivity.this, getString(R.string.app_name),
+                                getString(R.string.profile_change_avatar_success));
+                    }
+
+                    @Override
+                    public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildAPIErrorDialog(EditProfileActivity.this, getString(R.string.app_name),
+                                ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                    }
+                });
+            }
+        } else {
+            if (pickingCoverImage) { // Cover
+                //TODO: Remove cover image.
+            } else { // Avatar
+                //TODO: Remove avatar image.
+            }
+        }
+    }
+
+    @Subscribe
+    public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+        refreshUserAfterProfileChange();
+    }
+
+    @Subscribe
+    public void userAvatarChangedEvent(GTUserAvatarUpdatedEvent event) {
+        refreshUserAfterProfileChange();
+    }
+
+    @Subscribe
+    public void userCoverChangedEvent(GTUserCoverUpdatedEvent event) {
+        refreshUserAfterProfileChange();
+    }
+
+    private void refreshUserAfterProfileChange() {
+        me = GTSDK.getAccountManager().getLoggedInUser();
+        loadUserData();
+    }
+
     private void saveProfile() {
         Log.i(getClass().getSimpleName(), "Saving user");
         String fn = firstName.getText().toString().trim();
@@ -135,7 +222,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
                     TaskDialog.getInstance().hideDialog();
 
                     me = GTSDK.getAccountManager().getLoggedInUser();
-                    loadData();
+                    loadUserData();
 
                     DialogBuilder.buildOKDialog(EditProfileActivity.this, getString(R.string.app_name), getString(R.string.edit_profile_success));
                 }
@@ -153,13 +240,17 @@ public class EditProfileActivity extends CameraUtilsActivity {
 
     // Loading
 
-    private void loadData() {
+    private void loadUserData() {
         firstName.setText(me.firstName);
         lastName.setText(me.lastName);
         email.setText(me.email);
         if (me.about != null) about.setText(me.about);
         if (me.website != null) website.setText(me.website);
 
+        loadUserAssets();
+    }
+
+    private void loadUserAssets() {
         loadAvatar();
         loadCover();
     }
@@ -185,5 +276,9 @@ public class EditProfileActivity extends CameraUtilsActivity {
     private void setupTopBar() {
         getSupportActionBar().setTitle(getString(R.string.edit_profile));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
+
+    private void setupEventListeners() {
+        GTSDK.registerEventListener(this);
     }
 }
