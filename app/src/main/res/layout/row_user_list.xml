@@ -31,7 +31,8 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginBottom="1dp">
 
             <TextView
                 android:id="@+id/nameField"
@@ -49,7 +50,7 @@
                 android:layout_marginTop="1dp"
                 android:text="georgi"
                 android:textColor="#AAAAAA"
-                android:textSize="12sp" />
+                android:textSize="13sp" />
         </LinearLayout>
 
         <ImageView

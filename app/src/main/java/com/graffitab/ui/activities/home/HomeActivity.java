@@ -140,6 +140,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             openExplorer();
             return true;
         }
+        else if (item.getItemId() == R.id.action_search) {
+            SearchActivity.openSearch(HomeActivity.this, null);
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }

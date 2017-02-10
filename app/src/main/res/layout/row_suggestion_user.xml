@@ -6,10 +6,10 @@
     android:background="#fff"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingBottom="7dp"
+    android:paddingBottom="6dp"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
-    android:paddingTop="7dp">
+    android:paddingTop="6dp">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/avatar"
