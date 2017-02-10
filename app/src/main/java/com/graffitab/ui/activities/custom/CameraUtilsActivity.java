@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.permissions.GTPermissions;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.file.FileUtils;
 import com.graffitab.utils.image.BitmapUtils;
@@ -55,8 +56,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) { // Success
                 try {
                     Bitmap imageBitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), cameraImageUri);
-                    byte[] bytes = BitmapUtils.getBitmapData(imageBitmap);
-                    finishCapturingImage(bytes);
+                    finishCapturingImage(imageBitmap);
                 } catch (Exception e) {
                     Log.e(getClass().getSimpleName(), "Failed to retrieve taken image.", e);
                 }
@@ -73,8 +73,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(data.getData());
-                    byte[] bytes = BitmapUtils.getBytes(inputStream);
-                    finishCapturingImage(bytes);
+                    finishCapturingImage(inputStream);
                 } catch (Exception e) {
                     Log.e(getClass().getSimpleName(), "Failed to retrieve chose image.", e);
                 }
@@ -151,10 +150,73 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
     // Image capture
 
-    private void finishCapturingImage(byte[] bytes) {
-        // Save full-size image to file.
-        final Uri uri = FileUtils.saveImageToShare(bytes);
+    private void finishCapturingImage(final Bitmap bitmap) {
+        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
 
+        // Perform image operations on another thread.
+        new Thread() {
+
+            @Override
+            public void run() {
+                Uri uri = null;
+                try {
+                    byte[] bytes = BitmapUtils.getBitmapData(bitmap);
+
+                    // Save full-size image to file.
+                    uri = FileUtils.saveImageToShare(bytes);
+                } catch (Exception e) {
+                    Log.e(getClass().getSimpleName(), "Failed to retrieve image.", e);
+                }
+                final Uri imageUri = uri;
+
+                // Continue on UI thread.
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        TaskDialog.getInstance().hideDialog();
+                        if (imageUri != null)
+                            finishCapturingImage(imageUri);
+                    }
+                });
+            }
+        }.start();
+    }
+
+    private void finishCapturingImage(final InputStream inputStream) {
+        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+
+        // Perform image operations on another thread.
+        new Thread() {
+
+            @Override
+            public void run() {
+                Uri uri = null;
+                try {
+                    byte[] bytes = BitmapUtils.getBytes(inputStream);
+
+                    // Save full-size image to file.
+                    uri = FileUtils.saveImageToShare(bytes);
+                } catch (Exception e) {
+                    Log.e(getClass().getSimpleName(), "Failed to retrieve image.", e);
+                }
+                final Uri imageUri = uri;
+
+                // Continue on UI thread.
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        TaskDialog.getInstance().hideDialog();
+                        if (imageUri != null)
+                            finishCapturingImage(imageUri);
+                    }
+                });
+            }
+        }.start();
+    }
+
+    private void finishCapturingImage(final Uri uri) {
         // Pause the calculation of the aspect ratio because of the interface orientation. The default
         // orientation in Android is landscape, so even though the camera is in portrait, when control
         // comes back to this activity, it will be landscape for a few ms, so we want to wait until
@@ -177,11 +239,28 @@ public class CameraUtilsActivity extends AppCompatActivity {
     }
 
     private void finishCroppingImage(Uri imageResource) {
-        File file = new File(imageResource.getPath());
+        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        final File file = new File(imageResource.getPath());
 
-        // Compress bitmap to fit the target view's bounds.
-        Bitmap bitmap = BitmapUtils.decodeSampledBitmapFileForSize(file, targetView.getWidth(), targetView.getHeight());
-        finishPickingImage(bitmap);
+        // Perform image processing on another thread.
+        new Thread() {
+
+            @Override
+            public void run() {
+                // Compress bitmap to fit the target view's bounds.
+                final Bitmap bitmap = BitmapUtils.decodeSampledBitmapFileForSize(file, targetView.getWidth(), targetView.getHeight());
+
+                // Continue on the UI thread.
+                runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        TaskDialog.getInstance().hideDialog();
+                        finishPickingImage(bitmap);
+                    }
+                });
+            }
+        }.run();
     }
 
     private void takePicture() {

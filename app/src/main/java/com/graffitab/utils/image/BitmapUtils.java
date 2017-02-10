@@ -286,9 +286,9 @@ public class BitmapUtils {
 		return returnedBitmap;
 	}
 	
-	public static byte[] bitmapToByteArray( Bitmap bmp ) {
+	public static byte[] bitmapToByteArray( Bitmap bmp, int quality ) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bmp.compress( CompressFormat.JPEG, 60, stream );
+        bmp.compress( CompressFormat.JPEG, quality, stream );
         byte[] byteArray = stream.toByteArray();
         
         return byteArray;
