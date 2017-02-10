@@ -138,8 +138,9 @@ public class CameraUtilsActivity extends AppCompatActivity {
     public void finishPickingImage(Bitmap bitmap) {
         if (bitmap != null)
             targetView.setImageBitmap(bitmap);
-        else
-            targetView.setImageDrawable(null);
+        // We have a confirmation dialog first before clearing the image.
+//        else
+//            targetView.setImageDrawable(null);
     }
 
     public Pair<Integer, Integer> calculateAspectRatio(View targetView) {

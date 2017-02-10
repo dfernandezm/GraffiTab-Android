@@ -15,10 +15,10 @@ import android.widget.ImageView;
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
+import com.graffitab.managers.UserAssetManager;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
-import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.UserProfileFragment;
 import com.graffitab.utils.Utils;
@@ -27,7 +27,6 @@ import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
-import com.graffitabsdk.network.service.assets.response.GTAssetResponse;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
@@ -230,49 +229,16 @@ public class ProfileActivity extends CameraUtilsActivity {
         super.finishPickingImage(bitmap);
 
         if (bitmap != null) {
-            if (pickingCoverImage) { // Cover
-                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
-                GTSDK.getMeManager().uploadCover(bitmap, new GTResponseHandler<GTAssetResponse>() {
-
-                    @Override
-                    public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
-                        TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildOKDialog(ProfileActivity.this, getString(R.string.app_name),
-                                getString(R.string.profile_change_cover_success));
-                    }
-
-                    @Override
-                    public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
-                        TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name),
-                                ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
-                    }
-                });
-            } else { // Avatar
-                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
-                GTSDK.getMeManager().uploadAvatar(bitmap, new GTResponseHandler<GTAssetResponse>() {
-
-                    @Override
-                    public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
-                        TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildOKDialog(ProfileActivity.this, getString(R.string.app_name),
-                                                    getString(R.string.profile_change_avatar_success));
-                    }
-
-                    @Override
-                    public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
-                        TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name),
-                                ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
-                    }
-                });
-            }
-        } else {
-            if (pickingCoverImage) { // Cover
-                //TODO: Remove cover image.
-            } else { // Avatar
-                //TODO: Remove avatar image.
-            }
+            if (pickingCoverImage)
+                UserAssetManager.editCover(this, bitmap);
+            else
+                UserAssetManager.editAvatar(this, bitmap);
+        }
+        else {
+            if (pickingCoverImage)
+                UserAssetManager.deleteCover(this);
+            else
+                UserAssetManager.deleteAvatar(this);
         }
     }
 
