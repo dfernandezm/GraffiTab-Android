@@ -83,11 +83,13 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
 
             @Subscribe
             public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 handleUserChanged(event.getUser());
             }
 
             @Subscribe
             public void userAvatarUpdatedEvent(GTUserAvatarUpdatedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 handleUserChanged(GTSDK.getAccountManager().getLoggedInUser());
             }
 

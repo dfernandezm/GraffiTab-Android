@@ -190,16 +190,19 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     @Subscribe
     public void userFollowedEvent(GTUserFollowedEvent event) {
+        if (fab == null) return;
         refreshUserAfterFollowStateChange(event.getUser());
     }
 
     @Subscribe
     public void userUnfollowedEvent(GTUserUnfollowedEvent event) {
+        if (fab == null) return;
         refreshUserAfterFollowStateChange(event.getUser());
     }
 
     @Subscribe
     public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+        if (fab == null) return;
         refreshUserAfterFollowStateChange(event.getUser());
         content.loadUserNamesAndHeaderData(); // Refresh profile assets.
         content.loadUserAssets();
@@ -207,11 +210,13 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     @Subscribe
     public void userAvatarChangedEvent(GTUserAvatarUpdatedEvent event) {
+        if (fab == null) return;
         refreshUserAfterAssetsChange();
     }
 
     @Subscribe
     public void userCoverChangedEvent(GTUserCoverUpdatedEvent event) {
+        if (fab == null) return;
         refreshUserAfterAssetsChange();
     }
 

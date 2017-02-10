@@ -44,6 +44,7 @@ public class PrivateStreamablesActivity extends ToggleStreamablesActivity {
 
                 @Subscribe
                 public void streamableMarkedPrivateEvent(GTStreamableMarkedPrivateEvent event) {
+                    if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                     if (!items.contains(event.getStreamable())) {
                         items.add(0, event.getStreamable());
                         adapter.setItems(items, getRecyclerView().getRecyclerView());
@@ -52,6 +53,7 @@ public class PrivateStreamablesActivity extends ToggleStreamablesActivity {
 
                 @Subscribe
                 public void streamableMarkedPublicEvent(GTStreamableMarkedPublicEvent event) {
+                    if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                     int index = items.indexOf(event.getStreamable());
                     if (index >= 0)
                         removeItemAtIndex(index);

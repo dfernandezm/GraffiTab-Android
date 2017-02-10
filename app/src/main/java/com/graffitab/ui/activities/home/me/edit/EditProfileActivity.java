@@ -149,16 +149,19 @@ public class EditProfileActivity extends CameraUtilsActivity {
 
     @Subscribe
     public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+        if (avatar == null) return;
         refreshUserAfterProfileChange();
     }
 
     @Subscribe
     public void userAvatarChangedEvent(GTUserAvatarUpdatedEvent event) {
+        if (avatar == null) return;
         refreshUserAfterProfileChange();
     }
 
     @Subscribe
     public void userCoverChangedEvent(GTUserCoverUpdatedEvent event) {
+        if (avatar == null) return;
         refreshUserAfterProfileChange();
     }
 

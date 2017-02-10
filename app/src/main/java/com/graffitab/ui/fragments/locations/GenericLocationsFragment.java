@@ -49,12 +49,14 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
             @Subscribe
             public void locationCreatedEvent(GTLocationCreatedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 items.add(event.getLocation());
                 adapter.setItems(items, getRecyclerView().getRecyclerView());
             }
 
             @Subscribe
             public void locationUpdatedEvent(GTLocationUpdatedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 int index = items.indexOf(event.getLocation());
                 if (index >= 0) {
                     items.set(index, event.getLocation());

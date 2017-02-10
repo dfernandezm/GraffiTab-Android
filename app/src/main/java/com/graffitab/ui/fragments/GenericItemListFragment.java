@@ -55,7 +55,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     private boolean setupEndlessScrolling = false;
 
     public GenericItemListFragment() {
-        basicInit();
+        // No-op.
     }
 
     /** This method is called from the constructor so avoid any view-related operations. */
@@ -67,6 +67,8 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        basicInit();
+        
         setHasOptionsMenu(true);
     }
 

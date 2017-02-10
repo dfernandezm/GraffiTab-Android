@@ -43,16 +43,19 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
             @Subscribe
             public void userFollowedEvent(GTUserFollowedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 refreshUserAfterFollowToggle(event.getUser());
             }
 
             @Subscribe
             public void userUnfollowedEvent(GTUserUnfollowedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 refreshUserAfterFollowToggle(event.getUser());
             }
 
             @Subscribe
             public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 refreshUserAfterFollowToggle(event.getUser());
             }
 

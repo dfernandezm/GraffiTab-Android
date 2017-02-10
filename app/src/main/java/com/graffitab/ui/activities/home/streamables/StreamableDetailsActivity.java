@@ -216,6 +216,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @Subscribe
     public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+        if (avatar == null) return;
         if (streamable.user.equals(event.getUser())) {
             streamable.user = event.getUser();
             loadUserAndStreamableData();
@@ -224,16 +225,19 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @Subscribe
     public void streamableLikedEvent(GTStreamableLikedEvent event) {
+        if (avatar == null) return;
         refreshStreamableAfterLikeToggle(event.getStreamable());
     }
 
     @Subscribe
     public void streamableUnlikedEvent(GTStreamableUnlikedEvent event) {
+        if (avatar == null) return;
         refreshStreamableAfterLikeToggle(event.getStreamable());
     }
 
     @Subscribe
     public void commentPostedEvent(GTCommentPostedEvent event) {
+        if (avatar == null) return;
         if (streamable.equals(event.getComment().streamable)) {
             streamable = event.getComment().streamable;
             loadUserAndStreamableData();
@@ -242,6 +246,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @Subscribe
     public void commentDeletedEvent(GTCommentDeletedEvent event) {
+        if (avatar == null) return;
         if (streamable.id == event.getStreamableId()) {
             streamable.removeFromCommentsCount();
             loadUserAndStreamableData();

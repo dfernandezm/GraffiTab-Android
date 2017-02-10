@@ -62,26 +62,31 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
             @Subscribe
             public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 refreshStreamablesAfterUserProfileChange(event.getUser());
             }
 
             @Subscribe
             public void userAvatarUpdatedEvent(GTUserAvatarUpdatedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 refreshStreamablesAfterUserProfileChange(GTSDK.getAccountManager().getLoggedInUser());
             }
 
             @Subscribe
             public void streamableLikedEvent(GTStreamableLikedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 refreshStreamableAfterLikeToggle(event.getStreamable());
             }
 
             @Subscribe
             public void streamableUnlikedEvent(GTStreamableUnlikedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 refreshStreamableAfterLikeToggle(event.getStreamable());
             }
 
             @Subscribe
             public void commentPostedEvent(GTCommentPostedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 for (int i = 0; i < items.size(); i++) {
                     GTStreamable streamable = items.get(i);
                     if (streamable.equals(event.getComment().streamable)) {
@@ -94,6 +99,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
             @Subscribe
             public void commentDeletedEvent(GTCommentDeletedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 for (int i = 0; i < items.size(); i++) {
                     GTStreamable streamable = items.get(i);
                     if (streamable.id == event.getStreamableId()) {
