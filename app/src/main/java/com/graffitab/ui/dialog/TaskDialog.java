@@ -27,16 +27,20 @@ public class TaskDialog {
 	}
 	
 	public void showDialog(String msg, Activity a, AsyncTask<?,?,?> task) {
+		showDialog(msg, a, task, false);
+	}
+
+	public void showDialog(String msg, Activity a, AsyncTask<?,?,?> task, boolean cancelable) {
 		this.task = task;
 
 		dialog = ProgressDialog.show(a.getParent() != null ? a.getParent() : a, "", msg == null ? a.getString(R.string.other_processing) : msg, true);
-		dialog.setCancelable(false);
+		dialog.setCancelable(cancelable);
 		dialog.setOnCancelListener(new OnCancelListener() {
 
 			@Override
 			public void onCancel(DialogInterface dialog) {
-			if (TaskDialog.this.task != null)
-				TaskDialog.this.task.cancel(true);
+				if (TaskDialog.this.task != null)
+					TaskDialog.this.task.cancel(true);
 			}
 		});
 	}

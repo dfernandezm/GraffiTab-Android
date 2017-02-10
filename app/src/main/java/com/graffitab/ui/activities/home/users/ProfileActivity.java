@@ -11,9 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
+
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
@@ -37,6 +35,10 @@ import com.graffitabsdk.sdk.events.users.GTUserFollowedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
 import com.squareup.otto.Subscribe;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by georgichristov on 20/11/2016
@@ -218,17 +220,17 @@ public class ProfileActivity extends CameraUtilsActivity {
         super.finishPickingImage(bitmap);
 
         if (bitmap != null) {
-
-            if (pickingCoverImage) {
-                //TODO: Cover
-            } else { // It is an avatar
+            if (pickingCoverImage) { // Cover
+                //TODO: Upload cover.
+            } else { // Avatar
                 TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
                 GTSDK.getMeManager().uploadAvatar(bitmap, new GTResponseHandler<GTAssetResponse>() {
+
                     @Override
                     public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildOKDialog(ProfileActivity.this, getString(R.string.profile_change_avatar_success),
-                                                    getString(R.string.app_name));
+                        DialogBuilder.buildOKDialog(ProfileActivity.this, getString(R.string.app_name),
+                                                    getString(R.string.profile_change_avatar_success));
                     }
 
                     @Override
@@ -240,7 +242,11 @@ public class ProfileActivity extends CameraUtilsActivity {
                 });
             }
         } else {
-            //TODO: Remove image was selected
+            if (pickingCoverImage) { // Cover
+                //TODO: Remove cover image.
+            } else { // Avatar
+                //TODO: Remove avatar image.
+            }
         }
     }
 
