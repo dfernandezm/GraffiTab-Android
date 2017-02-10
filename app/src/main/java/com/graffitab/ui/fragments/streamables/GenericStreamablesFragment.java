@@ -35,6 +35,7 @@ import com.graffitabsdk.sdk.events.comments.GTCommentDeletedEvent;
 import com.graffitabsdk.sdk.events.comments.GTCommentPostedEvent;
 import com.graffitabsdk.sdk.events.streamables.GTStreamableLikedEvent;
 import com.graffitabsdk.sdk.events.streamables.GTStreamableUnlikedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.squareup.otto.Subscribe;
 
@@ -61,13 +62,12 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
             @Subscribe
             public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
-                List<Integer> indexes = indexesOfStreamablesForOwner(event.getUser());
-                if (indexes.size() >= 0) {
-                    // Refresh streamable users.
-                    for (Integer index : indexes)
-                        items.get(index).user = event.getUser();
-                    adapter.setItems(items, getRecyclerView().getRecyclerView());
-                }
+                refreshStreamablesAfterUserProfileChange(event.getUser());
+            }
+
+            @Subscribe
+            public void userAvatarUpdatedEvent(GTUserAvatarUpdatedEvent event) {
+                refreshStreamablesAfterUserProfileChange(GTSDK.getAccountManager().getLoggedInUser());
             }
 
             @Subscribe
@@ -101,6 +101,16 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                         adapter.setItems(items, getRecyclerView().getRecyclerView());
                         break;
                     }
+                }
+            }
+
+            private void refreshStreamablesAfterUserProfileChange(GTUser user) {
+                List<Integer> indexes = indexesOfStreamablesForOwner(user);
+                if (indexes.size() >= 0) {
+                    // Refresh streamable users.
+                    for (Integer index : indexes)
+                        items.get(index).user = user;
+                    adapter.setItems(items, getRecyclerView().getRecyclerView());
                 }
             }
 
