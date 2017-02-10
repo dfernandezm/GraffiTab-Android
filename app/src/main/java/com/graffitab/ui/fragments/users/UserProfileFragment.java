@@ -130,7 +130,7 @@ public class UserProfileFragment extends ListStreamablesFragment {
         nameField.setText(user.fullName());
         usernameField.setText(user.mentionUsername());
         circleIndicator.setVisibility(user.aboutString().length() > 0 ? View.VISIBLE : View.GONE);
-        viewPager.setVisibility(circleIndicator.getVisibility());
+        viewPager.setAlpha(circleIndicator.getVisibility() == View.VISIBLE ? 1 : 0);
     }
 
     public void loadUserAssets() {

@@ -31,6 +31,7 @@ import com.graffitabsdk.network.service.assets.response.GTAssetResponse;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserCoverUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserFollowedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
@@ -196,6 +197,15 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     @Subscribe
     public void userAvatarChangedEvent(GTUserAvatarUpdatedEvent event) {
+        refreshUserAfterAssetsChange();
+    }
+
+    @Subscribe
+    public void userCoverChangedEvent(GTUserCoverUpdatedEvent event) {
+        refreshUserAfterAssetsChange();
+    }
+
+    private void refreshUserAfterAssetsChange() {
         if (user.isMe()) {
             user = GTSDK.getAccountManager().getLoggedInUser();
             content.setUser(user);
@@ -221,7 +231,23 @@ public class ProfileActivity extends CameraUtilsActivity {
 
         if (bitmap != null) {
             if (pickingCoverImage) { // Cover
-                //TODO: Upload cover.
+                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+                GTSDK.getMeManager().uploadCover(bitmap, new GTResponseHandler<GTAssetResponse>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildOKDialog(ProfileActivity.this, getString(R.string.app_name),
+                                getString(R.string.profile_change_cover_success));
+                    }
+
+                    @Override
+                    public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
+                        TaskDialog.getInstance().hideDialog();
+                        DialogBuilder.buildAPIErrorDialog(ProfileActivity.this, getString(R.string.app_name),
+                                ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                    }
+                });
             } else { // Avatar
                 TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
                 GTSDK.getMeManager().uploadAvatar(bitmap, new GTResponseHandler<GTAssetResponse>() {
