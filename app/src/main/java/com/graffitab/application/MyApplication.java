@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.graffitab.config.AppConfig;
 import com.graffitab.managers.GTLocationManager;
 import com.graffitab.permissions.GTPermissions;
@@ -39,6 +40,7 @@ public class MyApplication extends Application {
         instance = new WeakReference<Application>(this);
 
         // Initialize the SDK before executing any other operations.
+        Fresco.initialize(this);
         FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);
         AppConfig.configuration.configureApp();

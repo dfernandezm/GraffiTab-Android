@@ -35,6 +35,7 @@ import com.graffitabsdk.sdk.events.users.GTUserFollowedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
 import com.squareup.otto.Subscribe;
+import com.stfalcon.frescoimageviewer.ImageViewer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -161,12 +162,22 @@ public class ProfileActivity extends CameraUtilsActivity {
             showImagePicker((ImageView) view);
             pickingCoverImage = false;
         }
+        else if (user.hasAvatar()) {
+            new ImageViewer.Builder(this, new String[]{user.avatar.link})
+                    .setStartPosition(0)
+                    .show();
+        }
     }
 
     public void onClickCover(View view) {
         if (user.isMe()) {
             showImagePicker((ImageView) view);
             pickingCoverImage = true;
+        }
+        else if (user.hasCover()) {
+            new ImageViewer.Builder(this, new String[]{user.cover.link})
+                    .setStartPosition(0)
+                    .show();
         }
     }
 
