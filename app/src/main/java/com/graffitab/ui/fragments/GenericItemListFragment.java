@@ -68,7 +68,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         super.onCreate(savedInstanceState);
 
         basicInit();
-        
+
         setHasOptionsMenu(true);
     }
 

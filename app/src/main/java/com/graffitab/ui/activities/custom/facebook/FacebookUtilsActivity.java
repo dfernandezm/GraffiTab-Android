@@ -12,9 +12,10 @@ import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.graffitab.R;
+import com.graffitab.ui.dialog.TaskDialog;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +31,7 @@ public class FacebookUtilsActivity extends AppCompatActivity {
 
     private CallbackManager callbackManager;
     private FacebookLoginCallback loginCallback;
+    protected boolean forceLogin;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,13 +48,38 @@ public class FacebookUtilsActivity extends AppCompatActivity {
             return;
     }
 
-    public void facebookLogin(boolean forceLogin, FacebookLoginCallback callback) {
-        loginCallback = callback;
+    public void getFacebookMe(boolean forceLogin, final FacebookMeCallback callback) {
+        // Setup callbacks.
+        this.forceLogin = forceLogin;
+        this.loginCallback = new FacebookLoginCallback() {
 
-        if (forceLogin)
+            @Override
+            public void onSuccess(LoginResult result) {
+                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), FacebookUtilsActivity.this, null);
+                getMe(callback);
+            }
+
+            @Override
+            public void onCancel() {
+                if (callback != null)
+                    callback.onCancel();
+            }
+
+            @Override
+            public void onError(FacebookException exception) {
+                if (callback != null)
+                    callback.onError(exception);
+            }
+        };
+
+        if (forceLogin) // Logout if necessary;
             facebookLogout();
 
-        LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile", "user_friends"));
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        if (accessToken != null) // We already have a token, so use it to login.
+            getMe(callback);
+        else // No token yet or it has been cleared, so obtain a new token.
+            LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile", "user_friends"));
     }
 
     public void facebookLogout() {
@@ -66,21 +93,27 @@ public class FacebookUtilsActivity extends AppCompatActivity {
         return AccessToken.getCurrentAccessToken() != null;
     }
 
-    public void getMe(final FacebookMeCallback callback) {
+    private void getMe(final FacebookMeCallback callback) {
         final AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        final Profile profile = Profile.getCurrentProfile();
 
         GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
 
             @Override
             public void onCompleted(JSONObject object, GraphResponse response) {
                 try {
+                    String name = object.getString("name");
+                    String[] nameComponents = name.split(" ");
+                    String firstName = nameComponents[0];
+                    String lastName = nameComponents[1];
                     String email = object.getString("email");
+                    String id = object.getString("id");
 
                     if (callback != null)
-                        callback.profileFetched(profile.getFirstName(), profile.getLastName(), profile.getId(), email, accessToken.getToken());
+                        callback.onProfileFetched(firstName, lastName, id, email, accessToken.getToken());
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    if (callback != null)
+                        callback.onError(new FacebookException(e));
                 }
             }
         });
@@ -100,30 +133,35 @@ public class FacebookUtilsActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 Log.i(getClass().getSimpleName(), "Facebook login complete");
-
                 if (loginCallback != null)
-                    loginCallback.loginComplete();
+                    loginCallback.onSuccess(loginResult);
             }
 
             @Override
             public void onCancel() {
                 Log.i(getClass().getSimpleName(), "Facebook login cancelled");
+                if (loginCallback != null)
+                    loginCallback.onCancel();
             }
 
             @Override
             public void onError(FacebookException exception) {
                 Log.d(getClass().getSimpleName(), "Facebook login failed - " + exception.getMessage());
+                if (loginCallback != null)
+                    loginCallback.onError(exception);
             }
         });
     }
 
-    // Callbacks.
-
-    public interface FacebookLoginCallback {
-        void loginComplete();
+    interface FacebookLoginCallback {
+        void onSuccess(LoginResult result);
+        void onCancel();
+        void onError(FacebookException exception);
     }
 
     public interface FacebookMeCallback {
-        void profileFetched(String firstName, String lastName, String userId, String email, String accessToken);
+        void onProfileFetched(String firstName, String lastName, String userId, String email, String accessToken);
+        void onCancel();
+        void onError(FacebookException exception);
     }
 }

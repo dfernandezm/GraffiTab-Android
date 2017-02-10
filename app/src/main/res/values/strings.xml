@@ -19,6 +19,7 @@
     <string name="login_error_username">Please enter your username.</string>
     <string name="login_error_password">Please enter your password.</string>
     <string name="login_error_credentials">These credentials are incorrect. Please try again.</string>
+    <string name="login_username_prompt">Pick a username for your account.</string>
 
     <!-- Reset password -->
     <string name="reset_password">Reset password</string>

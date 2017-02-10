@@ -13,6 +13,7 @@ import android.widget.FrameLayout;
 import com.graffitab.R;
 import com.graffitab.config.AppConfig;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
+import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.GTResultCode;
 
@@ -126,17 +127,17 @@ public class DialogBuilder {
 		    .setNegativeButton(noTitle, dialogClickListener).show();
 	}
 	
-	public static void buildYesNoInputDialog(Context context, String hint, String title, String message, String yesTitle, String noTitle, final OnYesNoInputHandler handler) {
+	public static void buildUsernameDialog(final Context context, final OnYesNoInputHandler handler) {
         if (context == null) return;
 
 		// Create dialog.
 		AlertDialog.Builder builder = new AlertDialog.Builder(context);
-		builder.setTitle(title);
+		builder.setTitle(context.getString(R.string.sign_up_confirmation_title));
 		
 		// Attach buttons.
-		builder.setMessage(message)
-			   .setPositiveButton(yesTitle, null)
-			   .setNegativeButton(noTitle, null);
+		builder.setMessage(context.getString(R.string.login_username_prompt))
+			   .setPositiveButton(context.getString(R.string.other_done), null)
+			   .setNegativeButton(context.getString(R.string.other_cancel), null);
 		
 		// Set custom layout.
 		final FrameLayout frameView = new FrameLayout(context);
@@ -144,26 +145,31 @@ public class DialogBuilder {
 
 		final AlertDialog alertDialog = builder.create();
 		LayoutInflater inflater = alertDialog.getLayoutInflater();
-		View dialoglayout = inflater.inflate(R.layout.dialog_input, frameView);
+		View dialoglayout = inflater.inflate(R.layout.dialog_input_username, frameView);
 		
-		final EditText inputField = (EditText) dialoglayout.findViewById(R.id.codeField);
-		inputField.setHint(hint);
+		final EditText inputField = (EditText) dialoglayout.findViewById(R.id.usernameField);
 
 		// Attach button listeners.
-		alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, yesTitle, new OnClickListener() {
+		alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, context.getString(R.string.other_done), new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-			if (handler != null)
-				handler.onClickYes(inputField.getText().toString());
+				KeyboardUtils.hideKeyboard(context, inputField);
+				String text = inputField.getText().toString().trim();
+
+				if (handler != null) {
+					if (text.length() > 0)
+						handler.onClickYes(text);
+				}
 			}
 		});
-		alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, noTitle, new OnClickListener() {
+		alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.other_cancel), new OnClickListener() {
 			
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-			if (handler != null)
-				handler.onClickNo();
+                KeyboardUtils.hideKeyboard(context, inputField);
+                if (handler != null)
+                    handler.onClickNo();
 			}
 		});
 		
