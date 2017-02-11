@@ -1,13 +1,10 @@
 package com.graffitab.ui.adapters.users.viewholders;
 
-import android.graphics.Color;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
-import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTUser;
 
 import butterknife.BindView;
@@ -22,7 +19,8 @@ public class ListUserViewHolder extends UserViewHolder {
 
     @BindView(R.id.nameField) public TextView nameField;
     @BindView(R.id.usernameField) public TextView usernameField;
-    @BindView(R.id.followButton) public ImageView followBtn;
+    @BindView(R.id.followButton) public View followBtn;
+    @BindView(R.id.followButtonText) public TextView followText;
 
     public ListUserViewHolder(View itemView) {
         super(itemView);
@@ -36,12 +34,10 @@ public class ListUserViewHolder extends UserViewHolder {
         nameField.setText(item.fullName());
         usernameField.setText(item.mentionUsername());
 
-        followBtn.setVisibility(user.isMe() ? View.GONE : View.VISIBLE);
-        followBtn.setImageResource(user.followedByCurrentUser ? R.drawable.ic_action_unfollow : R.drawable.ic_action_follow);
-        followBtn.setBackgroundResource(user.followedByCurrentUser ? R.drawable.rounded_corner_unfollow : R.drawable.rounded_corner_follow);
-        followBtn.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(),
-                user.followedByCurrentUser ? R.drawable.ic_action_unfollow : R.drawable.ic_action_follow,
-                user.followedByCurrentUser ? Color.WHITE : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary)));
+        followText.setVisibility(user.isMe() ? View.GONE : View.VISIBLE);
+        followText.setBackgroundResource(user.followedByCurrentUser ? R.drawable.rounded_corner_user_list_unfollow : R.drawable.rounded_corner_user_list_follow);
+        followText.setTextColor(MyApplication.getInstance().getResources().getColor(user.followedByCurrentUser ? R.color.colorPrimary : R.color.colorWhite));
+        followText.setText(user.followedByCurrentUser ? R.string.profile_following : R.string.profile_follow);
     }
 
     @Override

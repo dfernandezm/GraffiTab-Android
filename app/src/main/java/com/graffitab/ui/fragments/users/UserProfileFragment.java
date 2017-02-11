@@ -1,6 +1,7 @@
 package com.graffitab.ui.fragments.users;
 
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -61,6 +62,10 @@ public class UserProfileFragment extends ListStreamablesFragment {
     private TextView followingField;
     private ViewPager viewPager;
     private CircleIndicator circleIndicator;
+    private ImageView followButtonIcon;
+    private TextView followButtonText;
+    private View followButtonLayout;
+    private View followButtonSeparator;
 
     private GTUser user;
     private ProfileViewPagerAdapter pagerAdapter;
@@ -112,11 +117,25 @@ public class UserProfileFragment extends ListStreamablesFragment {
                 public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
             });
         }
+
         loadUserCountData();
+        loadFollowButton();
+
         return user.followedByCurrentUser;
     }
 
     // Loading
+
+    public void loadFollowButton() {
+        if (getActivity() == null) return; // View is destroyed.
+
+        followButtonIcon.setImageDrawable(user.followedByCurrentUser ? ImageUtils.tintIcon(getActivity(), R.drawable.ic_action_unfollow, getResources().getColor(R.color.colorBlack)) : ImageUtils.tintIcon(getActivity(), R.drawable.ic_action_follow, getResources().getColor(R.color.colorPrimary)));
+        followButtonText.setText(user.followedByCurrentUser ? getString(R.string.profile_following) : getString(R.string.profile_follow));
+        followButtonText.setTextColor(user.followedByCurrentUser ? Color.parseColor("#AAAAAA") : getResources().getColor(R.color.colorPrimary));
+
+        followButtonLayout.setVisibility(user.isMe() ? View.GONE : View.VISIBLE); // Only show follow button if we're viewing some else's profile.
+        followButtonSeparator.setVisibility(followButtonLayout.getVisibility());
+    }
 
     public void loadUserCountData() {
         if (getActivity() == null) return; // View is destroyed.
@@ -290,6 +309,10 @@ public class UserProfileFragment extends ListStreamablesFragment {
         avatar = (ImageView) header.findViewById(R.id.avatar);
         viewPager = (ViewPager) header.findViewById(R.id.viewpager);
         circleIndicator = (CircleIndicator) header.findViewById(R.id.indicator);
+        followButtonIcon = (ImageView) header.findViewById(R.id.followButtonIcon);
+        followButtonText = (TextView) header.findViewById(R.id.followButtonText);
+        followButtonLayout = header.findViewById(R.id.followButtonLayout);
+        followButtonSeparator = header.findViewById(R.id.followButtonSeparator);
 
         final GestureDetector tapGestureDetector = new GestureDetector(getActivity(), new TapGestureListener());
         viewPager.setOnTouchListener(new View.OnTouchListener() {
@@ -314,6 +337,7 @@ public class UserProfileFragment extends ListStreamablesFragment {
 
         loadUserNamesAndHeaderData();
         loadUserAssets();
+        loadFollowButton();
     }
 
     class TapGestureListener extends GestureDetector.SimpleOnGestureListener{

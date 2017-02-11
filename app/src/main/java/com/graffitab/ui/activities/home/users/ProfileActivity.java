@@ -3,7 +3,6 @@ package com.graffitab.ui.activities.home.users;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 
-import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.managers.UserAssetManager;
@@ -23,7 +21,6 @@ import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.UserProfileFragment;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.api.ApiUtils;
-import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
@@ -37,9 +34,7 @@ import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
 import com.squareup.otto.Subscribe;
 import com.stfalcon.frescoimageviewer.ImageViewer;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by georgichristov on 20/11/2016
@@ -47,8 +42,6 @@ import butterknife.OnClick;
  * Copyright © GraffiTab Inc. 2016
  */
 public class ProfileActivity extends CameraUtilsActivity {
-
-    @BindView(R.id.fab) FloatingActionButton fab;
 
     private GTUser user;
     private UserProfileFragment content;
@@ -75,15 +68,13 @@ public class ProfileActivity extends CameraUtilsActivity {
             return;
         }
 
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_fragment_holder);
         ButterKnife.bind(this);
 
         setupTopBar();
         setupContent();
-        setupButtons();
         setupEventListeners();
 
-        loadFollowButton();
         Utils.runWithDelay(new Runnable() {
 
             @Override
@@ -113,10 +104,8 @@ public class ProfileActivity extends CameraUtilsActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @OnClick(R.id.fab)
     public void onClickFollow(View view) {
         user.followedByCurrentUser = content.toggleFollow();
-        loadFollowButton();
     }
 
     public void onClickPosts(View view) {
@@ -190,19 +179,19 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     @Subscribe
     public void userFollowedEvent(GTUserFollowedEvent event) {
-        if (fab == null) return;
+        if (this.isDestroyed()) return;
         refreshUserAfterFollowStateChange(event.getUser());
     }
 
     @Subscribe
     public void userUnfollowedEvent(GTUserUnfollowedEvent event) {
-        if (fab == null) return;
+        if (this.isDestroyed()) return;
         refreshUserAfterFollowStateChange(event.getUser());
     }
 
     @Subscribe
     public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
-        if (fab == null) return;
+        if (this.isDestroyed()) return;
         refreshUserAfterFollowStateChange(event.getUser());
         content.loadUserNamesAndHeaderData(); // Refresh profile assets.
         content.loadUserAssets();
@@ -210,13 +199,13 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     @Subscribe
     public void userAvatarChangedEvent(GTUserAvatarUpdatedEvent event) {
-        if (fab == null) return;
+        if (this.isDestroyed()) return;
         refreshUserAfterAssetsChange();
     }
 
     @Subscribe
     public void userCoverChangedEvent(GTUserCoverUpdatedEvent event) {
-        if (fab == null) return;
+        if (this.isDestroyed()) return;
         refreshUserAfterAssetsChange();
     }
 
@@ -237,7 +226,7 @@ public class ProfileActivity extends CameraUtilsActivity {
 
         content.setUser(user);
         content.loadUserCountData();
-        loadFollowButton();
+        content.loadFollowButton();
     }
 
     @Override
@@ -259,13 +248,6 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     // Loading
-
-    private void loadFollowButton() {
-        fab.setImageDrawable(user.followedByCurrentUser ? ImageUtils.tintIcon(this, R.drawable.ic_action_unfollow, getResources().getColor(R.color.colorWhite)) : ImageUtils.tintIcon(this, R.drawable.ic_action_follow, getResources().getColor(R.color.colorPrimary)));
-        fab.setColorNormalResId(user.followedByCurrentUser ? R.color.colorPrimary : R.color.colorWhite);
-        fab.setColorPressed(user.followedByCurrentUser ? getResources().getColor(R.color.colorPrimaryDark) : Color.parseColor("#efefef"));
-        fab.setColorRipple(user.followedByCurrentUser ? getResources().getColor(R.color.colorPrimaryDark) : Color.parseColor("#efefef"));
-    }
 
     public void reloadUserProfile() {
         GTSDK.getUserManager().getFullUserProfile(user.id, !profileRefreshedOnce, new GTResponseHandler<GTUserResponse>() {
@@ -292,25 +274,13 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     private void finishLoadingUserProfile() {
-        if (fab == null) return; // View is destroyed.
+        if (isDestroyed()) return; // View is destroyed.
 
-        loadFollowButton();
         content.setUser(user);
+        content.loadFollowButton();
         content.loadUserCountData();
         content.loadUserNamesAndHeaderData();
         content.loadUserAssets();
-
-        if (!user.isMe()) { // Only show follow button if we're viewing some else's profile.
-            Utils.runWithDelay(new Runnable() {
-
-                @Override
-                public void run() {
-                    fab.setVisibility(View.VISIBLE);
-                    fab.animate().scaleX(1);
-                    fab.animate().scaleY(1);
-                }
-            }, 700);
-        }
     }
 
     // Setup
@@ -331,12 +301,6 @@ public class ProfileActivity extends CameraUtilsActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, content);
         transaction.commit();
-    }
-
-    private void setupButtons() {
-        fab.setVisibility(View.GONE);
-        fab.animate().scaleX(0);
-        fab.animate().scaleY(0);
     }
 
     private void setupEventListeners() {

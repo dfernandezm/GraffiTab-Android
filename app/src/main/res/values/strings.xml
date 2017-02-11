@@ -100,6 +100,7 @@
     <string name="profile_following">following</string>
     <string name="profile_change_avatar_success">Avatar updated!</string>
     <string name="profile_change_cover_success">Cover updated!</string>
+    <string name="profile_follow">follow</string>
 
     <!-- Likes -->
     <string name="likes">Likes</string>

@@ -28,11 +28,11 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:orientation="vertical"
-            android:layout_marginBottom="1dp">
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/nameField"
@@ -53,14 +53,24 @@
                 android:textSize="13sp" />
         </LinearLayout>
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/followButton"
-            android:layout_width="42dp"
-            android:layout_height="32dp"
-            android:background="@drawable/rounded_corner_follow"
-            android:padding="3dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_action_follow"
-            android:tint="@color/colorPrimary" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground">
+
+            <TextView
+                android:id="@+id/followButtonText"
+                android:layout_width="85dp"
+                android:layout_height="32dp"
+                android:background="@drawable/rounded_corner_user_list_follow"
+                android:text="@string/profile_follow"
+                android:textAllCaps="false"
+                android:textColor="@color/colorWhite"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textSize="14sp"
+                android:gravity="center"/>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>
