@@ -9,7 +9,6 @@
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/login_full"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
@@ -59,9 +58,9 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
                 android:background="@drawable/rounded_corner_login"
-                android:orientation="vertical"
-                android:layout_marginTop="40dp">
+                android:orientation="vertical">
 
                 <Button
                     android:id="@+id/loginLocalBtn"
@@ -69,11 +68,11 @@
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackground"
                     android:fontFamily="sans-serif-medium"
+                    android:paddingLeft="80dp"
+                    android:paddingRight="80dp"
                     android:text="@string/login"
                     android:textColor="#fff"
-                    android:textSize="15sp"
-                    android:paddingLeft="70dp"
-                    android:paddingRight="70dp"/>
+                    android:textSize="15sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -85,7 +84,7 @@
             android:layout_marginBottom="10dp"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Not Georgi? Switch account"
+            android:text="@string/login_signout"
             android:textColor="@color/colorLoginWhite"
             android:textSize="15sp" />
     </RelativeLayout>

@@ -54,6 +54,7 @@ public class LoginActivity extends FacebookUtilsActivity {
     @BindView(R.id.avatar) ImageView avatar;
     @BindView(nameField) TextView nameView;
     @BindView(R.id.usernameField) TextView usernameView;
+    @BindView(R.id.signOut) TextView signOut;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -270,6 +271,10 @@ public class LoginActivity extends FacebookUtilsActivity {
         GTUser user = GTSDK.getAccountManager().getLastLoggedInUser();
         nameView.setText(user.fullName());
         usernameView.setText(user.mentionUsername());
+
+        signOut.setText(getString(R.string.login_signout, user.firstName));
+        TextUtils.colorTextViewSubstring(signOut, getString(R.string.login_switch_account), Color.parseColor("#ddffffff"));
+
         loadAvatar(user);
     }
 
