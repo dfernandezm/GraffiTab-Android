@@ -20,6 +20,7 @@ public class Constants {
     public static final String EXTRA_CLUSTER = "EXTRA_CLUSTER";
     public static final String EXTRA_PERMISSION_TYPE = "EXTRA_PERMISSION_TYPE";
     public static final String EXTRA_PERMISSIONS = "EXTRA_PERMISSIONS";
+    public static final String EXTRA_EXTERNAL_TYPE = "EXTRA_EXTERNAL_TYPE";
 
     public static final String[] PALLETE = {"#cad0cc", "#cdc7b9", "#a9b3b2", "#b9bbb8", "#c2d1cc", "#c2c8c4", "#b4bfb9"};
 }

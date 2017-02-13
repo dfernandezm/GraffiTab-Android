@@ -214,6 +214,7 @@ public class LoginActivity extends FacebookUtilsActivity {
             public void onError(FacebookException exception) {
                 TaskDialog.getInstance().hideDialog();
                 Log.e(getClass().getSimpleName(), "Failed to login with Facebook", exception);
+                DialogBuilder.buildOKToast(LoginActivity.this, getString(R.string.other_facebook_error));
             }
         });
     }

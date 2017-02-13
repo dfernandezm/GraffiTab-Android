@@ -168,6 +168,14 @@
     <!-- Cluster -->
     <string name="cluster_streamables_count">%1$d discovered</string>
 
+    <!-- Linked Accounts -->
+    <string name="linked_accounts_find_friends">Find Friends</string>
+    <string name="linked_accounts_account">Account</string>
+    <string name="linked_accounts_unlink">Unlink</string>
+    <string name="linked_accounts_unlink_description">Unlinking your account will disable login with that specific provider.</string>
+    <string name="linked_accounts_unlink_prompt">Are you sure you want to unlink this account?</string>
+    <string name="linked_accounts_unlink_success">This account has been unlinked</string>
+
     <!-- Settings -->
     <string name="settings_account">Account</string>
     <string name="settings_edit_profile">Edit Profile</string>
@@ -250,6 +258,7 @@
     <string name="api_error">An unexpected error has occurred. Please contact support to raise a ticket.</string>
     
     <!-- Other -->
+    <string name="other_facebook_error">Couldn\'t perform Facebook operation</string>
     <string name="other_confirm_delete">Confirm delete?</string>
     <string name="other_retry">Try again</string>
     <string name="other_copied">Text copied to clipboard</string>

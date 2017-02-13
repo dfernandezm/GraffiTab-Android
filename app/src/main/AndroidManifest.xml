@@ -205,6 +205,14 @@
             android:theme="@style/AllTimeDialogTheme"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.settings.social.LinkedAccountsActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.home.settings.social.LinkedAccountActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

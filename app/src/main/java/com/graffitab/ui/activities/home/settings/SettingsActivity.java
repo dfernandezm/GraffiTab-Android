@@ -20,6 +20,7 @@ import com.graffitab.settings.Settings;
 import com.graffitab.ui.activities.home.WebActivity;
 import com.graffitab.ui.activities.home.me.edit.EditPasswordActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
+import com.graffitab.ui.activities.home.settings.social.LinkedAccountsActivity;
 import com.graffitab.ui.activities.home.users.UserLikesActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
@@ -120,6 +121,7 @@ public class SettingsActivity extends AppCompatActivity {
         private Preference userLikesPreference;
         private CheckBoxPreference rememberMePreference;
 
+        private Preference linkedAccountsPreference;
         private Preference cachePreference;
         private CheckBoxPreference assistantPreference;
 
@@ -142,6 +144,7 @@ public class SettingsActivity extends AppCompatActivity {
             userLikesPreference = findPreference("likedPosts");
             rememberMePreference = (CheckBoxPreference) findPreference("rememberMe");
             cachePreference = findPreference("clearCache");
+            linkedAccountsPreference = findPreference("linkedAccounts");
             assistantPreference = (CheckBoxPreference) findPreference("drawingAssistant");
             helpPreference = findPreference("helpCenter");
             reportPreference = findPreference("reportProblem");
@@ -168,6 +171,14 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
         private void bindPreferences() {
+            linkedAccountsPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    startActivity(new Intent(getActivity(), LinkedAccountsActivity.class));
+                    return true;
+                }
+            });
             cachePreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
 
                 @Override

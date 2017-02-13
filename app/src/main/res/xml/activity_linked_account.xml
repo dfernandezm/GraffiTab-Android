@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <Preference
+        android:key="findFriends"
+        android:title="@string/linked_accounts_find_friends" />
+    <PreferenceCategory android:title="@string/linked_accounts_account">
+        <Preference
+            android:key="unlink"
+            android:summary="@string/linked_accounts_unlink_description"
+            android:title="@string/linked_accounts_unlink" />
+    </PreferenceCategory>
+</PreferenceScreen>
