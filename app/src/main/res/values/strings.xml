@@ -98,8 +98,8 @@
     <string name="profile_graffiti">graffiti</string>
     <string name="profile_followers">followers</string>
     <string name="profile_following">following</string>
-    <string name="profile_change_avatar_success">Avatar updated!</string>
-    <string name="profile_change_cover_success">Cover updated!</string>
+    <string name="profile_change_avatar_success">Avatar updated</string>
+    <string name="profile_change_cover_success">Cover updated</string>
     <string name="profile_follow">follow</string>
 
     <!-- Likes -->
@@ -144,6 +144,7 @@
     <!-- Explorer -->
     <string name="explorer">Explorer</string>
     <string name="explorer_save_location_prompt">Save this area to your Locations?</string>
+    <string name="explorer_error_refresh">Couldn\'t refresh map</string>
 
     <!-- Create Location -->
     <string name="create_location_no_matches">No address matches found.</string>
@@ -201,7 +202,6 @@
     <string name="streamable_details_explore">Explore Map Area</string>
 
     <!-- API Errors -->
-
     <string name="api_error_unsupported_file_type">This file type is not supported.</string>
     <string name="api_error_invalid_token">The provided token is invalid.</string>
     <string name="api_error_stream_could_not_be_read">The file stream could not be read.</string>

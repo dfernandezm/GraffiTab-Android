@@ -178,7 +178,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public void onFailure(GTResponse<GTListStreamablesResponse> gtResponse) {
-                DialogBuilder.buildAPIErrorDialog(ExplorerActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                DialogBuilder.buildAPIErrorToast(ExplorerActivity.this, getString(R.string.explorer_error_refresh));
             }
         });
     }

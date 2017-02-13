@@ -28,15 +28,14 @@ public class UserAssetManager {
             @Override
             public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
                 TaskDialog.getInstance().hideDialog();
-                DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name),
-                        context.getString(R.string.profile_change_avatar_success));
+                DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_avatar_success));
             }
 
             @Override
             public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
                 TaskDialog.getInstance().hideDialog();
                 DialogBuilder.buildAPIErrorDialog(context, context.getString(R.string.app_name),
-                        ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                        ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
             }
         });
     }
@@ -52,15 +51,14 @@ public class UserAssetManager {
                     @Override
                     public void onSuccess(GTResponse<GTActionCompleteResult> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name),
-                                context.getString(R.string.profile_change_avatar_success));
+                        DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_avatar_success));
                     }
 
                     @Override
                     public void onFailure(GTResponse<GTActionCompleteResult> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
                         DialogBuilder.buildAPIErrorDialog(context, context.getString(R.string.app_name),
-                                ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                                ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
                     }
                 });
             }
@@ -77,15 +75,14 @@ public class UserAssetManager {
             @Override
             public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
                 TaskDialog.getInstance().hideDialog();
-                DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name),
-                        context.getString(R.string.profile_change_cover_success));
+                DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_cover_success));
             }
 
             @Override
             public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
                 TaskDialog.getInstance().hideDialog();
                 DialogBuilder.buildAPIErrorDialog(context, context.getString(R.string.app_name),
-                        ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                        ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
             }
         });
     }
@@ -101,15 +98,14 @@ public class UserAssetManager {
                     @Override
                     public void onSuccess(GTResponse<GTActionCompleteResult> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildOKDialog(context, context.getString(R.string.app_name),
-                                context.getString(R.string.profile_change_cover_success));
+                        DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_cover_success));
                     }
 
                     @Override
                     public void onFailure(GTResponse<GTActionCompleteResult> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
                         DialogBuilder.buildAPIErrorDialog(context, context.getString(R.string.app_name),
-                                ApiUtils.localizedErrorReason(gtResponse), gtResponse.getResultCode());
+                                ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
                     }
                 });
             }

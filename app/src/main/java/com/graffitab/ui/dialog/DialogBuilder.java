@@ -9,13 +9,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import com.graffitab.R;
 import com.graffitab.config.AppConfig;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.utils.input.KeyboardUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.GTResultCode;
+import com.graffitabsdk.sdk.GTSDK;
 
 import java.util.Date;
 
@@ -55,24 +56,26 @@ public class DialogBuilder {
 
         if (forceShow)
             buildOKDialog(context, title, message, action);
-        else {
-            Date errorDate = new Date();
-            boolean shouldShowError = false;
-            if (lastErrorDate == null) { // Error has not been shown.
-                shouldShowError = true;
-                lastErrorDate = errorDate;
-            }
-            else { // Show error only after error interval has passed.
-                long seconds = (errorDate.getTime() - lastErrorDate.getTime()) / 1000;
-                if (seconds > AppConfig.configuration.apiErrorInterval) {
-                    shouldShowError = true;
-                    lastErrorDate = errorDate;
-                }
-            }
+        else if (isPastLastApiErrorDate())
+            buildOKDialog(context, title, message, action);
+    }
 
-            if (shouldShowError)
-                buildOKDialog(context, title, message, action);
-        }
+    public static void buildAPIErrorToast(final Activity context, String message) {
+        buildAPIErrorToast(context, message, false);
+    }
+
+    public static void buildAPIErrorToast(final Activity context, String message, boolean forceShow) {
+        if (context == null) return;
+
+        if (forceShow)
+            buildOKToast(context, message);
+        else if (isPastLastApiErrorDate())
+            buildOKToast(context, message);
+    }
+
+    public static void buildOKToast(Context context, String message) {
+        if (context == null) return;
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
     }
 
 	public static void buildOKDialog(Context context, String title, String message, final OnOkHandler handler) {
@@ -176,4 +179,21 @@ public class DialogBuilder {
 		// Show dialog.
 		alertDialog.show();
 	}
+
+    static boolean isPastLastApiErrorDate() {
+        Date errorDate = new Date();
+        boolean shouldShowError = false;
+        if (lastErrorDate == null) { // Error has not been shown.
+            shouldShowError = true;
+            lastErrorDate = errorDate;
+        }
+        else { // Show error only after error interval has passed.
+            long seconds = (errorDate.getTime() - lastErrorDate.getTime()) / 1000;
+            if (seconds > AppConfig.configuration.apiErrorInterval) {
+                shouldShowError = true;
+                lastErrorDate = errorDate;
+            }
+        }
+        return shouldShowError;
+    }
 }
