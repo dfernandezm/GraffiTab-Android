@@ -25,6 +25,7 @@ import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
+import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.fragments.home.FeedFragment;
 import com.graffitab.ui.fragments.home.NotificationsFragment;
 import com.graffitab.ui.fragments.home.RecentFragment;
@@ -33,10 +34,10 @@ import com.graffitab.ui.views.sidemenu.CustomResideMenu;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.image.ImageUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUnseenNotificationsResponse;
+import com.graffitabsdk.sdk.GTSDK;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -59,6 +60,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private CustomResideMenu resideMenu;
     private View notificationsIndicator;
+    private final int TIME_INTERVAL = 3000; // # milliseconds, desired time passed between two back presses.
+    private long mBackPressed;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +86,18 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 performStartUpAnimations();
             }
         }, 1500);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            super.onBackPressed();
+            return;
+        }
+        else
+            DialogBuilder.buildOKToast(this, getString(R.string.home_exit_prompt));
+
+        mBackPressed = System.currentTimeMillis();
     }
 
     @Override
