@@ -14,6 +14,8 @@ import java.util.regex.Pattern;
 public class TextUtils {
 
     public static void colorTextViewSubstring(TextView textView, String substring, int color) {
+        if (textView == null) return;
+
         String notes = textView.getText().toString();
         SpannableStringBuilder sb = new SpannableStringBuilder(notes);
         Pattern p = Pattern.compile(substring, Pattern.CASE_INSENSITIVE);

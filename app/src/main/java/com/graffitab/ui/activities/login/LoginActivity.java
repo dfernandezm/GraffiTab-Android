@@ -7,10 +7,12 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.FacebookException;
 import com.graffitab.R;
+import com.graffitab.settings.Settings;
 import com.graffitab.ui.activities.custom.facebook.FacebookUtilsActivity;
 import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
@@ -22,16 +24,20 @@ import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.model.GTExternalProvider;
+import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+
+import static com.graffitab.R.id.nameField;
 
 /**
  * Created by georgichristov on 11/11/2016
@@ -43,6 +49,11 @@ public class LoginActivity extends FacebookUtilsActivity {
     @BindView(R.id.username) EditText usernameField;
     @BindView(R.id.password) EditText passwordField;
     @BindView(R.id.signUp) TextView signUpField;
+    @BindView(R.id.normalLoginView) View normalLoginView;
+    @BindView(R.id.existingLoginView) View existingLoginView;
+    @BindView(R.id.avatar) ImageView avatar;
+    @BindView(nameField) TextView nameView;
+    @BindView(R.id.usernameField) TextView usernameView;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,14 +66,36 @@ public class LoginActivity extends FacebookUtilsActivity {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
+        setupContentView();
         setupBackgroundImage();
         setupTextFields();
+    }
+
+    @OnClick(R.id.loginLocalBtn)
+    public void onClickLoginLocal(View view) {
+        Log.i(getClass().getSimpleName(), "Logging in local user");
+        KeyboardUtils.hideKeyboard(this);
+
+        String un = GTSDK.getAccountManager().getLastLoggedInUser().username;
+        String pw = GTSDK.getAccountManager().getLastLoggedInUserPassword();
+        login(un, pw);
+    }
+
+    @OnClick(R.id.signOut)
+    public void onClickSignOut(View view) {
+        Log.i(getClass().getSimpleName(), "Signing out local user");
+        KeyboardUtils.hideKeyboard(this);
+        GTSDK.getAccountManager().clearLastLoggedInUser();
+        setupContentView();
     }
 
     @OnClick(R.id.loginBtn)
     public void onClickLogin(View view) {
         KeyboardUtils.hideKeyboard(this);
-        login();
+
+        String un = usernameField.getText().toString();
+        String pw = passwordField.getText().toString();
+        login(un, pw);
     }
 
     @OnClick(R.id.loginFacebookBtn)
@@ -91,16 +124,15 @@ public class LoginActivity extends FacebookUtilsActivity {
 
     // Login
 
-    private void login() {
+    private void login(String username, String password) {
         Log.i(getClass().getSimpleName(), "Logging in");
-        String un = usernameField.getText().toString();
-        String pw = passwordField.getText().toString();
 
-        if (InputValidator.validateLogin(this, un, pw)) {
+
+        if (InputValidator.validateLogin(this, username, password)) {
             KeyboardUtils.hideKeyboard(this);
             TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
 
-            GTSDK.getUserManager().login(un, pw, new GTResponseHandler<GTUserResponse>() {
+            GTSDK.getUserManager().login(username, password, new GTResponseHandler<GTUserResponse>() {
 
                 @Override
                 public void onSuccess(GTResponse<GTUserResponse> responseObject) {
@@ -232,7 +264,36 @@ public class LoginActivity extends FacebookUtilsActivity {
         });
     }
 
+    // Loading
+
+    private void loadLocalUserData() {
+        GTUser user = GTSDK.getAccountManager().getLastLoggedInUser();
+        nameView.setText(user.fullName());
+        usernameView.setText(user.mentionUsername());
+        loadAvatar(user);
+    }
+
+    private void loadAvatar(GTUser user) {
+        int p = R.drawable.default_avatar;
+        if (user.hasAvatar())
+            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
+        else
+            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+    }
+
     // Setup
+
+    private void setupContentView() {
+        if (Settings.settings.rememberMe() && GTSDK.getAccountManager().hasLastLoggedInUser() && GTSDK.getAccountManager().getLastLoggedInUserPassword() != null) {
+            normalLoginView.setVisibility(View.GONE);
+            existingLoginView.setVisibility(View.VISIBLE);
+            loadLocalUserData();
+        }
+        else {
+            normalLoginView.setVisibility(View.VISIBLE);
+            existingLoginView.setVisibility(View.GONE);
+        }
+    }
 
     private void setupTextFields() {
         TextUtils.colorTextViewSubstring(signUpField, getString(R.string.login_sign_up), Color.parseColor("#ddffffff"));

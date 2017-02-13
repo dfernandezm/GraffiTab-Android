@@ -23,13 +23,13 @@ import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.activities.home.users.UserLikesActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
-import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.OnYesNoHandler;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.file.FileUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.sdk.GTSDK;
 import com.instabug.library.Instabug;
 
 /**
@@ -49,6 +49,8 @@ public class SettingsActivity extends AppCompatActivity {
                 TaskDialog.getInstance().hideDialog();
 
                 // Clear any data on disk for the current user.
+                if (!Settings.settings.rememberMe())
+                    GTSDK.getAccountManager().clearLastLoggedInUser();
 
                 // Show login screen.
                 Intent intent = new Intent(activity, LoginActivity.class);

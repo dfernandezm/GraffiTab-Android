@@ -31,8 +31,10 @@ public class ActivityUtils {
             b = BitmapUtils.getBytes(is);
             Drawable drawable = new BitmapDrawable(activity.getResources(), BitmapUtils.decodeSampledBitmapFromBytesForCurrentScreen(b, activity));
 
-            ImageView background = (ImageView) activity.findViewById(backgroundResId);
-            background.setImageDrawable(drawable);
+            if (activity.findViewById(backgroundResId) != null) {
+                ImageView background = (ImageView) activity.findViewById(backgroundResId);
+                background.setImageDrawable(drawable);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
