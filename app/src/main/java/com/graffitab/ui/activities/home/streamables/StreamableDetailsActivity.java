@@ -1,6 +1,6 @@
 package com.graffitab.ui.activities.home.streamables;
 
-import android.content.Context;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,6 +9,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
@@ -40,6 +43,7 @@ import com.graffitabsdk.sdk.events.streamables.GTStreamableUnlikedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -69,10 +73,23 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     private GTStreamable streamable;
     private PhotoViewAttacher mAttacher;
 
-    public static void openStreamableDetails(Context context, GTStreamable streamable) {
+    public static void openStreamableDetails(Activity context, GTStreamable streamable, View source) {
         Intent intent = new Intent(context, StreamableDetailsActivity.class);
         intent.putExtra(Constants.EXTRA_STREAMABLE, streamable);
-        context.startActivity(intent);
+
+        if (source != null) {
+            // Configure the Intent to set the transition
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    // the context of the activity
+                    context,
+                    // For each shared element, add to this method a new Pair item,
+                    // which contains the reference of the view we are transitioning *from*,
+                    // and the value of the transitionName attribute
+                    new Pair<>(source, context.getString(R.string.transition_name_streamable)));
+            ActivityCompat.startActivity(context, intent, options.toBundle());
+        }
+        else
+            context.startActivity(intent);
     }
 
     @Override
@@ -98,13 +115,13 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         setupDisplays();
 
         loadUserAndStreamableData();
-        refreshStreamable();
 
         Utils.runWithDelay(new Runnable() {
 
             @Override
             public void run() {
                 toggleDisplay();
+//                refreshStreamable();
             }
         }, 1000);
     }
@@ -132,7 +149,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.close)
     public void onClickClose(View view) {
-        finish();
+        supportFinishAfterTransition();
     }
 
     @OnClick(R.id.optionsBtn)
@@ -375,51 +392,93 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         commentsField.setText(streamable.commentsCount + "");
 
         loadAvatar();
+        loadStreamable();
     }
 
     private void loadAvatar() {
         ImageUtils.setAvatar(avatar, streamable.user);
     }
 
-    private void refreshStreamable() {
-        GTSDK.getStreamableManager().getStreamable(streamable.id, true, new GTResponseHandler<GTStreamableResponse>() {
+    private void loadStreamable() {
+        // Delay transition until we have images.
+        supportPostponeEnterTransition();
+
+        final Runnable transitionRunnable = new Runnable() {
 
             @Override
-            public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
-                streamable = gtResponse.getObject().streamable;
-                finishRefresh();
+            public void run() {
+                mAttacher.update();
+                supportStartPostponedEnterTransition();
+            }
+        };
+
+        // Try loading full imag first.
+        Picasso.with(this).load(streamable.asset.link).networkPolicy(NetworkPolicy.OFFLINE).into(streamableView, new Callback() {
+
+            @Override
+            public void onSuccess() { // Image is cached.
+                transitionRunnable.run();
             }
 
             @Override
-            public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
-                finishRefresh();
-            }
+            public void onError() { // Image is not cached.
+                Picasso.with(StreamableDetailsActivity.this).load(streamable.asset.thumbnail).networkPolicy(NetworkPolicy.OFFLINE).into(streamableView, new Callback() {
 
-            @Override
-            public void onCache(GTResponse<GTStreamableResponse> gtResponse) {
-                super.onCache(gtResponse);
-                streamable = gtResponse.getObject().streamable;
-                finishRefresh();
+                    @Override
+                    public void onSuccess() { // Thumbnail is cached.
+                        transitionRunnable.run();
+
+                        // After the transition completes, load the full image from web.
+                        Utils.runWithDelay(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                if (streamableView == null) return;
+
+                                Picasso.with(StreamableDetailsActivity.this).load(streamable.asset.link).placeholder(streamableView.getDrawable()).into(streamableView, new Callback() {
+
+                                    @Override
+                                    public void onSuccess() {
+                                        mAttacher.update();
+                                    }
+
+                                    @Override
+                                    public void onError() {}
+                                });
+                            }
+                        }, 1000);
+                    }
+
+                    @Override
+                    public void onError() { // Thumbnail is not cached.
+                        transitionRunnable.run();
+                    }
+                });
             }
         });
     }
 
-    private void finishRefresh() {
-        if (avatar == null) return; // View is destroyed.
-
-        loadUserAndStreamableData();
-        Picasso.with(this).load(streamable.asset.link).into(streamableView, new Callback() {
-
-            @Override
-            public void onSuccess() {
-                mAttacher.update();
-            }
-
-            @Override
-            public void onError() {
-                mAttacher.update();
-            }
-        });
+    private void refreshStreamable() {
+//        GTSDK.getStreamableManager().getStreamable(streamable.id, true, new GTResponseHandler<GTStreamableResponse>() {
+//
+//            @Override
+//            public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+//                streamable = gtResponse.getObject().streamable;
+//                finishRefresh();
+//            }
+//
+//            @Override
+//            public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
+//                finishRefresh();
+//            }
+//
+//            @Override
+//            public void onCache(GTResponse<GTStreamableResponse> gtResponse) {
+//                super.onCache(gtResponse);
+//                streamable = gtResponse.getObject().streamable;
+//                finishRefresh();
+//            }
+//        });
     }
 
     // Setup

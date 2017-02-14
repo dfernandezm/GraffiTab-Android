@@ -318,7 +318,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
             @Override
             public boolean onClusterItemClick(GTClusterItem gtClusterItem) {
-                StreamableDetailsActivity.openStreamableDetails(ExplorerActivity.this, gtClusterItem.getStreamable());
+                StreamableDetailsActivity.openStreamableDetails(ExplorerActivity.this, gtClusterItem.getStreamable(), null);
                 return true;
             }
         });

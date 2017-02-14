@@ -2,6 +2,7 @@ package com.graffitab.ui.fragments.notifications;
 
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
@@ -42,17 +43,25 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
         if (notification.type == GTNotification.GTNotificationType.FOLLOW)
             ProfileActivity.show(notification.follower, getActivity());
         else if (notification.type == GTNotification.GTNotificationType.COMMENT) {
-            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.commentedStreamable);
+            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.commentedStreamable, findStreamableViewSourceForAdapterPosition(adapterPosition));
         }
         else if (notification.type == GTNotification.GTNotificationType.LIKE) {
-            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.likedStreamable);
+            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.likedStreamable, findStreamableViewSourceForAdapterPosition(adapterPosition));
         }
         else if (notification.type == GTNotification.GTNotificationType.MENTION) {
-            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.mentionedStreamable);
+            StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.mentionedStreamable, findStreamableViewSourceForAdapterPosition(adapterPosition));
         }
         else {
             // No-op - Welcome notification type is not handled.
         }
+    }
+
+    private View findStreamableViewSourceForAdapterPosition(int adapterPosition) {
+        View source = null;
+        View v = getRecyclerView().getRecyclerView().getLayoutManager().findViewByPosition(adapterPosition);
+        if (v != null)
+            source = v.findViewById(R.id.itemImage);
+        return source;
     }
 
     // Configuration

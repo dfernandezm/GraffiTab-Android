@@ -180,7 +180,11 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public void onRowSelected(GTStreamable streamable, int adapterPosition) {
-        StreamableDetailsActivity.openStreamableDetails(getActivity(), streamable);
+        View source = null;
+        View v = getRecyclerView().getRecyclerView().getLayoutManager().findViewByPosition(adapterPosition);
+        if (v != null)
+            source = v.findViewById(R.id.streamableView);
+        StreamableDetailsActivity.openStreamableDetails(getActivity(), streamable, source);
     }
 
     @Override

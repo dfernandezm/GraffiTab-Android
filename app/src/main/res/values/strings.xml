@@ -7,6 +7,10 @@
     <!-- Instabug -->
     <string name="instabug_token">95a2ae49aceb3d7c2b0d32c573a6231f</string>
 
+    <!-- Transitions -->
+    <string name="transition_name_streamable">TRANSITION:streamable</string>
+    <string name="transition_name_avatar">TRANSITION:avatar</string>
+
     <!-- Login -->
     <string name="login_hint_username">Username</string>
     <string name="login_hint_password">Password</string>
