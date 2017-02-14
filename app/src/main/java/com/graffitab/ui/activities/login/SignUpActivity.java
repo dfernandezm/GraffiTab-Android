@@ -86,7 +86,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         if (InputValidator.validateSignUp(this, fn, ln, em, un, pw, cpw)) {
             KeyboardUtils.hideKeyboard(this);
-            TaskDialog.getInstance().showDialog(null, this, null);
+            TaskDialog.getInstance().showProcessingDialog(this);
 
             GTSDK.getUserManager().register(fn, ln, em, un, pw, new GTResponseHandler<GTActionCompleteResult>() {
 

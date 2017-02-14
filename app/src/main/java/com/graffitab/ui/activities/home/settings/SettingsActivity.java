@@ -62,7 +62,7 @@ public class SettingsActivity extends AppCompatActivity {
             }
         };
 
-        TaskDialog.getInstance().showDialog(activity.getString(R.string.other_processing), activity, null);
+        TaskDialog.getInstance().showProcessingDialog(activity);
 
         Utils.runWithDelay(new Runnable() { // Give time to the loading dialog to appear.
 

@@ -22,7 +22,7 @@ import com.graffitabsdk.sdk.GTSDK;
 public class UserAssetManager {
 
     public static void editAvatar(final Activity context, Bitmap bitmap) {
-        TaskDialog.getInstance().showDialog(context.getString(R.string.other_processing), context, null);
+        TaskDialog.getInstance().showProcessingDialog(context);
         GTSDK.getMeManager().editAvatar(bitmap, new GTResponseHandler<GTAssetResponse>() {
 
             @Override
@@ -45,7 +45,7 @@ public class UserAssetManager {
 
             @Override
             public void onClickYes() {
-                TaskDialog.getInstance().showDialog(context.getString(R.string.other_processing), context, null);
+                TaskDialog.getInstance().showProcessingDialog(context);
                 GTSDK.getMeManager().deleteAvatar(new GTResponseHandler<GTActionCompleteResult>() {
 
                     @Override
@@ -69,7 +69,7 @@ public class UserAssetManager {
     }
 
     public static void editCover(final Activity context, Bitmap bitmap) {
-        TaskDialog.getInstance().showDialog(context.getString(R.string.other_processing), context, null);
+        TaskDialog.getInstance().showProcessingDialog(context);
         GTSDK.getMeManager().editCover(bitmap, new GTResponseHandler<GTAssetResponse>() {
 
             @Override
@@ -92,7 +92,7 @@ public class UserAssetManager {
 
             @Override
             public void onClickYes() {
-                TaskDialog.getInstance().showDialog(context.getString(R.string.other_processing), context, null);
+                TaskDialog.getInstance().showProcessingDialog(context);
                 GTSDK.getMeManager().deleteCover(new GTResponseHandler<GTActionCompleteResult>() {
 
                     @Override

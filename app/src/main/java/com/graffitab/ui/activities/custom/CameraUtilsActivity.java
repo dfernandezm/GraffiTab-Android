@@ -151,7 +151,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
     // Image capture
 
     private void finishCapturingImage(final Bitmap bitmap) {
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        TaskDialog.getInstance().showProcessingDialog(this);
 
         // Perform image operations on another thread.
         new Thread() {
@@ -184,7 +184,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
     }
 
     private void finishCapturingImage(final InputStream inputStream) {
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        TaskDialog.getInstance().showProcessingDialog(this);
 
         // Perform image operations on another thread.
         new Thread() {
@@ -239,7 +239,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
     }
 
     private void finishCroppingImage(Uri imageResource) {
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        TaskDialog.getInstance().showProcessingDialog(this);
         final File file = new File(imageResource.getPath());
 
         // Perform image processing on another thread.

@@ -84,8 +84,7 @@ public class LinkedAccountsActivity extends FacebookUtilsActivity {
 
                 @Override
                 public void onProfileFetched(String firstName, String lastName, String userId, String email, String accessToken) {
-                    TaskDialog.getInstance().hideDialog();
-                    TaskDialog.getInstance().showDialog(getString(R.string.other_processing), LinkedAccountsActivity.this, null);
+                    TaskDialog.getInstance().showProcessingDialog(LinkedAccountsActivity.this);
                     GTSDK.getMeManager().linkExternalProvider(userId, accessToken, GTExternalProvider.GTExternalProviderType.FACEBOOK, new GTResponseHandler<GTUserResponse>() {
 
                         @Override

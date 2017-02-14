@@ -14,7 +14,6 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.graffitab.R;
 import com.graffitab.ui.dialog.TaskDialog;
 
 import org.json.JSONException;
@@ -55,7 +54,7 @@ public class FacebookUtilsActivity extends AppCompatActivity {
 
             @Override
             public void onSuccess(LoginResult result) {
-                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), FacebookUtilsActivity.this, null);
+                TaskDialog.getInstance().showProcessingDialog(FacebookUtilsActivity.this);
                 getMe(callback);
             }
 
@@ -76,8 +75,10 @@ public class FacebookUtilsActivity extends AppCompatActivity {
             facebookLogout();
 
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        if (accessToken != null) // We already have a token, so use it to login.
+        if (accessToken != null) { // We already have a token, so use it to login.
+            TaskDialog.getInstance().showProcessingDialog(FacebookUtilsActivity.this);
             getMe(callback);
+        }
         else // No token yet or it has been cleared, so obtain a new token.
             LoginManager.getInstance().logInWithReadPermissions(this, Arrays.asList("email", "public_profile", "user_friends"));
     }

@@ -67,7 +67,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         if (TextUtils.isValidEmailAddress(em)) {
             KeyboardUtils.hideKeyboard(this);
-            TaskDialog.getInstance().showDialog(null, this, null);
+            TaskDialog.getInstance().showProcessingDialog(this);
 
             final Runnable successHandler = new Runnable() {
 

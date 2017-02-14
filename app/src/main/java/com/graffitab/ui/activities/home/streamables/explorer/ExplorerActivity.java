@@ -129,7 +129,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
 
     private void saveLocation() {
         final LatLng center = mMap.getCameraPosition().target;
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        TaskDialog.getInstance().showProcessingDialog(this);
         findAddressForLocation(this, center.latitude, center.longitude, new CreateLocationActivity.OnAddressFoundListener() {
 
             @Override

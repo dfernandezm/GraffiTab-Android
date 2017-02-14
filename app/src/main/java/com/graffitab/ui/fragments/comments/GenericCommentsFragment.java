@@ -217,7 +217,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
     @Override
     public void onOpenMention(GTComment comment, String mention, int adapterPosition) {
         // Check if the user profile exists.
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), getActivity(), null);
+        TaskDialog.getInstance().showProcessingDialog(getActivity());
         GTSDK.getUserManager().getFullUserProfileForUsername(mention.replace("@", ""), false, new GTResponseHandler<GTUserResponse>() {
 
             @Override

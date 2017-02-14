@@ -69,7 +69,7 @@ public class EditPasswordActivity extends AppCompatActivity {
 
             if (InputValidator.validateChangePassword(this, pw, npw, cpw)) {
                 KeyboardUtils.hideKeyboard(this);
-                TaskDialog.getInstance().showDialog(null, this, null);
+                TaskDialog.getInstance().showProcessingDialog(this);
 
                 GTSDK.getMeManager().editPassword(pw, npw, new GTResponseHandler<GTActionCompleteResult>() {
 

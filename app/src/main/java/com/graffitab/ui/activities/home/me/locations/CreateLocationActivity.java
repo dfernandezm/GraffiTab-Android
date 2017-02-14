@@ -196,7 +196,7 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
     @OnClick(R.id.fab)
     public void onClickCreateLocation(View view) {
         final LatLng center = mMap.getCameraPosition().target;
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        TaskDialog.getInstance().showProcessingDialog(this);
         findAddressForLocation(this, center.latitude, center.longitude, new OnAddressFoundListener() {
 
             @Override
@@ -361,7 +361,7 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
     // Search
 
     private void search(String query) {
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        TaskDialog.getInstance().showProcessingDialog(this);
         findAddress(this, query, new OnLocationFoundListener() {
 
             @Override

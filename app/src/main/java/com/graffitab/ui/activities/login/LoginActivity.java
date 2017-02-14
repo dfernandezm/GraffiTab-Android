@@ -131,7 +131,7 @@ public class LoginActivity extends FacebookUtilsActivity {
 
         if (InputValidator.validateLogin(this, username, password)) {
             KeyboardUtils.hideKeyboard(this);
-            TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+            TaskDialog.getInstance().showProcessingDialog(this);
 
             GTSDK.getUserManager().login(username, password, new GTResponseHandler<GTUserResponse>() {
 
@@ -222,7 +222,7 @@ public class LoginActivity extends FacebookUtilsActivity {
     // Sign up
 
     private void signUpWithFacebook(String firstName, String lastName, String userId, String email, String accessToken, String username) {
-        TaskDialog.getInstance().showDialog(getString(R.string.other_processing), this, null);
+        TaskDialog.getInstance().showProcessingDialog(this);
 
         GTSDK.getUserManager().register(GTExternalProvider.GTExternalProviderType.FACEBOOK, userId, accessToken, firstName, lastName, email, username, new GTResponseHandler<GTActionCompleteResult>() {
 

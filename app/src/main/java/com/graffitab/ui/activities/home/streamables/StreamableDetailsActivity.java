@@ -309,7 +309,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
             @Override
             public void onClickYes() {
-                TaskDialog.getInstance().showDialog(getString(R.string.other_processing), StreamableDetailsActivity.this, null);
+                TaskDialog.getInstance().showProcessingDialog(StreamableDetailsActivity.this);
                 GTSDK.getStreamableManager().delete(streamable.id, new GTResponseHandler<GTActionCompleteResult>() {
 
                     @Override

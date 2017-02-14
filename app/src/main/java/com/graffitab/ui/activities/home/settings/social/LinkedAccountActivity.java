@@ -130,7 +130,7 @@ public class LinkedAccountActivity extends AppCompatActivity {
         }
 
         private void unlinkAccount() {
-            TaskDialog.getInstance().showDialog(getString(R.string.other_processing), getActivity(), null);
+            TaskDialog.getInstance().showProcessingDialog(getActivity());
             GTSDK.getMeManager().unlinkExternalProvider(type, new GTResponseHandler<GTUserResponse>() {
 
                 @Override

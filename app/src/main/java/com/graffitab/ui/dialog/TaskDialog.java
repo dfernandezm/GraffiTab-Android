@@ -25,12 +25,18 @@ public class TaskDialog {
 		
 		return td;
 	}
-	
+
+    public void showProcessingDialog(Activity a) {
+        showDialog(a.getString(R.string.other_processing), a, null, false);
+    }
+
 	public void showDialog(String msg, Activity a, AsyncTask<?,?,?> task) {
 		showDialog(msg, a, task, false);
 	}
 
 	public void showDialog(String msg, Activity a, AsyncTask<?,?,?> task, boolean cancelable) {
+		if (dialog != null) return;
+
 		this.task = task;
 
 		dialog = ProgressDialog.show(a.getParent() != null ? a.getParent() : a, "", msg == null ? a.getString(R.string.other_processing) : msg, true);

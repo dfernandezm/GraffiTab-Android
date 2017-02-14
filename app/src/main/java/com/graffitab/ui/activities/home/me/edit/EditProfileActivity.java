@@ -180,7 +180,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
 
         if (InputValidator.validateEditProfile(this, fn, ln, em)) {
             KeyboardUtils.hideKeyboard(this);
-            TaskDialog.getInstance().showDialog(null, this, null);
+            TaskDialog.getInstance().showProcessingDialog(this);
 
             GTSDK.getMeManager().edit(fn, ln, em, a.length() > 0 ? a : null, w.length() > 0 ? w : null, new GTResponseHandler<GTUserResponse>() {
 
