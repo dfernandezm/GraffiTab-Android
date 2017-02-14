@@ -378,11 +378,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void loadAvatar() {
-        int p = R.drawable.default_avatar;
-        if (streamable.user.hasAvatar())
-            Picasso.with(this).load(streamable.user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(this).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, streamable.user);
     }
 
     private void refreshStreamable() {

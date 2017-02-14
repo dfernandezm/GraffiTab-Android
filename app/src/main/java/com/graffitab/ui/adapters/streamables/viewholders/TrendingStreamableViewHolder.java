@@ -11,7 +11,6 @@ import com.graffitab.application.MyApplication;
 import com.graffitab.utils.device.DeviceUtils;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,11 +55,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
     }
 
     public void loadAvatar() {
-        int p = R.drawable.default_avatar;
-        if (item.user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, item.user);
     }
 
     @Override

@@ -17,11 +17,11 @@ import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.model.GTCommentExtension;
 import com.graffitab.ui.adapters.comments.OnCommentClickListener;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTComment;
 import com.luseen.autolinklibrary.AutoLinkMode;
 import com.luseen.autolinklibrary.AutoLinkOnClickListener;
 import com.luseen.autolinklibrary.AutoLinkTextView;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -92,11 +92,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void loadAvatar() {
-        int p = R.drawable.default_avatar;
-        if (item.user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(item.user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, item.user);
     }
 
     // Setup

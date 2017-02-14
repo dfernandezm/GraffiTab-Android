@@ -20,6 +20,7 @@ import com.graffitab.ui.dialog.OnYesNoInputHandler;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
@@ -31,7 +32,6 @@ import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -280,11 +280,7 @@ public class LoginActivity extends FacebookUtilsActivity {
     }
 
     private void loadAvatar(GTUser user) {
-        int p = R.drawable.default_avatar;
-        if (user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, user);
     }
 
     // Setup

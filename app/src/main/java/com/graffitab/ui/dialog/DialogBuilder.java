@@ -7,14 +7,19 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.graffitab.R;
 import com.graffitab.config.AppConfig;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitab.utils.input.KeyboardUtils;
+import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.GTResultCode;
 import com.graffitabsdk.sdk.GTSDK;
 
@@ -179,6 +184,51 @@ public class DialogBuilder {
 		// Show dialog.
 		alertDialog.show();
 	}
+
+    public static void buildUnfollowDialog(final Context context, GTUser user, final OnYesNoHandler handler) {
+        if (context == null) return;
+
+        // Create dialog.
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        // Set custom layout.
+        final FrameLayout frameView = new FrameLayout(context);
+        builder.setView(frameView);
+
+        final AlertDialog alertDialog = builder.create();
+        LayoutInflater inflater = alertDialog.getLayoutInflater();
+        View dialoglayout = inflater.inflate(R.layout.dialog_unfollow, frameView);
+
+        ImageView avatar = (ImageView) dialoglayout.findViewById(R.id.avatar);
+        TextView unfollowPrompt = (TextView) dialoglayout.findViewById(R.id.unfollowPrompt);
+        Button cancelBtn = (Button) dialoglayout.findViewById(R.id.cancelBtn);
+        Button unfollowBtn = (Button) dialoglayout.findViewById(R.id.unfollowBtn);
+
+        unfollowPrompt.setText(context.getString(R.string.following_unfollow_user, user.firstName));
+        ImageUtils.setAvatar(avatar, user);
+
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                if (handler != null)
+                    handler.onClickNo();
+            }
+        });
+        unfollowBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                alertDialog.dismiss();
+                if (handler != null)
+                    handler.onClickYes();
+            }
+        });
+
+        // Show dialog.
+        alertDialog.show();
+    }
 
     static boolean isPastLastApiErrorDate() {
         Date errorDate = new Date();

@@ -9,6 +9,8 @@ import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.adapters.users.GenericUsersRecyclerViewAdapter;
 import com.graffitab.ui.adapters.users.OnUserClickListener;
 import com.graffitab.ui.adapters.users.viewholders.UserViewHolder;
+import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
@@ -109,27 +111,48 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
     }
 
     @Override
-    public void onToggleFollow(GTUser user, UserViewHolder holder, int adapterPosition) {
-        user.followedByCurrentUser = !user.followedByCurrentUser;
-        adapter.notifyDataSetChanged();
-        if (user.followedByCurrentUser)
-            GTSDK.getUserManager().follow(user.id, new GTResponseHandler<GTUserResponse>() {
+    public void onToggleFollow(final GTUser user, UserViewHolder holder, int adapterPosition) {
+        final Runnable followRunnable = new Runnable() {
+
+            @Override
+            public void run() {
+                user.followedByCurrentUser = !user.followedByCurrentUser;
+                adapter.notifyDataSetChanged();
+                if (user.followedByCurrentUser)
+                    GTSDK.getUserManager().follow(user.id, new GTResponseHandler<GTUserResponse>() {
+
+                        @Override
+                        public void onSuccess(GTResponse<GTUserResponse> gtResponse) {}
+
+                        @Override
+                        public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
+                    });
+                else
+                    GTSDK.getUserManager().unfollow(user.id, new GTResponseHandler<GTUserResponse>() {
+
+                        @Override
+                        public void onSuccess(GTResponse<GTUserResponse> gtResponse) {}
+
+                        @Override
+                        public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
+                    });
+            }
+        };
+
+        if (user.followedByCurrentUser) {
+            DialogBuilder.buildUnfollowDialog(getActivity(), user, new OnYesNoHandler() {
 
                 @Override
-                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {}
+                public void onClickYes() {
+                    followRunnable.run();
+                }
 
                 @Override
-                public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
+                public void onClickNo() {}
             });
+        }
         else
-            GTSDK.getUserManager().unfollow(user.id, new GTResponseHandler<GTUserResponse>() {
-
-                @Override
-                public void onSuccess(GTResponse<GTUserResponse> gtResponse) {}
-
-                @Override
-                public void onFailure(GTResponse<GTUserResponse> gtResponse) {}
-            });
+            followRunnable.run();
     }
 
     // Configuration

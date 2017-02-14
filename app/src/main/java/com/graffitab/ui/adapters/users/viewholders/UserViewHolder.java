@@ -6,8 +6,8 @@ import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.ui.adapters.users.OnUserClickListener;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTUser;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -37,11 +37,7 @@ public class UserViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void loadAvatar() {
-        int p = R.drawable.default_avatar;
-        if (item.hasAvatar())
-            Picasso.with(avatar.getContext()).load(item.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, item);
     }
 
     public GTUser getItem() {

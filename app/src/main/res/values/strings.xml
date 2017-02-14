@@ -131,6 +131,8 @@
 
     <!-- Following -->
     <string name="following">Following</string>
+    <string name="following_unfollow">Unfollow</string>
+    <string name="following_unfollow_user">Unfollow %1$s?</string>
 
     <!-- Edit Profile -->
     <string name="edit_profile">Edit Profile</string>

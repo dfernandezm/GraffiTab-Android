@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.ui.adapters.BaseItemAdapter;
-import com.graffitabsdk.sdk.GTSDK;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
@@ -19,7 +19,7 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.streamable.response.GTListHashtagsResponse;
 import com.graffitabsdk.network.service.user.response.GTListUsersResponse;
-import com.squareup.picasso.Picasso;
+import com.graffitabsdk.sdk.GTSDK;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -89,11 +89,7 @@ class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filterable 
     }
 
     private void loadAvatar(ImageView avatar, GTUser user) {
-        int p = R.drawable.default_avatar;
-        if (user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, user);
     }
 
     @Override

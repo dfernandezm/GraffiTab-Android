@@ -40,7 +40,6 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
-import com.squareup.picasso.Picasso;
 
 import me.relex.circleindicator.CircleIndicator;
 
@@ -158,19 +157,11 @@ public class UserProfileFragment extends ListStreamablesFragment {
     }
 
     private void loadAvatar() {
-        int p = R.drawable.default_avatar;
-        if (user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, user);
     }
 
     private void loadCover() {
-        int p = R.drawable.login_full;
-        if (user.hasCover())
-            Picasso.with(getActivity()).load(user.cover.link).placeholder(p).placeholder(p).error(p).into(cover);
-        else
-            Picasso.with(getActivity()).load(p).placeholder(p).into(cover);
+        ImageUtils.setCover(cover, user);
     }
 
     @Override

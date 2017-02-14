@@ -17,6 +17,7 @@ import com.graffitab.managers.UserAssetManager;
 import com.graffitab.ui.activities.custom.CameraUtilsActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
+import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.UserProfileFragment;
 import com.graffitab.utils.Utils;
@@ -105,7 +106,20 @@ public class ProfileActivity extends CameraUtilsActivity {
     }
 
     public void onClickFollow(View view) {
-        user.followedByCurrentUser = content.toggleFollow();
+        if (user.followedByCurrentUser) {
+            DialogBuilder.buildUnfollowDialog(this, user, new OnYesNoHandler() {
+
+                @Override
+                public void onClickYes() {
+                    user.followedByCurrentUser = content.toggleFollow();
+                }
+
+                @Override
+                public void onClickNo() {}
+            });
+        }
+        else
+            user.followedByCurrentUser = content.toggleFollow();
     }
 
     public void onClickPosts(View view) {

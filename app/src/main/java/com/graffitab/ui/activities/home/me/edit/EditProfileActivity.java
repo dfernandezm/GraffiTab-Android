@@ -20,6 +20,7 @@ import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.model.GTUser;
@@ -31,7 +32,6 @@ import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserCoverUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.squareup.otto.Subscribe;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -226,19 +226,11 @@ public class EditProfileActivity extends CameraUtilsActivity {
     }
 
     private void loadAvatar() {
-        int p = R.drawable.default_avatar;
-        if (me.hasAvatar())
-            Picasso.with(this).load(me.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(this).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, me);
     }
 
     private void loadCover() {
-        int p = R.drawable.login_full;
-        if (me.hasCover())
-            Picasso.with(this).load(me.cover.link).placeholder(p).placeholder(p).error(p).into(cover);
-        else
-            Picasso.with(this).load(p).placeholder(p).into(cover);
+        ImageUtils.setCover(cover, me);
     }
 
     // Setup

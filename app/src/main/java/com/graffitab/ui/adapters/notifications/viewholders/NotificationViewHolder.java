@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.ui.adapters.notifications.OnNotificationClickListener;
+import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTNotification;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
@@ -58,11 +59,7 @@ public class NotificationViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void loadAvatar(GTUser user) {
-        int p = R.drawable.default_avatar;
-        if (user.hasAvatar())
-            Picasso.with(avatar.getContext()).load(user.avatar.thumbnail).placeholder(p).error(p).into(avatar);
-        else
-            Picasso.with(avatar.getContext()).load(p).placeholder(p).into(avatar);
+        ImageUtils.setAvatar(avatar, user);
     }
 
     public void loadStreamable(GTStreamable streamable) {
