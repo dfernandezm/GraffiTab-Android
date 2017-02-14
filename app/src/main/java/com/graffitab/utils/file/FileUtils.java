@@ -38,6 +38,14 @@ public class FileUtils {
         return null;
     }
 
+    public static boolean cleanupFile(Uri file) {
+        if (file == null) return false;
+        File f = new File(file.getPath());
+        if (f.exists())
+            return f.delete();
+        return false;
+    }
+
     /**
      * Returns (and creates, if needed) the root app directory.
      */

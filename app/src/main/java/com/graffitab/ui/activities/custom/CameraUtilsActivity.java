@@ -37,6 +37,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
     private ImageView targetView;
     private Uri cameraImageUri;
+    private int actionId;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -99,12 +100,15 @@ public class CameraUtilsActivity extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        actionId = which;
                         if (which == R.id.action_take_new)
                             takePicture();
                         else if (which == R.id.action_choose)
                             choosePicture();
                         else if (which == R.id.action_remove)
-                            finishPickingImage(null);
+                            finishPickingImage(null, actionId);
+                        else if (which == R.id.action_facebook_import)
+                            finishPickingImage(null, actionId);
                     }
                 });
                 builder.show();
@@ -134,7 +138,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
                 .sheet(R.menu.menu_camera_normal);
     }
 
-    public void finishPickingImage(Bitmap bitmap) {
+    public void finishPickingImage(Bitmap bitmap, int actionId) {
         if (bitmap != null)
             targetView.setImageBitmap(bitmap);
         // We have a confirmation dialog first before clearing the image.
@@ -238,7 +242,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
         }, 300);
     }
 
-    private void finishCroppingImage(Uri imageResource) {
+    private void finishCroppingImage(final Uri imageResource) {
         TaskDialog.getInstance().showProcessingDialog(this);
         final File file = new File(imageResource.getPath());
 
@@ -249,6 +253,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
             public void run() {
                 // Compress bitmap to fit the target view's bounds.
                 final Bitmap bitmap = BitmapUtils.decodeSampledBitmapFileForSize(file, targetView.getWidth(), targetView.getHeight());
+                FileUtils.cleanupFile(imageResource); // Cleanup after operations.
 
                 // Continue on the UI thread.
                 runOnUiThread(new Runnable() {
@@ -256,7 +261,7 @@ public class CameraUtilsActivity extends AppCompatActivity {
                     @Override
                     public void run() {
                         TaskDialog.getInstance().hideDialog();
-                        finishPickingImage(bitmap);
+                        finishPickingImage(bitmap, actionId);
                     }
                 });
             }

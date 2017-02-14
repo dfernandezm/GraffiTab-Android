@@ -8,6 +8,7 @@ import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.api.ApiUtils;
+import com.graffitabsdk.model.GTExternalProvider;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.common.result.GTActionCompleteResult;
@@ -24,6 +25,25 @@ public class UserAssetManager {
     public static void editAvatar(final Activity context, Bitmap bitmap) {
         TaskDialog.getInstance().showProcessingDialog(context);
         GTSDK.getMeManager().editAvatar(bitmap, new GTResponseHandler<GTAssetResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
+                TaskDialog.getInstance().hideDialog();
+                DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_avatar_success));
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTAssetResponse> gtResponse) {
+                TaskDialog.getInstance().hideDialog();
+                DialogBuilder.buildAPIErrorDialog(context, context.getString(R.string.app_name),
+                        ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
+            }
+        });
+    }
+
+    public static void importAvatar(final Activity context, GTExternalProvider.GTExternalProviderType type) {
+        TaskDialog.getInstance().showProcessingDialog(context);
+        GTSDK.getMeManager().importAvatar(type, new GTResponseHandler<GTAssetResponse>() {
 
             @Override
             public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {

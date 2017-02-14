@@ -260,6 +260,7 @@
     <string name="api_error">An unexpected error has occurred. Please contact support to raise a ticket.</string>
     
     <!-- Other -->
+    <string name="other_facebook_import">Import from Facebook</string>
     <string name="other_facebook_error">Couldn\'t perform Facebook operation</string>
     <string name="other_confirm_delete">Confirm delete?</string>
     <string name="other_retry">Try again</string>

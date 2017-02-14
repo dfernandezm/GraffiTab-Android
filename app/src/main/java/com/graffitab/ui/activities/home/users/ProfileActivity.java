@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 
+import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.managers.UserAssetManager;
@@ -22,6 +23,7 @@ import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 import com.graffitab.ui.fragments.users.UserProfileFragment;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.api.ApiUtils;
+import com.graffitabsdk.model.GTExternalProvider;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
@@ -162,8 +164,8 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     public void onClickAvatar(View view) {
         if (user.isMe()) {
-            showImagePicker((ImageView) view);
             pickingCoverImage = false;
+            showImagePicker((ImageView) view);
         }
         else if (user.hasAvatar()) {
             new ImageViewer.Builder(this, new String[]{user.avatar.link})
@@ -174,8 +176,8 @@ public class ProfileActivity extends CameraUtilsActivity {
 
     public void onClickCover(View view) {
         if (user.isMe()) {
-            showImagePicker((ImageView) view);
             pickingCoverImage = true;
+            showImagePicker((ImageView) view);
         }
         else if (user.hasCover()) {
             new ImageViewer.Builder(this, new String[]{user.cover.link})
@@ -243,19 +245,30 @@ public class ProfileActivity extends CameraUtilsActivity {
         content.loadFollowButton();
     }
 
-    @Override
-    public void finishPickingImage(Bitmap bitmap) {
-        super.finishPickingImage(bitmap);
+    // Image picking.
 
-        if (bitmap != null) {
-            if (pickingCoverImage)
+    @Override
+    public BottomSheet.Builder buildImagePickerSheet() {
+        return new BottomSheet.Builder(this, R.style.BottomSheet_StyleDialog)
+                .title(R.string.other_select_image)
+                .sheet(user.hasLinkedAccount(GTExternalProvider.GTExternalProviderType.FACEBOOK) && !pickingCoverImage ? R.menu.menu_camera_facebook : R.menu.menu_camera_normal);
+    }
+
+    @Override
+    public void finishPickingImage(Bitmap bitmap, int actionId) {
+        super.finishPickingImage(bitmap, actionId);
+
+        if (pickingCoverImage) { // Cover
+            if (bitmap != null)
                 UserAssetManager.editCover(this, bitmap);
             else
-                UserAssetManager.editAvatar(this, bitmap);
-        }
-        else {
-            if (pickingCoverImage)
                 UserAssetManager.deleteCover(this);
+        }
+        else { // Avatar
+            if (actionId == R.id.action_facebook_import)
+                UserAssetManager.importAvatar(this, GTExternalProvider.GTExternalProviderType.FACEBOOK);
+            else if (bitmap != null)
+                UserAssetManager.editAvatar(this, bitmap);
             else
                 UserAssetManager.deleteAvatar(this);
         }
