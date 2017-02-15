@@ -9,7 +9,6 @@
 
     <!-- Transitions -->
     <string name="transition_name_streamable">TRANSITION:streamable</string>
-    <string name="transition_name_avatar">TRANSITION:avatar</string>
 
     <!-- Login -->
     <string name="login_hint_username">Username</string>

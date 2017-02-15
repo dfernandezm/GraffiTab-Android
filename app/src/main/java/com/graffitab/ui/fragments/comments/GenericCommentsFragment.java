@@ -201,7 +201,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
 
     @Override
     public void onOpenCommenterProfile(GTComment comment, GTUser commenter, int adapterPosition) {
-        ProfileActivity.show(commenter, getActivity());
+        ProfileActivity.show(getActivity(), commenter);
     }
 
     @Override
@@ -224,7 +224,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
             public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
                 if (getActivity() == null) return;
                 TaskDialog.getInstance().hideDialog();
-                ProfileActivity.show(gtResponse.getObject().user, getActivity());
+                ProfileActivity.show(getActivity(), gtResponse.getObject().user);
             }
 
             @Override

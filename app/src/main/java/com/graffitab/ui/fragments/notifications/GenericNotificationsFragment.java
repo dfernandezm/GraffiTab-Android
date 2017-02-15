@@ -41,7 +41,7 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
     @Override
     public void onRowSelected(GTNotification notification, int adapterPosition) {
         if (notification.type == GTNotification.GTNotificationType.FOLLOW)
-            ProfileActivity.show(notification.follower, getActivity());
+            ProfileActivity.show(getActivity(), notification.follower);
         else if (notification.type == GTNotification.GTNotificationType.COMMENT) {
             StreamableDetailsActivity.openStreamableDetails(getActivity(), notification.commentedStreamable, findStreamableViewSourceForAdapterPosition(adapterPosition));
         }

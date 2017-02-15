@@ -51,7 +51,7 @@ public class ProfileActivity extends CameraUtilsActivity {
     private boolean profileRefreshedOnce = false;
     private boolean pickingCoverImage = false;
 
-    public static void show(GTUser user, Context context) {
+    public static void show(Context context, GTUser user) {
         Intent i = new Intent(context, ProfileActivity.class);
         i.putExtra(Constants.EXTRA_USER, user);
         context.startActivity(i);

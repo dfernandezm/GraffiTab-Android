@@ -107,7 +107,7 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
     @Override
     public void onRowSelected(GTUser user, int adapterPosition) {
-        ProfileActivity.show(user, getActivity());
+        ProfileActivity.show(getActivity(), user);
     }
 
     @Override

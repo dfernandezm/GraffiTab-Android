@@ -123,7 +123,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 if ((int) view.getTag() == 0) // Profile.
-                    ProfileActivity.show(GTSDK.getAccountManager().getLoggedInUser(), HomeActivity.this);
+                    ProfileActivity.show(HomeActivity.this, GTSDK.getAccountManager().getLoggedInUser());
                 else if ((int) view.getTag() == 1) // Locations.
                     startActivity(new Intent(HomeActivity.this, LocationsActivity.class));
                 else if ((int) view.getTag() == 2) // Search.

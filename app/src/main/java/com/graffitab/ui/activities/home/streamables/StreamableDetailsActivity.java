@@ -77,7 +77,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(context, StreamableDetailsActivity.class);
         intent.putExtra(Constants.EXTRA_STREAMABLE, streamable);
 
-        if (source != null) {
+        if (source != null && source instanceof ImageView && ((ImageView) source).getDrawable() != null) {
             // Configure the Intent to set the transition
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     // the context of the activity
@@ -115,13 +115,14 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         setupDisplays();
 
         loadUserAndStreamableData();
+        loadImages();
 
         Utils.runWithDelay(new Runnable() {
 
             @Override
             public void run() {
                 toggleDisplay();
-//                refreshStreamable();
+                refreshStreamable();
             }
         }, 1000);
     }
@@ -226,7 +227,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void onClickProfile() {
-        ProfileActivity.show(streamable.user, this);
+        ProfileActivity.show(this, streamable.user);
     }
 
     // Events
@@ -390,7 +391,9 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
         likesField.setText(streamable.likersCount + "");
         commentsField.setText(streamable.commentsCount + "");
+    }
 
+    private void loadImages() {
         loadAvatar();
         loadStreamable();
     }
@@ -459,26 +462,24 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void refreshStreamable() {
-//        GTSDK.getStreamableManager().getStreamable(streamable.id, true, new GTResponseHandler<GTStreamableResponse>() {
-//
-//            @Override
-//            public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
-//                streamable = gtResponse.getObject().streamable;
-//                finishRefresh();
-//            }
-//
-//            @Override
-//            public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {
-//                finishRefresh();
-//            }
-//
-//            @Override
-//            public void onCache(GTResponse<GTStreamableResponse> gtResponse) {
-//                super.onCache(gtResponse);
-//                streamable = gtResponse.getObject().streamable;
-//                finishRefresh();
-//            }
-//        });
+        GTSDK.getStreamableManager().getStreamable(streamable.id, true, new GTResponseHandler<GTStreamableResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+                streamable = gtResponse.getObject().streamable;
+                loadUserAndStreamableData();
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
+
+            @Override
+            public void onCache(GTResponse<GTStreamableResponse> gtResponse) {
+                super.onCache(gtResponse);
+                streamable = gtResponse.getObject().streamable;
+                loadUserAndStreamableData();
+            }
+        });
     }
 
     // Setup

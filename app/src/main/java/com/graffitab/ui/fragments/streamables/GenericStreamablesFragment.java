@@ -203,7 +203,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public void onOpenOwnerProfile(GTStreamable streamable, GTUser owner, int adapterPosition) {
-        ProfileActivity.show(owner, getActivity());
+        ProfileActivity.show(getActivity(), owner);
     }
 
     @Override
