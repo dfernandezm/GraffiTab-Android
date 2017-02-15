@@ -25,9 +25,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_centerInParent="true"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/avatar"
@@ -52,10 +52,10 @@
             android:id="@+id/close"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_alignParentRight="true"
             android:layout_marginRight="-5dp"
             android:background="@null"
-            android:src="@drawable/ic_close_dark"
-            android:layout_alignParentRight="true"/>
+            android:src="@drawable/ic_close_dark" />
     </RelativeLayout>
 
     <LinearLayout
@@ -64,6 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/gradient_streamable_bottom"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:orientation="vertical"
         android:padding="10dp">
 
@@ -76,6 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:clipChildren="false"
+            android:clipToPadding="false"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -107,32 +111,28 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <LinearLayout
+            <com.varunest.sparkbutton.SparkButton
                 android:id="@+id/likeBtn"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:padding="5dp"
+                app:sparkbutton_activeImage="@drawable/ic_thumb_up_primary_24dp"
+                app:sparkbutton_iconSize="25dp"
+                app:sparkbutton_inActiveImage="@drawable/ic_thumb_up_white_24dp"
+                app:sparkbutton_primaryColor="@color/colorPrimary"
+                app:sparkbutton_secondaryColor="@color/colorMetadata" />
+
+            <TextView
+                android:id="@+id/likesField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="4dp"
                 android:layout_marginRight="15dp"
-                android:gravity="center">
-
-                <ImageButton
-                    android:id="@+id/likeIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@null"
-                    android:clickable="false"
-                    android:padding="5dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_thumb_up_black_24dp"
-                    android:tint="#fff" />
-
-                <TextView
-                    android:id="@+id/likesField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1"
-                    android:textColor="#fff"
-                    android:textSize="17sp" />
-            </LinearLayout>
+                android:text="1"
+                android:textColor="#fff"
+                android:textSize="17sp" />
 
             <LinearLayout
                 android:id="@+id/commentBtn"
@@ -157,7 +157,8 @@
                     android:layout_height="wrap_content"
                     android:text="1"
                     android:textColor="#fff"
-                    android:textSize="17sp" />
+                    android:textSize="17sp"
+                    android:layout_marginLeft="1dp"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
