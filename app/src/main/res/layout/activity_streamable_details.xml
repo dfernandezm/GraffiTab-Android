@@ -111,18 +111,21 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <com.varunest.sparkbutton.SparkButton
+            <com.like.LikeButton
                 android:id="@+id/likeBtn"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="33dp"
+                android:layout_height="33dp"
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:padding="5dp"
-                app:sparkbutton_activeImage="@drawable/ic_thumb_up_primary_24dp"
-                app:sparkbutton_iconSize="25dp"
-                app:sparkbutton_inActiveImage="@drawable/ic_thumb_up_white_24dp"
-                app:sparkbutton_primaryColor="@color/colorPrimary"
-                app:sparkbutton_secondaryColor="@color/colorMetadata" />
+                app:icon_type="thumb"
+                app:icon_size="25dp"
+                app:dots_primary_color="@color/colorPrimary"
+                app:dots_secondary_color="@color/colorSecondary"
+                app:like_drawable="@drawable/ic_thumb_up_primary_24dp"
+                app:unlike_drawable="@drawable/ic_thumb_up_white_24dp"
+                app:circle_start_color="@color/colorSecondary"
+                app:circle_end_color="@color/colorPrimary"/>
 
             <TextView
                 android:id="@+id/likesField"

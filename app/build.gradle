@@ -42,7 +42,7 @@ def timeSinceTextViewVersion = "1.+"
 def permissionsVersion = "1.0"
 def frescoImageViewerVersion = "0.4.1"
 def frescoVersion = "1.0.1"
-def sparkButtonVersion = "1.0.4"
+def likeButtonVersion = "0.2.0"
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
@@ -77,7 +77,7 @@ dependencies {
     compile "com.github.damien5314:TimeSinceTextView:$timeSinceTextViewVersion"
     compile "com.anthonycr.grant:permissions:$permissionsVersion"
     compile "com.github.stfalcon:frescoimageviewer:$frescoImageViewerVersion"
-    compile "com.github.varunest:sparkbutton:$sparkButtonVersion"
+    compile "com.github.jd-alexander:LikeButton:$likeButtonVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -249,7 +249,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
         if (getActivity() == null)
             return;
 
-        adapter.setItems(items, getRecyclerView().getRecyclerView());
+        adapter.replaceItems(items, getRecyclerView().getRecyclerView());
     }
 
     public void finalizeLoad() {
@@ -258,7 +258,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
 
         isDownloading = false;
 
-        adapter.setItems(items, getRecyclerView().getRecyclerView());
+        adapter.replaceItems(items, getRecyclerView().getRecyclerView());
         adapter.finishLoadingMore();
 
         advancedRecyclerView.endRefreshing();

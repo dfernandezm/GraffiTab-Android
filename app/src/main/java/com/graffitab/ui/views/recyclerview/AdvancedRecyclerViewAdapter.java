@@ -34,7 +34,7 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
     public AdvancedRecyclerViewAdapter(Context context, List<T> itemList, RecyclerView recyclerView) {
         this.context = context;
 
-        setItems(itemList, recyclerView);
+        replaceItems(itemList, recyclerView);
     }
 
     // Methods to override
@@ -133,12 +133,27 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
         configureDecorationLayout(recyclerView);
     }
 
-    public void setItems(List<T> items, RecyclerView recyclerView) {
-        if (items == null) this.itemList = new ArrayList();
-        else this.itemList = new ArrayList(items);
-        rebuildItemTypes();
-        notifyDataSetChanged();
-        configureDecorationLayout(recyclerView);
+    public void setItems(List<T> items, List<Integer> positions, RecyclerView recyclerView) {
+        if (itemList != null) {
+            for (int position : positions) {
+                if (position >= 0 && position < itemList.size())
+                    setItem(items.get(position), position, recyclerView);
+            }
+        }
+    }
+
+    public void setItem(T item, int position, RecyclerView recyclerView) {
+        if (itemList != null && position >= 0 && position < itemList.size()) {
+            itemList.set(position, item);
+
+            int count = 0;
+            while (count < itemTypes.size()) {
+                if (itemTypes.get(count) == ViewTypes.NORMAL)
+                    break;
+                count++;
+            }
+            notifyItemChanged(count + position);
+        }
     }
 
     public void removeItem(int position, final RecyclerView recyclerView) {
@@ -174,6 +189,14 @@ public abstract class AdvancedRecyclerViewAdapter<T> extends RecyclerView.Adapte
                 }
             });
         }
+    }
+
+    public void replaceItems(List<T> items, RecyclerView recyclerView) {
+        if (items == null) this.itemList = new ArrayList();
+        else this.itemList = new ArrayList(items);
+        rebuildItemTypes();
+        notifyDataSetChanged();
+        configureDecorationLayout(recyclerView);
     }
 
     private void rebuildItemTypes() {

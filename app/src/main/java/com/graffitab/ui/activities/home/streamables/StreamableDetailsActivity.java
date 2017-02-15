@@ -41,11 +41,12 @@ import com.graffitabsdk.sdk.events.comments.GTCommentPostedEvent;
 import com.graffitabsdk.sdk.events.streamables.GTStreamableLikedEvent;
 import com.graffitabsdk.sdk.events.streamables.GTStreamableUnlikedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
-import com.varunest.sparkbutton.SparkButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -64,7 +65,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     @BindView(R.id.streamableView) ImageView streamableView;
     @BindView(R.id.likesField) public TextView likesField;
     @BindView(R.id.commentsField) public TextView commentsField;
-    @BindView(R.id.likeBtn) public SparkButton likeBtn;
+    @BindView(R.id.likeBtn) public LikeButton likeBtn;
     @BindView(R.id.commentIcon) public ImageView commentIcon;
     @BindView(R.id.topDisplay) public View topDisplay;
     @BindView(R.id.bottomDisplay) public View bottomDisplay;
@@ -108,10 +109,10 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_streamable_details);
         ButterKnife.bind(this);
 
-        setupImageView();
         setupImageViews();
         setupEventListeners();
         setupDisplays();
+        setupButtons();
 
         loadUserAndStreamableData();
         loadImages();
@@ -184,34 +185,6 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     public void onClickShare(View view) {
         Utils.shareImage(this, ((BitmapDrawable) streamableView.getDrawable()).getBitmap());
     }
-
-//    @OnClick(R.id.likeBtn)
-//    public void onClickToggleLike(View view) {
-//        streamable.likedByCurrentUser = !streamable.likedByCurrentUser;
-//        if (streamable.likedByCurrentUser) {
-//            streamable.addToLikersCount();
-//            GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
-//
-//                @Override
-//                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
-//
-//                @Override
-//                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
-//            });
-//        }
-//        else {
-//            streamable.removeFromLikersCount();
-//            GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
-//
-//                @Override
-//                public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
-//
-//                @Override
-//                public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
-//            });
-//        }
-//        loadUserAndStreamableData();
-//    }
 
     @OnClick(R.id.commentBtn)
     public void onClickComment(View view) {
@@ -378,10 +351,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     private void loadUserAndStreamableData() {
         usernameField.setText(streamable.user.mentionUsername());
-
-        int tint = getResources().getColor(streamable.likedByCurrentUser ? R.color.colorPrimary: R.color.colorWhite);
-//        likeIcon.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_thumb_up_black_24dp, tint));
-
+        likeBtn.setLiked(streamable.likedByCurrentUser);
         likesField.setText(streamable.likersCount + "");
         commentsField.setText(streamable.commentsCount + "");
     }
@@ -455,7 +425,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     private void refreshStreamable() {
-        GTSDK.getStreamableManager().getStreamable(streamable.id, true, new GTResponseHandler<GTStreamableResponse>() {
+        GTSDK.getStreamableManager().getStreamable(streamable.id, false, new GTResponseHandler<GTStreamableResponse>() {
 
             @Override
             public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
@@ -467,17 +437,15 @@ public class StreamableDetailsActivity extends AppCompatActivity {
             public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
 
             @Override
-            public void onCache(GTResponse<GTStreamableResponse> gtResponse) {
-                super.onCache(gtResponse);
-                streamable = gtResponse.getObject().streamable;
-                loadUserAndStreamableData();
-            }
+            public void onCache(GTResponse<GTStreamableResponse> gtResponse) {}
         });
     }
 
     // Setup
 
-    private void setupImageView() {
+    private void setupImageViews() {
+        commentIcon.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_chat_bubble_black_24dp, Color.WHITE));
+
         mAttacher = new PhotoViewAttacher(streamableView);
         mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
 
@@ -491,8 +459,39 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         });
     }
 
-    private void setupImageViews() {
-        commentIcon.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_chat_bubble_black_24dp, Color.WHITE));
+    private void setupButtons() {
+        likeBtn.setOnLikeListener(new OnLikeListener() {
+
+            @Override
+            public void liked(LikeButton likeButton) {
+                streamable.likedByCurrentUser = true;
+                streamable.addToLikersCount();
+                GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
+
+                    @Override
+                    public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
+                });
+                loadUserAndStreamableData();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
+                streamable.likedByCurrentUser = false;
+                streamable.removeFromLikersCount();
+                GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
+
+                    @Override
+                    public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
+
+                    @Override
+                    public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
+                });
+                loadUserAndStreamableData();
+            }
+        });
     }
 
     private void setupEventListeners() {

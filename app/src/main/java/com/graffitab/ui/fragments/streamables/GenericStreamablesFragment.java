@@ -91,7 +91,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                     GTStreamable streamable = items.get(i);
                     if (streamable.equals(event.getComment().streamable)) {
                         items.set(i, event.getComment().streamable);
-                        adapter.setItems(items, getRecyclerView().getRecyclerView());
+                        adapter.setItem(event.getComment().streamable, i, getRecyclerView().getRecyclerView());
                         break;
                     }
                 }
@@ -104,7 +104,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                     GTStreamable streamable = items.get(i);
                     if (streamable.id == event.getStreamableId()) {
                         streamable.removeFromCommentsCount();
-                        adapter.setItems(items, getRecyclerView().getRecyclerView());
+                        adapter.setItem(streamable, i, getRecyclerView().getRecyclerView());
                         break;
                     }
                 }
@@ -116,7 +116,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                     // Refresh streamable users.
                     for (Integer index : indexes)
                         items.get(index).user = user;
-                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+                    adapter.setItems(items, indexes, getRecyclerView().getRecyclerView());
                 }
             }
 
@@ -124,7 +124,7 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                 int index = items.indexOf(toggledStreamable);
                 if (index >= 0) {
                     items.set(index, toggledStreamable);
-                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+                    adapter.setItem(toggledStreamable, index, getRecyclerView().getRecyclerView());
                 }
             }
 

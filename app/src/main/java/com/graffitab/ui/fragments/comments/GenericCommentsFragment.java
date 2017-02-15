@@ -50,7 +50,9 @@ import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.orangegangsters.github.swipyrefreshlayout.library.SwipyRefreshLayoutDirection;
 import com.squareup.otto.Subscribe;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 import butterknife.BindView;
@@ -94,11 +96,15 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
             }
 
             private void handleUserChanged(GTUser user) {
-                for (GTComment comment : items) {
-                    if (comment.user.equals(user))
+                List<Integer> positions = new ArrayList<>();
+                for (int position = 0; position < items.size(); position++) {
+                    GTComment comment = items.get(position);
+                    if (comment.user.equals(user)) {
                         comment.user = user;
+                        positions.add(position);
+                    }
                 }
-                adapter.setItems(items, getRecyclerView().getRecyclerView());
+                adapter.setItems(items, positions, getRecyclerView().getRecyclerView());
             }
         };
         GTSDK.registerEventListener(eventListener);
@@ -154,7 +160,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
             }
             toEdit = null;
             toEditPosition = -1;
-            adapter.setItems(items, getRecyclerView().getRecyclerView());
+            adapter.replaceItems(items, getRecyclerView().getRecyclerView());
             commentField.setText("");
         }
     }

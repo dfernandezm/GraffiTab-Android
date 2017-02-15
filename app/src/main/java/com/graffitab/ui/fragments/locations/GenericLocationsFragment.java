@@ -51,7 +51,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
             public void locationCreatedEvent(GTLocationCreatedEvent event) {
                 if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 items.add(event.getLocation());
-                adapter.setItems(items, getRecyclerView().getRecyclerView());
+                adapter.replaceItems(items, getRecyclerView().getRecyclerView());
             }
 
             @Subscribe
@@ -60,7 +60,7 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
                 int index = items.indexOf(event.getLocation());
                 if (index >= 0) {
                     items.set(index, event.getLocation());
-                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+                    adapter.setItem(items, index, getRecyclerView().getRecyclerView());
                 }
             }
         };

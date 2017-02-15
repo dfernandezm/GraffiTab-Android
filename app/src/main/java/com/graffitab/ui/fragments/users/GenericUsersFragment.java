@@ -65,7 +65,7 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
                 int index = items.indexOf(toggledUser);
                 if (index >= 0) {
                     items.set(index, toggledUser);
-                    adapter.setItems(items, getRecyclerView().getRecyclerView());
+                    adapter.setItem(toggledUser, index, getRecyclerView().getRecyclerView());
                 }
             }
         };

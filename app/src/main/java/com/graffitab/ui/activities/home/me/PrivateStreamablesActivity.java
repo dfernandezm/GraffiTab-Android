@@ -8,9 +8,6 @@ import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.sdk.GTSDK;
-import com.graffitabsdk.sdk.events.streamables.GTStreamableMarkedPrivateEvent;
-import com.graffitabsdk.sdk.events.streamables.GTStreamableMarkedPublicEvent;
-import com.squareup.otto.Subscribe;
 
 /**
  * Created by georgichristov on 04/12/2016
@@ -34,39 +31,6 @@ public class PrivateStreamablesActivity extends ToggleStreamablesActivity {
     }
 
     public static class ContentFragment extends GridStreamablesFragment {
-
-        private Object eventListener;
-
-        @Override
-        public void basicInit() {
-            super.basicInit();
-            eventListener = new Object() {
-
-                @Subscribe
-                public void streamableMarkedPrivateEvent(GTStreamableMarkedPrivateEvent event) {
-                    if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
-                    if (!items.contains(event.getStreamable())) {
-                        items.add(0, event.getStreamable());
-                        adapter.setItems(items, getRecyclerView().getRecyclerView());
-                    }
-                }
-
-                @Subscribe
-                public void streamableMarkedPublicEvent(GTStreamableMarkedPublicEvent event) {
-                    if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
-                    int index = items.indexOf(event.getStreamable());
-                    if (index >= 0)
-                        removeItemAtIndex(index);
-                }
-            };
-            GTSDK.registerEventListener(eventListener);
-        }
-
-        @Override
-        public void onDestroyView() {
-            GTSDK.unregisterEventListener(eventListener);
-            super.onDestroyView();
-        }
 
         @Override
         public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
