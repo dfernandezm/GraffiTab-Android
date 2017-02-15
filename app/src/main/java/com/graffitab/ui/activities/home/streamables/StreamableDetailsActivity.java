@@ -59,7 +59,6 @@ import uk.co.senab.photoview.PhotoViewAttacher;
 public class StreamableDetailsActivity extends AppCompatActivity {
 
     @BindView(R.id.avatar) ImageView avatar;
-    @BindView(R.id.nameField) public TextView nameField;
     @BindView(R.id.usernameField) public TextView usernameField;
     @BindView(R.id.streamableView) ImageView streamableView;
     @BindView(R.id.likesField) public TextView likesField;
@@ -135,11 +134,6 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.avatar)
     public void onClickAvatar(View view) {
-        onClickProfile();
-    }
-
-    @OnClick(R.id.nameField)
-    public void onClickName(View view) {
         onClickProfile();
     }
 
@@ -383,11 +377,10 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     // Loading
 
     private void loadUserAndStreamableData() {
-        nameField.setText(streamable.user.fullName());
         usernameField.setText(streamable.user.mentionUsername());
 
-        int background = streamable.likedByCurrentUser ? R.drawable.rounded_corner_streamable_detail_liked : R.drawable.rounded_corner_streamable_detail;
-        likeBtn.setBackgroundResource(background);
+        int tint = getResources().getColor(streamable.likedByCurrentUser ? R.color.colorPrimary: R.color.colorWhite);
+        likeIcon.setImageDrawable(ImageUtils.tintIcon(this, R.drawable.ic_thumb_up_black_24dp, tint));
 
         likesField.setText(streamable.likersCount + "");
         commentsField.setText(streamable.commentsCount + "");

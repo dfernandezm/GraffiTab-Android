@@ -10,55 +10,42 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="fitCenter"
-        android:transitionName="@string/transition_name_streamable"/>
+        android:transitionName="@string/transition_name_streamable" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/topDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorStreamableDetailBackground"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:background="@drawable/gradient_streamable_top"
         android:paddingBottom="7dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="7dp">
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/avatar"
-            android:layout_width="37dp"
-            android:layout_height="37dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_avatar"
-            app:riv_corner_radius="5dp" />
-
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="1dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:gravity="center">
 
-            <TextView
-                android:id="@+id/nameField"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="Georgi Christov"
-                android:textColor="#fff"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/avatar"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar"
+                app:riv_corner_radius="14dp" />
 
             <TextView
                 android:id="@+id/usernameField"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="3dp"
-                android:layout_marginTop="-2dp"
+                android:layout_marginLeft="7dp"
                 android:text="georgi"
-                android:textColor="#EEEEEE"
-                android:textSize="13sp" />
+                android:textColor="#fff"
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </LinearLayout>
 
         <ImageButton
@@ -67,125 +54,111 @@
             android:layout_height="40dp"
             android:layout_marginRight="-5dp"
             android:background="@null"
-            android:src="@drawable/ic_close_dark" />
-    </LinearLayout>
+            android:src="@drawable/ic_close_dark"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/bottomDisplay"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:gravity="center"
-        android:orientation="horizontal"
+        android:background="@drawable/gradient_streamable_bottom"
+        android:orientation="vertical"
         android:padding="10dp">
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#55ffffff" />
+
         <LinearLayout
-            android:id="@+id/optionsBtn"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner_streamable_detail"
+            android:layout_marginTop="10dp"
             android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:paddingTop="5dp">
+            android:orientation="horizontal">
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
+                android:id="@+id/optionsBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:background="@null"
                 android:clickable="false"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_more_horiz_black_24dp"
                 android:tint="#fff" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/shareBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corner_streamable_detail"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="2dp"
-            android:paddingTop="5dp">
 
             <ImageButton
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
+                android:id="@+id/shareBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:clickable="false"
+                android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_share_black_24dp"
                 android:tint="#fff" />
-        </LinearLayout>
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
 
-        <LinearLayout
-            android:id="@+id/likeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_corner_streamable_detail_liked"
-            android:gravity="center"
-            android:paddingBottom="6dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="7dp"
-            android:paddingTop="6dp">
-
-            <ImageButton
-                android:id="@+id/likeIcon"
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:clickable="false"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_thumb_up_black_24dp"
-                android:tint="#fff" />
-
-            <TextView
-                android:id="@+id/likesField"
+            <LinearLayout
+                android:id="@+id/likeBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
-                android:textColor="#fff"
-                android:textSize="17sp" />
-        </LinearLayout>
+                android:layout_marginRight="15dp"
+                android:gravity="center">
 
-        <LinearLayout
-            android:id="@+id/commentBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/rounded_corner_streamable_detail"
-            android:gravity="center"
-            android:paddingBottom="5dp"
-            android:paddingLeft="2dp"
-            android:paddingRight="7dp"
-            android:paddingTop="5dp">
+                <ImageButton
+                    android:id="@+id/likeIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_thumb_up_black_24dp"
+                    android:tint="#fff" />
 
-            <ImageButton
-                android:id="@+id/commentIcon"
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:clickable="false"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_chat_bubble_black_24dp"
-                android:tint="#fff" />
+                <TextView
+                    android:id="@+id/likesField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textColor="#fff"
+                    android:textSize="17sp" />
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/commentsField"
+            <LinearLayout
+                android:id="@+id/commentBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="1"
-                android:textColor="#fff"
-                android:textSize="17sp" />
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/commentIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:clickable="false"
+                    android:padding="5dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_chat_bubble_black_24dp"
+                    android:tint="#fff" />
+
+                <TextView
+                    android:id="@+id/commentsField"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1"
+                    android:textColor="#fff"
+                    android:textSize="17sp" />
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
