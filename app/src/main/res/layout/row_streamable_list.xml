@@ -81,7 +81,9 @@
         android:orientation="vertical"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:paddingTop="10dp" >
+        android:paddingTop="10dp"
+        android:clipChildren="false"
+        android:clipToPadding="false">
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -120,7 +122,9 @@
             android:layout_marginBottom="5dp"
             android:gravity="center"
             android:paddingTop="4dp"
-            android:paddingBottom="6dp">
+            android:paddingBottom="6dp"
+            android:clipChildren="false"
+            android:clipToPadding="false">
 
             <LinearLayout
                 android:id="@+id/likeButton"
@@ -129,14 +133,24 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="horizontal"
-                android:paddingRight="17dp">
+                android:paddingRight="17dp"
+                android:clipChildren="false"
+                android:clipToPadding="false">
 
-                <ImageView
-                    android:id="@+id/likeStatusImage"
+                <com.like.LikeButton
+                    android:id="@+id/likeAnimationButton"
                     android:layout_width="22dp"
                     android:layout_height="22dp"
-                    android:src="@drawable/ic_thumb_up_black_24dp"
-                    android:tint="@color/colorPrimary"/>
+                    android:clipChildren="false"
+                    android:clipToPadding="false"
+                    app:icon_type="thumb"
+                    app:icon_size="22dp"
+                    app:dots_primary_color="@color/colorPrimary"
+                    app:dots_secondary_color="@color/colorSecondary"
+                    app:like_drawable="@drawable/ic_thumb_up_primary_24dp"
+                    app:unlike_drawable="@drawable/ic_thumb_up_grey_24dp"
+                    app:circle_start_color="@color/colorSecondary"
+                    app:circle_end_color="@color/colorPrimary"/>
 
                 <TextView
                     android:id="@+id/likeStatus"

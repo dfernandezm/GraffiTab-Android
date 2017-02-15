@@ -20,6 +20,7 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
+import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserFollowedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserUnfollowedEvent;
@@ -59,6 +60,12 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
             public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
                 if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
                 refreshUserAfterFollowToggle(event.getUser());
+            }
+
+            @Subscribe
+            public void userAvatarUpdatedEvent(GTUserAvatarUpdatedEvent event) {
+                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
+                refreshUserAfterFollowToggle(GTSDK.getAccountManager().getLoggedInUser());
             }
 
             private void refreshUserAfterFollowToggle(GTUser toggledUser) {

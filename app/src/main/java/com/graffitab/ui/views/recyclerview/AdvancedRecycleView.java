@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -42,14 +43,21 @@ public class AdvancedRecycleView extends RecyclerView {
 
     public AdvancedRecycleView(Context context) {
         super(context);
+        basicInit();
     }
 
     public AdvancedRecycleView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        basicInit();
     }
 
     public AdvancedRecycleView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        basicInit();
+    }
+
+    private void basicInit() {
+        ((SimpleItemAnimator) getItemAnimator()).setSupportsChangeAnimations(false);
     }
 
     @Override

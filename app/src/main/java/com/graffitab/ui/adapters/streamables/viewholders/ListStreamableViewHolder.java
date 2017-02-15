@@ -1,6 +1,8 @@
 package com.graffitab.ui.adapters.streamables.viewholders;
 
 import android.text.format.DateUtils;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -9,6 +11,8 @@ import com.graffitab.R;
 import com.graffitab.application.MyApplication;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
+import com.like.LikeButton;
+import com.like.OnLikeListener;
 import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
@@ -29,7 +33,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
     @BindView(R.id.dateField) public TextView dateField;
     @BindView(R.id.likesField) public TextView likesField;
     @BindView(R.id.commentsField) public TextView commentsField;
-    @BindView(R.id.likeStatusImage) public ImageView likeStatusImage;
+    @BindView(R.id.likeAnimationButton) public LikeButton likeAnimationButton;
     @BindView(R.id.likeStatus) public TextView likeStatus;
     @BindView(R.id.likeButton) public View likeButton;
     @BindView(R.id.commentButton) public View commentButton;
@@ -38,6 +42,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
     public ListStreamableViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        setupImageView();
     }
 
     @Override
@@ -51,7 +56,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
         dateField.setText(DateUtils.getRelativeTimeSpanString(item.createdOn.getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS, flags));
 
         int color = !streamable.likedByCurrentUser ? MyApplication.getInstance().getResources().getColor(R.color.colorMetadata) : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary);
-        likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
+        likeAnimationButton.setLiked(streamable.likedByCurrentUser);
         likeStatus.setTextColor(color);
         likeStatus.setText(streamable.likedByCurrentUser ? MyApplication.getInstance().getString(R.string.likes_liked) : MyApplication.getInstance().getString(R.string.likes_like));
 
@@ -74,8 +79,6 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
     @Override
     protected void setupViews() {
-        super.setupViews();
-
         View.OnClickListener profileListener = new View.OnClickListener() {
 
             @Override
@@ -117,6 +120,18 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void onClick(View view) {
+                likeAnimationButton.onClick(null);
+            }
+        });
+        likeAnimationButton.setOnLikeListener(new OnLikeListener() {
+
+            @Override
+            public void liked(LikeButton likeButton) {
+                onClickToggleLike();
+            }
+
+            @Override
+            public void unLiked(LikeButton likeButton) {
                 onClickToggleLike();
             }
         });
@@ -129,5 +144,43 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
                 onClickShare();
             }
         });
+    }
+
+    private void setupImageView() {
+        final GestureDetector gestureDetector = new GestureDetector(streamableView.getContext(), new MyGestureListener());
+        streamableView.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (gestureDetector.onTouchEvent(motionEvent)) {
+                    return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            System.out.println("TAP");
+            if (clickListener != null)
+                clickListener.onRowSelected(item, getAdapterPosition());
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            System.out.println("TAP TAP");
+            if (!item.likedByCurrentUser)
+                likeAnimationButton.onClick(null);
+            return true;
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
+        }
     }
 }

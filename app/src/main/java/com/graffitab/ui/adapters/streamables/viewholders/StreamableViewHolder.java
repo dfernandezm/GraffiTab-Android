@@ -81,7 +81,7 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
     // Setup
 
     protected void setupViews() {
-        itemView.setOnClickListener(new View.OnClickListener() {
+        streamableView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {

@@ -24,12 +24,7 @@ import butterknife.ButterKnife;
 public class TrendingStreamableViewHolder extends StreamableViewHolder {
 
     @BindView(R.id.avatar) public ImageView avatar;
-    @BindView(R.id.nameField) public TextView nameField;
     @BindView(R.id.usernameField) public TextView usernameField;
-    @BindView(R.id.likesField) public TextView likesField;
-    @BindView(R.id.commentsField) public TextView commentsField;
-    @BindView(R.id.likeStatusImage) public ImageView likeStatusImage;
-    @BindView(R.id.commentsImage) public ImageView commentImage;
 
     public TrendingStreamableViewHolder(View itemView) {
         super(itemView);
@@ -40,16 +35,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
     public void setItem(GTStreamable streamable) {
         super.setItem(streamable);
 
-        nameField.setText(streamable.user.fullName());
-        usernameField.setText(streamable.user.mentionUsername());
-
-        int color = !streamable.likedByCurrentUser ? MyApplication.getInstance().getResources().getColor(R.color.colorMetadata) : MyApplication.getInstance().getResources().getColor(R.color.colorPrimary);
-        likeStatusImage.setImageDrawable(ImageUtils.tintIcon(MyApplication.getInstance(), R.drawable.ic_thumb_up_black_24dp, color));
-        likesField.setTextColor(color);
-
-        likesField.setText(streamable.likersCount + "");
-        commentsField.setText(streamable.commentsCount + "");
-
+        usernameField.setText(streamable.user.username);
         streamableView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.pxToDip(MyApplication.getInstance(), item.asset.thumbnailHeight)));
 
         loadAvatar();
@@ -80,36 +66,5 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
         avatar.setOnClickListener(profileListener);
         usernameField.setClickable(true);
         usernameField.setOnClickListener(profileListener);
-        nameField.setClickable(true);
-        nameField.setOnClickListener(profileListener);
-
-        likesField.setClickable(true);
-        likesField.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                onClickLikes();
-            }
-        });
-        likeStatusImage.setClickable(true);
-        likeStatusImage.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                onClickLikes();
-            }
-        });
-
-        View.OnClickListener commentListener = new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                onClickComments();
-            }
-        };
-        commentsField.setClickable(true);
-        commentsField.setOnClickListener(commentListener);
-        commentImage.setClickable(true);
-        commentImage.setOnClickListener(commentListener);
     }
 }

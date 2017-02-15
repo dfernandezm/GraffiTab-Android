@@ -4,111 +4,53 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="#fff"
     card_view:cardElevation="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#fff"
+        android:background="?attr/selectableItemBackground"
         android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/streamableView"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="#efefef"
+            android:scaleType="centerCrop" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:padding="7dp"
+            android:gravity="center_vertical">
 
-            <ImageView
-                android:id="@+id/streamableView"
-                android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#efefef"
-                android:scaleType="centerCrop" />
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/avatar"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar"
+                app:riv_corner_radius="14dp" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="11dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="7dp">
+                android:layout_marginLeft="7dp"
+                android:text="\@"
+                android:textColor="#e0e0e0"
+                android:textSize="15sp" />
 
-                <ImageView
-                    android:id="@+id/likeStatusImage"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_thumb_up_black_24dp"
-                    android:tint="@color/colorPrimary" />
-
-                <TextView
-                    android:id="@+id/likesField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginRight="13dp"
-                    android:text="1"
-                    android:textColor="@color/colorPrimary"
-                    android:textSize="13sp" />
-
-                <ImageView
-                    android:id="@+id/commentsImage"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:src="@drawable/ic_chat_bubble_black_24dp"
-                    android:tint="@color/colorMetadata" />
-
-                <TextView
-                    android:id="@+id/commentsField"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
-                    android:text="1"
-                    android:textColor="@color/colorMetadata"
-                    android:textSize="13sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/usernameField"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal"
-                android:padding="5dp">
-
-                <com.makeramen.roundedimageview.RoundedImageView
-                    android:id="@+id/avatar"
-                    android:layout_width="35dp"
-                    android:layout_height="35dp"
-                    android:scaleType="centerCrop"
-                    android:src="@drawable/default_avatar"
-                    app:riv_corner_radius="5dp" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginRight="7dp"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/nameField"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Georgi Christov"
-                        android:textColor="#000"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/usernameField"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="1dp"
-                        android:text="georgi"
-                        android:textColor="#aaaaaa"
-                        android:textSize="12sp" />
-                </LinearLayout>
-            </LinearLayout>
+                android:text="georgi"
+                android:textColor="#232728"
+                android:textSize="15sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </android.support.v7.widget.CardView>
