@@ -14,6 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
@@ -33,6 +35,7 @@ import com.graffitab.ui.fragments.home.TrendingFragment;
 import com.graffitab.ui.views.sidemenu.CustomResideMenu;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.animation.BounceInterpolator;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
@@ -224,8 +227,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void performStartUpAnimations() {
         fab.setVisibility(View.VISIBLE);
-        fab.animate().scaleX(1);
-        fab.animate().scaleY(1);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        BounceInterpolator interpolator = new BounceInterpolator(0.1, 20);
+        myAnim.setInterpolator(interpolator);
+        fab.startAnimation(myAnim);
     }
 
     // GCM
@@ -328,7 +333,5 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     private void setupButtons() {
         fab.setVisibility(View.GONE);
-        fab.animate().scaleX(0);
-        fab.animate().scaleY(0);
     }
 }

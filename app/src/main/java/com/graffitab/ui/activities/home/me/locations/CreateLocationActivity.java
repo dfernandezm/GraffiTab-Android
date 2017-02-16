@@ -12,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -32,6 +34,7 @@ import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.OnOkHandler;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.animation.BounceInterpolator;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.sdk.GTSDK;
@@ -286,8 +289,10 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
 
     private void performStartUpAnimations() {
         fab.setVisibility(View.VISIBLE);
-        fab.animate().scaleX(1);
-        fab.animate().scaleY(1);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        BounceInterpolator interpolator = new BounceInterpolator(0.1, 20);
+        myAnim.setInterpolator(interpolator);
+        fab.startAnimation(myAnim);
     }
 
     // Map
@@ -422,8 +427,6 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
 
     private void setupButtons() {
         fab.setVisibility(View.GONE);
-        fab.animate().scaleX(0);
-        fab.animate().scaleY(0);
     }
 
     public interface OnAddressFoundListener {
