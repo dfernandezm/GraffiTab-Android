@@ -68,8 +68,7 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
 
     public enum ViewType {LIST_FULL}
 
-    @BindView(R.id.messageField)
-    UserHashtagMultiAutoCompleteTextView commentField;
+    @BindView(R.id.messageField) UserHashtagMultiAutoCompleteTextView commentField;
 
     private GTStreamable streamable;
     private ViewType viewType;
@@ -132,8 +131,6 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
     public void onClickSend(View view) {
         String text = commentField.getText().toString().trim();
         if (text.length() > 0) {
-            KeyboardUtils.hideKeyboard(getActivity());
-
             if (toEdit != null) {
                 Log.i(getClass().getSimpleName(), "Editing comment");
                 // Edit local comment.

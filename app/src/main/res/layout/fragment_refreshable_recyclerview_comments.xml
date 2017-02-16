@@ -35,22 +35,34 @@
             android:background="@drawable/rounded_corner_chat"
             android:gravity="top"
             android:hint="@string/comments_hint"
+            android:imeOptions="flagNoExtractUi"
             android:inputType="textMultiLine|textCapSentences"
-            android:padding="10dp"
-            android:textSize="16sp"
             android:maxLines="5"
-            android:imeOptions="flagNoExtractUi"/>
+            android:padding="10dp"
+            android:textSize="16sp" />
 
-        <ImageButton
+        <LinearLayout
             android:id="@+id/sendBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginBottom="3dp"
-            android:layout_marginRight="2dp"
-            android:background="@null"
-            android:padding="2dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/ic_send_black_24dp"
-            android:tint="@color/colorPrimary" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground">
+
+            <LinearLayout
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="2dp"
+                android:background="@drawable/circle_comments_post"
+                android:padding="8dp">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="2dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_send_black_24dp"
+                    android:tint="@color/colorWhite" />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

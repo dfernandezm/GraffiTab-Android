@@ -7,6 +7,7 @@ import com.graffitab.constants.Constants;
 import com.graffitab.ui.activities.custom.comments.BaseCommentsActivity;
 import com.graffitab.ui.fragments.comments.GenericCommentsFragment;
 import com.graffitab.ui.fragments.comments.ListCommentsFragment;
+import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitabsdk.model.GTStreamable;
 
 /**
@@ -30,6 +31,12 @@ public class CommentsActivity extends BaseCommentsActivity {
         }
 
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onPause() {
+        KeyboardUtils.hideKeyboard(this);
+        super.onPause();
     }
 
     @Override
