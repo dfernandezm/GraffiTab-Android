@@ -18,6 +18,7 @@ import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.OnYesNoInputHandler;
 import com.graffitab.ui.dialog.TaskDialog;
+import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.ImageUtils;
@@ -118,9 +119,15 @@ public class LoginActivity extends FacebookUtilsActivity {
     }
 
     private void showHomeScreen() {
-        startActivity(new Intent(getBaseContext(), HomeActivity.class));
-        finish();
-//        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                startActivity(new Intent(getBaseContext(), HomeActivity.class));
+                finish();
+                overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+            }
+        }, 100);
     }
 
     // Login

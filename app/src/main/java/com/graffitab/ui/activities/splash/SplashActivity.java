@@ -26,12 +26,12 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ActivityUtils.enableFullScreen(this);
+//        ActivityUtils.enableFullScreen(this);
         ActivityUtils.hideActionBar(this);
 
         setContentView(R.layout.activity_splash);
 
-        setupBackgroundImage();
+//        setupBackgroundImage();
 
         Utils.runWithDelay(new Runnable() {
 
@@ -39,19 +39,19 @@ public class SplashActivity extends AppCompatActivity {
             public void run() {
                 checkLoginStatus();
             }
-        }, 1000);
+        }, 300);
     }
 
     private void showLoginScreen() {
         startActivity(new Intent(getBaseContext(), LoginActivity.class));
         finish();
-//        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     private void showHomeScreen() {
         startActivity(new Intent(getBaseContext(), HomeActivity.class));
         finish();
-//        overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+        overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
     }
 
     // Login

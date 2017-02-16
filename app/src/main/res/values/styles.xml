@@ -3,7 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">#fff</item>
-        <item name="colorPrimaryDark">#b2b2b2</item>
+        <item name="colorPrimaryDark">@color/colorStatusBar</item>
 
         <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="actionBarStyle">@style/ActionBarStyle</item>
@@ -17,7 +17,7 @@
         <item name="windowActionBar">true</item>
 
         <item name="colorPrimary">#fff</item>
-        <item name="colorPrimaryDark">#b2b2b2</item>
+        <item name="colorPrimaryDark">@color/colorStatusBar</item>
 
         <item name="actionBarTheme">@style/ActionBarTheme</item>
         <item name="actionBarStyle">@style/ActionBarStyle</item>
@@ -49,7 +49,7 @@
     <!-- Base no actionbar theme. -->
     <style name="AppThemeNoActionBar" parent="Theme.AppCompat.Light">
         <item name="colorPrimary">#fff</item>
-        <item name="colorPrimaryDark">#b2b2b2</item>
+        <item name="colorPrimaryDark">@color/colorStatusBar</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

@@ -58,7 +58,7 @@ public class SettingsActivity extends AppCompatActivity {
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity.startActivity(intent);
                 activity.finish();
-                activity.overridePendingTransition(R.anim.slow_fade_in, R.anim.fade_out);
+                activity.overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
             }
         };
 
