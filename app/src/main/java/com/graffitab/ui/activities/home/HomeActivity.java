@@ -17,6 +17,7 @@ import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
@@ -62,7 +63,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.fab) FloatingActionButton fab;
 
     private CustomResideMenu resideMenu;
-    private View notificationsIndicator;
+    private TextView notificationsIndicator;
     private final int TIME_INTERVAL = 3000; // # milliseconds, desired time passed between two back presses.
     private long mBackPressed;
 
@@ -213,11 +214,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             public void onSuccess(GTResponse<GTUnseenNotificationsResponse> gtResponse) {
                 if (viewPager == null) return; // View is destroyed.
 
-                if (gtResponse.getObject().count <= 0) return; // No new notifications.
+                int count = gtResponse.getObject().count;
+                if (count <= 0) return; // No new notifications.
                 if (isNotificationsTabSelected())
                     refreshNotificationsTab();
-                else
-                    notificationsIndicator.setVisibility(View.VISIBLE);
+                else {
+                    notificationsIndicator.setText(count + "");
+                    if (notificationsIndicator.getVisibility() != View.VISIBLE) {
+                        notificationsIndicator.setVisibility(View.VISIBLE);
+                        Animation myAnim = AnimationUtils.loadAnimation(HomeActivity.this, R.anim.bounce);
+                        BounceInterpolator interpolator = new BounceInterpolator(0.1, 20);
+                        myAnim.setInterpolator(interpolator);
+                        notificationsIndicator.startAnimation(myAnim);
+                    }
+                }
             }
 
             @Override
@@ -311,7 +321,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             tab.setCustomView(v);
 
             if (i == NOTIFICATIONS_POSITION)
-                notificationsIndicator = v.findViewById(R.id.tabNotificationsIndicator);
+                notificationsIndicator = (TextView) v.findViewById(R.id.tabNotificationsIndicator);
         }
         setupTabBarColors(0);
     }
