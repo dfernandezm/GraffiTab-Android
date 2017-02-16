@@ -1,19 +1,17 @@
 package com.graffitab.ui.adapters.streamables.viewholders;
 
 import android.text.format.DateUtils;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
+import com.graffitab.ui.views.likeimageview.LikeImageView;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +40,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
     public ListStreamableViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        setupImageView();
+//        setupImageView();
     }
 
     @Override
@@ -70,7 +68,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
     @Override
     public void loadStreamableImage() {
-        Picasso.with(streamableView.getContext()).load(item.asset.link).into(streamableView);
+        streamableView.loadImage(item.asset.link);
     }
 
     public void loadAvatar() {
@@ -127,6 +125,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
 
             @Override
             public void liked(LikeButton likeButton) {
+                streamableView.animateLike();
                 onClickToggleLike();
             }
 
@@ -144,43 +143,21 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
                 onClickShare();
             }
         });
-    }
 
-    private void setupImageView() {
-        final GestureDetector gestureDetector = new GestureDetector(streamableView.getContext(), new MyGestureListener());
-        streamableView.setOnTouchListener(new View.OnTouchListener() {
+        // Custom handler for Like animation.
+        streamableView.setLikeImageScale(3.0f);
+        streamableView.setLikeListener(new LikeImageView.OnLikeListener() {
 
             @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-                if (gestureDetector.onTouchEvent(motionEvent)) {
-                    return true;
-                }
-                return false;
+            public void onLiked() {
+                if (!item.likedByCurrentUser)
+                    likeAnimationButton.onClick(null);
+            }
+
+            @Override
+            public void onTapped() {
+                onClickDetails();
             }
         });
-    }
-
-    private class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
-
-        @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            System.out.println("TAP");
-            if (clickListener != null)
-                clickListener.onRowSelected(item, getAdapterPosition());
-            return true;
-        }
-
-        @Override
-        public boolean onDoubleTap(MotionEvent e) {
-            System.out.println("TAP TAP");
-            if (!item.likedByCurrentUser)
-                likeAnimationButton.onClick(null);
-            return true;
-        }
-
-        @Override
-        public boolean onDown(MotionEvent e) {
-            return true;
-        }
     }
 }

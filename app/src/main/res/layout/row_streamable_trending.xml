@@ -13,7 +13,7 @@
         android:background="?attr/selectableItemBackground"
         android:orientation="vertical">
 
-        <ImageView
+        <com.graffitab.ui.views.likeimageview.LikeImageView
             android:id="@+id/streamableView"
             android:layout_width="match_parent"
             android:layout_height="200dp"

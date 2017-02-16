@@ -26,6 +26,7 @@ import com.graffitab.ui.activities.home.users.ProfileActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.ui.dialog.TaskDialog;
+import com.graffitab.ui.views.likeimageview.LikeImageView;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
@@ -77,7 +78,18 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         Intent intent = new Intent(context, StreamableDetailsActivity.class);
         intent.putExtra(Constants.EXTRA_STREAMABLE, streamable);
 
-        if (source != null && source instanceof ImageView && ((ImageView) source).getDrawable() != null) {
+        if (source != null && source instanceof LikeImageView && ((LikeImageView) source).getDrawable() != null) {
+            // Configure the Intent to set the transition
+            ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                    // the context of the activity
+                    context,
+                    // For each shared element, add to this method a new Pair item,
+                    // which contains the reference of the view we are transitioning *from*,
+                    // and the value of the transitionName attribute
+                    new Pair<>(((LikeImageView)source).getImageView(), context.getString(R.string.transition_name_streamable)));
+            ActivityCompat.startActivity(context, intent, options.toBundle());
+        }
+        else if (source != null && source instanceof ImageView && ((ImageView) source).getDrawable() != null) {
             // Configure the Intent to set the transition
             ActivityOptionsCompat options = ActivityOptionsCompat.makeSceneTransitionAnimation(
                     // the context of the activity

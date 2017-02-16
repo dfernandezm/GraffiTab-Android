@@ -4,13 +4,12 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.ui.adapters.streamables.OnStreamableClickListener;
+import com.graffitab.ui.views.likeimageview.LikeImageView;
 import com.graffitabsdk.model.GTStreamable;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,7 +21,7 @@ import butterknife.ButterKnife;
  */
 public class StreamableViewHolder extends RecyclerView.ViewHolder {
 
-    @BindView(R.id.streamableView) public ImageView streamableView;
+    @BindView(R.id.streamableView) public LikeImageView streamableView;
 
     protected GTStreamable item;
     protected OnStreamableClickListener clickListener;
@@ -42,7 +41,7 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void loadStreamableImage() {
-        Picasso.with(streamableView.getContext()).load(item.asset.thumbnail).into(streamableView);
+        streamableView.loadImage(item.asset.thumbnail);
     }
 
     public GTStreamable getItem() {
@@ -78,15 +77,25 @@ public class StreamableViewHolder extends RecyclerView.ViewHolder {
             clickListener.onToggleLike(item, this, getAdapterPosition());
     }
 
+    public void onClickDetails() {
+        if (clickListener != null)
+            clickListener.onRowSelected(item, getAdapterPosition());
+    }
+
     // Setup
 
     protected void setupViews() {
-        streamableView.setOnClickListener(new View.OnClickListener() {
+        streamableView.setLikeListener(new LikeImageView.OnLikeListener() {
 
             @Override
-            public void onClick(View view) {
-                if (clickListener != null)
-                    clickListener.onRowSelected(item, getAdapterPosition());
+            public void onLiked() {
+                if (!item.likedByCurrentUser)
+                    onClickToggleLike();
+            }
+
+            @Override
+            public void onTapped() {
+                onClickDetails();
             }
         });
     }

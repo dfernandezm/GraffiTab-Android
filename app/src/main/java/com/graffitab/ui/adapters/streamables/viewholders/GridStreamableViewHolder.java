@@ -22,4 +22,11 @@ public class GridStreamableViewHolder extends StreamableViewHolder {
     public void setItem(GTStreamable streamable) {
         super.setItem(streamable);
     }
+
+    @Override
+    protected void setupViews() {
+        super.setupViews();
+
+        streamableView.setLikeImageScale(2);
+    }
 }

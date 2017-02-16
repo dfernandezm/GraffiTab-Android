@@ -28,4 +28,11 @@ public class SwimlaneStreamableViewHolder extends StreamableViewHolder {
 
         streamableView.setLayoutParams(new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DeviceUtils.pxToDip(MyApplication.getInstance(), item.asset.thumbnailHeight)));
     }
+
+    @Override
+    protected void setupViews() {
+        super.setupViews();
+
+        streamableView.setLikeImageScale(2);
+    }
 }

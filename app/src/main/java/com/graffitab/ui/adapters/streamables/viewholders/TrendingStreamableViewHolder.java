@@ -11,7 +11,6 @@ import com.graffitab.application.MyApplication;
 import com.graffitab.utils.device.DeviceUtils;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
-import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -43,7 +42,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
 
     @Override
     public void loadStreamableImage() {
-        Picasso.with(streamableView.getContext()).load(item.asset.link).into(streamableView);
+        streamableView.loadImage(item.asset.link);
     }
 
     public void loadAvatar() {
@@ -66,5 +65,7 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
         avatar.setOnClickListener(profileListener);
         usernameField.setClickable(true);
         usernameField.setOnClickListener(profileListener);
+
+        streamableView.setLikeImageScale(2);
     }
 }
