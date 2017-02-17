@@ -145,7 +145,7 @@ public class ListStreamableViewHolder extends StreamableViewHolder {
         });
 
         // Custom handler for Like animation.
-        streamableView.setLikeImageScale(3.0f);
+        streamableView.setLikeImageScale(0.5f);
         streamableView.setLikeListener(new LikeImageView.OnLikeListener() {
 
             @Override

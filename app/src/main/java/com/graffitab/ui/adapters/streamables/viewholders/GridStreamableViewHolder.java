@@ -27,6 +27,6 @@ public class GridStreamableViewHolder extends StreamableViewHolder {
     protected void setupViews() {
         super.setupViews();
 
-        streamableView.setLikeImageScale(2);
+        streamableView.setLikeImageScale(0.5f);
     }
 }

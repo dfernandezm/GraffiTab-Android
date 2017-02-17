@@ -216,6 +216,12 @@
     <string name="streamable_details_flag">Flag Inappropriate</string>
     <string name="streamable_details_flag_prompt">Mark this post as inappropriate?</string>
     <string name="streamable_details_explore">Explore Map Area</string>
+    <string name="streamable_details_likers_me">Liked by You and %1$d others</string>
+    <string name="streamable_details_likers_me_single">Liked by You and 1 other</string>
+    <string name="streamable_details_likers">Liked by %1$s and %2$d others</string>
+    <string name="streamable_details_likers_single">Liked by %1$s and 1 other</string>
+    <string name="streamable_details_liker_me">Liked by You</string>
+    <string name="streamable_details_liker">Liked by %1$s</string>
 
     <!-- API Errors -->
     <string name="api_error_unsupported_file_type">This file type is not supported.</string>

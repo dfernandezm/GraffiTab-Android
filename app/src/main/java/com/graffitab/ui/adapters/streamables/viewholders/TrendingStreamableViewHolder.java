@@ -66,6 +66,6 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
         usernameField.setClickable(true);
         usernameField.setOnClickListener(profileListener);
 
-        streamableView.setLikeImageScale(2);
+        streamableView.setLikeImageScale(0.6f);
     }
 }

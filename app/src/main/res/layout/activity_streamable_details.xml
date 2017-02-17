@@ -69,6 +69,16 @@
         android:orientation="vertical"
         android:padding="10dp">
 
+        <TextView
+            android:id="@+id/likersField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="2dp"
+            android:clickable="true"
+            android:textColor="#fff"
+            android:textSize="14sp" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -118,14 +128,14 @@
                 android:clipChildren="false"
                 android:clipToPadding="false"
                 android:padding="5dp"
-                app:icon_type="thumb"
-                app:icon_size="25dp"
+                app:circle_end_color="@color/colorPrimary"
+                app:circle_start_color="@color/colorSecondary"
                 app:dots_primary_color="@color/colorPrimary"
                 app:dots_secondary_color="@color/colorSecondary"
+                app:icon_size="25dp"
+                app:icon_type="thumb"
                 app:like_drawable="@drawable/ic_thumb_up_primary_24dp"
-                app:unlike_drawable="@drawable/ic_thumb_up_white_24dp"
-                app:circle_start_color="@color/colorSecondary"
-                app:circle_end_color="@color/colorPrimary"/>
+                app:unlike_drawable="@drawable/ic_thumb_up_white_24dp" />
 
             <TextView
                 android:id="@+id/likesField"
@@ -158,10 +168,10 @@
                     android:id="@+id/commentsField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="1dp"
                     android:text="1"
                     android:textColor="#fff"
-                    android:textSize="17sp"
-                    android:layout_marginLeft="1dp"/>
+                    android:textSize="17sp" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

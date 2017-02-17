@@ -31,11 +31,15 @@ import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.image.ImageUtils;
+import com.graffitab.utils.text.TextUtils;
 import com.graffitabsdk.model.GTStreamable;
+import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.common.result.GTActionCompleteResult;
 import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
+import com.graffitabsdk.network.service.user.response.GTListUsersResponse;
 import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.sdk.events.comments.GTCommentDeletedEvent;
 import com.graffitabsdk.sdk.events.comments.GTCommentPostedEvent;
@@ -48,6 +52,8 @@ import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,6 +71,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     @BindView(R.id.usernameField) public TextView usernameField;
     @BindView(R.id.streamableView) ImageView streamableView;
     @BindView(R.id.likesField) public TextView likesField;
+    @BindView(R.id.likersField) public TextView likersField;
     @BindView(R.id.commentsField) public TextView commentsField;
     @BindView(R.id.likeBtn) public LikeButton likeBtn;
     @BindView(R.id.commentIcon) public ImageView commentIcon;
@@ -143,6 +150,13 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     protected void onDestroy() {
         GTSDK.unregisterEventListener(this);
         super.onDestroy();
+    }
+
+    @OnClick(R.id.likersField)
+    public void onClickLikers(View view) {
+        Intent intent = new Intent(this, LikesActivity.class);
+        intent.putExtra(Constants.EXTRA_STREAMABLE, streamable);
+        startActivity(intent);
     }
 
     @OnClick(R.id.avatar)
@@ -451,6 +465,31 @@ public class StreamableDetailsActivity extends AppCompatActivity {
             @Override
             public void onCache(GTResponse<GTStreamableResponse> gtResponse) {}
         });
+
+        refreshLikers();
+    }
+
+    private void refreshLikers() {
+        GTQueryParameters params = new GTQueryParameters();
+        GTSDK.getStreamableManager().getLikers(streamable.id, false, params, new GTResponseHandler<GTListUsersResponse>() {
+
+            @Override
+            public void onSuccess(GTResponse<GTListUsersResponse> gtResponse) {
+                showLikers(gtResponse.getObject().items);
+            }
+
+            @Override
+            public void onFailure(GTResponse<GTListUsersResponse> gtResponse) {}
+        });
+    }
+
+    private void showLikers(List<GTUser> users) {
+        if (users.isEmpty())
+            likersField.animate().alpha(0);
+        else {
+            likersField.setText(TextUtils.buildLikersString(this, users, streamable));
+            likersField.animate().alpha(1);
+        }
     }
 
     // Setup
@@ -481,7 +520,9 @@ public class StreamableDetailsActivity extends AppCompatActivity {
                 GTSDK.getStreamableManager().like(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                     @Override
-                    public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
+                    public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+                        refreshLikers();
+                    }
 
                     @Override
                     public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
@@ -496,7 +537,9 @@ public class StreamableDetailsActivity extends AppCompatActivity {
                 GTSDK.getStreamableManager().unlike(streamable.id, new GTResponseHandler<GTStreamableResponse>() {
 
                     @Override
-                    public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {}
+                    public void onSuccess(GTResponse<GTStreamableResponse> gtResponse) {
+                        refreshLikers();
+                    }
 
                     @Override
                     public void onFailure(GTResponse<GTStreamableResponse> gtResponse) {}
@@ -513,5 +556,6 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     private void setupDisplays() {
         topDisplay.setAlpha(0.0f);
         bottomDisplay.setAlpha(0.0f);
+        likersField.setAlpha(0.0f);
     }
 }

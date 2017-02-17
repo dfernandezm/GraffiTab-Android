@@ -94,14 +94,17 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {
-        if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
-            super.onBackPressed();
-            return;
-        }
-        else
-            DialogBuilder.buildOKToast(this, getString(R.string.home_exit_prompt));
+        if (resideMenu.isOpened())
+            resideMenu.closeMenu();
+        else {
+            if (mBackPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+                super.onBackPressed();
+                return;
+            } else
+                DialogBuilder.buildOKToast(this, getString(R.string.home_exit_prompt));
 
-        mBackPressed = System.currentTimeMillis();
+            mBackPressed = System.currentTimeMillis();
+        }
     }
 
     @Override

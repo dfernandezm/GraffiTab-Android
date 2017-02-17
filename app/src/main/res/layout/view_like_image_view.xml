@@ -21,7 +21,7 @@
         android:id="@+id/heart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="center"
-        android:src="@drawable/ic_thumb_up_stream_24dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/like"
         android:visibility="gone"/>
 </RelativeLayout>
