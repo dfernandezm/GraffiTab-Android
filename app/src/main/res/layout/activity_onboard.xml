@@ -40,7 +40,7 @@
                 android:layout_height="37dp"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"
-                android:background="?selectableItemBackgroundBorderless"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/onboard_go"
                 android:textColor="#ddffffff"

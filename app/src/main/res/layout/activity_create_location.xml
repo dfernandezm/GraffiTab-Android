@@ -20,23 +20,31 @@
         android:src="@drawable/ic_location_on_black_24dp"
         android:tint="@color/colorPrimary" />
 
-    <ImageButton
-        android:id="@+id/backBtn"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/circle_back_btn"
-        android:elevation="10dp"
-        android:src="@drawable/ic_arrow_back_black_24dp"
-        android:tint="@color/colorPrimary" />
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="10dp">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="@color/colorPrimary" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="45dp"
+        android:layout_alignParentRight="true"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:layout_alignParentRight="true"
         android:background="@drawable/rounded_corner_map"
         android:elevation="10dp"
         android:gravity="center"
@@ -48,7 +56,7 @@
             android:id="@+id/searchBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@null"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_search_white_24dp"
             android:tint="@color/colorPrimary" />
 
@@ -56,21 +64,18 @@
             android:id="@+id/searchField"
             android:layout_width="190dp"
             android:layout_height="match_parent"
-            android:hint="@string/home_search"
-            android:background="@null"
             android:layout_marginLeft="5dp"
-            android:visibility="gone"
+            android:background="@null"
+            android:hint="@string/home_search"
+            android:imeOptions="actionSearch"
+            android:inputType="textCapWords"
             android:singleLine="true"
             android:textColor="@color/colorPrimary"
-            android:imeOptions="actionSearch"
-            android:inputType="textCapWords"/>
+            android:visibility="gone" />
     </LinearLayout>
 
     <com.github.clans.fab.FloatingActionButton
         android:id="@+id/fab"
-        fab:fab_colorNormal="@color/colorPrimary"
-        fab:fab_colorPressed="@color/colorPrimary"
-        fab:fab_colorRipple="@color/colorResetPasswordWhite"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -78,5 +83,8 @@
         android:layout_gravity="bottom|right"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="10dp"
-        android:src="@drawable/ic_check_white_24dp" />
+        android:src="@drawable/ic_check_white_24dp"
+        fab:fab_colorNormal="@color/colorPrimary"
+        fab:fab_colorPressed="@color/colorPrimary"
+        fab:fab_colorRipple="@color/colorResetPasswordWhite" />
 </RelativeLayout>

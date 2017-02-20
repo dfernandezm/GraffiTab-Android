@@ -11,16 +11,24 @@
         android:layout_height="match_parent"
         tools:context="com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity" />
 
-    <ImageButton
-        android:id="@+id/backBtn"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/circle_back_btn"
         android:elevation="10dp"
-        android:src="@drawable/ic_arrow_back_black_24dp"
-        android:tint="@color/colorPrimary" />
+        android:clipChildren="false"
+        android:clipToPadding="false">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back_black_24dp"
+            android:tint="@color/colorPrimary" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -29,6 +37,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="28dp"
         android:background="@drawable/rounded_corner_map"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         android:elevation="10dp"
         android:gravity="center"
         android:orientation="horizontal"
@@ -39,7 +49,7 @@
             android:id="@+id/gridBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@null"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_apps_black_24dp"
             android:tint="@color/colorPrimary" />
 
@@ -56,7 +66,7 @@
             android:id="@+id/locate"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@null"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_my_location_black_24dp"
             android:tint="@color/colorPrimary" />
 
@@ -73,7 +83,7 @@
             android:id="@+id/createLocationBtn"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@null"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_add_location_white_24dp"
             android:tint="@color/colorPrimary" />
     </LinearLayout>
