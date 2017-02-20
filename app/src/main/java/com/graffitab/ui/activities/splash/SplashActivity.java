@@ -6,14 +6,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.graffitab.R;
+import com.graffitab.settings.Settings;
 import com.graffitab.ui.activities.home.HomeActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
+import com.graffitab.ui.activities.onboard.OnboardActivity;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUserResponse;
+import com.graffitabsdk.sdk.GTSDK;
+
+import butterknife.ButterKnife;
 
 /**
  * Created by georgichristov on 11/11/2016
@@ -22,24 +26,33 @@ import com.graffitabsdk.network.service.user.response.GTUserResponse;
  */
 public class SplashActivity extends AppCompatActivity {
 
+    private static final int REQUEST_CODE_ONBOARDING = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//        ActivityUtils.enableFullScreen(this);
         ActivityUtils.hideActionBar(this);
 
         setContentView(R.layout.activity_splash);
-
-//        setupBackgroundImage();
+        ButterKnife.bind(this);
 
         Utils.runWithDelay(new Runnable() {
 
             @Override
             public void run() {
-                checkLoginStatus();
+                checkOnboarding();
             }
         }, 300);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_ONBOARDING) {
+            Settings.settings.setShowedOnboarding(true);
+            checkLoginStatus();
+        }
     }
 
     private void showLoginScreen() {
@@ -55,6 +68,15 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     // Login
+
+    private void checkOnboarding() {
+        if (!Settings.settings.showedOnboarding()) {
+            startActivityForResult(new Intent(this, OnboardActivity.class), REQUEST_CODE_ONBOARDING);
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+        }
+        else
+            checkLoginStatus();
+    }
 
     private void checkLoginStatus() {
         if (GTSDK.getAccountManager().isUserLoggedIn()) {
@@ -90,11 +112,5 @@ public class SplashActivity extends AppCompatActivity {
             Log.i(getClass().getSimpleName(), "User not logged in. Showing login screen");
             showLoginScreen();
         }
-    }
-
-    // Setup
-
-    private void setupBackgroundImage() {
-        ActivityUtils.setupBackgroundImage(this, R.drawable.login_full, R.id.background);
     }
 }

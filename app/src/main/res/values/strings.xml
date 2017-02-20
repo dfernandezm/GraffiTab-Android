@@ -10,6 +10,19 @@
     <!-- Transitions -->
     <string name="transition_name_streamable">TRANSITION:streamable</string>
 
+    <!-- Onboard -->
+    <string name="onboard_go">Let\'s go!</string>
+    <string name="onboard_screen_1_title">Paint</string>
+    <string name="onboard_screen_1_description">Creating beautiful art is as easy as moving your finger across the canvas.</string>
+    <string name="onboard_screen_2_title">Enhance</string>
+    <string name="onboard_screen_2_description">Make your drawing stand out with a variety of filters and effects.</string>
+    <string name="onboard_screen_3_title">Explore</string>
+    <string name="onboard_screen_3_description">Discover what your friends are creating around your area.</string>
+    <string name="onboard_screen_4_title">Follow</string>
+    <string name="onboard_screen_4_description">Follow your favourite artists and get instant updates about new content.</string>
+    <string name="onboard_screen_5_title">Profile</string>
+    <string name="onboard_screen_5_description">Everything you make is stored in your creative profile. Ready to get started?</string>
+
     <!-- Login -->
     <string name="login_hint_username">Username</string>
     <string name="login_hint_password">Password</string>

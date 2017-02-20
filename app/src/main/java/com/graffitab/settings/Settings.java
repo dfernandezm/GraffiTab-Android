@@ -15,8 +15,17 @@ public class Settings {
     private static final String PREFERENCE_TITLE = "GraffiTabPreferences";
     private static final String PREFERENCE_REMEMBER_ME = "PREFERENCE_REMEMBER_ME";
     private static final String PREFERENCE_SHOW_DRAWING_ASSISTANT = "PREFERENCE_SHOW_DRAWING_ASSISTANT";
+    private static final String PREFERENCE_SHOWED_ONBOARDING = "PREFERENCE_SHOWED_ONBOARDING";
 
     public static final Settings settings = new Settings();
+
+    public boolean showedOnboarding() {
+        return getPreference(PREFERENCE_SHOWED_ONBOARDING, false);
+    }
+
+    public void setShowedOnboarding(boolean value) {
+        savePreference(value, PREFERENCE_SHOWED_ONBOARDING);
+    }
 
     public boolean rememberMe() {
         return getPreference(PREFERENCE_REMEMBER_ME, true);

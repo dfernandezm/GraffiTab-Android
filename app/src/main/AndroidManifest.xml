@@ -213,6 +213,11 @@
             android:name=".ui.activities.home.settings.social.LinkedAccountActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.onboard.OnboardActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppThemeTransparentAction"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
