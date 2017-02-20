@@ -8,12 +8,15 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import com.graffitab.R;
 import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
 import com.graffitab.ui.fragments.onboard.OnboardSlideFragment;
 import com.graffitab.utils.activity.ActivityUtils;
+import com.graffitab.utils.animation.BounceInterpolator;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -60,6 +63,24 @@ public class OnboardActivity extends AppCompatActivity {
         finish();
     }
 
+    private void startAnimatingGoButton() {
+        goBtn.setVisibility(View.VISIBLE);
+        final Animation myAnim = AnimationUtils.loadAnimation(this, R.anim.bounce);
+        BounceInterpolator interpolator = new BounceInterpolator(0.1, 20);
+        myAnim.setInterpolator(interpolator);
+        goBtn.startAnimation(myAnim);
+
+        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(goBtn,
+                PropertyValuesHolder.ofFloat("scaleX", 1.1f),
+                PropertyValuesHolder.ofFloat("scaleY", 1.1f));
+        scaleDown.setDuration(1000);
+        scaleDown.setInterpolator(new FastOutSlowInInterpolator());
+        scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
+        scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
+        scaleDown.setStartDelay(2000);
+        scaleDown.start();
+    }
+
     // Setup
 
     private void setupBackgroundImage() {
@@ -77,20 +98,26 @@ public class OnboardActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         viewPager.setOffscreenPageLimit(adapter.getCount());
         viewPager.setOverScrollMode(View.OVER_SCROLL_NEVER);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {}
+
+            @Override
+            public void onPageScrollStateChanged(int state) {}
+
+            @Override
+            public void onPageSelected(int position) {
+                if (position >= adapter.getCount() - 1 && goBtn.getVisibility() != View.VISIBLE)
+                    startAnimatingGoButton();
+            }
+        });
 
         circleIndicator.setViewPager(viewPager);
     }
 
     private void setupGoButton() {
-        ObjectAnimator scaleDown = ObjectAnimator.ofPropertyValuesHolder(goBtn,
-                PropertyValuesHolder.ofFloat("scaleX", 1.1f),
-                PropertyValuesHolder.ofFloat("scaleY", 1.1f));
-        scaleDown.setDuration(1000);
-        scaleDown.setInterpolator(new FastOutSlowInInterpolator());
-        scaleDown.setRepeatCount(ObjectAnimator.INFINITE);
-        scaleDown.setRepeatMode(ObjectAnimator.REVERSE);
-
-        scaleDown.start();
+        goBtn.setVisibility(View.GONE);
     }
 
     private OnboardSlideFragment setupSlide(String title, String subtitle, int imageResId) {
