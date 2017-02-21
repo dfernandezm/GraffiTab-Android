@@ -8,7 +8,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="245dp">
+        android:layout_height="@dimen/profile_header_height">
 
         <ImageView
             android:id="@+id/cover"
@@ -19,7 +19,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="55dp"
+            android:layout_height="@dimen/profile_gradient_height"
             android:background="@drawable/gradient_profile" />
 
         <android.support.v4.view.ViewPager
@@ -30,17 +30,17 @@
         <me.relex.circleindicator.CircleIndicator
             android:id="@+id/indicator"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/profile_paging_indicator_height"
             android:layout_alignParentBottom="true" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginTop="-42dp"
+        android:layout_marginBottom="@dimen/profile_metadata_panel_margin_bottom"
+        android:layout_marginLeft="@dimen/profile_metadata_panel_margin_left"
+        android:layout_marginRight="@dimen/profile_metadata_panel_margin_right"
+        android:layout_marginTop="@dimen/profile_metadata_panel_margin_top"
         android:orientation="vertical">
 
         <LinearLayout
@@ -50,8 +50,8 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/avatar"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="@dimen/profile_avatar_size"
+                android:layout_height="@dimen/profile_avatar_size"
                 android:clickable="true"
                 android:onClick="onClickAvatar"
                 android:scaleType="centerCrop"
@@ -64,13 +64,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:layout_marginLeft="9dp"
+                android:layout_marginLeft="@dimen/profile_name_margin_left"
                 android:orientation="vertical">
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="40dp"
-                    android:layout_marginBottom="7dp" />
+                    android:layout_height="@dimen/profile_name_placeholder_height"
+                    android:layout_marginBottom="@dimen/profile_name_placeholder_margin_bottom" />
 
                 <TextView
                     android:id="@+id/nameField"
@@ -78,27 +78,27 @@
                     android:layout_height="wrap_content"
                     android:text="Georgi Christov"
                     android:textColor="#000"
-                    android:textSize="19sp"
+                    android:textSize="@dimen/profile_name_text_size"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/usernameField"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="9dp"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginBottom="@dimen/profile_username_margin_bottom"
+                    android:layout_marginTop="@dimen/profile_username_margin_top"
                     android:text="username"
                     android:textColor="#AAAAAA"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/profile_username_text_size" />
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="-15dp"
-            android:layout_marginRight="-15dp"
-            android:layout_marginTop="17dp"
+            android:layout_marginLeft="@dimen/profile_stats_layout_margin_left"
+            android:layout_marginRight="@dimen/profile_stats_layout_margin_right"
+            android:layout_marginTop="@dimen/profile_stats_layout_margin_top"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -119,22 +119,22 @@
                     android:gravity="center"
                     android:text="--"
                     android:textColor="#000"
-                    android:textSize="24sp"
+                    android:textSize="@dimen/profile_stats_item_text_size"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="@dimen/profile_stats_item_title_margin_top"
                     android:gravity="center"
                     android:text="@string/profile_graffiti"
                     android:textColor="#AAAAAA"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/profile_stats_item_title_text_size" />
             </LinearLayout>
 
             <View
-                android:layout_width="3dp"
-                android:layout_height="3dp" />
+                android:layout_width="@dimen/profile_stats_item_separator_size"
+                android:layout_height="@dimen/profile_stats_item_separator_size" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -152,22 +152,22 @@
                     android:gravity="center"
                     android:text="--"
                     android:textColor="#000"
-                    android:textSize="24sp"
+                    android:textSize="@dimen/profile_stats_item_text_size"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="@dimen/profile_stats_item_title_margin_top"
                     android:gravity="center"
                     android:text="@string/profile_followers"
                     android:textColor="#AAAAAA"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/profile_stats_item_title_text_size" />
             </LinearLayout>
 
             <View
-                android:layout_width="3dp"
-                android:layout_height="3dp" />
+                android:layout_width="@dimen/profile_stats_item_separator_size"
+                android:layout_height="@dimen/profile_stats_item_separator_size" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -185,22 +185,22 @@
                     android:gravity="center"
                     android:text="--"
                     android:textColor="#000"
-                    android:textSize="24sp"
+                    android:textSize="@dimen/profile_stats_item_text_size"
                     android:textStyle="bold" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="@dimen/profile_stats_item_title_margin_top"
                     android:gravity="center"
                     android:text="@string/profile_following"
                     android:textColor="#AAAAAA"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/profile_stats_item_title_text_size" />
             </LinearLayout>
 
             <View
                 android:id="@+id/followButtonSeparator"
-                android:layout_width="2px"
+                android:layout_width="@dimen/profile_stats_follow_button_separator_width"
                 android:layout_height="match_parent" />
 
             <LinearLayout
@@ -213,12 +213,12 @@
                 android:gravity="center"
                 android:onClick="onClickFollow"
                 android:orientation="vertical"
-                android:paddingTop="3dp">
+                android:paddingTop="@dimen/profile_stats_follow_button_padding_top">
 
                 <ImageView
                     android:id="@+id/followButtonIcon"
                     android:layout_width="match_parent"
-                    android:layout_height="30dp"
+                    android:layout_height="@dimen/profile_stats_follow_button_height"
                     android:src="@drawable/ic_action_follow"
                     android:tint="@color/colorPrimary" />
 
@@ -226,28 +226,28 @@
                     android:id="@+id/followButtonText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="1dp"
+                    android:layout_marginTop="@dimen/profile_stats_item_title_margin_top"
                     android:gravity="center"
                     android:text="--"
                     android:textColor="@color/colorPrimary"
-                    android:textSize="13sp" />
+                    android:textSize="@dimen/profile_stats_item_title_text_size" />
             </LinearLayout>
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:layout_marginBottom="11dp"
-            android:layout_marginLeft="-10dp"
-            android:layout_marginRight="-10dp"
-            android:layout_marginTop="11dp"
+            android:layout_height="@dimen/profile_stats_separator_height"
+            android:layout_marginBottom="@dimen/profile_stats_separator_margin_bottom"
+            android:layout_marginLeft="@dimen/profile_stats_separator_margin_left"
+            android:layout_marginRight="@dimen/profile_stats_separator_margin_right"
+            android:layout_marginTop="@dimen/profile_stats_separator_margin_top"
             android:background="#eaeaea" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:layout_marginLeft="-15dp"
-            android:layout_marginRight="-15dp"
+            android:layout_height="@dimen/profile_toolbar_height"
+            android:layout_marginLeft="@dimen/profile_toolbar_margin_left"
+            android:layout_marginRight="@dimen/profile_toolbar_margin_right"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -261,7 +261,7 @@
                 android:tint="@color/colorPrimary" />
 
             <View
-                android:layout_width="2px"
+                android:layout_width="@dimen/profile_toolbar_item_separator_width"
                 android:layout_height="match_parent"
                 android:background="#eaeaea" />
 
@@ -275,7 +275,7 @@
                 android:tint="@color/colorPrimary" />
 
             <View
-                android:layout_width="2px"
+                android:layout_width="@dimen/profile_toolbar_item_separator_width"
                 android:layout_height="match_parent"
                 android:background="#eaeaea" />
 
@@ -289,7 +289,7 @@
                 android:tint="@color/colorPrimary" />
 
             <View
-                android:layout_width="2px"
+                android:layout_width="@dimen/profile_toolbar_item_separator_width"
                 android:layout_height="match_parent"
                 android:background="#eaeaea" />
 

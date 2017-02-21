@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="0dp"
     android:layout_height="wrap_content"
-    android:layout_marginTop="10dp"
+    android:layout_marginTop="@dimen/row_notification_middle_margin_top"
     android:layout_weight="1"
     android:gravity="center"
     android:orientation="vertical"
-    android:layout_marginRight="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginRight="@dimen/row_notification_middle_margin_right"
+    android:layout_marginBottom="@dimen/row_notification_middle_margin_bottom">
 
     <TextView
         android:id="@+id/actionLbl"
@@ -15,14 +15,14 @@
         android:layout_height="wrap_content"
         android:text="Mike Lngmr started following you."
         android:textColor="@color/colorPrimary"
-        android:textSize="15sp" />
+        android:textSize="@dimen/row_notification_middle_title_text_size" />
 
     <TextView
         android:id="@+id/dateField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
+        android:layout_marginTop="@dimen/row_notification_middle_date_margin_top"
         android:text="4 mins ago"
         android:textColor="#B8B8B8"
-        android:textSize="11sp" />
+        android:textSize="@dimen/row_notification_middle_date_text_size" />
 </LinearLayout>

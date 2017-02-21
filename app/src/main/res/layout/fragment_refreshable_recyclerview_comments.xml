@@ -18,19 +18,19 @@
         android:background="@drawable/square_frame_chat"
         android:gravity="bottom"
         android:orientation="horizontal"
-        android:paddingBottom="4dp"
-        android:paddingLeft="7dp"
-        android:paddingRight="5dp"
-        android:paddingTop="4dp">
+        android:paddingBottom="@dimen/comments_layout_padding_bottom"
+        android:paddingLeft="@dimen/comments_layout_padding_left"
+        android:paddingRight="@dimen/comments_layout_padding_right"
+        android:paddingTop="@dimen/comments_layout_padding_top">
 
         <com.graffitab.ui.views.autocomplete.UserHashtagMultiAutoCompleteTextView
             android:id="@+id/messageField"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="3dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="3dp"
+            android:layout_marginBottom="@dimen/comments_field_margin_bottom"
+            android:layout_marginRight="@dimen/comments_field_margin_right"
+            android:layout_marginTop="@dimen/comments_field_margin_top"
             android:layout_weight="1"
             android:background="@drawable/rounded_corner_chat"
             android:gravity="top"
@@ -38,27 +38,27 @@
             android:imeOptions="flagNoExtractUi"
             android:inputType="textMultiLine|textCapSentences"
             android:maxLines="5"
-            android:padding="10dp"
-            android:textSize="16sp" />
+            android:padding="@dimen/comments_field_padding"
+            android:textSize="@dimen/comments_field_text_size" />
 
         <LinearLayout
             android:id="@+id/sendBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="?attr/selectableItemBackground">
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:layout_marginBottom="@dimen/comments_send_button_margin_bottom"
+            android:layout_marginRight="@dimen/comments_send_button_margin_right">
 
             <LinearLayout
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginRight="2dp"
+                android:layout_width="@dimen/comments_send_button_size"
+                android:layout_height="@dimen/comments_send_button_size"
                 android:background="@drawable/circle_comments_post"
-                android:padding="8dp">
+                android:padding="@dimen/comments_send_button_padding">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="2dp"
+                    android:layout_marginLeft="@dimen/comments_send_button_margin_left"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_send_black_24dp"
                     android:tint="@color/colorWhite" />

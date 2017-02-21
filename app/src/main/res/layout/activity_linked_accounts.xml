@@ -13,15 +13,12 @@
         android:clickable="true"
         android:gravity="center"
         android:orientation="horizontal"
-        android:paddingBottom="17dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="16dp"
-        android:paddingTop="17dp">
+        android:padding="@dimen/linked_accounts_icon_padding">
 
         <ImageView
             android:id="@+id/facebookImg"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
+            android:layout_width="@dimen/linked_accounts_icon_size"
+            android:layout_height="@dimen/linked_accounts_icon_size"
             android:scaleType="fitCenter"
             android:src="@drawable/facebook"
             android:tint="@color/colorPrimary" />
@@ -30,11 +27,11 @@
             android:id="@+id/facebookLbl"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_marginLeft="@dimen/linked_accounts_name_margin_left"
             android:layout_weight="1"
             android:text="Facebook"
             android:textColor="#232728"
-            android:textSize="16sp" />
+            android:textSize="@dimen/linked_accounts_name_text_size" />
     </LinearLayout>
 
     <View

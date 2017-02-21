@@ -24,24 +24,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="7dp"
+            android:padding="@dimen/row_streamable_trending_metadata_padding"
             android:gravity="center_vertical">
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/avatar"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="@dimen/row_streamable_trending_avatar_size"
+                android:layout_height="@dimen/row_streamable_trending_avatar_size"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_avatar"
-                app:riv_corner_radius="14dp" />
+                app:riv_corner_radius="@dimen/row_streamable_trending_avatar_radius" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
+                android:layout_marginLeft="@dimen/row_streamable_trending_handle_margin_left"
                 android:text="\@"
                 android:textColor="#e0e0e0"
-                android:textSize="15sp" />
+                android:textSize="@dimen/row_streamable_trending_handle_text_size" />
 
             <TextView
                 android:id="@+id/usernameField"
@@ -49,7 +49,7 @@
                 android:layout_height="wrap_content"
                 android:text="georgi"
                 android:textColor="#232728"
-                android:textSize="15sp"
+                android:textSize="@dimen/row_streamable_trending_username_text_size"
                 android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>

@@ -2,12 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:minWidth="300dp"
+    android:minWidth="@dimen/dialog_username_width"
     android:orientation="vertical"
-    android:paddingBottom="15dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="15dp"
+    android:paddingBottom="@dimen/dialog_username_padding_bottom"
+    android:paddingLeft="@dimen/dialog_username_padding_left"
+    android:paddingRight="@dimen/dialog_username_padding_right"
+    android:paddingTop="@dimen/dialog_username_padding_top"
     android:background="#fff">
 
     <EditText
@@ -20,6 +20,6 @@
         android:inputType="textFilter|textNoSuggestions"
         android:singleLine="true"
         android:textColor="@color/colorPrimary"
-        android:textSize="28sp" />
+        android:textSize="@dimen/dialog_username_text_size" />
 
 </LinearLayout>

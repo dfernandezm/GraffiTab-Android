@@ -17,10 +17,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_streamable_top"
-        android:paddingBottom="7dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="7dp">
+        android:paddingBottom="@dimen/streamable_details_top_display_padding_bottom"
+        android:paddingLeft="@dimen/streamable_details_top_display_padding_left"
+        android:paddingRight="@dimen/streamable_details_top_display_padding_right"
+        android:paddingTop="@dimen/streamable_details_top_display_padding_top">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -31,20 +31,20 @@
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/avatar"
-                android:layout_width="28dp"
-                android:layout_height="28dp"
+                android:layout_width="@dimen/streamable_details_avatar_size"
+                android:layout_height="@dimen/streamable_details_avatar_size"
                 android:scaleType="centerCrop"
                 android:src="@drawable/default_avatar"
-                app:riv_corner_radius="14dp" />
+                app:riv_corner_radius="@dimen/streamable_details_avatar_radius" />
 
             <TextView
                 android:id="@+id/usernameField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
+                android:layout_marginLeft="@dimen/streamable_details_username_margin_left"
                 android:text="georgi"
                 android:textColor="#fff"
-                android:textSize="15sp"
+                android:textSize="@dimen/streamable_details_username_text_size"
                 android:textStyle="bold"
                 android:shadowDx="1"
                 android:shadowDy="1"
@@ -54,10 +54,10 @@
 
         <ImageButton
             android:id="@+id/close"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/streamable_details_close_button_size"
+            android:layout_height="@dimen/streamable_details_close_button_size"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="-5dp"
+            android:layout_marginRight="@dimen/streamable_details_close_button_margin_right"
             android:background="@null"
             android:src="@drawable/ic_close_dark" />
     </RelativeLayout>
@@ -71,20 +71,17 @@
         android:clipChildren="false"
         android:clipToPadding="false"
         android:orientation="vertical"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp">
+        android:padding="@dimen/streamable_details_bottom_display_padding">
 
         <TextView
             android:id="@+id/likersField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="12dp"
-            android:layout_marginLeft="2dp"
+            android:layout_marginBottom="@dimen/streamable_details_likers_margin_bottom"
+            android:layout_marginLeft="@dimen/streamable_details_likers_margin_left"
             android:clickable="true"
             android:textColor="#fff"
-            android:textSize="14sp"
+            android:textSize="@dimen/streamable_details_likers_text_size"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
@@ -98,7 +95,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/streamable_details_toolbar_margin_top"
             android:clipChildren="false"
             android:clipToPadding="false"
             android:gravity="center"
@@ -108,9 +105,9 @@
                 android:id="@+id/optionsBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@null"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="false"
-                android:padding="5dp"
+                android:padding="@dimen/streamable_details_toolbar_button_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_more_horiz_black_24dp"
                 android:tint="#fff" />
@@ -119,10 +116,10 @@
                 android:id="@+id/shareBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:background="@null"
+                android:layout_marginLeft="@dimen/streamable_details_share_button_margin_left"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="false"
-                android:padding="5dp"
+                android:padding="@dimen/streamable_details_toolbar_button_padding"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_share_black_24dp"
                 android:tint="#fff" />
@@ -134,16 +131,16 @@
 
             <com.like.LikeButton
                 android:id="@+id/likeBtn"
-                android:layout_width="33dp"
-                android:layout_height="33dp"
+                android:layout_width="@dimen/streamable_details_like_button_size"
+                android:layout_height="@dimen/streamable_details_like_button_size"
                 android:clipChildren="false"
                 android:clipToPadding="false"
-                android:padding="5dp"
+                android:padding="@dimen/streamable_details_toolbar_button_padding"
                 app:circle_end_color="@color/colorPrimary"
                 app:circle_start_color="@color/colorSecondary"
                 app:dots_primary_color="@color/colorPrimary"
                 app:dots_secondary_color="@color/colorSecondary"
-                app:icon_size="25dp"
+                app:icon_size="@dimen/streamable_details_like_button_icon_size"
                 app:icon_type="thumb"
                 app:like_drawable="@drawable/ic_thumb_up_primary_24dp"
                 app:unlike_drawable="@drawable/ic_thumb_up_white_24dp" />
@@ -152,17 +149,18 @@
                 android:id="@+id/likesField"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="15dp"
+                android:layout_marginLeft="@dimen/streamable_details_likes_title_margin_left"
+                android:layout_marginRight="@dimen/streamable_details_likes_title_margin_right"
                 android:text="1"
                 android:textColor="#fff"
-                android:textSize="17sp" />
+                android:textSize="@dimen/streamable_details_likes_text_size" />
 
             <LinearLayout
                 android:id="@+id/commentBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center">
+                android:gravity="center"
+                android:background="?attr/selectableItemBackgroundBorderless">
 
                 <ImageButton
                     android:id="@+id/commentIcon"
@@ -170,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:clickable="false"
-                    android:padding="5dp"
+                    android:padding="@dimen/streamable_details_toolbar_button_padding"
                     android:scaleType="fitCenter"
                     android:src="@drawable/ic_chat_bubble_black_24dp"
                     android:tint="#fff" />
@@ -179,10 +177,10 @@
                     android:id="@+id/commentsField"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="1dp"
+                    android:layout_marginLeft="@dimen/streamable_details_comments_title_margin_left"
                     android:text="1"
                     android:textColor="#fff"
-                    android:textSize="17sp" />
+                    android:textSize="@dimen/streamable_details_comments_text_size" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

@@ -6,15 +6,15 @@
     android:background="#fff"
     android:gravity="center"
     android:orientation="horizontal"
-    android:paddingBottom="6dp"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="6dp">
+    android:paddingBottom="@dimen/row_suggestion_user_padding_bottom"
+    android:paddingLeft="@dimen/row_suggestion_user_padding_left"
+    android:paddingRight="@dimen/row_suggestion_user_padding_right"
+    android:paddingTop="@dimen/row_suggestion_user_padding_top">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/avatar"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/row_suggestion_user_avatar_size"
+        android:layout_height="@dimen/row_suggestion_user_avatar_size"
         android:scaleType="centerCrop"
         android:src="@drawable/default_avatar"
         app:riv_corner_radius="5dp" />
@@ -22,27 +22,27 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="@dimen/row_suggestion_user_name_margin_left"
+        android:layout_marginRight="@dimen/row_suggestion_user_name_margin_right"
         android:layout_weight="1"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/nameField"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Georgi Christov"
             android:textColor="#000"
-            android:textSize="13sp"
+            android:textSize="@dimen/row_suggestion_user_name_text_size"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/usernameField"
-            android:layout_width="fill_parent"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="georgi"
             android:textColor="#AAAAAA"
-            android:textSize="11sp" />
+            android:textSize="@dimen/row_suggestion_user_username_text_size" />
     </LinearLayout>
 
 </LinearLayout>

@@ -6,23 +6,23 @@
     android:background="#fff"
     android:gravity="center"
     android:orientation="horizontal"
-    android:padding="10dp">
+    android:padding="@dimen/row_suggestion_tag_padding">
 
     <ImageView
-        android:layout_width="15dp"
-        android:layout_height="15dp"
-        android:layout_marginTop="1dp"
+        android:layout_width="@dimen/row_suggestion_tag_icon_size"
+        android:layout_height="@dimen/row_suggestion_tag_icon_size"
+        android:layout_marginTop="@dimen/row_suggestion_tag_icon_margin_top"
         android:src="@drawable/ic_hashtag"
         android:tint="#e0e0e0" />
 
     <TextView
         android:id="@+id/tagField"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="7dp"
+        android:layout_marginLeft="@dimen/row_suggestion_tag_title_margin_left"
         android:text="hashtag"
         android:textColor="#000"
-        android:textSize="15sp"
+        android:textSize="@dimen/row_suggestion_tag_title_text_size"
         android:textStyle="bold" />
 
 </LinearLayout>

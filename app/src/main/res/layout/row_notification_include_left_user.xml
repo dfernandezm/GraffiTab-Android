@@ -7,35 +7,35 @@
 
     <View
         android:id="@+id/unreadIndicator"
-        android:layout_width="4dp"
+        android:layout_width="@dimen/row_notification_left_user_unread_width"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="@dimen/row_notification_left_user_margin_left"
+        android:layout_marginRight="@dimen/row_notification_left_user_margin_right"
         android:gravity="center"
         android:orientation="vertical">
 
         <View
             android:id="@+id/topTimelineSeparator"
-            android:layout_width="1dp"
-            android:layout_height="11dp"
+            android:layout_width="@dimen/row_notification_left_user_top_timeline_indocator_width"
+            android:layout_height="@dimen/row_notification_left_user_top_timeline_indocator_height"
             android:background="#f5f5f5" />
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/avatar"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="@dimen/row_notification_left_user_avatar_size"
+            android:layout_height="@dimen/row_notification_left_user_avatar_size"
             android:scaleType="centerCrop"
             android:src="@drawable/default_avatar"
             app:riv_corner_radius="5dp"/>
 
         <View
             android:id="@+id/bottomTimelineSeparator"
-            android:layout_width="1dp"
+            android:layout_width="@dimen/row_notification_left_user_top_timeline_indocator_width"
             android:layout_height="match_parent"
             android:background="#f5f5f5" />
     </LinearLayout>

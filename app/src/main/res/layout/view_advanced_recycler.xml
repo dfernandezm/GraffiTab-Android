@@ -23,15 +23,15 @@
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:paddingLeft="@dimen/empty_view_padding_left"
+        android:paddingRight="@dimen/empty_view_padding_right"
         android:visibility="gone">
 
         <ImageView
             android:id="@+id/emptyImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="13dp"
+            android:layout_marginBottom="@dimen/empty_view_image_margin_bottom"
             android:src="@drawable/empty_feed"
             android:tint="#d0d0d0" />
 
@@ -42,17 +42,17 @@
             android:gravity="center"
             android:text="Some title text"
             android:textColor="@color/colorLightBlack"
-            android:textSize="21sp"
+            android:textSize="@dimen/empty_view_title_text_size"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/emptyDescription"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
+            android:layout_marginTop="@dimen/empty_view_summary_margin_top"
             android:gravity="center"
             android:text="Some description text"
             android:textColor="#b0b0b0"
-            android:textSize="15sp" />
+            android:textSize="@dimen/empty_view_summary_text_size" />
     </LinearLayout>
 </RelativeLayout>

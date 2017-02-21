@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:gravity="center"
-    android:paddingLeft="30dp"
-    android:paddingRight="30dp">
+    android:paddingLeft="@dimen/profile_pager_padding_left"
+    android:paddingRight="@dimen/profile_pager_padding_right">
 
     <TextView
         android:id="@+id/about"
@@ -13,14 +13,14 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/colorWhite"
-        android:textSize="18sp"
+        android:textSize="@dimen/profile_about_text_size"
         android:textStyle="bold"/>
 
     <View
         android:id="@+id/separator"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="20dp"/>
+        android:layout_marginBottom="@dimen/profile_about_separator_margin_bottom"/>
 
     <TextView
         android:id="@+id/website"
@@ -28,5 +28,5 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textColor="@color/colorWhite"
-        android:textSize="13sp"/>
+        android:textSize="@dimen/profile_website_text_size"/>
 </LinearLayout>

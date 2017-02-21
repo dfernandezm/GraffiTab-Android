@@ -21,30 +21,30 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:orientation="vertical"
-            android:paddingBottom="30dp"
-            android:paddingLeft="23dp"
-            android:paddingRight="23dp"
-            android:paddingTop="20dp">
+            android:paddingBottom="@dimen/sign_up_layout_padding_bottom"
+            android:paddingLeft="@dimen/sign_up_layout_padding_left"
+            android:paddingRight="@dimen/sign_up_layout_padding_right"
+            android:paddingTop="@dimen/sign_up_layout_padding_top">
 
             <ImageButton
                 android:id="@+id/closeBtn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/sign_up_close_button_size"
+                android:layout_height="@dimen/sign_up_close_button_size"
                 android:layout_gravity="right"
-                android:layout_marginRight="-12dp"
-                android:layout_marginTop="-10dp"
-                android:background="@null"
+                android:layout_marginRight="@dimen/sign_up_close_button_margin_right"
+                android:layout_marginTop="@dimen/sign_up_close_button_margin_top"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_close_white_24dp"
                 android:tint="@color/colorResetPasswordWhite" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="35dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginBottom="@dimen/sign_up_title_margin_bottom"
+                android:layout_marginTop="@dimen/sign_up_title_margin_top"
                 android:text="@string/login_sign_up"
                 android:textColor="@color/colorResetPasswordWhite"
-                android:textSize="26sp" />
+                android:textSize="@dimen/sign_up_title_text_size" />
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/firstName"
@@ -63,7 +63,7 @@
                 android:id="@+id/lastName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/sign_up_form_field_margin_top"
                 android:background="@null"
                 android:hint="@string/sign_up_last_name"
                 android:inputType="textCapWords"
@@ -77,7 +77,7 @@
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/sign_up_form_field_margin_top"
                 android:background="@null"
                 android:hint="@string/reset_password_hint_email"
                 android:inputType="textEmailAddress"
@@ -91,7 +91,7 @@
                 android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/sign_up_form_field_margin_top"
                 android:background="@null"
                 android:hint="@string/login_hint_username"
                 android:inputType="textNoSuggestions"
@@ -105,7 +105,7 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/sign_up_form_field_margin_top"
                 android:background="@null"
                 android:fontFamily="sans-serif"
                 android:hint="@string/login_hint_password"
@@ -120,7 +120,7 @@
                 android:id="@+id/confirmPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="@dimen/sign_up_form_field_margin_top"
                 android:background="@null"
                 android:fontFamily="sans-serif"
                 android:hint="@string/sign_up_confirm_password"
@@ -135,15 +135,15 @@
                 android:id="@+id/terms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/sign_up_terms_margin_top"
                 android:text="@string/sign_up_terms"
                 android:textColor="@color/colorLoginWhite"
-                android:textSize="15sp" />
+                android:textSize="@dimen/sign_up_terms_text_size" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="@dimen/sign_up_button_margin_top"
                 android:background="@drawable/rounded_corner_login">
 
                 <Button

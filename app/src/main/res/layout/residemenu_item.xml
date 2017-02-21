@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:paddingTop="13dp"
-    android:paddingBottom="13dp">
+    android:paddingTop="@dimen/reside_menu_padding_top"
+    android:paddingBottom="@dimen/reside_menu_padding_bottom">
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="@dimen/reside_menu_icon_size"
+        android:layout_height="@dimen/reside_menu_icon_size"
         android:scaleType="centerCrop"
         android:id="@+id/iv_icon"/>
 
@@ -18,8 +18,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:layout_marginLeft="10dp"
+        android:textSize="@dimen/reside_menu_title_text_size"
+        android:layout_marginLeft="@dimen/reside_menu_title_margin_left"
         android:id="@+id/tv_title"/>
 
 </LinearLayout>

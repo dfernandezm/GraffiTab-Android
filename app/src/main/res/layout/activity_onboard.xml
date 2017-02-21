@@ -19,32 +19,32 @@
             android:id="@+id/viewpager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="35dp"
+            android:layout_marginBottom="@dimen/onboard_pager_margin_bottom"
+            android:layout_marginTop="@dimen/onboard_pager_margin_top"
             android:layout_weight="1" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="11dp">
+            android:layout_marginBottom="@dimen/onboard_indicator_margin_bottom">
 
             <me.relex.circleindicator.CircleIndicator
                 android:id="@+id/indicator"
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="@dimen/onboard_indicator_height"
                 android:layout_centerInParent="true" />
 
             <Button
                 android:id="@+id/goBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="37dp"
+                android:layout_height="@dimen/onboard_go_button_height"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="@dimen/onboard_go_button_margin_right"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="sans-serif-medium"
                 android:text="@string/onboard_go"
                 android:textColor="#ddffffff"
-                android:textSize="15sp" />
+                android:textSize="@dimen/onboard_go_button_text_size" />
         </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -5,37 +5,37 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:gravity="center"
-    android:minWidth="300dp"
+    android:minWidth="@dimen/dialog_unfollow_width"
     android:orientation="vertical"
-    android:paddingTop="25dp">
+    android:paddingTop="@dimen/dialog_unfollow_padding_top">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/avatar"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
+        android:layout_width="@dimen/dialog_unfollow_avatar_size"
+        android:layout_height="@dimen/dialog_unfollow_avatar_size"
         android:scaleType="centerCrop"
         android:src="@drawable/default_avatar"
-        app:riv_corner_radius="40dp" />
+        app:riv_corner_radius="@dimen/dialog_unfollow_avatar_radius" />
 
     <TextView
         android:id="@+id/unfollowPrompt"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/dialog_unfollow_prompt_margin_top"
         android:gravity="center"
         android:text="@string/following_unfollow_user"
         android:textColor="#232728"
-        android:textSize="16sp" />
+        android:textSize="@dimen/dialog_unfollow_prompt_text_size" />
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="25dp"
+        android:layout_height="@dimen/dialog_unfollow_buttons_separator_height"
+        android:layout_marginTop="@dimen/dialog_unfollow_buttons_separator_margin_top"
         android:background="#efefef" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/dialog_unfollow_button_height"
         android:orientation="horizontal">
 
         <Button
@@ -47,10 +47,10 @@
             android:text="@string/other_cancel"
             android:textAllCaps="false"
             android:textColor="#232728"
-            android:textSize="15dp" />
+            android:textSize="@dimen/dialog_unfollow_button_text_size" />
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="@dimen/dialog_unfollow_button_separator_width"
             android:layout_height="match_parent"
             android:background="#efefef" />
 
@@ -63,7 +63,7 @@
             android:text="@string/following_unfollow"
             android:textAllCaps="false"
             android:textColor="#232728"
-            android:textSize="15dp"
+            android:textSize="@dimen/dialog_unfollow_button_text_size"
             android:textStyle="bold" />
     </LinearLayout>
 </LinearLayout>
