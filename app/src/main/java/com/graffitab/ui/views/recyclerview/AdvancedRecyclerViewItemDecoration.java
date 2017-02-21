@@ -16,6 +16,11 @@ public class AdvancedRecyclerViewItemDecoration extends RecyclerView.ItemDecorat
     private int spacing;
     private boolean padEdges = true;
 
+    public AdvancedRecyclerViewItemDecoration() {
+        this.spacing = 0;
+        this.spanCount = 1;
+    }
+
     public AdvancedRecyclerViewItemDecoration(@IntRange(from = 0) int columns, @IntRange(from = 0) int spacing) {
         this.spacing = spacing;
         this.spanCount = columns;

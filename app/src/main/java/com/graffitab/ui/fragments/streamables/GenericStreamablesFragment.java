@@ -243,12 +243,16 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        if (viewType == ViewType.GRID)
-            return new AdvancedRecyclerViewItemDecoration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3, 2);
+        if (viewType == ViewType.GRID) {
+            if (DeviceUtils.isLandscape(MyApplication.getInstance()))
+                return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.streamables_grid_columns_landscape), (int) getResources().getDimension(R.dimen.row_streamable_grid_spacing));
+            else
+                return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.streamables_grid_columns_portrait), (int) getResources().getDimension(R.dimen.row_streamable_grid_spacing));
+        }
         else if (viewType == ViewType.LIST_FULL) {
-            final int spacing = 10;
+            final int spacing = (int) getResources().getDimension(R.dimen.row_streamable_list_spacing);
 
-            return new AdvancedRecyclerViewItemDecoration(1, spacing) {
+            return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.streamables_list_columns), spacing) {
 
                 @Override
                 public void getItemOffsets(Rect outRect, View view, RecyclerView parent, RecyclerView.State state) {
@@ -264,10 +268,18 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                 }
             };
         }
-        else if (viewType == ViewType.SWIMLANE)
-            return new AdvancedRecyclerViewItemDecoration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3, 5);
-        else if (viewType == ViewType.TRENDING)
-            return new AdvancedRecyclerViewItemDecoration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 3 : 2, 15);
+        else if (viewType == ViewType.SWIMLANE) {
+            if (DeviceUtils.isLandscape(MyApplication.getInstance()))
+                return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.streamables_swimlane_columns_landscape), (int) getResources().getDimension(R.dimen.row_streamable_swimlane_spacing));
+            else
+                return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.streamables_swimlane_columns_portrait), (int) getResources().getDimension(R.dimen.row_streamable_swimlane_spacing));
+        }
+        else if (viewType == ViewType.TRENDING) {
+            if (DeviceUtils.isLandscape(MyApplication.getInstance()))
+                return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.streamables_trending_columns_landscape), (int) getResources().getDimension(R.dimen.row_streamable_trending_spacing));
+            else
+                return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.streamables_trending_columns_portrait), (int) getResources().getDimension(R.dimen.row_streamable_trending_spacing));
+        }
         return null;
     }
 
@@ -282,26 +294,38 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
         if (viewType == ViewType.GRID)
-            return new GridLayoutManager(MyApplication.getInstance(), 3);
+            return new GridLayoutManager(MyApplication.getInstance(), getResources().getInteger(R.integer.streamables_grid_columns_portrait));
         else if (viewType == ViewType.LIST_FULL)
             return new LinearLayoutManager(MyApplication.getInstance());
         else if (viewType == ViewType.SWIMLANE)
-            return new StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL);
+            return new StaggeredGridLayoutManager(getResources().getInteger(R.integer.streamables_swimlane_columns_portrait), StaggeredGridLayoutManager.VERTICAL);
         else if (viewType == ViewType.TRENDING)
-            return new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+            return new StaggeredGridLayoutManager(getResources().getInteger(R.integer.streamables_trending_columns_portrait), StaggeredGridLayoutManager.VERTICAL);
         return null;
     }
 
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
-        if (viewType == ViewType.GRID)
-            return new AdvancedRecyclerViewLayoutConfiguration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3);
+        if (viewType == ViewType.GRID) {
+            if (DeviceUtils.isLandscape(MyApplication.getInstance()))
+                return new AdvancedRecyclerViewLayoutConfiguration(getResources().getInteger(R.integer.streamables_grid_columns_landscape));
+            else
+                return new AdvancedRecyclerViewLayoutConfiguration(getResources().getInteger(R.integer.streamables_grid_columns_portrait));
+        }
         else if (viewType == ViewType.LIST_FULL)
             return null;
-        else if (viewType == ViewType.SWIMLANE)
-            return new AdvancedRecyclerViewLayoutConfiguration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 4 : 3);
-        else if (viewType == ViewType.TRENDING)
-            return new AdvancedRecyclerViewLayoutConfiguration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 3 : 2);
+        else if (viewType == ViewType.SWIMLANE) {
+            if (DeviceUtils.isLandscape(MyApplication.getInstance()))
+                return new AdvancedRecyclerViewLayoutConfiguration(getResources().getInteger(R.integer.streamables_swimlane_columns_landscape));
+            else
+                return new AdvancedRecyclerViewLayoutConfiguration(getResources().getInteger(R.integer.streamables_swimlane_columns_portrait));
+        }
+        else if (viewType == ViewType.TRENDING) {
+            if (DeviceUtils.isLandscape(MyApplication.getInstance()))
+                return new AdvancedRecyclerViewLayoutConfiguration(getResources().getInteger(R.integer.streamables_trending_columns_landscape));
+            else
+                return new AdvancedRecyclerViewLayoutConfiguration(getResources().getInteger(R.integer.streamables_trending_columns_portrait));
+        }
         return null;
     }
 }

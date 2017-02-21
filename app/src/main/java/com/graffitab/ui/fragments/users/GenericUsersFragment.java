@@ -167,7 +167,7 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
         if (viewType == ViewType.LIST_FULL)
-            return new AdvancedRecyclerViewItemDecoration(1, 0);
+            return new AdvancedRecyclerViewItemDecoration();
         return null;
     }
 

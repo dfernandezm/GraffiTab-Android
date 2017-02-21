@@ -152,7 +152,10 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        return new AdvancedRecyclerViewItemDecoration(DeviceUtils.isLandscape(getActivity()) ? 2 : 1, 20);
+        if (DeviceUtils.isLandscape(getActivity()))
+            return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.locations_columns_landscape), (int) getResources().getDimension(R.dimen.row_location_spacing));
+        else
+            return new AdvancedRecyclerViewItemDecoration(getResources().getInteger(R.integer.locations_columns_portrait), (int) getResources().getDimension(R.dimen.row_location_spacing));
     }
 
     @Override
@@ -164,11 +167,14 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
 
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        return new GridLayoutManager(MyApplication.getInstance(), 1);
+        return new GridLayoutManager(MyApplication.getInstance(), DeviceUtils.isLandscape(MyApplication.getInstance()) ? getResources().getInteger(R.integer.locations_columns_landscape) : getResources().getInteger(R.integer.locations_columns_portrait));
     }
 
     @Override
     public AdvancedRecyclerViewLayoutConfiguration getLayoutConfiguration() {
-        return new AdvancedRecyclerViewLayoutConfiguration(DeviceUtils.isLandscape(MyApplication.getInstance()) ? 2 : 1);
+        if (DeviceUtils.isLandscape(MyApplication.getInstance()))
+            return new AdvancedRecyclerViewLayoutConfiguration(getResources().getInteger(R.integer.locations_columns_landscape));
+        else
+            return new AdvancedRecyclerViewLayoutConfiguration(getResources().getInteger(R.integer.locations_columns_portrait));
     }
 }

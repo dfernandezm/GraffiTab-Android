@@ -68,7 +68,7 @@ public abstract class GenericNotificationsFragment extends GenericItemListFragme
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        return new AdvancedRecyclerViewItemDecoration(1, 0);
+        return new AdvancedRecyclerViewItemDecoration();
     }
 
     @Override

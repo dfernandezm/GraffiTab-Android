@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <dimen name="onboard_pager_margin_bottom">15dp</dimen>
@@ -293,6 +294,7 @@
     <dimen name="row_location_menu_button_size">30dp</dimen>
     <dimen name="row_location_menu_margin_left">10dp</dimen>
     <dimen name="row_location_menu_padding">5dp</dimen>
+    <dimen name="row_location_spacing">7dp</dimen>
 
     <dimen name="row_notification_left_user_unread_width">4dp</dimen>
     <dimen name="row_notification_left_user_margin_left">10dp</dimen>
@@ -347,6 +349,7 @@
     <dimen name="row_streamable_list_like_button_size">22dp</dimen>
     <dimen name="row_streamable_list_like_status_margin_left">7dp</dimen>
     <dimen name="row_streamable_list_like_status_text_size">14sp</dimen>
+    <dimen name="row_streamable_list_spacing">3dp</dimen>
 
     <dimen name="row_streamable_trending_metadata_padding">7dp</dimen>
     <dimen name="row_streamable_trending_avatar_size">28dp</dimen>
@@ -354,6 +357,11 @@
     <dimen name="row_streamable_trending_handle_margin_left">7dp</dimen>
     <dimen name="row_streamable_trending_handle_text_size">15sp</dimen>
     <dimen name="row_streamable_trending_username_text_size">15sp</dimen>
+    <dimen name="row_streamable_trending_spacing">7dp</dimen>
+
+    <dimen name="row_streamable_grid_spacing">1dp</dimen>
+
+    <dimen name="row_streamable_swimlane_spacing">1dp</dimen>
 
     <dimen name="row_suggestion_tag_padding">10dp</dimen>
     <dimen name="row_suggestion_tag_icon_size">15dp</dimen>
