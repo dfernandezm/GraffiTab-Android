@@ -56,4 +56,6 @@
     <dimen name="reside_menu_title_margin_left">17dp</dimen>
 
     <dimen name="row_streamable_trending_spacing">10dp</dimen>
+
+    <dimen name="row_location_height">200dp</dimen>
 </resources>
