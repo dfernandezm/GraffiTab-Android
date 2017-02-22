@@ -45,6 +45,7 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUnseenNotificationsResponse;
 import com.graffitabsdk.sdk.GTSDK;
+import com.instabug.library.Instabug;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
 
@@ -261,7 +262,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
                     @Override
                     public void run() {
-                        // TODO: Show shake prompt here.
+                        if (!Settings.settings.showedFeedbackOnboarding()) {
+                            if (Settings.settings.shouldShowFeedbackOnboarding()) {
+                                Settings.settings.setShowedFeedbackOnboarding(true);
+                                Instabug.showIntroMessage();
+                            }
+                        }
                     }
                 };
 
@@ -271,6 +277,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                         startActivity(new Intent(HomeActivity.this, AvatarPromptActivity.class));
                         Settings.settings.setShowedAvatarPrompt(true);
                     }
+                    else
+                        shakePromptSequence.run();
                 }
                 else
                     shakePromptSequence.run();
