@@ -153,6 +153,7 @@
     <dimen name="sign_up_terms_text_size">15sp</dimen>
     <dimen name="sign_up_terms_margin_top">8dp</dimen>
     <dimen name="sign_up_button_margin_top">25dp</dimen>
+    <dimen name="sign_up_button_text_size">15sp</dimen>
 
     <dimen name="streamable_details_top_display_padding_left">10dp</dimen>
     <dimen name="streamable_details_top_display_padding_right">10dp</dimen>

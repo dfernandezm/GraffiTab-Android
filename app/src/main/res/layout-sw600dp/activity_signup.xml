@@ -16,6 +16,10 @@
         android:layout_height="match_parent"
         android:fillViewport="true">
 
-        <include layout="@layout/activity_signup_include_form" />
+        <include
+            android:layout_width="@dimen/sign_up_form_width"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            layout="@layout/activity_signup_include_form" />
     </ScrollView>
 </RelativeLayout>

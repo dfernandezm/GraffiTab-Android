@@ -17,6 +17,7 @@ import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.OnOkHandler;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
+import com.graffitab.utils.device.DeviceUtils;
 import com.graffitab.utils.input.InputValidator;
 import com.graffitab.utils.input.KeyboardUtils;
 import com.graffitab.utils.text.TextUtils;
@@ -44,6 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
     @BindView(R.id.password) MaterialEditText password;
     @BindView(R.id.confirmPassword) MaterialEditText confirmPassword;
     @BindView(R.id.terms) TextView terms;
+    @BindView(R.id.closeBtn) View closeBtn;
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,6 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         setupBackgroundImage();
         setupTextFields();
+        setupButtons();
     }
 
     @OnClick(R.id.terms)
@@ -114,6 +117,10 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     // Setup
+
+    private void setupButtons() {
+        closeBtn.setVisibility(DeviceUtils.isTablet(this) ? View.GONE : View.VISIBLE);
+    }
 
     private void setupTextFields() {
         TextUtils.colorTextViewSubstring(terms, getString(R.string.sign_up_terms_of_use), Color.parseColor("#ddffffff"));
