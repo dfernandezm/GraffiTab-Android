@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 
+import com.graffitab.R;
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorSet;
 import com.nineoldandroids.animation.ObjectAnimator;
@@ -80,7 +81,7 @@ public class CustomResideMenu extends FrameLayout {
     private void initViews(Context context){
         LayoutInflater inflater = (LayoutInflater)
                 context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(com.special.ResideMenu.R.layout.residemenu, this);
+        inflater.inflate(R.layout.residemenu, this);
         scrollViewLeftMenu = (ScrollView) findViewById(com.special.ResideMenu.R.id.sv_left_menu);
         scrollViewRightMenu = (ScrollView) findViewById(com.special.ResideMenu.R.id.sv_right_menu);
         imageViewShadow = (ImageView) findViewById(com.special.ResideMenu.R.id.iv_shadow);

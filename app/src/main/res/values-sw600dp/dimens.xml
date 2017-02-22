@@ -48,4 +48,10 @@
     <dimen name="avatar_prompt_avatar_radius">60dp</dimen>
     <dimen name="avatar_prompt_action_button_text_size">17sp</dimen>
     <dimen name="avatar_prompt_later_button_text_size">17sp</dimen>
+
+    <dimen name="reside_menu_padding_top">18dp</dimen>
+    <dimen name="reside_menu_padding_bottom">18dp</dimen>
+    <dimen name="reside_menu_icon_size">40dp</dimen>
+    <dimen name="reside_menu_title_text_size">26sp</dimen>
+    <dimen name="reside_menu_title_margin_left">17dp</dimen>
 </resources>
