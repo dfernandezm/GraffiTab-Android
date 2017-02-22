@@ -23,6 +23,10 @@
     <string name="onboard_screen_5_title">Profile</string>
     <string name="onboard_screen_5_description">Everything you make is stored in your creative profile. Ready to get started?</string>
 
+    <!-- Avatar prompt -->
+    <string name="avatar_prompt_go">Say \"Cheese!\"</string>
+    <string name="avatar_prompt_later">I\'ll do it later</string>
+
     <!-- Login -->
     <string name="login_hint_username">Username</string>
     <string name="login_hint_password">Password</string>

@@ -218,6 +218,11 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeTransparentAction"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ui.activities.onboard.AvatarPromptActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:theme="@style/AppThemeTransparentActionAvatarPrompt"
+            android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

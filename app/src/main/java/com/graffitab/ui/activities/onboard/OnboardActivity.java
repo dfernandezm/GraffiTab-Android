@@ -117,7 +117,7 @@ public class OnboardActivity extends AppCompatActivity {
     }
 
     private void setupGoButton() {
-        goBtn.setVisibility(View.GONE);
+        goBtn.setVisibility(View.INVISIBLE);
     }
 
     private OnboardSlideFragment setupSlide(String title, String subtitle, int imageResId) {

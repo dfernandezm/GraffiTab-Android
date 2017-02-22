@@ -23,10 +23,12 @@ import com.github.clans.fab.FloatingActionButton;
 import com.graffitab.R;
 import com.graffitab.managers.GTGcmManager;
 import com.graffitab.permissions.GTPermissions;
+import com.graffitab.settings.Settings;
 import com.graffitab.ui.activities.home.me.locations.LocationsActivity;
 import com.graffitab.ui.activities.home.settings.SettingsActivity;
 import com.graffitab.ui.activities.home.streamables.explorer.ExplorerActivity;
 import com.graffitab.ui.activities.home.users.ProfileActivity;
+import com.graffitab.ui.activities.onboard.AvatarPromptActivity;
 import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.fragments.home.FeedFragment;
@@ -38,6 +40,7 @@ import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.animation.BounceInterpolator;
 import com.graffitab.utils.image.ImageUtils;
+import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.user.response.GTUnseenNotificationsResponse;
@@ -88,6 +91,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void run() {
                 performStartUpAnimations();
+                checkOnboardingSequence();
             }
         }, 1500);
     }
@@ -244,6 +248,34 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         BounceInterpolator interpolator = new BounceInterpolator(0.1, 20);
         myAnim.setInterpolator(interpolator);
         fab.startAnimation(myAnim);
+    }
+
+    private void checkOnboardingSequence() {
+        Utils.runWithDelay(new Runnable() {
+
+            @Override
+            public void run() {
+                GTUser user = GTSDK.getAccountManager().getLoggedInUser();
+
+                Runnable shakePromptSequence = new Runnable() {
+
+                    @Override
+                    public void run() {
+                        // TODO: Show shake prompt here.
+                    }
+                };
+
+                // Run sequence
+                if (!user.hasAvatar()) {
+                    if (!Settings.settings.showedAvatarPrompt()) {
+                        startActivity(new Intent(HomeActivity.this, AvatarPromptActivity.class));
+                        Settings.settings.setShowedAvatarPrompt(true);
+                    }
+                }
+                else
+                    shakePromptSequence.run();
+            }
+        }, 1000);
     }
 
     // GCM

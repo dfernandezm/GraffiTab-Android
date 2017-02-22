@@ -67,6 +67,11 @@
         <item name="actionBarStyle">@style/ActionBarTransparentStyle</item>
     </style>
 
+    <!-- Base application avatar prompt theme. -->
+    <style name="AppThemeTransparentActionAvatarPrompt" parent="AppThemeTransparentAction">
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
+    </style>
+
     <!-- ActionBar theme. -->
     <style name="ActionBarTransparentTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <item name="colorControlNormal">#fff</item>

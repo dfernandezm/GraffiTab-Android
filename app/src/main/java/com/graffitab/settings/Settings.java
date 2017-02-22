@@ -16,8 +16,17 @@ public class Settings {
     private static final String PREFERENCE_REMEMBER_ME = "PREFERENCE_REMEMBER_ME";
     private static final String PREFERENCE_SHOW_DRAWING_ASSISTANT = "PREFERENCE_SHOW_DRAWING_ASSISTANT";
     private static final String PREFERENCE_SHOWED_ONBOARDING = "PREFERENCE_SHOWED_ONBOARDING";
+    private static final String PREFERENCE_SHOWED_AVATAR_PROMPT = "PREFERENCE_SHOWED_AVATAR_PROMPT";
 
     public static final Settings settings = new Settings();
+
+    public boolean showedAvatarPrompt() {
+        return getPreference(PREFERENCE_SHOWED_AVATAR_PROMPT, false);
+    }
+
+    public void setShowedAvatarPrompt(boolean value) {
+        savePreference(value, PREFERENCE_SHOWED_AVATAR_PROMPT);
+    }
 
     public boolean showedOnboarding() {
         return getPreference(PREFERENCE_SHOWED_ONBOARDING, false);

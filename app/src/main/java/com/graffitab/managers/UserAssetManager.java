@@ -23,6 +23,10 @@ import com.graffitabsdk.sdk.GTSDK;
 public class UserAssetManager {
 
     public static void editAvatar(final Activity context, Bitmap bitmap) {
+        editAvatar(context, bitmap, null);
+    }
+
+    public static void editAvatar(final Activity context, Bitmap bitmap, final OnAssetUpdatedListener listener) {
         TaskDialog.getInstance().showProcessingDialog(context);
         GTSDK.getMeManager().editAvatar(bitmap, new GTResponseHandler<GTAssetResponse>() {
 
@@ -30,6 +34,9 @@ public class UserAssetManager {
             public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
                 TaskDialog.getInstance().hideDialog();
                 DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_avatar_success));
+
+                if (listener != null)
+                    listener.onAssetUpdated();
             }
 
             @Override
@@ -42,6 +49,10 @@ public class UserAssetManager {
     }
 
     public static void importAvatar(final Activity context, GTExternalProvider.GTExternalProviderType type) {
+        importAvatar(context, type, null);
+    }
+
+    public static void importAvatar(final Activity context, GTExternalProvider.GTExternalProviderType type, final OnAssetUpdatedListener listener) {
         TaskDialog.getInstance().showProcessingDialog(context);
         GTSDK.getMeManager().importAvatar(type, new GTResponseHandler<GTAssetResponse>() {
 
@@ -49,6 +60,9 @@ public class UserAssetManager {
             public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
                 TaskDialog.getInstance().hideDialog();
                 DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_avatar_success));
+
+                if (listener != null)
+                    listener.onAssetUpdated();
             }
 
             @Override
@@ -61,6 +75,10 @@ public class UserAssetManager {
     }
 
     public static void deleteAvatar(final Activity context) {
+        deleteAvatar(context, null);
+    }
+
+    public static void deleteAvatar(final Activity context, final OnAssetUpdatedListener listener) {
         DialogBuilder.buildYesNoDialog(context, context.getString(R.string.app_name), context.getString(R.string.other_confirm_delete), context.getString(R.string.other_delete), context.getString(R.string.other_cancel), new OnYesNoHandler() {
 
             @Override
@@ -72,6 +90,9 @@ public class UserAssetManager {
                     public void onSuccess(GTResponse<GTActionCompleteResult> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
                         DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_avatar_success));
+
+                        if (listener != null)
+                            listener.onAssetUpdated();
                     }
 
                     @Override
@@ -89,6 +110,10 @@ public class UserAssetManager {
     }
 
     public static void editCover(final Activity context, Bitmap bitmap) {
+        editCover(context, bitmap, null);
+    }
+
+    public static void editCover(final Activity context, Bitmap bitmap, final OnAssetUpdatedListener listener) {
         TaskDialog.getInstance().showProcessingDialog(context);
         GTSDK.getMeManager().editCover(bitmap, new GTResponseHandler<GTAssetResponse>() {
 
@@ -96,6 +121,9 @@ public class UserAssetManager {
             public void onSuccess(GTResponse<GTAssetResponse> gtResponse) {
                 TaskDialog.getInstance().hideDialog();
                 DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_cover_success));
+
+                if (listener != null)
+                    listener.onAssetUpdated();
             }
 
             @Override
@@ -108,6 +136,10 @@ public class UserAssetManager {
     }
 
     public static void deleteCover(final Activity context) {
+        deleteCover(context, null);
+    }
+
+    public static void deleteCover(final Activity context, final OnAssetUpdatedListener listener) {
         DialogBuilder.buildYesNoDialog(context, context.getString(R.string.app_name), context.getString(R.string.other_confirm_delete), context.getString(R.string.other_delete), context.getString(R.string.other_cancel), new OnYesNoHandler() {
 
             @Override
@@ -119,6 +151,9 @@ public class UserAssetManager {
                     public void onSuccess(GTResponse<GTActionCompleteResult> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
                         DialogBuilder.buildOKToast(context, context.getString(R.string.profile_change_cover_success));
+
+                        if (listener != null)
+                            listener.onAssetUpdated();
                     }
 
                     @Override
@@ -133,5 +168,9 @@ public class UserAssetManager {
             @Override
             public void onClickNo() {}
         });
+    }
+
+    public interface OnAssetUpdatedListener {
+        void onAssetUpdated();
     }
 }
