@@ -156,7 +156,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/firstName"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/edit_profile_left_margin"
                 android:background="@null"
@@ -171,7 +171,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/lastName"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/edit_profile_left_margin"
                 android:layout_marginTop="@dimen/edit_profile_input_box_margin_top"
@@ -187,7 +187,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/email"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/edit_profile_left_margin"
                 android:layout_marginTop="@dimen/edit_profile_input_box_margin_top"
@@ -203,7 +203,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/about"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/edit_profile_left_margin"
                 android:layout_marginTop="@dimen/edit_profile_input_box_margin_top"
@@ -219,7 +219,7 @@
 
             <com.rengwuxian.materialedittext.MaterialEditText
                 android:id="@+id/website"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/edit_profile_left_margin"
                 android:layout_marginTop="@dimen/edit_profile_input_box_margin_top"

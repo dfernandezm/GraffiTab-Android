@@ -36,7 +36,7 @@
 
             <TextView
                 android:id="@+id/nameField"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Georgi Christov"
                 android:textColor="#000"
@@ -45,7 +45,7 @@
 
             <TextView
                 android:id="@+id/usernameField"
-                android:layout_width="fill_parent"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/row_user_list_username_margin_top"
                 android:text="georgi"
