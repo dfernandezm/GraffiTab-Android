@@ -43,4 +43,9 @@
     <dimen name="sign_up_form_width">520dp</dimen>
     <dimen name="sign_up_title_text_size">32sp</dimen>
     <dimen name="sign_up_title_margin_top">50dp</dimen>
+
+    <dimen name="avatar_prompt_avatar_size">120dp</dimen>
+    <dimen name="avatar_prompt_avatar_radius">60dp</dimen>
+    <dimen name="avatar_prompt_action_button_text_size">17sp</dimen>
+    <dimen name="avatar_prompt_later_button_text_size">17sp</dimen>
 </resources>
