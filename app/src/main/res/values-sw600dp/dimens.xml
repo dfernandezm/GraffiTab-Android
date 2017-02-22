@@ -60,4 +60,8 @@
     <dimen name="row_location_height">200dp</dimen>
 
     <dimen name="change_password_form_width">450dp</dimen>
+
+    <dimen name="users_list_width">550dp</dimen>
+
+    <dimen name="notifications_list_width">550dp</dimen>
 </resources>

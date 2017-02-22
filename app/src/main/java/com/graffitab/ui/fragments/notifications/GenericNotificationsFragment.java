@@ -14,6 +14,7 @@ import com.graffitab.ui.fragments.GenericItemListFragment;
 import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
+import com.graffitab.utils.device.DeviceUtils;
 import com.graffitabsdk.model.GTNotification;
 
 /**
@@ -22,6 +23,21 @@ import com.graffitabsdk.model.GTNotification;
  * Copyright © GraffiTab Inc. 2016
  */
 public abstract class GenericNotificationsFragment extends GenericItemListFragment<GTNotification> implements OnNotificationClickListener {
+
+    @Override
+    public int getLayoutResId() {
+        if (DeviceUtils.isTablet(getActivity()))
+            return R.layout.fragment_refreshable_recyclerview_notifications;
+        return super.getLayoutResId();
+    }
+
+    @Override
+    public void setupCustomViews() {
+        super.setupCustomViews();
+
+        int padding = DeviceUtils.pxToDip(getContext(), 10);
+        getRecyclerView().setPadding(0, padding, 0, 0);
+    }
 
     @Override
     public int emptyViewImageResource() {

@@ -75,7 +75,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_refreshable_recyclerview, container, false);
+        View view = inflater.inflate(getLayoutResId(), container, false);
         ButterKnife.bind(this, view);
 
         setupRecyclerView();
@@ -124,6 +124,10 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     @Override
     public String emptyViewSubtitle() {
         return getString(R.string.other_empty_no_items_description);
+    }
+
+    public int getLayoutResId() {
+        return R.layout.fragment_refreshable_recyclerview;
     }
 
     public AdvancedRecyclerView getRecyclerView() {
