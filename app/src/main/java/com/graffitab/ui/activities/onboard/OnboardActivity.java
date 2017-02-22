@@ -2,6 +2,7 @@ package com.graffitab.ui.activities.onboard;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
@@ -17,6 +18,7 @@ import com.graffitab.ui.adapters.viewpagers.ViewPagerTabAdapter;
 import com.graffitab.ui.fragments.onboard.OnboardSlideFragment;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.animation.BounceInterpolator;
+import com.graffitab.utils.device.DeviceUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,7 +44,6 @@ public class OnboardActivity extends AppCompatActivity {
 
         ActivityUtils.enableFullScreen(this);
         ActivityUtils.hideActionBar(this);
-        ActivityUtils.setOrientation(this);
 
         setContentView(R.layout.activity_onboard);
         ButterKnife.bind(this);
@@ -50,6 +51,13 @@ public class OnboardActivity extends AppCompatActivity {
         setupBackgroundImage();
         setupViewPager();
         setupGoButton();
+        setupSlidesContent();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setupSlidesContent();
     }
 
     @Override
@@ -118,6 +126,20 @@ public class OnboardActivity extends AppCompatActivity {
 
     private void setupGoButton() {
         goBtn.setVisibility(View.INVISIBLE);
+    }
+
+    private void setupSlidesContent() {
+        int[] deviceScreens = {R.drawable.onboard_1, R.drawable.onboard_2, R.drawable.onboard_3, R.drawable.onboard_4, R.drawable.onboard_5};
+        int[] deviceScreensPad = {R.drawable.onboard_pad_1, R.drawable.onboard_pad_2, R.drawable.onboard_pad_3, R.drawable.onboard_pad_4, R.drawable.onboard_pad_5};
+        int[] deviceScreensPadL = {R.drawable.onboard_pad_l_1, R.drawable.onboard_pad_l_2, R.drawable.onboard_pad_l_3, R.drawable.onboard_pad_l_4, R.drawable.onboard_pad_l_5};
+
+        for (int i = 0; i < adapter.getCount(); i++) {
+            OnboardSlideFragment fragment = (OnboardSlideFragment) adapter.getItem(i);
+            if (DeviceUtils.isTablet(this))
+                fragment.setImageResId(DeviceUtils.isLandscape(this) ? deviceScreensPadL[i] : deviceScreensPad[i]);
+            else
+                fragment.setImageResId(deviceScreens[i]);
+        }
     }
 
     private OnboardSlideFragment setupSlide(String title, String subtitle, int imageResId) {

@@ -39,6 +39,7 @@ public class OnboardSlideFragment extends Fragment {
 
     public void setImageResId(int imageResId) {
         this.imageResId = imageResId;
+        loadSlideData();
     }
 
     @Nullable
@@ -55,6 +56,7 @@ public class OnboardSlideFragment extends Fragment {
     // Loading
 
     private void loadSlideData() {
+        if (imageView == null) return; // View hasn't been loaded yet.
         imageView.setImageResource(imageResId);
         titleView.setText(title);
         subtitleView.setText(subtitle);

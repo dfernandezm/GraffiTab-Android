@@ -217,7 +217,8 @@
             android:name=".ui.activities.onboard.OnboardActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeTransparentAction"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.onboard.AvatarPromptActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
