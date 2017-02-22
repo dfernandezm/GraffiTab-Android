@@ -15,4 +15,18 @@
     <dimen name="onboard_slide_subtitle_text_size">20sp</dimen>
     <dimen name="onboard_slide_image_margin_top">40dp</dimen>
 
+    <dimen name="login_logo_height">55dp</dimen>
+    <dimen name="login_logo_margin_bottom">37dp</dimen>
+    <dimen name="login_form_width">450dp</dimen>
+    <dimen name="login_sign_up_text_size">17sp</dimen>
+    <dimen name="login_facebook_button_text_size">17sp</dimen>
+    <dimen name="login_login_button_text_size">17sp</dimen>
+    <dimen name="login_or_text_size">15sp</dimen>
+    <dimen name="login_username_text_size">18sp</dimen>
+    <dimen name="login_password_text_size">18sp</dimen>
+    <dimen name="login_forgot_password_text_size">16sp</dimen>
+    <dimen name="login_avatar_size">120dp</dimen>
+    <dimen name="login_avatar_radius">60dp</dimen>
+    <dimen name="login_local_button_text_size">17sp</dimen>
+    <dimen name="login_sign_out_button_text_size">17sp</dimen>
 </resources>
