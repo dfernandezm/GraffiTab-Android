@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <integer name="streamables_trending_columns_portrait">3</integer>
+    <integer name="streamables_trending_columns_landscape">4</integer>
+
 </resources>

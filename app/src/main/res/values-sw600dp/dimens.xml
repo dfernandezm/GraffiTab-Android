@@ -54,4 +54,6 @@
     <dimen name="reside_menu_icon_size">40dp</dimen>
     <dimen name="reside_menu_title_text_size">26sp</dimen>
     <dimen name="reside_menu_title_margin_left">17dp</dimen>
+
+    <dimen name="row_streamable_trending_spacing">10dp</dimen>
 </resources>
