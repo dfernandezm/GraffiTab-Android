@@ -69,5 +69,5 @@
     <dimen name="streamable_details_avatar_radius">20dp</dimen>
     <dimen name="streamable_details_username_margin_left">10dp</dimen>
     <dimen name="streamable_details_username_text_size">18sp</dimen>
-    <dimen name="streamable_details_likes_text_size">18sp</dimen>
+    <dimen name="streamable_details_likes_text_size">19sp</dimen>
 </resources>
