@@ -124,7 +124,7 @@
     <dimen name="reset_password_close_button_size">40dp</dimen>
     <dimen name="reset_password_close_button_margin_right">5dp</dimen>
     <dimen name="reset_password_close_button_margin_top">5dp</dimen>
-    <dimen name="reset_password_title_layout_margin_top">20dp</dimen>
+    <dimen name="reset_password_title_layout_margin_bottom">20dp</dimen>
     <dimen name="reset_password_title_layout_margin_left">20dp</dimen>
     <dimen name="reset_password_title_layout_margin_right">20dp</dimen>
     <dimen name="reset_password_title_margin_bottom">15dp</dimen>
@@ -413,7 +413,7 @@
     <dimen name="avatar_prompt_avatar_radius">50dp</dimen>
     <dimen name="avatar_prompt_name_margin_top">20dp</dimen>
     <dimen name="avatar_prompt_name_text_size">20sp</dimen>
-    <dimen name="avatar_prompt_action_button_margin_top">80dp</dimen>
+    <dimen name="avatar_prompt_action_button_margin_top">70dp</dimen>
     <dimen name="avatar_prompt_action_button_padding_left">20dp</dimen>
     <dimen name="avatar_prompt_action_button_padding_right">20dp</dimen>
     <dimen name="avatar_prompt_action_button_text_size">15sp</dimen>
