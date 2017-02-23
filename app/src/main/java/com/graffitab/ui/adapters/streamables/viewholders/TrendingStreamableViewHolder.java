@@ -42,7 +42,10 @@ public class TrendingStreamableViewHolder extends StreamableViewHolder {
 
     @Override
     public void loadStreamableImage() {
-        streamableView.loadImage(item.asset.link);
+        if (DeviceUtils.isTablet(streamableView.getContext()))
+            streamableView.loadImage(item.asset.thumbnail);
+        else
+            streamableView.loadImage(item.asset.link);
     }
 
     public void loadAvatar() {
