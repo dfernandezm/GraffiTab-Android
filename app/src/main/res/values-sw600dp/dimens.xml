@@ -59,6 +59,9 @@
 
     <dimen name="row_streamable_list_height">450dp</dimen>
     <dimen name="row_streamable_list_width">500dp</dimen>
+    <dimen name="row_streamable_list_likes_text_size">16sp</dimen>
+    <dimen name="row_streamable_list_like_status_text_size">15sp</dimen>
+    <dimen name="row_streamable_list_date_text_size">12sp</dimen>
 
     <dimen name="row_location_height">200dp</dimen>
 
@@ -73,4 +76,19 @@
     <dimen name="streamable_details_username_margin_left">10dp</dimen>
     <dimen name="streamable_details_username_text_size">18sp</dimen>
     <dimen name="streamable_details_likers_text_size">16sp</dimen>
+
+    <dimen name="profile_header_height">370dp</dimen>
+    <dimen name="profile_avatar_size">150dp</dimen>
+    <dimen name="profile_name_margin_left">15dp</dimen>
+    <dimen name="profile_name_text_size">28sp</dimen>
+    <dimen name="profile_username_text_size">18sp</dimen>
+    <dimen name="profile_metadata_panel_margin_top">-67dp</dimen>
+    <dimen name="profile_name_placeholder_height">0dp</dimen>
+    <dimen name="profile_stats_item_text_size">30sp</dimen>
+    <dimen name="profile_stats_item_title_text_size">15sp</dimen>
+    <dimen name="profile_stats_follow_button_padding_top">3dp</dimen>
+    <dimen name="profile_stats_follow_button_height">37dp</dimen>
+    <dimen name="profile_about_text_size">24sp</dimen>
+    <dimen name="profile_website_text_size">17sp</dimen>
+    <dimen name="profile_toolbar_height">27dp</dimen>
 </resources>

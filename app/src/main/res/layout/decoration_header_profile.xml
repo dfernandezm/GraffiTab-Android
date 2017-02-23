@@ -258,7 +258,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onClickList"
                 android:src="@drawable/ic_menu_black_24dp"
-                android:tint="@color/colorPrimary" />
+                android:tint="@color/colorPrimary"
+                android:scaleType="fitCenter"/>
 
             <View
                 android:layout_width="@dimen/profile_toolbar_item_separator_width"
@@ -272,7 +273,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onClickGrid"
                 android:src="@drawable/ic_apps_black_24dp"
-                android:tint="@color/colorPrimary" />
+                android:tint="@color/colorPrimary"
+                android:scaleType="fitCenter"/>
 
             <View
                 android:layout_width="@dimen/profile_toolbar_item_separator_width"
@@ -286,7 +288,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onClickLikes"
                 android:src="@drawable/ic_thumb_up_black_24dp"
-                android:tint="@color/colorPrimary" />
+                android:tint="@color/colorPrimary"
+                android:scaleType="fitCenter"/>
 
             <View
                 android:layout_width="@dimen/profile_toolbar_item_separator_width"
@@ -300,7 +303,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:onClick="onClickMentions"
                 android:src="@drawable/ic_assignment_ind_black_24dp"
-                android:tint="@color/colorPrimary" />
+                android:tint="@color/colorPrimary"
+                android:scaleType="fitCenter"/>
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
