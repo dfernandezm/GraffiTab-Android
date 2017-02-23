@@ -1,6 +1,5 @@
 package com.graffitab.ui.fragments.users;
 
-import com.graffitab.R;
 import com.graffitab.utils.device.DeviceUtils;
 
 /**
@@ -17,17 +16,12 @@ public abstract class ListUsersFragment extends GenericUsersFragment {
     }
 
     @Override
-    public int getLayoutResId() {
-        if (DeviceUtils.isTablet(getActivity()))
-            return R.layout.fragment_refreshable_recyclerview_users;
-        return super.getLayoutResId();
-    }
-
-    @Override
     public void setupCustomViews() {
         super.setupCustomViews();
 
-        int padding = DeviceUtils.pxToDip(getContext(), 10);
-        getRecyclerView().setPadding(0, padding, 0, 0);
+        if (DeviceUtils.isTablet(getActivity())) {
+            int padding = DeviceUtils.pxToDip(getContext(), 10);
+            getRecyclerView().setPadding(0, padding, 0, 0);
+        }
     }
 }

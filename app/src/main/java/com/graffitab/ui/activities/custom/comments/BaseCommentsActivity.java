@@ -45,7 +45,7 @@ public abstract class BaseCommentsActivity extends AppCompatActivity {
     }
 
     public int getLayoutResId() {
-        return R.layout.activity_fragment_holder;
+        return R.layout.activity_dialog_fragment_holder;
     }
 
     public GenericCommentsFragment getContent() {

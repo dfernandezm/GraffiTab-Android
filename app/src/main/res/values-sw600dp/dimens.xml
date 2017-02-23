@@ -57,6 +57,9 @@
 
     <dimen name="row_streamable_trending_spacing">10dp</dimen>
 
+    <dimen name="row_streamable_list_height">450dp</dimen>
+    <dimen name="row_streamable_list_width">500dp</dimen>
+
     <dimen name="row_location_height">200dp</dimen>
 
     <dimen name="change_password_form_width">450dp</dimen>

@@ -40,11 +40,6 @@ public class CommentsActivity extends BaseCommentsActivity {
     }
 
     @Override
-    public int getLayoutResId() {
-        return R.layout.activity_dialog_fragment_holder;
-    }
-
-    @Override
     protected void onPause() {
         KeyboardUtils.hideKeyboard(this);
         super.onPause();

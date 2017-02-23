@@ -23,15 +23,12 @@
         <item name="actionBarStyle">@style/ActionBarStyle</item>
     </style>
 
-    <!-- Activity Dialog theme. -->
-    <style name="DialogTheme" parent="AppTheme">
-
+    <style name="TabletDialogTheme" parent="AppTheme">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">true</item>
     </style>
 
-    <!-- Activity Dialog theme. -->
-    <style name="AllTimeDialogTheme" parent="AppThemeDialog">
-
-    </style>
+    <style name="AllTimeDialogTheme" parent="AppThemeDialog" />
 
     <!-- ActionBar theme. -->
     <style name="ActionBarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
@@ -90,4 +87,28 @@
         <item name="android:textColorPrimary">@color/colorLightBlack</item>
         <item name="android:textColorSecondary">#a0a0a0</item>
     </style>
+
+    <!-- Custom view styles. -->
+    <style name="RowStreamableListWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="SignUpFormWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="ChangePasswordFormWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="ResetPasswordFormWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="LoginFormWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="RowNotificationWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    <style name="RowUserListWidth">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
 </resources>

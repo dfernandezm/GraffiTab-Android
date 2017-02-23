@@ -25,18 +25,13 @@ import com.graffitabsdk.model.GTNotification;
 public abstract class GenericNotificationsFragment extends GenericItemListFragment<GTNotification> implements OnNotificationClickListener {
 
     @Override
-    public int getLayoutResId() {
-        if (DeviceUtils.isTablet(getActivity()))
-            return R.layout.fragment_refreshable_recyclerview_notifications;
-        return super.getLayoutResId();
-    }
-
-    @Override
     public void setupCustomViews() {
         super.setupCustomViews();
 
-        int padding = DeviceUtils.pxToDip(getContext(), 10);
-        getRecyclerView().setPadding(0, padding, 0, 0);
+        if (DeviceUtils.isTablet(getActivity())) {
+            int padding = DeviceUtils.pxToDip(getContext(), 10);
+            getRecyclerView().setPadding(0, padding, 0, 0);
+        }
     }
 
     @Override

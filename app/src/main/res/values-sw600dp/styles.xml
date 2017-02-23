@@ -1,0 +1,28 @@
+<resources>
+
+    <style name="TabletDialogTheme" parent="AppThemeDialog" />
+
+    <!-- Custom view styles. -->
+    <style name="RowStreamableListWidth">
+        <item name="android:layout_width">@dimen/row_streamable_list_width</item>
+    </style>
+    <style name="SignUpFormWidth">
+        <item name="android:layout_width">@dimen/sign_up_form_width</item>
+    </style>
+    <style name="ChangePasswordFormWidth">
+        <item name="android:layout_width">@dimen/change_password_form_width</item>
+    </style>
+    <style name="ResetPasswordFormWidth">
+        <item name="android:layout_width">@dimen/reset_password_form_width</item>
+    </style>
+    <style name="LoginFormWidth">
+        <item name="android:layout_width">@dimen/login_form_width</item>
+    </style>
+    <style name="RowNotificationWidth">
+        <item name="android:layout_width">@dimen/notifications_list_width</item>
+    </style>
+    <style name="RowUserListWidth">
+        <item name="android:layout_width">@dimen/users_list_width</item>
+    </style>
+
+</resources>
