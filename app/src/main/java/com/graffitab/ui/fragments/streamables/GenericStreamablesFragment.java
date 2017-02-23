@@ -31,7 +31,6 @@ import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.streamable.response.GTStreamableResponse;
 import com.graffitabsdk.sdk.GTSDK;
-import com.graffitabsdk.sdk.events.comments.GTCommentDeletedEvent;
 import com.graffitabsdk.sdk.events.comments.GTCommentPostedEvent;
 import com.graffitabsdk.sdk.events.streamables.GTStreamableLikedEvent;
 import com.graffitabsdk.sdk.events.streamables.GTStreamableUnlikedEvent;
@@ -97,19 +96,6 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                 }
             }
 
-            @Subscribe
-            public void commentDeletedEvent(GTCommentDeletedEvent event) {
-                if (getRecyclerView() == null || getRecyclerView().getRecyclerView() == null) return;
-                for (int i = 0; i < items.size(); i++) {
-                    GTStreamable streamable = items.get(i);
-                    if (streamable.id == event.getStreamableId()) {
-                        streamable.removeFromCommentsCount();
-                        adapter.setItem(streamable, i, getRecyclerView().getRecyclerView());
-                        break;
-                    }
-                }
-            }
-
             private void refreshStreamablesAfterUserProfileChange(GTUser user) {
                 List<Integer> indexes = indexesOfStreamablesForOwner(user);
                 if (indexes.size() >= 0) {
@@ -138,7 +124,18 @@ public abstract class GenericStreamablesFragment extends GenericItemListFragment
                 return indexes;
             }
         };
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
         GTSDK.registerEventListener(eventListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GTSDK.unregisterEventListener(eventListener);
     }
 
     @Override

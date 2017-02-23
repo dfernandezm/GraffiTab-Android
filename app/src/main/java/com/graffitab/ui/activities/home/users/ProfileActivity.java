@@ -76,7 +76,6 @@ public class ProfileActivity extends CameraUtilsActivity {
 
         setupTopBar();
         setupContent();
-        setupEventListeners();
 
         Utils.runWithDelay(new Runnable() {
 
@@ -85,6 +84,18 @@ public class ProfileActivity extends CameraUtilsActivity {
                 reloadUserProfile();
             }
         }, 300);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        GTSDK.registerEventListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GTSDK.unregisterEventListener(this);
     }
 
     @Override
@@ -260,17 +271,47 @@ public class ProfileActivity extends CameraUtilsActivity {
 
         if (pickingCoverImage) { // Cover
             if (bitmap != null)
-                UserAssetManager.editCover(this, bitmap);
+                UserAssetManager.editCover(this, bitmap, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterAssetsChange();
+                    }
+                });
             else
-                UserAssetManager.deleteCover(this);
+                UserAssetManager.deleteCover(this, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterAssetsChange();
+                    }
+                });
         }
         else { // Avatar
             if (actionId == R.id.action_facebook_import)
-                UserAssetManager.importAvatar(this, GTExternalProvider.GTExternalProviderType.FACEBOOK);
+                UserAssetManager.importAvatar(this, GTExternalProvider.GTExternalProviderType.FACEBOOK, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterAssetsChange();
+                    }
+                });
             else if (bitmap != null)
-                UserAssetManager.editAvatar(this, bitmap);
+                UserAssetManager.editAvatar(this, bitmap, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterAssetsChange();
+                    }
+                });
             else
-                UserAssetManager.deleteAvatar(this);
+                UserAssetManager.deleteAvatar(this, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterAssetsChange();
+                    }
+                });
         }
     }
 
@@ -328,9 +369,5 @@ public class ProfileActivity extends CameraUtilsActivity {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.content, content);
         transaction.commit();
-    }
-
-    private void setupEventListeners() {
-        GTSDK.registerEventListener(this);
     }
 }

@@ -45,7 +45,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
     @BindView(R.id.advancedRecyclerView) public AdvancedRecyclerView advancedRecyclerView;
 
     public AdvancedEndlessRecyclerViewAdapter adapter;
-    public List<T> items = new ArrayList();
+    public List<T> items = new ArrayList<>();
     public boolean isDownloading = false;
     public boolean canLoadMore = true;
     public int offset = 0;

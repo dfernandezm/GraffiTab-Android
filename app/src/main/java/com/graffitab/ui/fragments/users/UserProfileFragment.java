@@ -283,6 +283,15 @@ public class UserProfileFragment extends ListStreamablesFragment {
     public void setUser(GTUser user) {
         this.user = user;
         if (pagerAdapter != null) pagerAdapter.setUser(user);
+
+        if (adapter != null) {
+            // Refresh the streamables' user.
+            for (GTStreamable streamable : items) {
+                if (streamable.user.equals(user))
+                    streamable.user = user;
+            }
+            adapter.notifyDataSetChanged();
+        }
     }
 
     // Setup

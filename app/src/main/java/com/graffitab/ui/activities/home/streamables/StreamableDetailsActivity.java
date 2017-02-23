@@ -45,6 +45,7 @@ import com.graffitabsdk.sdk.events.comments.GTCommentDeletedEvent;
 import com.graffitabsdk.sdk.events.comments.GTCommentPostedEvent;
 import com.graffitabsdk.sdk.events.streamables.GTStreamableLikedEvent;
 import com.graffitabsdk.sdk.events.streamables.GTStreamableUnlikedEvent;
+import com.graffitabsdk.sdk.events.users.GTUserAvatarUpdatedEvent;
 import com.graffitabsdk.sdk.events.users.GTUserProfileUpdatedEvent;
 import com.like.LikeButton;
 import com.like.OnLikeListener;
@@ -129,7 +130,6 @@ public class StreamableDetailsActivity extends AppCompatActivity {
         ButterKnife.bind(this);
 
         setupImageViews();
-        setupEventListeners();
         setupDisplays();
         setupButtons();
 
@@ -144,6 +144,18 @@ public class StreamableDetailsActivity extends AppCompatActivity {
                 refreshStreamable();
             }
         }, 1000);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        GTSDK.registerEventListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GTSDK.unregisterEventListener(this);
     }
 
     @Override
@@ -226,12 +238,15 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     // Events
 
     @Subscribe
+    public void userAvatarUpdatedEvent(GTUserAvatarUpdatedEvent event) {
+        if (avatar == null) return;
+        refreshUserAfterProfileUpdate(GTSDK.getAccountManager().getLoggedInUser());
+    }
+
+    @Subscribe
     public void userProfileUpdatedEvent(GTUserProfileUpdatedEvent event) {
         if (avatar == null) return;
-        if (streamable.user.equals(event.getUser())) {
-            streamable.user = event.getUser();
-            loadUserAndStreamableData();
-        }
+        refreshUserAfterProfileUpdate(event.getUser());
     }
 
     @Subscribe
@@ -258,9 +273,15 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     @Subscribe
     public void commentDeletedEvent(GTCommentDeletedEvent event) {
         if (avatar == null) return;
-        if (streamable.id == event.getStreamableId()) {
-            streamable.removeFromCommentsCount();
+        if (streamable.id == event.getStreamableId())
+            refreshStreamable();
+    }
+
+    private void refreshUserAfterProfileUpdate(GTUser user) {
+        if (streamable.user.equals(user)) {
+            streamable.user = user;
             loadUserAndStreamableData();
+            loadAvatar();
         }
     }
 
@@ -547,10 +568,6 @@ public class StreamableDetailsActivity extends AppCompatActivity {
                 loadUserAndStreamableData();
             }
         });
-    }
-
-    private void setupEventListeners() {
-        GTSDK.registerEventListener(this);
     }
 
     private void setupDisplays() {

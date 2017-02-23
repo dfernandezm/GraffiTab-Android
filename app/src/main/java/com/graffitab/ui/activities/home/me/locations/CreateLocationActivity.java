@@ -239,7 +239,7 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
                 if (searchField == null) return; // View is destroyed.
 
                 TaskDialog.getInstance().hideDialog();
-                DialogBuilder.buildOKDialog(CreateLocationActivity.this, getString(R.string.app_name), getString(R.string.create_location_no_matches));
+                DialogBuilder.buildOKToast(CreateLocationActivity.this, getString(R.string.create_location_no_matches));
             }
         });
     }
@@ -378,7 +378,7 @@ public class CreateLocationActivity extends AppCompatActivity implements OnMapRe
             @Override
             public void onLocationNotFound() {
                 TaskDialog.getInstance().hideDialog();
-                DialogBuilder.buildOKDialog(CreateLocationActivity.this, getString(R.string.app_name), getString(R.string.create_location_no_matches));
+                DialogBuilder.buildOKToast(CreateLocationActivity.this, getString(R.string.create_location_no_matches));
             }
         });
     }

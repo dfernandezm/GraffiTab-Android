@@ -106,7 +106,18 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
                 adapter.setItems(items, positions, getRecyclerView().getRecyclerView());
             }
         };
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
         GTSDK.registerEventListener(eventListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GTSDK.unregisterEventListener(eventListener);
     }
 
     @Override

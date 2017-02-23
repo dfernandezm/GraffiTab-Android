@@ -139,7 +139,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
                     @Override
                     public void onSuccess(GTResponse<GTLocationResponse> gtResponse) {
                         TaskDialog.getInstance().hideDialog();
-                        DialogBuilder.buildOKDialog(ExplorerActivity.this, getString(R.string.app_name), getString(R.string.create_location_success));
+                        DialogBuilder.buildOKToast(ExplorerActivity.this, getString(R.string.create_location_success));
                     }
 
                     @Override
@@ -153,7 +153,7 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
             @Override
             public void onAddressNotFound() {
                 TaskDialog.getInstance().hideDialog();
-                DialogBuilder.buildOKDialog(ExplorerActivity.this, getString(R.string.app_name), getString(R.string.create_location_no_matches));
+                DialogBuilder.buildOKToast(ExplorerActivity.this, getString(R.string.create_location_no_matches));
             }
         });
     }

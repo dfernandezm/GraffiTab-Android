@@ -65,9 +65,20 @@ public class EditProfileActivity extends CameraUtilsActivity {
         ButterKnife.bind(this);
 
         setupTopBar();
-        setupEventListeners();
 
         loadUserData();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        GTSDK.registerEventListener(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GTSDK.unregisterEventListener(this);
     }
 
     @Override
@@ -146,17 +157,47 @@ public class EditProfileActivity extends CameraUtilsActivity {
 
         if (pickingCoverImage) { // Cover
             if (bitmap != null)
-                UserAssetManager.editCover(this, bitmap);
+                UserAssetManager.editCover(this, bitmap, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterProfileChange();
+                    }
+                });
             else
-                UserAssetManager.deleteCover(this);
+                UserAssetManager.deleteCover(this, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterProfileChange();
+                    }
+                });
         }
         else { // Avatar
             if (actionId == R.id.action_facebook_import)
-                UserAssetManager.importAvatar(this, GTExternalProvider.GTExternalProviderType.FACEBOOK);
+                UserAssetManager.importAvatar(this, GTExternalProvider.GTExternalProviderType.FACEBOOK, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterProfileChange();
+                    }
+                });
             else if (bitmap != null)
-                UserAssetManager.editAvatar(this, bitmap);
+                UserAssetManager.editAvatar(this, bitmap, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterProfileChange();
+                    }
+                });
             else
-                UserAssetManager.deleteAvatar(this);
+                UserAssetManager.deleteAvatar(this, new UserAssetManager.OnAssetUpdatedListener() {
+
+                    @Override
+                    public void onAssetUpdated() {
+                        refreshUserAfterProfileChange();
+                    }
+                });
         }
     }
 
@@ -207,7 +248,7 @@ public class EditProfileActivity extends CameraUtilsActivity {
                     me = GTSDK.getAccountManager().getLoggedInUser();
                     loadUserData();
 
-                    DialogBuilder.buildOKDialog(EditProfileActivity.this, getString(R.string.app_name), getString(R.string.edit_profile_success));
+                    DialogBuilder.buildOKToast(EditProfileActivity.this, getString(R.string.edit_profile_success));
                 }
 
                 @Override
@@ -251,9 +292,5 @@ public class EditProfileActivity extends CameraUtilsActivity {
     private void setupTopBar() {
         getSupportActionBar().setTitle(getString(R.string.edit_profile));
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    }
-
-    private void setupEventListeners() {
-        GTSDK.registerEventListener(this);
     }
 }

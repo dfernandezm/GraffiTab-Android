@@ -64,7 +64,18 @@ public abstract class GenericLocationsFragment extends GenericItemListFragment<G
                 }
             }
         };
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
         GTSDK.registerEventListener(eventListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GTSDK.unregisterEventListener(eventListener);
     }
 
     @Override

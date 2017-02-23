@@ -76,7 +76,18 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
                 }
             }
         };
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
         GTSDK.registerEventListener(eventListener);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GTSDK.unregisterEventListener(eventListener);
     }
 
     @Override
