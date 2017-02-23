@@ -166,7 +166,7 @@
     <dimen name="streamable_details_close_button_size">40dp</dimen>
     <dimen name="streamable_details_close_button_margin_right">-5dp</dimen>
     <dimen name="streamable_details_bottom_display_padding">10dp</dimen>
-    <dimen name="streamable_details_likers_margin_bottom">12dp</dimen>
+    <dimen name="streamable_details_likers_padding_bottom">12dp</dimen>
     <dimen name="streamable_details_likers_margin_left">2dp</dimen>
     <dimen name="streamable_details_likers_text_size">14sp</dimen>
     <dimen name="streamable_details_toolbar_margin_top">10dp</dimen>

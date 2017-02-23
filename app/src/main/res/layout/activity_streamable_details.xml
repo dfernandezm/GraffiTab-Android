@@ -77,7 +77,7 @@
             android:id="@+id/likersField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/streamable_details_likers_margin_bottom"
+            android:paddingBottom="@dimen/streamable_details_likers_padding_bottom"
             android:layout_marginLeft="@dimen/streamable_details_likers_margin_left"
             android:clickable="true"
             android:textColor="#fff"

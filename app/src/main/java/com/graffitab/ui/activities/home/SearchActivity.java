@@ -65,6 +65,8 @@ public class SearchActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             searchRequest = extras.getString(Constants.EXTRA_SEARCH_REQUEST);
+            searchRequest = searchRequest.replace("@", "");
+            searchRequest = searchRequest.replace("#", "");
         }
 
         setupTopBar();
@@ -129,6 +131,9 @@ public class SearchActivity extends AppCompatActivity {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     KeyboardUtils.hideKeyboard(SearchActivity.this);
                     String query = textView.getText().toString().trim();
+                    query = query.replace("@", "");
+                    query = query.replace("#", "");
+
                     searchUsersFragment.search(query);
                     searchGraffitiFragment.search(query);
                 }
