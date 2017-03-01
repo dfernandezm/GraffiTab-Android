@@ -8,7 +8,7 @@ import com.graffitab.managers.GTGcmManager;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class GcmIdListenerService extends InstanceIDListenerService {
+public class GcmIDListenerService extends InstanceIDListenerService {
 
     @Override
     public void onTokenRefresh() {
