@@ -22,8 +22,8 @@ android {
 
 def facebookVersion = "4.13.2"
 def junitVersion = "4.12"
-def androidSupportLibraryVersion = "25.1.1"
-def playServicesVersion = "10.0.1"
+def androidSupportLibraryVersion = "25.2.0"
+def playServicesVersion = "10.2.0"
 def butterKnifeVersion = "8.4.0"
 def materialEditTextVersion = "2.1.4"
 def reSideMenuVersion = "1.6+"
