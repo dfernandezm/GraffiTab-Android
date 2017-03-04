@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -107,6 +108,7 @@ public class LinkedAccountsActivity extends FacebookUtilsActivity {
 
                 @Override
                 public void onError(FacebookException exception) {
+                    Log.e(getClass().getSimpleName(), "Failed to login with Facebook", exception);
                     DialogBuilder.buildOKToast(LinkedAccountsActivity.this, getString(R.string.other_facebook_error));
                 }
             });
