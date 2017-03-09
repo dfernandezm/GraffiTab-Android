@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_height="wrap_content"
+        android:background="#fff"
+        android:layout_gravity="center_horizontal"
+        style="@style/RowNotificationWidth">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:orientation="horizontal">
+
+            <include layout="@layout/row_activity_include_left_user" />
+            <include layout="@layout/row_activity_include_recyclerview" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

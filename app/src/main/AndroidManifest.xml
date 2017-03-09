@@ -191,6 +191,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:windowSoftInputMode="stateHidden" />
         <activity
+                android:name=".ui.activities.home.users.staticcontainers.StaticUsersActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:windowSoftInputMode="stateHidden" />
+        <activity
             android:name=".ui.activities.home.streamables.explorer.staticcontainers.StaticClusterActivity"
             android:theme="@style/AllTimeDialogTheme"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -224,6 +228,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeTransparentActionAvatarPrompt"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+                android:name=".ui.activities.home.me.FollowersActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>

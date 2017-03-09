@@ -27,14 +27,14 @@ public class SearchGraffitiFragment extends GridStreamablesFragment {
     @Override
     public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
         GTQueryParameters parameters = new GTQueryParameters();
-        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
-        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+        parameters.addParameter(GTQueryParameters.GTParameterType.offset, offset);
+        parameters.addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS);
 
         if (searchQuery == null) // Load default search results.
             GTSDK.getStreamableManager().getPopular(isFirstLoad, parameters, handler);
         else {
             getRecyclerView().beginRefreshing();
-            parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, searchQuery);
+            parameters.addParameter(GTQueryParameters.GTParameterType.query, searchQuery);
             GTSDK.getStreamableManager().search(parameters, handler);
         }
     }

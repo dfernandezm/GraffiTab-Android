@@ -8,7 +8,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,25 +29,22 @@ import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClu
 import com.graffitab.ui.activities.home.streamables.explorer.mapcomponents.GTClusterRenderer;
 import com.graffitab.ui.activities.home.streamables.explorer.staticcontainers.StaticClusterActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
-import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.ui.dialog.OnYesNoHandler;
+import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.activity.ActivityUtils;
 import com.graffitab.utils.api.ApiUtils;
-import com.graffitabsdk.sdk.GTSDK;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
 import com.graffitabsdk.network.service.location.response.GTLocationResponse;
 import com.graffitabsdk.network.service.streamable.response.GTListStreamablesResponse;
+import com.graffitabsdk.sdk.GTSDK;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 import static com.graffitab.R.id.map;
 import static com.graffitab.ui.activities.home.me.locations.CreateLocationActivity.findAddressForLocation;
@@ -164,9 +162,9 @@ public class ExplorerActivity extends AppCompatActivity implements OnMapReadyCal
         Log.i(getClass().getSimpleName(), "Refreshing map...");
         LatLng center = mMap.getCameraPosition().target;
         GTQueryParameters parameters = new GTQueryParameters();
-        parameters.addParameter(GTQueryParameters.GTParameterType.LATITUDE, center.latitude + "");
-        parameters.addParameter(GTQueryParameters.GTParameterType.LONGITUDE, center.longitude + "");
-        parameters.addParameter(GTQueryParameters.GTParameterType.RADIUS, AppConfig.configuration.locationRadius + "");
+        parameters.addParameter(GTQueryParameters.GTParameterType.latitude, center.latitude + "");
+        parameters.addParameter(GTQueryParameters.GTParameterType.longitude, center.longitude + "");
+        parameters.addParameter(GTQueryParameters.GTParameterType.radius, AppConfig.configuration.locationRadius + "");
         GTSDK.getStreamableManager().searchLocation(parameters, new GTResponseHandler<GTListStreamablesResponse>() {
 
             @Override

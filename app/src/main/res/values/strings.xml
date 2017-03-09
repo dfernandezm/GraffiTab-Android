@@ -187,6 +187,8 @@
     <!-- Static Streamables -->
     <string name="static_streamables_count">%1$d graffiti</string>
 
+    <string name="static_users_count">%1$d people</string>
+
     <!-- Cluster -->
     <string name="cluster_streamables_count">%1$d discovered</string>
 
@@ -239,6 +241,18 @@
     <string name="streamable_details_likers_single">Liked by %1$s and 1 other</string>
     <string name="streamable_details_liker_me">Liked by You</string>
     <string name="streamable_details_liker">Liked by %1$s</string>
+
+    <!-- Followers activity -->
+    <string name="followers_activity_empty_title">No activity</string>
+    <string name="followers_activity_empty_subtitle">Looks like we don\'t have any activity to display yet. Please come back again.</string>
+    <string name="followers_activity_like_one">%1$s liked a graffiti.</string>
+    <string name="followers_activity_like_multiple">%1$s liked %2$d graffiti</string>
+    <string name="followers_activity_follow_one">%1$s started following %2$s</string>
+    <string name="followers_activity_follow_multiple">%1$s started following %2$d people</string>
+    <string name="followers_activity_comment_single">%1$s commented on a graffiti</string>
+    <string name="followers_activity_comment_multiple">%1$s commented on %2$d graffiti</string>
+    <string name="followers_activity_create_streamable_single">%1$s created a graffiti</string>
+    <string name="followers_activity_create_streamable_multiple">%1$s created %2$d graffiti</string>
 
     <!-- API Errors -->
     <string name="api_error_unsupported_file_type">This file type is not supported.</string>
