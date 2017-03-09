@@ -8,16 +8,17 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTGcmManager;
 import com.graffitab.settings.Settings;
 import com.graffitab.ui.activities.home.WebActivity;
+import com.graffitab.ui.activities.home.me.FollowersActivity;
 import com.graffitab.ui.activities.home.me.edit.EditPasswordActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.activities.home.settings.social.LinkedAccountsActivity;
@@ -134,6 +135,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         private Preference logoutPreference;
 
+        private Preference followersActivityPreference;
+
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -152,6 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
             eulaPreference = findPreference("eula");
             aboutPreference = findPreference("about");
             logoutPreference = findPreference("logout");
+            followersActivityPreference = findPreference("getFollowersActivity");
 
             bindPreferences();
             loadPreferences();
@@ -300,6 +304,16 @@ public class SettingsActivity extends AppCompatActivity {
                         @Override
                         public void onClickNo() {}
                     });
+                    return true;
+                }
+            });
+
+            // Open new BaseFollowersActivity
+            followersActivityPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Log.i(getClass().getSimpleName(), "Followers activity handled");
+                    startActivity(new Intent(getActivity(), FollowersActivity.class));
                     return true;
                 }
             });

@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import com.cocosw.bottomsheet.BottomSheet;
 import com.graffitab.R;
 import com.graffitab.application.MyApplication;
@@ -54,10 +56,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 /**
  * Created by georgichristov on 09/12/2016
@@ -409,8 +407,8 @@ public class GenericCommentsFragment extends GenericItemListFragment<GTComment> 
     @Override
     public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
         GTQueryParameters parameters = new GTQueryParameters();
-        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
-        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+        parameters.addParameter(GTQueryParameters.GTParameterType.offset, offset);
+        parameters.addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS);
         GTSDK.getStreamableManager().getComments(streamable.id, isFirstLoad, parameters, handler);
     }
 

@@ -12,12 +12,13 @@ public class Constants {
     public static final String EXTRA_HTML_FILE = "EXTRA_HTML_FILE";
     public static final String EXTRA_TITLE = "EXTRA_TITLE";
     public static final String EXTRA_STREAMABLE = "EXTRA_STREAMABLE";
+    public static final String EXTRA_STREAMABLES = "EXTRA_STREAMABLES";
     public static final String EXTRA_USER = "EXTRA_USER";
+    public static final String EXTRA_USERS = "EXTRA_USERS";
     public static final String EXTRA_SEARCH_REQUEST = "EXTRA_SEARCH_REQUEST";
     public static final String EXTRA_LATITUDE = "EXTRA_LATITUDE";
     public static final String EXTRA_LONGITUDE = "EXTRA_LONGITUDE";
     public static final String EXTRA_LOCATION = "EXTRA_LOCATION";
-    public static final String EXTRA_CLUSTER = "EXTRA_CLUSTER";
     public static final String EXTRA_PERMISSION_TYPE = "EXTRA_PERMISSION_TYPE";
     public static final String EXTRA_PERMISSIONS = "EXTRA_PERMISSIONS";
     public static final String EXTRA_EXTERNAL_TYPE = "EXTRA_EXTERNAL_TYPE";

@@ -13,11 +13,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.graffitab.R;
 import com.graffitab.ui.dialog.DialogBuilder;
-import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
 import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerView;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewLayoutConfiguration;
 import com.graffitab.utils.Utils;
 import com.graffitab.utils.activity.ActivityUtils;
@@ -29,11 +30,6 @@ import com.graffitabsdk.network.common.result.GTListItemsResult;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
-import static com.graffitabsdk.constants.GTConstants.MAX_ITEMS;
 
 /**
  * Created by georgichristov on 14/11/2016
@@ -215,7 +211,7 @@ public abstract class GenericItemListFragment<T> extends Fragment implements Adv
                 items.addAll(loaded.items);
 
                 // Configure load more layout.
-                if (loaded.items.size() <= 0 || loaded.items.size() < MAX_ITEMS)
+                if (loaded.items.size() <= 0)
                     canLoadMore = false;
 
                 adapter.setCanLoadMore(canLoadMore, advancedRecyclerView.getRecyclerView());

@@ -120,9 +120,9 @@ class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filterable 
                     if (suggestions.size() <= 0 && (previousSearchTerm == null || !previousSearchTerm.equals(query))) { // No local suggestions, so fetch from server.
                         previousSearchTerm = query;
                         GTQueryParameters parameters = new GTQueryParameters();
-                        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, 0);
-                        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
-                        parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, query);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.offset, 0);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.query, query);
                         GTSDK.getUserManager().search(parameters, new GTResponseHandler<GTListUsersResponse>() {
 
                             @Override
@@ -152,9 +152,9 @@ class AutoCompleteAdapter extends BaseItemAdapter<Object> implements Filterable 
                     if (suggestions.size() <= 0 && (previousSearchTerm == null || !previousSearchTerm.equals(query))) { // No local suggestions, so fetch from server.
                         previousSearchTerm = query;
                         GTQueryParameters parameters = new GTQueryParameters();
-                        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, 0);
-                        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
-                        parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, query);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.offset, 0);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS);
+                        parameters.addParameter(GTQueryParameters.GTParameterType.query, query);
                         GTSDK.getStreamableManager().searchHashtags(parameters, new GTResponseHandler<GTListHashtagsResponse>() {
 
                             @Override
