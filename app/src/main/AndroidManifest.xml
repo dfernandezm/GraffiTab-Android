@@ -224,6 +224,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/AppThemeTransparentActionAvatarPrompt"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+                android:name=".ui.activities.home.me.FollowersActivity"
+                android:configChanges="keyboardHidden|orientation|screenSize"
+                android:windowSoftInputMode="stateHidden" />
     </application>
 
 </manifest>
