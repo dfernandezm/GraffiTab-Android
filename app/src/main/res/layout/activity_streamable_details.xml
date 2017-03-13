@@ -59,7 +59,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="@dimen/streamable_details_close_button_margin_right"
             android:background="@null"
-            android:src="@drawable/ic_close_dark" />
+            android:src="@drawable/ic_close_white_24dp" />
     </RelativeLayout>
 
     <LinearLayout

@@ -3,7 +3,7 @@ apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "23.0.3"
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         applicationId "com.graffitab"
@@ -11,16 +11,24 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "0.0.1"
+        multiDexEnabled true
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled true
+            shrinkResources true
+        }
+    }
+    dexOptions {
+        javaMaxHeapSize "4g"
     }
 }
 
-def facebookVersion = "4.13.2"
+def facebookVersion = "4.20.0"
 def junitVersion = "4.12"
 def androidSupportLibraryVersion = "25.2.0"
 def playServicesVersion = "10.2.0"
@@ -48,12 +56,15 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile "junit:junit:$junitVersion"
     compile "com.android.support:appcompat-v7:$androidSupportLibraryVersion"
-    compile "com.google.android.gms:play-services:$playServicesVersion"
+    compile "com.google.android.gms:play-services-maps:$playServicesVersion"
+    compile "com.google.android.gms:play-services-location:$playServicesVersion"
     compile "com.android.support:design:$androidSupportLibraryVersion"
     compile "com.android.support:cardview-v7:$androidSupportLibraryVersion"
     compile "com.android.support:recyclerview-v7:$androidSupportLibraryVersion"
     compile "com.google.maps.android:android-maps-utils:$mapUtilsVersion"
     compile "com.google.android.gms:play-services-gcm:$playServicesVersion"
+    compile "com.android.support:animated-vector-drawable:$androidSupportLibraryVersion"
+    compile "com.android.support:customtabs:$androidSupportLibraryVersion"
     compile project(':graffitabsdk')
 
     compile "com.facebook.android:facebook-android-sdk:$facebookVersion"
