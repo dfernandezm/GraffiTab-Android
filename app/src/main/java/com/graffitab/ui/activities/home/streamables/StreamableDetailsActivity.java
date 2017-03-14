@@ -3,6 +3,7 @@ package com.graffitab.ui.activities.home.streamables;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
@@ -81,6 +82,7 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     private GTStreamable streamable;
     private PhotoViewAttacher mAttacher;
+    private boolean rotatedScreen;
 
     public static void openStreamableDetails(Activity context, GTStreamable streamable, View source) {
         Intent intent = new Intent(context, StreamableDetailsActivity.class);
@@ -147,6 +149,17 @@ public class StreamableDetailsActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        rotatedScreen = true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        onClickClose(null);
+    }
+
+    @Override
     public void onPause() {
         super.onPause();
         GTSDK.registerEventListener(this);
@@ -183,7 +196,10 @@ public class StreamableDetailsActivity extends AppCompatActivity {
 
     @OnClick(R.id.close)
     public void onClickClose(View view) {
-        supportFinishAfterTransition();
+        if (!rotatedScreen)
+            supportFinishAfterTransition();
+        else
+            finish();
     }
 
     @OnClick(R.id.optionsBtn)
