@@ -72,15 +72,14 @@ public class Utils {
 	    if ( type != null )
 	    	intent.setType( type );
 	    
-	    List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities( intent, PackageManager.MATCH_DEFAULT_ONLY );
-	    
-		return (resolveInfo.size() > 0);
+	    List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+		return resolveInfo.size() > 0;
 	}
 	
 	public static boolean isIntentAvailable( Context context, Intent i ) {
 	    final PackageManager packageManager = context.getPackageManager();
 	    
-	    List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities( i, PackageManager.MATCH_DEFAULT_ONLY );
+	    List<ResolveInfo> resolveInfo = packageManager.queryIntentActivities(i, PackageManager.MATCH_DEFAULT_ONLY);
 	    
 		return (resolveInfo != null && resolveInfo.size() > 0);
 	}
@@ -90,15 +89,13 @@ public class Utils {
 	    final Intent intent = new Intent();
 	    intent.setClassName( packageName, className );
 	    
-	    List<ResolveInfo> list = packageManager.queryIntentActivities( intent, PackageManager.MATCH_DEFAULT_ONLY );
-
-	    return (list.size() > 0);
+	    List<ResolveInfo> list = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY);
+	    return list.size() > 0;
 	}
 	
 	public static boolean isNetworkConnected( Context c ) {
 		ConnectivityManager cm = (ConnectivityManager)c.getSystemService( Context.CONNECTIVITY_SERVICE );
-		NetworkInfo ni = cm.getActiveNetworkInfo();
-		
-		return (ni != null);
+		NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+		return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 	}
 }
