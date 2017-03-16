@@ -35,8 +35,8 @@ public class PrivateStreamablesActivity extends ToggleStreamablesActivity {
         @Override
         public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
             GTQueryParameters parameters = new GTQueryParameters();
-            parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
-            parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+            parameters.addParameter(GTQueryParameters.GTParameterType.offset, offset);
+            parameters.addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS);
             GTSDK.getMeManager().getPrivatePosts(isFirstLoad, parameters, handler);
         }
     }

@@ -28,14 +28,14 @@ public class SearchUsersFragment extends ListUsersFragment {
     @Override
     public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
         GTQueryParameters parameters = new GTQueryParameters();
-        parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
-        parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+        parameters.addParameter(GTQueryParameters.GTParameterType.offset, offset);
+        parameters.addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS);
 
         if (searchQuery == null) // Load default search results.
             GTSDK.getUserManager().getMostActiveUsers(isFirstLoad, parameters, handler);
         else {
             getRecyclerView().beginRefreshing();
-            parameters.addParameter(GTQueryParameters.GTParameterType.QUERY, searchQuery);
+            parameters.addParameter(GTQueryParameters.GTParameterType.query, searchQuery);
             GTSDK.getUserManager().search(parameters, handler);
         }
     }
