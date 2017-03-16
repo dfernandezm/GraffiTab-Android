@@ -155,7 +155,7 @@ public class SettingsActivity extends AppCompatActivity {
             eulaPreference = findPreference("eula");
             aboutPreference = findPreference("about");
             logoutPreference = findPreference("logout");
-            followersActivityPreference = findPreference("followersActivity");
+            followersActivityPreference = findPreference("getFollowersActivity");
 
             bindPreferences();
             loadPreferences();

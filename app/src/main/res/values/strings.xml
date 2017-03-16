@@ -240,6 +240,10 @@
     <string name="streamable_details_liker_me">Liked by You</string>
     <string name="streamable_details_liker">Liked by %1$s</string>
 
+    <!-- Followers activity -->
+    <string name="followers_activity_empty_title">No activity</string>
+    <string name="followers_activity_empty_subtitle">Looks like we don\'t have any activity to display yet. Please come back again.</string>
+
     <!-- API Errors -->
     <string name="api_error_unsupported_file_type">This file type is not supported.</string>
     <string name="api_error_invalid_token">The provided token is invalid.</string>

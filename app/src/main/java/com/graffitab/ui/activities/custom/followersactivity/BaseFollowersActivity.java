@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.Window;
 import butterknife.ButterKnife;
 import com.graffitab.R;
-import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
+import com.graffitab.ui.fragments.followersactivity.GenericFollowersActivityFragment;
 
 /**
  * Created by david on 16/02/2017.
@@ -17,16 +17,14 @@ import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
 public abstract class BaseFollowersActivity extends AppCompatActivity {
 
     //TODO: GenericFollowersFragment
-    private GenericStreamablesFragment content;
+    private GenericFollowersActivityFragment content;
 
-    //TODO: GenericFollowersActivityFragment
-    public abstract GenericStreamablesFragment getFragment();
+    public abstract GenericFollowersActivityFragment getFragment();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         super.onCreate(savedInstanceState);
-
 
         // Activity view contains the Fragment which contains an AdvancedRecyclerView
         // This can be overriden in order to provide separate layouts to this activity
@@ -50,20 +48,19 @@ public abstract class BaseFollowersActivity extends AppCompatActivity {
         return R.layout.activity_fragment_holder;
     }
 
-    //TODO: the content of this activity (fragment)
-    public GenericStreamablesFragment getContent() {
+    public GenericFollowersActivityFragment getContent() {
         return content;
     }
 
     // Setup
 
-    // Sets Home button as back arrow (standard Android)
+    // Sets Home button as back arrow (standard Android) -- enable it
     public void setupTopBar() {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     // Sets the content - attach fragment to the activity
-    public void setupContent(GenericStreamablesFragment contentFragment) {
+    public void setupContent(GenericFollowersActivityFragment contentFragment) {
         content = contentFragment;
         content.hasOptionsMenu = true;
 

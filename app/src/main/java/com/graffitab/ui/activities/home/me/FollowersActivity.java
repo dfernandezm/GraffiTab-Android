@@ -2,8 +2,7 @@ package com.graffitab.ui.activities.home.me;
 
 import com.graffitab.R;
 import com.graffitab.ui.activities.custom.followersactivity.BaseFollowersActivity;
-import com.graffitab.ui.fragments.streamables.GenericStreamablesFragment;
-import com.graffitab.ui.fragments.streamables.GridStreamablesFragment;
+import com.graffitab.ui.fragments.followersactivity.GenericFollowersActivityFragment;
 import com.graffitabsdk.constants.GTConstants;
 import com.graffitabsdk.network.common.params.GTQueryParameters;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
@@ -15,9 +14,8 @@ import com.graffitabsdk.sdk.GTSDK;
 
 public class FollowersActivity extends BaseFollowersActivity {
 
-    //TODO: followers fragment
     @Override
-    public GenericStreamablesFragment getFragment() {
+    public GenericFollowersActivityFragment getFragment() {
         return new ContentFragment();
     }
 
@@ -29,17 +27,16 @@ public class FollowersActivity extends BaseFollowersActivity {
         getSupportActionBar().setTitle(R.string.followers);
     }
 
-    //TODO: Extend the GenericFollowersActivityFragment directly
-    public static class ContentFragment extends GridStreamablesFragment {
+    public static class ContentFragment extends GenericFollowersActivityFragment {
 
         @Override
         public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
             GTQueryParameters parameters = new GTQueryParameters();
-            parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset);
-            parameters.addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS);
+            parameters.addParameter(GTQueryParameters.GTParameterType.OFFSET, offset)
+                    .addParameter(GTQueryParameters.GTParameterType.LIMIT, GTConstants.MAX_ITEMS)
+                    .addParameter(GTQueryParameters.GTParameterType.NUMBER_OF_ITEMS_IN_GROUP, GTConstants.NUMBER_OF_ITEMS_IN_GROUP);
 
-            //TODO: getFollowersActivity on the SDK
-            GTSDK.getMeManager().getPrivatePosts(isFirstLoad, parameters, handler);
+           GTSDK.getMeManager().getFollowersActivity(isFirstLoad, parameters, handler);
         }
     }
 }

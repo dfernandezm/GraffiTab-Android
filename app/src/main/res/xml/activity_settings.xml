@@ -30,7 +30,7 @@
             android:icon="@drawable/ic_action_facebook"/>
 
         <Preference
-            android:key="followersActivity"
+            android:key="getFollowersActivity"
             android:title="@string/settings_followers_activity" />
     </PreferenceCategory>
     <PreferenceCategory android:title="@string/home_settings">
