@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginTop="@dimen/row_notification_middle_margin_top"
+              android:layout_weight="1"
+              android:gravity="center"
+              android:orientation="horizontal">
+
+    <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+               android:id="@+id/innerItemImage"
+               android:layout_width="@dimen/row_notification_right_image_size"
+               android:layout_height="@dimen/row_notification_right_image_size"
+               android:scaleType="centerCrop"
+               android:background="#efefef" />
+
+</LinearLayout>

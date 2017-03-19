@@ -21,11 +21,10 @@ public class LikeFollowersActivityViewHolder extends ActivityContainerViewHolder
     public void setItem(GTActivityContainer activityContainer) {
         super.setItem(activityContainer);
 
-        if (activityContainer.activities.size() == 1) {
+        if (activityContainer.isSingle()) {
             actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_like_one, item.user.fullName()));
             loadStreamable(item.activities.get(0).likedStreamable);
         } else {
-            itemImage.setVisibility(View.INVISIBLE);
             actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_like_multiple, item.user.fullName(),
                     activityContainer.activities.size()));
         }

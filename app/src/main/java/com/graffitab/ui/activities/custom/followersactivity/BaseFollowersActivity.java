@@ -16,7 +16,6 @@ import com.graffitab.ui.fragments.followersactivity.GenericFollowersActivityFrag
 
 public abstract class BaseFollowersActivity extends AppCompatActivity {
 
-    //TODO: GenericFollowersFragment
     private GenericFollowersActivityFragment content;
 
     public abstract GenericFollowersActivityFragment getFragment();
