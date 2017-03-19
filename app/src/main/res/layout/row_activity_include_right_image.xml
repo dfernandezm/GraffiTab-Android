@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:layout_marginRight="@dimen/row_notification_right_margin_right"
+    android:layout_marginTop="@dimen/row_notification_right_margin_top"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/itemImage"
+        android:layout_width="@dimen/row_notification_right_image_size"
+        android:layout_height="@dimen/row_notification_right_image_size"
+        android:scaleType="centerCrop"
+        android:background="#efefef" />
+</LinearLayout>

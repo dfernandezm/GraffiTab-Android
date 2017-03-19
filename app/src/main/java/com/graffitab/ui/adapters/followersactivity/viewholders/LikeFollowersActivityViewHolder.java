@@ -2,6 +2,7 @@ package com.graffitab.ui.adapters.followersactivity.viewholders;
 
 import android.view.View;
 import butterknife.ButterKnife;
+import com.graffitab.R;
 import com.graffitabsdk.model.activity.GTActivityContainer;
 
 /**
@@ -20,9 +21,16 @@ public class LikeFollowersActivityViewHolder extends ActivityContainerViewHolder
     public void setItem(GTActivityContainer activityContainer) {
         super.setItem(activityContainer);
 
-        //actionLbl.setText(itemView.getContext().getString(R.string.notifications_like, item.liker.fullName()));
+        if (activityContainer.activities.size() == 1) {
+            actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_like_one, item.user.fullName()));
+            loadStreamable(item.activities.get(0).likedStreamable);
+        } else {
+            itemImage.setVisibility(View.INVISIBLE);
+            actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_like_multiple, item.user.fullName(),
+                    activityContainer.activities.size()));
+        }
 
-        //loadAvatar(item.liker);
-        //loadStreamable(item.likedStreamable);
+        loadAvatar(item.user);
+
     }
 }

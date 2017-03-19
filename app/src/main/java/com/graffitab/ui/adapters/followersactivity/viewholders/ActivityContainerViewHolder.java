@@ -42,7 +42,6 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
 
     public void setItem(GTActivityContainer activityContainer) {
         this.item = activityContainer;
-
         dateField.setText(DateUtils.getRelativeTimeSpanString(item.date.getTime(), System.currentTimeMillis(), DateUtils.SECOND_IN_MILLIS));
     }
 

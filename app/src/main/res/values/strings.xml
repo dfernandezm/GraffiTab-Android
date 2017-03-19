@@ -243,6 +243,8 @@
     <!-- Followers activity -->
     <string name="followers_activity_empty_title">No activity</string>
     <string name="followers_activity_empty_subtitle">Looks like we don\'t have any activity to display yet. Please come back again.</string>
+    <string name="followers_activity_like_one">%1$s liked a graffiti.</string>
+    <string name="followers_activity_like_multiple">%1$s liked %2$d graffiti.</string>
 
     <!-- API Errors -->
     <string name="api_error_unsupported_file_type">This file type is not supported.</string>
