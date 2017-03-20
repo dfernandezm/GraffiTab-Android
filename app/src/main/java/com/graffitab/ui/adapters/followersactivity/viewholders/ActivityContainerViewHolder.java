@@ -1,5 +1,6 @@
 package com.graffitab.ui.adapters.followersactivity.viewholders;
 
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.View;
@@ -9,11 +10,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.graffitab.R;
 import com.graffitab.ui.adapters.followersactivity.OnFollowerActivityClickListener;
+import com.graffitab.ui.adapters.followersactivity.innerviews.InnerItemsViewAdapter;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.model.activity.GTActivityContainer;
 import com.squareup.picasso.Picasso;
+
+import java.util.List;
 
 /**
  * Created by david on 16/03/2017.
@@ -30,12 +34,25 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
     public TextView descriptionLbl;
     public ImageView itemImage;
 
+    protected RecyclerView activityDetailRecyclerView;
+    private LinearLayoutManager activityDetailLinearLayoutManager;
+    private InnerItemsViewAdapter innerItemsViewAdapter;
+
     protected GTActivityContainer item;
     protected OnFollowerActivityClickListener clickListener;
+    private List<GTStreamable> streamables;
 
     public ActivityContainerViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
+        setupViews();
+        safelyBindViews();
+    }
+
+    public ActivityContainerViewHolder(View itemView, List<GTStreamable> streamables) {
+        super(itemView);
+        ButterKnife.bind(this, itemView);
+        this.streamables = streamables;
         setupViews();
         safelyBindViews();
     }
@@ -77,5 +94,13 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
     private void safelyBindViews() {
         if (itemView.findViewById(R.id.descriptionLbl) != null) descriptionLbl = (TextView) itemView.findViewById(R.id.descriptionLbl);
         if (itemView.findViewById(R.id.itemImage) != null) itemImage = (ImageView) itemView.findViewById(R.id.itemImage);
+        if (itemView.findViewById(R.id.activityDetailRecyclerView) != null) {
+            activityDetailRecyclerView = (RecyclerView) itemView.findViewById(R.id.activityDetailRecyclerView);
+            activityDetailLinearLayoutManager = new LinearLayoutManager(itemView.getContext());
+            activityDetailRecyclerView.setLayoutManager(activityDetailLinearLayoutManager);
+            innerItemsViewAdapter = new InnerItemsViewAdapter();
+            innerItemsViewAdapter.setItems(streamables);
+            activityDetailRecyclerView.setAdapter(innerItemsViewAdapter);
+        }
     }
 }

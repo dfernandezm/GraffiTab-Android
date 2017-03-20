@@ -19,7 +19,7 @@ public class InnerItemsViewAdapter extends RecyclerView.Adapter<InnerItemsViewAd
 
     private List<GTStreamable> items;
 
-    public InnerItemsViewAdapter(List<GTStreamable> items) {
+    public void setItems(List<GTStreamable> items) {
         this.items = items;
     }
 

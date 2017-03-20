@@ -1,7 +1,6 @@
 package com.graffitab.ui.adapters.followersactivity;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,9 +12,11 @@ import com.graffitab.ui.adapters.followersactivity.viewholders.CreateStreamableA
 import com.graffitab.ui.adapters.followersactivity.viewholders.FollowActivityViewHolder;
 import com.graffitab.ui.adapters.followersactivity.viewholders.LikeFollowersActivityViewHolder;
 import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
+import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.activity.GTActivity;
 import com.graffitabsdk.model.activity.GTActivityContainer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,16 +34,10 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
     private final int VIEW_TYPE_COMMENT = 5;
 
     private OnFollowerActivityClickListener clickListener;
-
-    private RecyclerView activityDetailRecyclerView;
-    private LinearLayoutManager activityDetailLinearLayoutManager;
+    private List<GTStreamable> streamables;
 
     public GenericFollowersActivityRecyclerViewAdapter(Context context, List<GTActivityContainer> items, RecyclerView recyclerView) {
         super(context, items, recyclerView);
-//        activityDetailRecyclerView = (RecyclerView) findViewById(R.id.activityDetailRecyclerView);
-//        activityDetailLinearLayoutManager = new LinearLayoutManager(this);
-//        activityDetailRecyclerView.setLayoutManager(activityDetailLinearLayoutManager);
-
     }
 
     public void setClickListener(OnFollowerActivityClickListener listener) {
@@ -56,7 +51,19 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
         boolean isSingle = item.isSingle();
         switch (type) {
             case LIKE:
-                return isSingle ? VIEW_TYPE_LIKE_SINGLE : VIEW_TYPE_LIKE_MULTIPLE;
+                if (isSingle)  {
+                    return VIEW_TYPE_LIKE_SINGLE;
+                } else {
+                    streamables = new ArrayList<>();
+
+                    for (GTActivity activity: item.activities) {
+                        streamables.add(activity.likedStreamable);
+                    }
+
+
+
+                    return VIEW_TYPE_LIKE_MULTIPLE;
+                }
             case FOLLOW: return VIEW_TYPE_FOLLOW;
             case CREATE_STREAMABLE: return VIEW_TYPE_CREATE_STREAMABLE;
             case COMMENT: return VIEW_TYPE_COMMENT;
@@ -77,7 +84,7 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
             }
             case VIEW_TYPE_LIKE_MULTIPLE: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_activity_like_multiple, parent, false);
-                final LikeFollowersActivityViewHolder rcv = new LikeFollowersActivityViewHolder(layoutView);
+                final LikeFollowersActivityViewHolder rcv = new LikeFollowersActivityViewHolder(layoutView, streamables);
                 rcv.setClickListener(clickListener);
                 return rcv;
             }
