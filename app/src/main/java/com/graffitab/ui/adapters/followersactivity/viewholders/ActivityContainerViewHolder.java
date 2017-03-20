@@ -10,16 +10,20 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.graffitab.R;
 import com.graffitab.ui.adapters.followersactivity.OnFollowerActivityClickListener;
-import com.graffitab.ui.adapters.followersactivity.innerviews.InnerItemsViewAdapter;
+import com.graffitab.ui.adapters.followersactivity.innerviews.FollowersActivityItemsAdapter;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.model.activity.GTActivity;
 import com.graffitabsdk.model.activity.GTActivityContainer;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Generification
+ *
  * Created by david on 16/03/2017.
  */
 
@@ -34,9 +38,8 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
     public TextView descriptionLbl;
     public ImageView itemImage;
 
-    protected RecyclerView activityDetailRecyclerView;
-    private LinearLayoutManager activityDetailLinearLayoutManager;
-    private InnerItemsViewAdapter innerItemsViewAdapter;
+    private RecyclerView activityDetailRecyclerView;
+    protected FollowersActivityItemsAdapter followersActivityItemsAdapter;
 
     protected GTActivityContainer item;
     protected OnFollowerActivityClickListener clickListener;
@@ -52,7 +55,6 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
     public ActivityContainerViewHolder(View itemView, List<GTStreamable> streamables) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-        this.streamables = streamables;
         setupViews();
         safelyBindViews();
     }
@@ -104,8 +106,21 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
         LinearLayoutManager activityDetailLinearLayoutManager = new LinearLayoutManager(itemView.getContext());
         activityDetailLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         activityDetailRecyclerView.setLayoutManager(activityDetailLinearLayoutManager);
-        InnerItemsViewAdapter innerItemsViewAdapter = new InnerItemsViewAdapter();
-        innerItemsViewAdapter.setItems(streamables);
-        activityDetailRecyclerView.setAdapter(innerItemsViewAdapter);
+        followersActivityItemsAdapter = new FollowersActivityItemsAdapter();
+        activityDetailRecyclerView.setAdapter(followersActivityItemsAdapter);
     }
+
+    protected List<GTStreamable> getStreamablesFromActivityContainer(GTActivityContainer item) {
+        List<GTStreamable> streamables = new ArrayList<>();
+        for (GTActivity activity: item.activities) {
+            streamables.add(extractStreamable(activity));
+        }
+        return streamables;
+    }
+
+    protected GTStreamable extractStreamable(GTActivity gtActivity) {
+        // For subclasses to override
+        throw new UnsupportedOperationException("Called extractStreamable on generic Activity Container");
+    }
+
 }

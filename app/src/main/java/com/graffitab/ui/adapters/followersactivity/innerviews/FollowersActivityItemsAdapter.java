@@ -15,7 +15,7 @@ import java.util.List;
  * Created by david on 19/03/2017.
  */
 
-public class InnerItemsViewAdapter extends RecyclerView.Adapter<InnerItemsViewAdapter.PhotoDetailViewHolder> {
+public class FollowersActivityItemsAdapter extends RecyclerView.Adapter<FollowersActivityItemsAdapter.PhotoDetailViewHolder> {
 
     private List<GTStreamable> items;
 
@@ -24,14 +24,14 @@ public class InnerItemsViewAdapter extends RecyclerView.Adapter<InnerItemsViewAd
     }
 
     @Override
-    public InnerItemsViewAdapter.PhotoDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public FollowersActivityItemsAdapter.PhotoDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.row_activity_like_image, parent, false);
         return new PhotoDetailViewHolder(inflatedView);
     }
 
     @Override
-    public void onBindViewHolder(InnerItemsViewAdapter.PhotoDetailViewHolder holder, int position) {
+    public void onBindViewHolder(FollowersActivityItemsAdapter.PhotoDetailViewHolder holder, int position) {
         GTStreamable itemStreamable = items.get(position);
         holder.bindImage(itemStreamable);
     }

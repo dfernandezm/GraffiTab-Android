@@ -4,6 +4,7 @@ import android.view.View;
 import butterknife.ButterKnife;
 import com.graffitab.R;
 import com.graffitabsdk.model.GTStreamable;
+import com.graffitabsdk.model.activity.GTActivity;
 import com.graffitabsdk.model.activity.GTActivityContainer;
 
 import java.util.List;
@@ -18,14 +19,12 @@ public class LikeFollowersActivityViewHolder extends ActivityContainerViewHolder
     public LikeFollowersActivityViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
-
     }
 
     public LikeFollowersActivityViewHolder(View itemView, List<GTStreamable> streamableList) {
         super(itemView, streamableList);
         ButterKnife.bind(this, itemView);
     }
-
 
     @Override
     public void setItem(GTActivityContainer activityContainer) {
@@ -37,9 +36,16 @@ public class LikeFollowersActivityViewHolder extends ActivityContainerViewHolder
         } else {
             actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_like_multiple, item.user.fullName(),
                     activityContainer.activities.size()));
+            followersActivityItemsAdapter.setItems(getStreamablesFromActivityContainer(item));
+            followersActivityItemsAdapter.notifyDataSetChanged();
         }
 
         loadAvatar(item.user);
 
+    }
+
+    @Override
+    protected GTStreamable extractStreamable(GTActivity gtActivity) {
+        return gtActivity.likedStreamable;
     }
 }

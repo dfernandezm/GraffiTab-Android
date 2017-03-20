@@ -16,7 +16,6 @@ import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.activity.GTActivity;
 import com.graffitabsdk.model.activity.GTActivityContainer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,18 +49,7 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
         GTActivity.GTActivityType type = item.type;
         boolean isSingle = item.isSingle();
         switch (type) {
-            case LIKE:
-                if (isSingle)  {
-                    return VIEW_TYPE_LIKE_SINGLE;
-                } else {
-                    streamables = new ArrayList<>();
-
-                    for (GTActivity activity: item.activities) {
-                        streamables.add(activity.likedStreamable);
-                    }
-
-                    return VIEW_TYPE_LIKE_MULTIPLE;
-                }
+            case LIKE: return isSingle ? VIEW_TYPE_LIKE_SINGLE : VIEW_TYPE_LIKE_MULTIPLE;
             case FOLLOW: return VIEW_TYPE_FOLLOW;
             case CREATE_STREAMABLE: return VIEW_TYPE_CREATE_STREAMABLE;
             case COMMENT: return VIEW_TYPE_COMMENT;
@@ -111,10 +99,8 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         ActivityContainerViewHolder viewHolder = (ActivityContainerViewHolder) holder;
-
         final GTActivityContainer item = getItem(position);
         viewHolder.setItem(item);
-
         viewHolder.topTimelineSeparator.setVisibility(position == 0 ? View.INVISIBLE : View.VISIBLE);
         viewHolder.bottomTimelineSeparator.setVisibility(position == getItemCount() - 2 /* Account for the infinite scroll view here. */ ? View.INVISIBLE : View.VISIBLE);
     }

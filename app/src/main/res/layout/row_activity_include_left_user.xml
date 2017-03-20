@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <View
-        android:id="@+id/unreadIndicator"
-        android:layout_width="@dimen/row_notification_left_user_unread_width"
-        android:layout_height="match_parent"
-        android:background="@color/colorPrimary" />
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
