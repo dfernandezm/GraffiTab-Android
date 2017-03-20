@@ -9,7 +9,7 @@
               android:layout_marginRight="@dimen/row_notification_middle_margin_right"
               android:layout_marginBottom="@dimen/row_notification_middle_margin_bottom">
 
-<TextView
+    <TextView
         android:id="@+id/actionLbl"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,14 +17,15 @@
         android:textColor="@color/colorPrimary"
         android:textSize="@dimen/row_notification_middle_title_text_size" />
 
-<!--Add dinamically to this view-->
+    <!--Add dinamically to this view-->
     <android.support.v7.widget.RecyclerView
             android:id="@+id/activityDetailRecyclerView"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"/>
+            android:scrollbars="horizontal"
+            android:layout_gravity="start" />
 
-<TextView
+    <TextView
         android:id="@+id/dateField"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,4 +33,5 @@
         android:text="5 mins ago"
         android:textColor="#B8B8B8"
         android:textSize="@dimen/row_notification_middle_date_text_size" />
+
 </LinearLayout>

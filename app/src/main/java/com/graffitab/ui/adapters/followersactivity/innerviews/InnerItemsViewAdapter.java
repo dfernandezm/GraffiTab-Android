@@ -44,7 +44,6 @@ public class InnerItemsViewAdapter extends RecyclerView.Adapter<InnerItemsViewAd
     public static class PhotoDetailViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView innerItemImage;
-        private GTStreamable streamable;
 
         public PhotoDetailViewHolder(View v) {
             super(v);
@@ -53,11 +52,10 @@ public class InnerItemsViewAdapter extends RecyclerView.Adapter<InnerItemsViewAd
 
         @Override
         public void onClick(View view) {
-            // Launch single streamable Activity
+            //TODO: Launch single streamable Activity
         }
 
         public void bindImage(GTStreamable streamable) {
-            this.streamable = streamable;
             Picasso.with(innerItemImage.getContext()).load(streamable.asset.thumbnail).into(innerItemImage);
         }
     }

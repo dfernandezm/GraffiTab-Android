@@ -15,8 +15,6 @@ import java.util.List;
  */
 public class LikeFollowersActivityViewHolder extends ActivityContainerViewHolder {
 
-
-
     public LikeFollowersActivityViewHolder(View itemView) {
         super(itemView);
         ButterKnife.bind(this, itemView);
@@ -39,8 +37,6 @@ public class LikeFollowersActivityViewHolder extends ActivityContainerViewHolder
         } else {
             actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_like_multiple, item.user.fullName(),
                     activityContainer.activities.size()));
-
-
         }
 
         loadAvatar(item.user);

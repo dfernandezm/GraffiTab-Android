@@ -60,8 +60,6 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
                         streamables.add(activity.likedStreamable);
                     }
 
-
-
                     return VIEW_TYPE_LIKE_MULTIPLE;
                 }
             case FOLLOW: return VIEW_TYPE_FOLLOW;

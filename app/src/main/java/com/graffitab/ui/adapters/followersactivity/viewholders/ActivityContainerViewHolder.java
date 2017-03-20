@@ -95,12 +95,17 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
         if (itemView.findViewById(R.id.descriptionLbl) != null) descriptionLbl = (TextView) itemView.findViewById(R.id.descriptionLbl);
         if (itemView.findViewById(R.id.itemImage) != null) itemImage = (ImageView) itemView.findViewById(R.id.itemImage);
         if (itemView.findViewById(R.id.activityDetailRecyclerView) != null) {
-            activityDetailRecyclerView = (RecyclerView) itemView.findViewById(R.id.activityDetailRecyclerView);
-            activityDetailLinearLayoutManager = new LinearLayoutManager(itemView.getContext());
-            activityDetailRecyclerView.setLayoutManager(activityDetailLinearLayoutManager);
-            innerItemsViewAdapter = new InnerItemsViewAdapter();
-            innerItemsViewAdapter.setItems(streamables);
-            activityDetailRecyclerView.setAdapter(innerItemsViewAdapter);
+            bindStreamablesRecyclerView();
         }
+    }
+
+    private void bindStreamablesRecyclerView() {
+        activityDetailRecyclerView = (RecyclerView) itemView.findViewById(R.id.activityDetailRecyclerView);
+        LinearLayoutManager activityDetailLinearLayoutManager = new LinearLayoutManager(itemView.getContext());
+        activityDetailLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        activityDetailRecyclerView.setLayoutManager(activityDetailLinearLayoutManager);
+        InnerItemsViewAdapter innerItemsViewAdapter = new InnerItemsViewAdapter();
+        innerItemsViewAdapter.setItems(streamables);
+        activityDetailRecyclerView.setAdapter(innerItemsViewAdapter);
     }
 }
