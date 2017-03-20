@@ -11,6 +11,7 @@ import butterknife.ButterKnife;
 import com.graffitab.R;
 import com.graffitab.ui.adapters.followersactivity.OnFollowerActivityClickListener;
 import com.graffitab.ui.adapters.followersactivity.innerviews.FollowersActivityItemsAdapter;
+import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.GTUser;
@@ -97,15 +98,18 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
         if (itemView.findViewById(R.id.descriptionLbl) != null) descriptionLbl = (TextView) itemView.findViewById(R.id.descriptionLbl);
         if (itemView.findViewById(R.id.itemImage) != null) itemImage = (ImageView) itemView.findViewById(R.id.itemImage);
         if (itemView.findViewById(R.id.activityDetailRecyclerView) != null) {
-            bindStreamablesRecyclerView();
+            bindActivityDetailRecyclerView();
         }
     }
 
-    private void bindStreamablesRecyclerView() {
+    private void bindActivityDetailRecyclerView() {
         activityDetailRecyclerView = (RecyclerView) itemView.findViewById(R.id.activityDetailRecyclerView);
+        activityDetailRecyclerView.addItemDecoration(new AdvancedRecyclerViewItemDecoration(1, 0));
+
         LinearLayoutManager activityDetailLinearLayoutManager = new LinearLayoutManager(itemView.getContext());
         activityDetailLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         activityDetailRecyclerView.setLayoutManager(activityDetailLinearLayoutManager);
+
         followersActivityItemsAdapter = new FollowersActivityItemsAdapter();
         activityDetailRecyclerView.setAdapter(followersActivityItemsAdapter);
     }
@@ -118,8 +122,8 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
         return streamables;
     }
 
+    // For subclasses to override
     protected GTStreamable extractStreamable(GTActivity gtActivity) {
-        // For subclasses to override
         throw new UnsupportedOperationException("Called extractStreamable on generic Activity Container");
     }
 
