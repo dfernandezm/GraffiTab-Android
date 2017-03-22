@@ -2,6 +2,10 @@ package com.graffitab.ui.adapters.followersactivity.viewholders;
 
 import android.view.View;
 import butterknife.ButterKnife;
+import com.graffitab.R;
+import com.graffitab.ui.adapters.followersactivity.adapters.FollowersActivityItemsAdapter;
+import com.graffitabsdk.model.GTUser;
+import com.graffitabsdk.model.activity.GTActivity;
 import com.graffitabsdk.model.activity.GTActivityContainer;
 
 /**
@@ -9,7 +13,7 @@ import com.graffitabsdk.model.activity.GTActivityContainer;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class FollowActivityViewHolder extends ActivityContainerViewHolder {
+public class FollowActivityViewHolder extends ActivityContainerViewHolder<GTUser> {
 
     public FollowActivityViewHolder(View itemView) {
         super(itemView);
@@ -17,11 +21,32 @@ public class FollowActivityViewHolder extends ActivityContainerViewHolder {
     }
 
     @Override
-    public void setItem(GTActivityContainer activityContainer) {
+    public void setItem(final GTActivityContainer activityContainer) {
         super.setItem(activityContainer);
 
-        //actionLbl.setText(itemView.getContext().getString(R.string.notifications_follow, item.follower.fullName()));
+        if (activityContainer.isSingle()) {
+            GTUser followed = item.activities.get(0).followed;
+            actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_follow_one, item.user.fullName(), followed.fullName()));
+            loadFollowedAvatar(followed);
+        } else {
+            actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_follow_multiple, item.user.fullName(),
+                    activityContainer.activities.size()));
+            followersActivityItemsAdapter.setItems(getUsersFromActivityContainer(item));
+            followersActivityItemsAdapter.setImageExtractor(new FollowersActivityItemsAdapter.ImageExtractor<GTUser>() {
+                @Override
+                public String getImageUrl(GTUser activityDetailItem) {
+                    return activityDetailItem.avatar.thumbnail;
+                }
+            });
+            followersActivityItemsAdapter.notifyDataSetChanged();
+        }
 
-        //loadAvatar(item.follower);
+        loadAvatar(item.user);
+
+    }
+
+    @Override
+    public GTUser extractUser(GTActivity gtActivity) {
+        return gtActivity.followed;
     }
 }

@@ -12,7 +12,6 @@ import com.graffitab.ui.adapters.followersactivity.viewholders.CreateStreamableA
 import com.graffitab.ui.adapters.followersactivity.viewholders.FollowActivityViewHolder;
 import com.graffitab.ui.adapters.followersactivity.viewholders.LikeFollowersActivityViewHolder;
 import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
-import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.activity.GTActivity;
 import com.graffitabsdk.model.activity.GTActivityContainer;
 
@@ -28,12 +27,12 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
     // By convention 0 is the header view
     private final int VIEW_TYPE_LIKE_SINGLE = 1;
     private final int VIEW_TYPE_LIKE_MULTIPLE = 2;
-    private final int VIEW_TYPE_FOLLOW = 3;
-    private final int VIEW_TYPE_CREATE_STREAMABLE = 4;
-    private final int VIEW_TYPE_COMMENT = 5;
+    private final int VIEW_TYPE_FOLLOW_SINGLE = 3;
+    private final int VIEW_TYPE_FOLLOW_MULTIPLE = 4;
+    private final int VIEW_TYPE_CREATE_STREAMABLE = 5;
+    private final int VIEW_TYPE_COMMENT = 6;
 
     private OnFollowerActivityClickListener clickListener;
-    private List<GTStreamable> streamables;
 
     public GenericFollowersActivityRecyclerViewAdapter(Context context, List<GTActivityContainer> items, RecyclerView recyclerView) {
         super(context, items, recyclerView);
@@ -50,7 +49,7 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
         boolean isSingle = item.isSingle();
         switch (type) {
             case LIKE: return isSingle ? VIEW_TYPE_LIKE_SINGLE : VIEW_TYPE_LIKE_MULTIPLE;
-            case FOLLOW: return VIEW_TYPE_FOLLOW;
+            case FOLLOW: return isSingle ? VIEW_TYPE_FOLLOW_SINGLE : VIEW_TYPE_FOLLOW_MULTIPLE;
             case CREATE_STREAMABLE: return VIEW_TYPE_CREATE_STREAMABLE;
             case COMMENT: return VIEW_TYPE_COMMENT;
             default:
@@ -70,12 +69,18 @@ public class GenericFollowersActivityRecyclerViewAdapter extends AdvancedEndless
             }
             case VIEW_TYPE_LIKE_MULTIPLE: {
                 View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_activity_like_multiple, parent, false);
-                final LikeFollowersActivityViewHolder rcv = new LikeFollowersActivityViewHolder(layoutView, streamables);
+                final LikeFollowersActivityViewHolder rcv = new LikeFollowersActivityViewHolder(layoutView);
                 rcv.setClickListener(clickListener);
                 return rcv;
             }
-            case VIEW_TYPE_FOLLOW: {
-                View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_activity_follow, parent, false);
+            case VIEW_TYPE_FOLLOW_SINGLE: {
+                View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_activity_follow_single, parent, false);
+                final FollowActivityViewHolder rcv = new FollowActivityViewHolder(layoutView);
+                rcv.setClickListener(clickListener);
+                return rcv;
+            }
+            case VIEW_TYPE_FOLLOW_MULTIPLE: {
+                View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_activity_like_multiple, parent, false);
                 final FollowActivityViewHolder rcv = new FollowActivityViewHolder(layoutView);
                 rcv.setClickListener(clickListener);
                 return rcv;

@@ -10,7 +10,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.graffitab.R;
 import com.graffitab.ui.adapters.followersactivity.OnFollowerActivityClickListener;
-import com.graffitab.ui.adapters.followersactivity.innerviews.FollowersActivityItemsAdapter;
+import com.graffitab.ui.adapters.followersactivity.adapters.FollowersActivityItemsAdapter;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
@@ -28,7 +28,7 @@ import java.util.List;
  * Created by david on 16/03/2017.
  */
 
-public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
+public class ActivityContainerViewHolder<T> extends RecyclerView.ViewHolder {
 
     @BindView(R.id.topTimelineSeparator) public View topTimelineSeparator;
     @BindView(R.id.bottomTimelineSeparator) public View bottomTimelineSeparator;
@@ -40,20 +40,13 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
     public ImageView itemImage;
 
     private RecyclerView activityDetailRecyclerView;
-    protected FollowersActivityItemsAdapter followersActivityItemsAdapter;
+    protected FollowersActivityItemsAdapter<T> followersActivityItemsAdapter;
+    protected ImageView followedAvatar;
 
     protected GTActivityContainer item;
     protected OnFollowerActivityClickListener clickListener;
-    private List<GTStreamable> streamables;
 
     public ActivityContainerViewHolder(View itemView) {
-        super(itemView);
-        ButterKnife.bind(this, itemView);
-        setupViews();
-        safelyBindViews();
-    }
-
-    public ActivityContainerViewHolder(View itemView, List<GTStreamable> streamables) {
         super(itemView);
         ButterKnife.bind(this, itemView);
         setupViews();
@@ -77,6 +70,10 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
         ImageUtils.setAvatar(avatar, user);
     }
 
+    public void loadFollowedAvatar(GTUser user) {
+        ImageUtils.setAvatar(followedAvatar, user);
+    }
+
     public void loadStreamable(GTStreamable streamable) {
         Picasso.with(itemImage.getContext()).load(streamable.asset.thumbnail).into(itemImage);
     }
@@ -97,8 +94,13 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
     private void safelyBindViews() {
         if (itemView.findViewById(R.id.descriptionLbl) != null) descriptionLbl = (TextView) itemView.findViewById(R.id.descriptionLbl);
         if (itemView.findViewById(R.id.itemImage) != null) itemImage = (ImageView) itemView.findViewById(R.id.itemImage);
+
         if (itemView.findViewById(R.id.activityDetailRecyclerView) != null) {
             bindActivityDetailRecyclerView();
+        }
+
+        if (itemView.findViewById(R.id.followedAvatar) != null) {
+            followedAvatar = (ImageView) itemView.findViewById(R.id.followedAvatar);
         }
     }
 
@@ -110,7 +112,7 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
         activityDetailLinearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
         activityDetailRecyclerView.setLayoutManager(activityDetailLinearLayoutManager);
 
-        followersActivityItemsAdapter = new FollowersActivityItemsAdapter();
+        followersActivityItemsAdapter = new FollowersActivityItemsAdapter<T>();
         activityDetailRecyclerView.setAdapter(followersActivityItemsAdapter);
     }
 
@@ -122,9 +124,24 @@ public class ActivityContainerViewHolder extends RecyclerView.ViewHolder {
         return streamables;
     }
 
+    protected List<GTUser> getUsersFromActivityContainer(GTActivityContainer item) {
+        List<GTUser> users = new ArrayList<>();
+        for (GTActivity activity: item.activities) {
+            users.add(extractUser(activity));
+        }
+        return users;
+    }
+
+
     // For subclasses to override
     protected GTStreamable extractStreamable(GTActivity gtActivity) {
         throw new UnsupportedOperationException("Called extractStreamable on generic Activity Container");
+    }
+
+
+    // For subclasses to override
+    protected GTUser extractUser(GTActivity gtActivity) {
+        throw new UnsupportedOperationException("Called extractUser on generic Activity Container");
     }
 
 }

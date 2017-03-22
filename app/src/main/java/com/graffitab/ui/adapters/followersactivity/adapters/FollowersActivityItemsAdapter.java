@@ -1,4 +1,4 @@
-package com.graffitab.ui.adapters.followersactivity.innerviews;
+package com.graffitab.ui.adapters.followersactivity.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,7 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.graffitab.R;
-import com.graffitabsdk.model.GTStreamable;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -15,12 +14,17 @@ import java.util.List;
  * Created by david on 19/03/2017.
  */
 
-public class FollowersActivityItemsAdapter extends RecyclerView.Adapter<FollowersActivityItemsAdapter.PhotoDetailViewHolder> {
+public class FollowersActivityItemsAdapter<T> extends RecyclerView.Adapter<FollowersActivityItemsAdapter.PhotoDetailViewHolder> {
 
-    private List<GTStreamable> items;
+    private List<T> items;
+    private ImageExtractor<T> imageExtractor;
 
-    public void setItems(List<GTStreamable> items) {
+    public void setItems(List<T> items) {
         this.items = items;
+    }
+
+    public void setImageExtractor(ImageExtractor<T> imageExtractor) {
+        this.imageExtractor = imageExtractor;
     }
 
     @Override
@@ -32,8 +36,7 @@ public class FollowersActivityItemsAdapter extends RecyclerView.Adapter<Follower
 
     @Override
     public void onBindViewHolder(FollowersActivityItemsAdapter.PhotoDetailViewHolder holder, int position) {
-        GTStreamable itemStreamable = items.get(position);
-        holder.bindImage(itemStreamable);
+        holder.bindImage(imageExtractor.getImageUrl(items.get(position)));
     }
 
     @Override
@@ -41,7 +44,7 @@ public class FollowersActivityItemsAdapter extends RecyclerView.Adapter<Follower
         return items.size();
     }
 
-    public static class PhotoDetailViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public static class PhotoDetailViewHolder<T> extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ImageView innerItemImage;
 
@@ -55,8 +58,12 @@ public class FollowersActivityItemsAdapter extends RecyclerView.Adapter<Follower
             //TODO: Launch single streamable Activity
         }
 
-        public void bindImage(GTStreamable streamable) {
-            Picasso.with(innerItemImage.getContext()).load(streamable.asset.thumbnail).into(innerItemImage);
+        public void bindImage(String imageUrl) {
+            Picasso.with(innerItemImage.getContext()).load(imageUrl).into(innerItemImage);
         }
+    }
+
+    public interface ImageExtractor<T> {
+        String getImageUrl(T activityDetailItem);
     }
 }
