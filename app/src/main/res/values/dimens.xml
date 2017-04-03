@@ -2,12 +2,12 @@
 <resources>
 
     <dimen name="onboard_pager_margin_bottom">15dp</dimen>
-    <dimen name="onboard_pager_margin_top">35dp</dimen>
+    <dimen name="onboard_pager_margin_top">40dp</dimen>
     <dimen name="onboard_indicator_margin_bottom">11dp</dimen>
     <dimen name="onboard_indicator_height">20dp</dimen>
     <dimen name="onboard_go_button_height">37dp</dimen>
     <dimen name="onboard_go_button_margin_right">10dp</dimen>
-    <dimen name="onboard_go_button_text_size">15sp</dimen>
+    <dimen name="onboard_go_button_text_size">16sp</dimen>
 
     <dimen name="change_password_padding">20dp</dimen>
     <dimen name="change_password_new_margin_top">30dp</dimen>
@@ -39,23 +39,23 @@
     <dimen name="home_action_button_margin_bottom">10dp</dimen>
 
     <dimen name="linked_accounts_icon_padding">17dp</dimen>
-    <dimen name="linked_accounts_icon_size">23dp</dimen>
+    <dimen name="linked_accounts_icon_size">25dp</dimen>
     <dimen name="linked_accounts_name_margin_left">20dp</dimen>
-    <dimen name="linked_accounts_name_text_size">16sp</dimen>
+    <dimen name="linked_accounts_name_text_size">17sp</dimen>
 
     <dimen name="login_avatar_size">90dp</dimen>
     <dimen name="login_avatar_radius">45dp</dimen>
     <dimen name="login_name_margin_top">20dp</dimen>
     <dimen name="login_name_text_size">20sp</dimen>
-    <dimen name="login_local_username_text_size">17sp</dimen>
+    <dimen name="login_local_username_text_size">18sp</dimen>
     <dimen name="login_local_username_margin_top">1dp</dimen>
     <dimen name="login_local_button_margin_top">40dp</dimen>
     <dimen name="login_local_button_padding_left">80dp</dimen>
     <dimen name="login_local_button_padding_right">80dp</dimen>
-    <dimen name="login_local_button_text_size">15sp</dimen>
+    <dimen name="login_local_button_text_size">16sp</dimen>
     <dimen name="login_sign_out_button_margin_bottom">10dp</dimen>
     <dimen name="login_sign_out_button_padding">10dp</dimen>
-    <dimen name="login_sign_out_button_text_size">15sp</dimen>
+    <dimen name="login_sign_out_button_text_size">16sp</dimen>
     <dimen name="login_login_view_padding_left">35dp</dimen>
     <dimen name="login_login_view_padding_right">35dp</dimen>
     <dimen name="login_logo_height">40dp</dimen>
@@ -66,30 +66,30 @@
     <dimen name="login_password_margin_bottom">45dp</dimen>
     <dimen name="login_password_text_size">17sp</dimen>
     <dimen name="login_forgot_password_padding">10dp</dimen>
-    <dimen name="login_forgot_password_text_size">14sp</dimen>
+    <dimen name="login_forgot_password_text_size">15sp</dimen>
     <dimen name="login_forgot_password_margin_bottom">-5dp</dimen>
-    <dimen name="login_login_button_text_size">15sp</dimen>
+    <dimen name="login_login_button_text_size">16sp</dimen>
     <dimen name="login_or_separator_margin_top">10dp</dimen>
     <dimen name="login_or_separator_margin_bottom">10dp</dimen>
     <dimen name="login_or_margin_left">10dp</dimen>
     <dimen name="login_or_margin_right">10dp</dimen>
     <dimen name="login_or_text_size">14sp</dimen>
-    <dimen name="login_facebook_button_text_size">15sp</dimen>
+    <dimen name="login_facebook_button_text_size">16sp</dimen>
     <dimen name="login_sign_up_margin_bottom">10dp</dimen>
     <dimen name="login_sign_up_padding">10dp</dimen>
-    <dimen name="login_sign_up_text_size">15sp</dimen>
+    <dimen name="login_sign_up_text_size">16sp</dimen>
 
-    <dimen name="permission_padding">15dp</dimen>
+    <dimen name="permission_padding">20dp</dimen>
     <dimen name="permission_title_text_size">24sp</dimen>
     <dimen name="permission_image_margin_left">40dp</dimen>
     <dimen name="permission_image_margin_right">40dp</dimen>
-    <dimen name="permission_image_margin_top">40dp</dimen>
+    <dimen name="permission_image_margin_top">25dp</dimen>
     <dimen name="permission_image_padding">1dp</dimen>
     <dimen name="permission_image_height">130dp</dimen>
     <dimen name="permission_description_margin_bottom">20dp</dimen>
     <dimen name="permission_description_margin_top">20dp</dimen>
-    <dimen name="permission_description_text_size">16sp</dimen>
-    <dimen name="permission_action_button_text_size">15sp</dimen>
+    <dimen name="permission_description_text_size">17sp</dimen>
+    <dimen name="permission_action_button_text_size">16sp</dimen>
     <dimen name="permission_later_button_margin_top">10dp</dimen>
     <dimen name="permission_later_button_text_size">15sp</dimen>
 
@@ -98,10 +98,10 @@
     <dimen name="edit_profile_avatar_padding_top">15dp</dimen>
     <dimen name="edit_profile_image_padding_left">15dp</dimen>
     <dimen name="edit_profile_image_padding_right">7dp</dimen>
-    <dimen name="edit_profile_image_size">35dp</dimen>
+    <dimen name="edit_profile_image_size">45dp</dimen>
     <dimen name="edit_profile_image_name_margin_left">13dp</dimen>
     <dimen name="edit_profile_image_name_text_size">17sp</dimen>
-    <dimen name="edit_profile_image_arrow_size">20dp</dimen>
+    <dimen name="edit_profile_image_arrow_size">25dp</dimen>
     <dimen name="edit_profile_image_arrow_margin_left">10dp</dimen>
     <dimen name="edit_profile_left_margin">15dp</dimen>
     <dimen name="edit_profile_password_padding_right">7dp</dimen>
@@ -119,7 +119,7 @@
     <dimen name="edit_profile_private_padding_right">7dp</dimen>
     <dimen name="edit_profile_private_text_size">17sp</dimen>
     <dimen name="edit_profile_private_summary_margin_top">4dp</dimen>
-    <dimen name="edit_profile_private_summary_text_size">11sp</dimen>
+    <dimen name="edit_profile_private_summary_text_size">12sp</dimen>
 
     <dimen name="reset_password_close_button_size">40dp</dimen>
     <dimen name="reset_password_close_button_margin_right">5dp</dimen>
@@ -128,10 +128,10 @@
     <dimen name="reset_password_title_layout_margin_left">20dp</dimen>
     <dimen name="reset_password_title_layout_margin_right">20dp</dimen>
     <dimen name="reset_password_title_margin_bottom">15dp</dimen>
-    <dimen name="reset_password_title_text_size">26sp</dimen>
-    <dimen name="reset_password_summary_text_size">13sp</dimen>
-    <dimen name="reset_password_form_layout_padding_left">15dp</dimen>
-    <dimen name="reset_password_form_layout_padding_right">15dp</dimen>
+    <dimen name="reset_password_title_text_size">28sp</dimen>
+    <dimen name="reset_password_summary_text_size">16sp</dimen>
+    <dimen name="reset_password_form_layout_padding_left">25dp</dimen>
+    <dimen name="reset_password_form_layout_padding_right">25dp</dimen>
     <dimen name="reset_password_form_layout_padding_top">25dp</dimen>
     <dimen name="reset_password_email_text_size">18sp</dimen>
     <dimen name="reset_password_submit_separator_margin_top">10dp</dimen>
@@ -152,8 +152,8 @@
     <dimen name="sign_up_form_field_margin_top">5dp</dimen>
     <dimen name="sign_up_terms_text_size">15sp</dimen>
     <dimen name="sign_up_terms_margin_top">8dp</dimen>
-    <dimen name="sign_up_button_margin_top">25dp</dimen>
-    <dimen name="sign_up_button_text_size">15sp</dimen>
+    <dimen name="sign_up_button_margin_top">28dp</dimen>
+    <dimen name="sign_up_button_text_size">16sp</dimen>
 
     <dimen name="streamable_details_top_display_padding_left">10dp</dimen>
     <dimen name="streamable_details_top_display_padding_right">10dp</dimen>
@@ -194,20 +194,20 @@
     <dimen name="profile_metadata_panel_margin_right">15dp</dimen>
     <dimen name="profile_metadata_panel_margin_bottom">10dp</dimen>
     <dimen name="profile_metadata_panel_margin_top">-42dp</dimen>
-    <dimen name="profile_avatar_size">100dp</dimen>
-    <dimen name="profile_name_margin_left">9dp</dimen>
+    <dimen name="profile_avatar_size">110dp</dimen>
+    <dimen name="profile_name_margin_left">11dp</dimen>
     <dimen name="profile_name_placeholder_height">40dp</dimen>
-    <dimen name="profile_name_placeholder_margin_bottom">7dp</dimen>
-    <dimen name="profile_name_text_size">19sp</dimen>
+    <dimen name="profile_name_placeholder_margin_bottom">5dp</dimen>
+    <dimen name="profile_name_text_size">21sp</dimen>
     <dimen name="profile_username_margin_top">1dp</dimen>
     <dimen name="profile_username_margin_bottom">9dp</dimen>
-    <dimen name="profile_username_text_size">14sp</dimen>
+    <dimen name="profile_username_text_size">15sp</dimen>
     <dimen name="profile_stats_layout_margin_left">-15dp</dimen>
     <dimen name="profile_stats_layout_margin_right">-15dp</dimen>
     <dimen name="profile_stats_layout_margin_top">17dp</dimen>
-    <dimen name="profile_stats_item_text_size">24sp</dimen>
+    <dimen name="profile_stats_item_text_size">25sp</dimen>
     <dimen name="profile_stats_item_title_margin_top">1dp</dimen>
-    <dimen name="profile_stats_item_title_text_size">13sp</dimen>
+    <dimen name="profile_stats_item_title_text_size">14sp</dimen>
     <dimen name="profile_stats_item_separator_size">3dp</dimen>
     <dimen name="profile_stats_follow_button_separator_width">1dp</dimen>
     <dimen name="profile_stats_follow_button_padding_top">3dp</dimen>
@@ -223,9 +223,9 @@
     <dimen name="profile_toolbar_item_separator_width">1px</dimen>
     <dimen name="profile_pager_padding_left">30dp</dimen>
     <dimen name="profile_pager_padding_right">30dp</dimen>
-    <dimen name="profile_about_text_size">18sp</dimen>
+    <dimen name="profile_about_text_size">19sp</dimen>
     <dimen name="profile_about_separator_margin_bottom">20dp</dimen>
-    <dimen name="profile_website_text_size">13sp</dimen>
+    <dimen name="profile_website_text_size">14sp</dimen>
 
     <dimen name="dialog_username_width">300dp</dimen>
     <dimen name="dialog_username_padding_left">10dp</dimen>
@@ -236,22 +236,22 @@
 
     <dimen name="dialog_unfollow_width">300dp</dimen>
     <dimen name="dialog_unfollow_padding_top">25dp</dimen>
-    <dimen name="dialog_unfollow_avatar_size">80dp</dimen>
-    <dimen name="dialog_unfollow_avatar_radius">40dp</dimen>
+    <dimen name="dialog_unfollow_avatar_size">90dp</dimen>
+    <dimen name="dialog_unfollow_avatar_radius">45dp</dimen>
     <dimen name="dialog_unfollow_prompt_margin_top">25dp</dimen>
-    <dimen name="dialog_unfollow_prompt_text_size">16sp</dimen>
+    <dimen name="dialog_unfollow_prompt_text_size">17sp</dimen>
     <dimen name="dialog_unfollow_buttons_separator_margin_top">25dp</dimen>
     <dimen name="dialog_unfollow_buttons_separator_height">1dp</dimen>
     <dimen name="dialog_unfollow_button_height">50dp</dimen>
-    <dimen name="dialog_unfollow_button_text_size">15sp</dimen>
+    <dimen name="dialog_unfollow_button_text_size">16sp</dimen>
     <dimen name="dialog_unfollow_button_separator_width">1dp</dimen>
 
     <dimen name="onboard_slide_padding_left">40dp</dimen>
     <dimen name="onboard_slide_padding_right">40dp</dimen>
-    <dimen name="onboard_slide_title_text_size">27sp</dimen>
-    <dimen name="onboard_slide_title_margin_bottom">10dp</dimen>
-    <dimen name="onboard_slide_subtitle_text_size">16sp</dimen>
-    <dimen name="onboard_slide_image_margin_top">30dp</dimen>
+    <dimen name="onboard_slide_title_text_size">28sp</dimen>
+    <dimen name="onboard_slide_title_margin_bottom">12dp</dimen>
+    <dimen name="onboard_slide_subtitle_text_size">17sp</dimen>
+    <dimen name="onboard_slide_image_margin_top">35dp</dimen>
 
     <dimen name="comments_layout_padding_left">7dp</dimen>
     <dimen name="comments_layout_padding_right">5dp</dimen>
@@ -268,11 +268,11 @@
     <dimen name="comments_send_button_padding">8dp</dimen>
     <dimen name="comments_send_button_margin_left">2dp</dimen>
 
-    <dimen name="reside_menu_padding_top">12dp</dimen>
-    <dimen name="reside_menu_padding_bottom">12dp</dimen>
-    <dimen name="reside_menu_icon_size">30dp</dimen>
-    <dimen name="reside_menu_title_text_size">18sp</dimen>
-    <dimen name="reside_menu_title_margin_left">10dp</dimen>
+    <dimen name="reside_menu_padding_top">14dp</dimen>
+    <dimen name="reside_menu_padding_bottom">14dp</dimen>
+    <dimen name="reside_menu_icon_size">35dp</dimen>
+    <dimen name="reside_menu_title_text_size">20sp</dimen>
+    <dimen name="reside_menu_title_margin_left">15dp</dimen>
 
     <dimen name="row_comment_padding_top">7dp</dimen>
     <dimen name="row_comment_padding_bottom">7dp</dimen>
@@ -299,25 +299,25 @@
 
     <dimen name="row_notification_left_user_unread_width">4dp</dimen>
     <dimen name="row_notification_left_user_margin_left">10dp</dimen>
-    <dimen name="row_notification_left_user_margin_right">10dp</dimen>
+    <dimen name="row_notification_left_user_margin_right">11dp</dimen>
     <dimen name="row_notification_left_user_top_timeline_indocator_width">1dp</dimen>
     <dimen name="row_notification_left_user_top_timeline_indocator_height">11dp</dimen>
-    <dimen name="row_notification_left_user_avatar_size">30dp</dimen>
+    <dimen name="row_notification_left_user_avatar_size">42dp</dimen>
 
-    <dimen name="row_notification_middle_margin_top">10dp</dimen>
+    <dimen name="row_notification_middle_margin_top">11dp</dimen>
     <dimen name="row_notification_middle_margin_right">10dp</dimen>
     <dimen name="row_notification_middle_margin_bottom">10dp</dimen>
-    <dimen name="row_notification_middle_title_text_size">15sp</dimen>
+    <dimen name="row_notification_middle_title_text_size">16sp</dimen>
     <dimen name="row_notification_middle_date_margin_top">3dp</dimen>
-    <dimen name="row_notification_middle_date_text_size">11sp</dimen>
+    <dimen name="row_notification_middle_date_text_size">12sp</dimen>
 
     <dimen name="row_notification_middle_description_date_margin_top">7dp</dimen>
-    <dimen name="row_notification_middle_description_text_size">13sp</dimen>
+    <dimen name="row_notification_middle_description_text_size">15sp</dimen>
     <dimen name="row_notification_middle_description_margin_top">5dp</dimen>
 
     <dimen name="row_notification_right_margin_top">10dp</dimen>
     <dimen name="row_notification_right_margin_right">10dp</dimen>
-    <dimen name="row_notification_right_image_size">30dp</dimen>
+    <dimen name="row_notification_right_image_size">42dp</dimen>
 
     <dimen name="row_streamable_list_top_panel_margin_left">5dp</dimen>
     <dimen name="row_streamable_list_top_panel_margin_right">3dp</dimen>
@@ -325,15 +325,15 @@
     <dimen name="row_streamable_list_top_panel_padding_right">17dp</dimen>
     <dimen name="row_streamable_list_top_panel_padding_top">12dp</dimen>
     <dimen name="row_streamable_list_top_panel_padding_bottom">8dp</dimen>
-    <dimen name="row_streamable_list_avatar_size">40dp</dimen>
-    <dimen name="row_streamable_list_name_margin_left">7dp</dimen>
-    <dimen name="row_streamable_list_name_margin_right">7dp</dimen>
+    <dimen name="row_streamable_list_avatar_size">44dp</dimen>
+    <dimen name="row_streamable_list_name_margin_left">8dp</dimen>
+    <dimen name="row_streamable_list_name_margin_right">8dp</dimen>
     <dimen name="row_streamable_list_name_margin_bottom">1dp</dimen>
-    <dimen name="row_streamable_list_name_text_size">15sp</dimen>
-    <dimen name="row_streamable_list_username_margin_top">1dp</dimen>
+    <dimen name="row_streamable_list_name_text_size">16sp</dimen>
+    <dimen name="row_streamable_list_username_margin_top">1px</dimen>
     <dimen name="row_streamable_list_username_text_size">13sp</dimen>
     <dimen name="row_streamable_list_date_text_size">11sp</dimen>
-    <dimen name="row_streamable_list_height">300dp</dimen>
+    <dimen name="row_streamable_list_height">350dp</dimen>
     <dimen name="row_streamable_list_bottom_panel_margin_left">5dp</dimen>
     <dimen name="row_streamable_list_bottom_panel_margin_right">3dp</dimen>
     <dimen name="row_streamable_list_bottom_panel_padding_left">15dp</dimen>
@@ -384,12 +384,12 @@
     <dimen name="row_user_list_padding_right">10dp</dimen>
     <dimen name="row_user_list_padding_top">7dp</dimen>
     <dimen name="row_user_list_padding_bottom">7dp</dimen>
-    <dimen name="row_user_list_avatar_size">40dp</dimen>
+    <dimen name="row_user_list_avatar_size">50dp</dimen>
     <dimen name="row_user_list_name_margin_left">10dp</dimen>
     <dimen name="row_user_list_name_margin_right">10dp</dimen>
     <dimen name="row_user_list_name_margin_bottom">1dp</dimen>
-    <dimen name="row_user_list_name_text_size">15sp</dimen>
-    <dimen name="row_user_list_username_text_size">13sp</dimen>
+    <dimen name="row_user_list_name_text_size">17sp</dimen>
+    <dimen name="row_user_list_username_text_size">14sp</dimen>
     <dimen name="row_user_list_username_margin_top">1dp</dimen>
     <dimen name="row_user_list_follow_button_width">85dp</dimen>
     <dimen name="row_user_list_follow_button_height">32dp</dimen>
@@ -417,9 +417,9 @@
     <dimen name="avatar_prompt_action_button_margin_top">70dp</dimen>
     <dimen name="avatar_prompt_action_button_padding_left">20dp</dimen>
     <dimen name="avatar_prompt_action_button_padding_right">20dp</dimen>
-    <dimen name="avatar_prompt_action_button_text_size">15sp</dimen>
+    <dimen name="avatar_prompt_action_button_text_size">16sp</dimen>
     <dimen name="avatar_prompt_later_button_margin_bottom">10dp</dimen>
     <dimen name="avatar_prompt_later_button_padding">10dp</dimen>
-    <dimen name="avatar_prompt_later_button_text_size">15sp</dimen>
+    <dimen name="avatar_prompt_later_button_text_size">16sp</dimen>
 
 </resources>
