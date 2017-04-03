@@ -300,7 +300,7 @@
     <dimen name="row_notification_left_user_unread_width">4dp</dimen>
     <dimen name="row_notification_left_user_margin_left">10dp</dimen>
     <dimen name="row_notification_left_user_margin_right">11dp</dimen>
-    <dimen name="row_notification_left_user_top_timeline_indocator_width">1dp</dimen>
+    <dimen name="row_notification_left_user_top_timeline_indocator_width">1px</dimen>
     <dimen name="row_notification_left_user_top_timeline_indocator_height">11dp</dimen>
     <dimen name="row_notification_left_user_avatar_size">42dp</dimen>
 
