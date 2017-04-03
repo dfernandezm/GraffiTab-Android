@@ -232,6 +232,10 @@
                 android:name=".ui.activities.home.me.FollowersActivity"
                 android:configChanges="keyboardHidden|orientation|screenSize"
                 android:windowSoftInputMode="stateHidden" />
+        <activity
+                android:name=".ui.activities.home.users.FacebookFriendsActivity"
+                android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+                android:label="@string/app_name"/>
     </application>
 
 </manifest>

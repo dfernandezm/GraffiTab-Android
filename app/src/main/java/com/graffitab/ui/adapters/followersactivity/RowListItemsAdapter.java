@@ -5,22 +5,25 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.graffitab.R;
 
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by david on 19/03/2017.
  */
 
-public class FollowersActivityItemsAdapter<T> extends RecyclerView.Adapter<FollowersActivityItemsAdapter.PhotoDetailViewHolder> {
+public class RowListItemsAdapter<T> extends RecyclerView.Adapter<RowListItemsAdapter.PhotoDetailViewHolder> {
 
     private List<T> items;
     private ImageLoader<T> imageLoader;
+    private int imageItemLayoutId;
+
+    public RowListItemsAdapter(int imageItemLayoutId) {
+        this.imageItemLayoutId = imageItemLayoutId;
+    }
 
     public void setItems(List<T> items) {
         this.items = items;
@@ -31,14 +34,14 @@ public class FollowersActivityItemsAdapter<T> extends RecyclerView.Adapter<Follo
     }
 
     @Override
-    public FollowersActivityItemsAdapter.PhotoDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RowListItemsAdapter.PhotoDetailViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View inflatedView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.row_activity_item_image, parent, false);
+                .inflate(imageItemLayoutId, parent, false);
         return new PhotoDetailViewHolder(inflatedView);
     }
 
     @Override
-    public void onBindViewHolder(FollowersActivityItemsAdapter.PhotoDetailViewHolder holder, int position) {
+    public void onBindViewHolder(RowListItemsAdapter.PhotoDetailViewHolder holder, int position) {
        imageLoader.loadImage(holder.innerItemImage, items.get(position));
     }
 

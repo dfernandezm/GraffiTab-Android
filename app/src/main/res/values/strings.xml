@@ -254,6 +254,12 @@
     <string name="followers_activity_create_streamable_single">%1$s created a graffiti</string>
     <string name="followers_activity_create_streamable_multiple">%1$s created %2$d graffiti</string>
 
+    <!-- Social friends -->
+    <string name="facebook_friends_title">Facebook Friends</string>
+    <string name="facebook_friends_empty_title">No friends to show</string>
+    <string name="facebook_friends_empty_subtitle">Looks like none of your Facebook friends are using Graffitab yet</string>
+    <string name="no_posts_yet">No posts yet</string>
+
     <!-- API Errors -->
     <string name="api_error_unsupported_file_type">This file type is not supported.</string>
     <string name="api_error_invalid_token">The provided token is invalid.</string>

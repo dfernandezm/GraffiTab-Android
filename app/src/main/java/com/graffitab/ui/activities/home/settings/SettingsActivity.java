@@ -7,30 +7,36 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import com.facebook.FacebookException;
 import com.graffitab.R;
 import com.graffitab.constants.Constants;
 import com.graffitab.managers.GTGcmManager;
 import com.graffitab.settings.Settings;
+import com.graffitab.ui.activities.custom.facebook.FacebookUtilsActivity;
 import com.graffitab.ui.activities.home.WebActivity;
 import com.graffitab.ui.activities.home.me.FollowersActivity;
 import com.graffitab.ui.activities.home.me.edit.EditPasswordActivity;
 import com.graffitab.ui.activities.home.me.edit.EditProfileActivity;
 import com.graffitab.ui.activities.home.settings.social.LinkedAccountsActivity;
+import com.graffitab.ui.activities.home.users.FacebookFriendsActivity;
 import com.graffitab.ui.activities.home.users.UserLikesActivity;
 import com.graffitab.ui.activities.login.LoginActivity;
 import com.graffitab.ui.dialog.DialogBuilder;
 import com.graffitab.ui.dialog.OnYesNoHandler;
 import com.graffitab.ui.dialog.TaskDialog;
 import com.graffitab.utils.Utils;
+import com.graffitab.utils.api.ApiUtils;
 import com.graffitab.utils.file.FileUtils;
+import com.graffitabsdk.model.GTExternalProvider;
+import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.network.common.response.GTResponse;
 import com.graffitabsdk.network.common.response.GTResponseHandler;
+import com.graffitabsdk.network.service.user.response.GTUserResponse;
 import com.graffitabsdk.sdk.GTSDK;
 import com.instabug.library.Instabug;
 
@@ -39,7 +45,7 @@ import com.instabug.library.Instabug;
  * --
  * Copyright © GraffiTab Inc. 2016
  */
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends FacebookUtilsActivity {
 
     public static void logout(final Activity activity) {
         final Runnable handlerBlock = new Runnable() {
@@ -137,6 +143,8 @@ public class SettingsActivity extends AppCompatActivity {
 
         private Preference followersActivityPreference;
 
+        private Preference facebookFriendsPreference;
+
         @Override
         public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -156,6 +164,7 @@ public class SettingsActivity extends AppCompatActivity {
             aboutPreference = findPreference("about");
             logoutPreference = findPreference("logout");
             followersActivityPreference = findPreference("getFollowersActivity");
+            facebookFriendsPreference = findPreference("findFacebookFriends");
 
             bindPreferences();
             loadPreferences();
@@ -317,6 +326,86 @@ public class SettingsActivity extends AppCompatActivity {
                     return true;
                 }
             });
+
+            facebookFriendsPreference.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                @Override
+                public boolean onPreferenceClick(Preference preference) {
+                    Log.i(getClass().getSimpleName(), "Facebook friends handled");
+                    // TODO: link on the fly + open FB friends activity
+                    SettingsActivity settingsActivity = (SettingsActivity) getActivity();
+                    settingsActivity.linkFacebookAndOpenFriendsActivity();
+                    return true;
+                }
+            });
         }
     }
+
+    private void linkFacebookAndOpenFriendsActivity() {
+        GTUser user = GTSDK.getAccountManager().getLoggedInUser();
+        boolean fLinked = user.hasLinkedAccount(GTExternalProvider.GTExternalProviderType.FACEBOOK);
+
+        final Runnable openFacebookFriendsRunnable = new Runnable() {
+            @Override
+            public void run() {
+                Intent i = new Intent(SettingsActivity.this, FacebookFriendsActivity.class);
+                startActivity(i);
+            }
+        };
+
+        if (!fLinked) {
+            getFacebookMe(false, new FacebookMeCallback() {
+                @Override
+                public void onProfileFetched(String firstName, String lastName, String userId, String email, String accessToken) {
+                    TaskDialog.getInstance().showProcessingDialog(SettingsActivity.this);
+                    GTSDK.getMeManager().linkExternalProvider(userId, accessToken, GTExternalProvider.GTExternalProviderType.FACEBOOK, new GTResponseHandler<GTUserResponse>() {
+
+                        @Override
+                        public void onSuccess(GTResponse<GTUserResponse> gtResponse) {
+                            TaskDialog.getInstance().hideDialog();
+                            openFacebookFriendsRunnable.run();
+                        }
+
+                        @Override
+                        public void onFailure(GTResponse<GTUserResponse> gtResponse) {
+                            TaskDialog.getInstance().hideDialog();
+                            DialogBuilder.buildAPIErrorDialog(SettingsActivity.this, getString(R.string.app_name), ApiUtils.localizedErrorReason(gtResponse), true, gtResponse.getResultCode());
+                        }
+                    });
+                }
+
+                @Override
+                public void onCancel() {}
+
+                @Override
+                public void onError(FacebookException exception) {
+                    Log.e(getClass().getSimpleName(), "Failed to login with Facebook", exception);
+                    DialogBuilder.buildOKToast(SettingsActivity.this, getString(R.string.other_facebook_error));
+                }
+            });
+        }
+        else
+            openFacebookFriendsRunnable.run();
+    }
+
+    // Testing the SDK
+//                GTQueryParameters parameters = new GTQueryParameters();
+//                parameters.addParameter(GTQueryParameters.GTParameterType.offset, 0)
+//                        .addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS);
+//
+//                GTSDK.getMeManager().findFacebookFriends(false, parameters, new GTResponseHandler<GTUserSocialFriendsContainer>() {
+//                    @Override
+//                    public void onSuccess(GTResponse<GTUserSocialFriendsContainer> gtResponse) {
+//                        GTUserSocialFriendsContainer friendsContainer = gtResponse.getObject();
+//                        for (GTUser user: friendsContainer.users) {
+//                            GTLog.i("facebookFriends", "User " + user.fullName(), true);
+//                            GTLog.i("facebookFriends", "Email " + user.email, true);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onFailure(GTResponse<GTUserSocialFriendsContainer> gtResponse) {
+//                        GTLog.i("facebookFriends", "Error: " + gtResponse.getStatusCode(), true);
+//                    }
+//                });
+
 }

@@ -5,9 +5,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.graffitab.R;
+import com.graffitab.ui.adapters.users.viewholders.SocialFriendsUserViewHolder;
 import com.graffitab.ui.adapters.users.viewholders.ListUserViewHolder;
+import com.graffitab.ui.adapters.users.viewholders.UserViewHolder;
 import com.graffitab.ui.fragments.users.GenericUsersFragment.ViewType;
 import com.graffitab.ui.views.recyclerview.AdvancedEndlessRecyclerViewAdapter;
 import com.graffitabsdk.model.GTUser;
@@ -22,6 +23,7 @@ import java.util.List;
 public class GenericUsersRecyclerViewAdapter extends AdvancedEndlessRecyclerViewAdapter<GTUser> {
 
     private final int VIEW_TYPE_LIST_FULL = 0;
+    private final int VIEW_TYPE_SOCIAL_FRIENDS = 1;
 
     private ViewType itemViewType;
     private OnUserClickListener clickListener;
@@ -42,6 +44,7 @@ public class GenericUsersRecyclerViewAdapter extends AdvancedEndlessRecyclerView
     public int getViewType(int position) {
         switch (itemViewType) {
             case LIST_FULL: return VIEW_TYPE_LIST_FULL;
+            case SOCIAL_FRIENDS: return VIEW_TYPE_SOCIAL_FRIENDS;
         }
 
         return VIEW_TYPE_LIST_FULL;
@@ -54,8 +57,12 @@ public class GenericUsersRecyclerViewAdapter extends AdvancedEndlessRecyclerView
             final ListUserViewHolder rcv = new ListUserViewHolder(layoutView);
             rcv.setClickListener(clickListener);
             return rcv;
-        }
-        else {
+        } else if (viewType == VIEW_TYPE_SOCIAL_FRIENDS) {
+            View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_social_friends_list, parent, false);
+            final SocialFriendsUserViewHolder rcv = new SocialFriendsUserViewHolder(layoutView);
+            rcv.setClickListener(clickListener);
+            return rcv;
+        } else {
             View layoutView = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_user_list, parent, false);
             final ListUserViewHolder rcv = new ListUserViewHolder(layoutView);
             rcv.setClickListener(clickListener);
@@ -66,10 +73,6 @@ public class GenericUsersRecyclerViewAdapter extends AdvancedEndlessRecyclerView
     @Override
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         final GTUser item = getItem(position);
-
-        if (holder instanceof ListUserViewHolder) {
-            ListUserViewHolder customHolder = (ListUserViewHolder) holder;
-            customHolder.setItem(item);
-        }
+        ((UserViewHolder) holder).setItem(item);
     }
 }

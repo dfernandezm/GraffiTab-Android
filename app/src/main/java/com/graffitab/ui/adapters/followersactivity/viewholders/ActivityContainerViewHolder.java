@@ -6,10 +6,11 @@ import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import com.graffitab.R;
-import com.graffitab.ui.adapters.followersactivity.FollowersActivityItemsAdapter;
 import com.graffitab.ui.adapters.followersactivity.OnFollowerActivityClickListener;
+import com.graffitab.ui.adapters.followersactivity.RowListItemsAdapter;
 import com.graffitab.ui.views.recyclerview.AdvancedRecyclerViewItemDecoration;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTStreamable;
@@ -20,9 +21,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Generification
@@ -42,7 +40,7 @@ public class ActivityContainerViewHolder<T> extends RecyclerView.ViewHolder {
     public ImageView itemImage;
 
     private RecyclerView activityDetailRecyclerView;
-    protected FollowersActivityItemsAdapter<T> followersActivityItemsAdapter;
+    protected RowListItemsAdapter<T> followersActivityItemsAdapter;
     protected ImageView followedAvatar;
 
     protected GTActivityContainer item;
@@ -118,7 +116,7 @@ public class ActivityContainerViewHolder<T> extends RecyclerView.ViewHolder {
                 3);
         activityDetailRecyclerView.addItemDecoration(decoration);
 
-        followersActivityItemsAdapter = new FollowersActivityItemsAdapter<T>();
+        followersActivityItemsAdapter = new RowListItemsAdapter<T>(R.layout.row_activity_item_image);
         activityDetailRecyclerView.setAdapter(followersActivityItemsAdapter);
     }
 

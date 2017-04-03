@@ -425,4 +425,7 @@
     <dimen name="avatar_prompt_later_button_padding">10dp</dimen>
     <dimen name="avatar_prompt_later_button_text_size">16sp</dimen>
 
+    <dimen name="row_social_friends_item_image_width">50dp</dimen>
+    <dimen name="row_social_friends_item_image_height">50dp</dimen>
+
 </resources>

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        style="@style/RowUserListWidth"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="#fff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/row_user_list_padding_bottom"
+            android:paddingLeft="@dimen/row_user_list_padding_left"
+            android:paddingRight="@dimen/row_user_list_padding_right"
+            android:paddingTop="@dimen/row_user_list_padding_top">
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/avatar"
+                android:layout_width="@dimen/row_user_list_avatar_size"
+                android:layout_height="@dimen/row_user_list_avatar_size"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_avatar"
+                app:riv_corner_radius="5dp" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/row_user_list_name_margin_bottom"
+                android:layout_marginLeft="@dimen/row_user_list_name_margin_left"
+                android:layout_marginRight="@dimen/row_user_list_name_margin_right"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Georgi Christov"
+                    android:textColor="#000"
+                    android:textSize="@dimen/row_user_list_name_text_size"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/usernameField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/row_user_list_username_margin_top"
+                    android:text="georgi"
+                    android:textColor="#AAAAAA"
+                    android:textSize="@dimen/row_user_list_username_text_size" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/followButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground">
+
+                <TextView
+                    android:id="@+id/followButtonText"
+                    android:layout_width="@dimen/row_user_list_follow_button_width"
+                    android:layout_height="@dimen/row_user_list_follow_button_height"
+                    android:background="@drawable/rounded_corner_user_list_follow"
+                    android:ellipsize="end"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/profile_follow"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/row_user_list_follow_button_text_size" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+            style="@style/RowUserListWidth"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="#fff">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/row_user_list_padding_bottom"
+                android:paddingLeft="@dimen/row_user_list_padding_left"
+                android:paddingRight="@dimen/row_user_list_padding_right"
+                android:paddingTop="@dimen/row_user_list_padding_top">
+
+
+            <com.graffitab.ui.views.recyclerview.touchdisabled.TouchDisаbledRecyclerView
+                    android:id="@+id/socialFriendsStreamablesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:layout_marginBottom="@dimen/row_activity_include_recyclerview_margin_bottom"
+                    android:layout_marginTop="@dimen/row_activity_include_recyclerview_margin_top"
+                    android:scrollbars="horizontal"/>
+
+            <TextView
+                    android:id="@+id/noPostsYet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/no_posts_yet"
+                    android:textColor="#B8B8B8"
+                    android:textSize="@dimen/row_notification_middle_description_text_size"
+                    android:layout_marginTop="@dimen/row_notification_middle_description_margin_top"
+                    android:visibility="gone"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

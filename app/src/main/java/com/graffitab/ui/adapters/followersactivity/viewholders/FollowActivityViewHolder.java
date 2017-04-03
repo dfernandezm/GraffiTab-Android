@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import butterknife.ButterKnife;
 import com.graffitab.R;
-import com.graffitab.ui.adapters.followersactivity.FollowersActivityItemsAdapter;
+import com.graffitab.ui.adapters.followersactivity.RowListItemsAdapter;
 import com.graffitab.utils.image.ImageUtils;
 import com.graffitabsdk.model.GTUser;
 import com.graffitabsdk.model.activity.GTActivity;
@@ -34,7 +34,7 @@ public class FollowActivityViewHolder extends ActivityContainerViewHolder<GTUser
             actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_follow_multiple, item.user.fullName(),
                     activityContainer.activities.size()));
             followersActivityItemsAdapter.setItems(getUsersFromActivityContainer(item));
-            followersActivityItemsAdapter.setImageLoader(new FollowersActivityItemsAdapter.ImageLoader<GTUser>() {
+            followersActivityItemsAdapter.setImageLoader(new RowListItemsAdapter.ImageLoader<GTUser>() {
                 @Override
                 public void loadImage(ImageView imageView, GTUser activityDetailItem) {
                     ImageUtils.setAvatar(imageView, activityDetailItem);

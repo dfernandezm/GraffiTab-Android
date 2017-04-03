@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.ImageView;
 import butterknife.ButterKnife;
 import com.graffitab.R;
-import com.graffitab.ui.adapters.followersactivity.FollowersActivityItemsAdapter;
+import com.graffitab.ui.adapters.followersactivity.RowListItemsAdapter;
 import com.graffitabsdk.model.GTStreamable;
 import com.graffitabsdk.model.activity.GTActivity;
 import com.graffitabsdk.model.activity.GTActivityContainer;
@@ -33,7 +33,7 @@ public class CreateStreamableActivityViewHolder extends ActivityContainerViewHol
             actionLbl.setText(itemView.getContext().getString(R.string.followers_activity_create_streamable_multiple, item.user.fullName(),
                     activityContainer.activities.size()));
             followersActivityItemsAdapter.setItems(getStreamablesFromActivityContainer(item));
-            followersActivityItemsAdapter.setImageLoader(new FollowersActivityItemsAdapter.ImageLoader<GTStreamable>() {
+            followersActivityItemsAdapter.setImageLoader(new RowListItemsAdapter.ImageLoader<GTStreamable>() {
                 @Override
                 public void loadImage(ImageView imageView, GTStreamable activityDetailItem) {
                     Picasso.with(imageView.getContext()).load(activityDetailItem.asset.thumbnail).into(imageView);

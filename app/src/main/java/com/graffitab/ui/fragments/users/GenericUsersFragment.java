@@ -33,7 +33,7 @@ import com.squareup.otto.Subscribe;
  */
 public abstract class GenericUsersFragment extends GenericItemListFragment<GTUser> implements OnUserClickListener {
 
-    public enum ViewType {LIST_FULL}
+    public enum ViewType {LIST_FULL, SOCIAL_FRIENDS}
 
     private ViewType viewType;
     private Object eventListener;
@@ -177,7 +177,7 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
     @Override
     public RecyclerView.ItemDecoration getItemDecoration() {
-        if (viewType == ViewType.LIST_FULL)
+        if (viewType == ViewType.LIST_FULL || viewType == ViewType.SOCIAL_FRIENDS)
             return new AdvancedRecyclerViewItemDecoration();
         return null;
     }
@@ -192,7 +192,7 @@ public abstract class GenericUsersFragment extends GenericItemListFragment<GTUse
 
     @Override
     public RecyclerView.LayoutManager getLayoutManagerForViewType() {
-        if (viewType == ViewType.LIST_FULL)
+        if (viewType == ViewType.LIST_FULL || viewType == ViewType.SOCIAL_FRIENDS)
             return new LinearLayoutManager(getContext());
         return null;
     }
