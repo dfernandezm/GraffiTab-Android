@@ -278,16 +278,16 @@
     <dimen name="row_comment_padding_bottom">7dp</dimen>
     <dimen name="row_comment_padding_left">10dp</dimen>
     <dimen name="row_comment_padding_right">10dp</dimen>
-    <dimen name="row_comment_avatar_size">30dp</dimen>
+    <dimen name="row_comment_avatar_size">40dp</dimen>
     <dimen name="row_comment_margin_left">10dp</dimen>
-    <dimen name="row_comment_name_text_size">14sp</dimen>
-    <dimen name="row_comment_username_text_size">11sp</dimen>
+    <dimen name="row_comment_name_text_size">17sp</dimen>
+    <dimen name="row_comment_username_text_size">13sp</dimen>
     <dimen name="row_comment_username_margin_left">5dp</dimen>
     <dimen name="row_comment_field_margin_top">3dp</dimen>
-    <dimen name="row_comment_field_text_size">15sp</dimen>
+    <dimen name="row_comment_field_text_size">18sp</dimen>
     <dimen name="row_comment_error_margin_left">12dp</dimen>
     <dimen name="row_comment_date_margin_top">7dp</dimen>
-    <dimen name="row_comment_date_text_size">11sp</dimen>
+    <dimen name="row_comment_date_text_size">12sp</dimen>
 
     <dimen name="row_location_height">180dp</dimen>
     <dimen name="row_location_metadata_margin">10dp</dimen>
