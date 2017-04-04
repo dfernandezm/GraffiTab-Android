@@ -305,7 +305,7 @@
     <dimen name="row_notification_left_user_avatar_size">42dp</dimen>
 
     <dimen name="row_notification_middle_margin_top">11dp</dimen>
-    <dimen name="row_notification_middle_margin_right">10dp</dimen>
+    <dimen name="row_notification_middle_margin_right">15dp</dimen>
     <dimen name="row_notification_middle_margin_bottom">10dp</dimen>
     <dimen name="row_notification_middle_title_text_size">16sp</dimen>
     <dimen name="row_notification_middle_date_margin_top">3dp</dimen>
@@ -318,6 +318,9 @@
     <dimen name="row_notification_right_margin_top">10dp</dimen>
     <dimen name="row_notification_right_margin_right">10dp</dimen>
     <dimen name="row_notification_right_image_size">42dp</dimen>
+
+    <dimen name="row_activity_include_recyclerview_margin_top">10dp</dimen>
+    <dimen name="row_activity_include_recyclerview_margin_bottom">7dp</dimen>
 
     <dimen name="row_streamable_list_top_panel_margin_left">5dp</dimen>
     <dimen name="row_streamable_list_top_panel_margin_right">3dp</dimen>

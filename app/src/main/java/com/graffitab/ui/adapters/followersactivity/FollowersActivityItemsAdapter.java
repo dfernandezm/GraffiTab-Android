@@ -5,11 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
+
 import com.graffitab.R;
 
 import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by david on 19/03/2017.
@@ -42,7 +44,7 @@ public class FollowersActivityItemsAdapter<T> extends RecyclerView.Adapter<Follo
 
     @Override
     public int getItemCount() {
-        return items.size();
+        return items != null ? items.size() : 0;
     }
 
     static class PhotoDetailViewHolder<T> extends RecyclerView.ViewHolder {

@@ -16,7 +16,7 @@
             android:background="?attr/selectableItemBackground"
             android:orientation="horizontal">
 
-            <include layout="@layout/row_notification_include_left_user" />
+            <include layout="@layout/row_activity_include_left_user" />
             <include layout="@layout/row_activity_include_recyclerview" />
         </LinearLayout>
     </LinearLayout>

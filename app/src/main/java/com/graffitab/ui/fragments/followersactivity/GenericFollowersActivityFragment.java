@@ -97,10 +97,8 @@ public abstract class GenericFollowersActivityFragment extends GenericItemListFr
                     }));
                 }
                 break;
-
             default:
                 throw new RuntimeException("Type not recognized -- " + activityContainer.type);
-
         }
     }
 
@@ -121,10 +119,6 @@ public abstract class GenericFollowersActivityFragment extends GenericItemListFr
         return streamables;
     }
 
-    protected GTStreamable extractStreamable(GTActivity gtActivity, GTActivity.GTActivityType type) {
-        return gtActivity.likedStreamable;
-    }
-
     private GTActivity getSingleActivityItem(GTActivityContainer activityContainer) {
         return activityContainer.activities.get(0);
     }
@@ -136,7 +130,6 @@ public abstract class GenericFollowersActivityFragment extends GenericItemListFr
     private void openSingleUserActivity(GTUser user) {
         ProfileActivity.show(getActivity(), user);
     }
-
 
     // Configuration
 

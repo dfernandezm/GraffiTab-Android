@@ -33,8 +33,9 @@ public class FollowersActivity extends BaseFollowersActivity {
         public void loadItems(boolean isFirstLoad, int offset, GTResponseHandler handler) {
             GTQueryParameters parameters = new GTQueryParameters();
             parameters.addParameter(GTQueryParameters.GTParameterType.offset, offset)
-                    .addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS)
-                    .addParameter(GTQueryParameters.GTParameterType.numberOfItemsInGroup, GTConstants.NUMBER_OF_ITEMS_IN_GROUP);
+                      .addParameter(GTQueryParameters.GTParameterType.limit, GTConstants.MAX_ITEMS)
+                      .addParameter(GTQueryParameters.GTParameterType.numberOfItemsInGroup,
+                             GTConstants.NUMBER_OF_ITEMS_IN_GROUP);
 
            GTSDK.getMeManager().getFollowersActivity(isFirstLoad, parameters, handler);
         }
