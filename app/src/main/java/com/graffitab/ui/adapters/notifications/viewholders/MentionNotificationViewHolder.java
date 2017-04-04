@@ -24,7 +24,7 @@ public class MentionNotificationViewHolder extends NotificationViewHolder {
         super.setItem(notification);
 
         actionLbl.setText(itemView.getContext().getString(R.string.notifications_mention, item.mentioner.fullName()));
-        descriptionLbl.setText(item.mentionedComment.text);
+        descriptionLbl.setText(item.mentionedComment.quotedText());
 
         loadAvatar(item.mentioner);
         loadStreamable(item.mentionedStreamable);

@@ -24,7 +24,7 @@ public class CommentNotificationViewHolder extends NotificationViewHolder {
         super.setItem(notification);
 
         actionLbl.setText(itemView.getContext().getString(R.string.notifications_comment, item.commenter.fullName()));
-        descriptionLbl.setText(item.comment.text);
+        descriptionLbl.setText(item.comment.quotedText());
 
         loadAvatar(item.commenter);
         loadStreamable(item.commentedStreamable);
